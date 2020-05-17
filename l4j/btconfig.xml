@@ -1,0 +1,13 @@
+<launch4jConfig>
+  <headerType>gui</headerType>
+  <jar>../exe/BTConfig.jar</jar>
+  <dontWrapJar>false</dontWrapJar>
+  <outfile>../exe/BTConfig.exe</outfile>
+  <errTitle>BTConfig</errTitle>
+  <chdir>.</chdir>
+  <icon>BTConfig.ico</icon>
+  <restartOnCrash>false</restartOnCrash>
+  <jre>
+    <minVersion>1.8.0</minVersion>
+  </jre>
+</launch4jConfig>
