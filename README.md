@@ -8,31 +8,25 @@ https://github.com/bluetailtech/BTConfig/blob/master/Documentation/p25rx_user_ma
 
 <BR><BR>Acquiring and Building From Source
 <PRE>
+Get Latest BTConfig source :
+git clone https://github.com/bluetailtech/BTConfig.git
+
 Install Oracle Java 1.8  (or greater)
 
 Install Netbeans 8.1
-
-(https://netbeans.org/downloads/old/8.1/
-  select Download Bundle ALL)
-netbeans-8.1-linux.sh downloaded
-chmod +x netbeans-8.1-linux.sh
-./netbeans-8.1-linux.sh
-Choose install path for netbeans
-Select jvm location (/usr/lib/jvm/java-1.8.0-openjdk-amd64)
-Select install location for glassfish  
-
-Select install
-Select finish
-
-Get the source from :
-git clone https://github.com/bluetailtech/BTConfig.git
+  
+  Dowload Netbeans Installer from https://netbeans.org/downloads/old/8.1/
+    Excecute Netbeans installer.
+   Linux :
+      chmod +x netbeans-8.1-linux.sh
+    ./netbeans-8.1-linux.sh
+   Windows :
+      netbeans-8.1-javase-windows.exe
 
 Start netbeans and open the project BTConfig/Source Packages/btconfig/BTFrame.java
 
-Select <Run> then "Run Project" in the Netbeans editor.  This will build and configure Netbeans on your system
-
-If the previous is successful in building BTConfig then
-BTConfig will now be excecuting, and the resulting BTConfig.jar file will be in BTConfig/dist
+Select <Run> then "Run Project" in the Netbeans editor.  This will build and execute the 
+resulting BTConfig.jar. The file will be in BTConfig/dist
 
 Now BTConfig.exe can be built from inside the BTConfig directory with 'sh build.sh' or 'ant exe'
 </PRE>
