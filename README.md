@@ -25,7 +25,7 @@ Install Netbeans 8.1
 
 Start netbeans and open the project BTConfig/Source Packages/btconfig/BTFrame.java
 
-Select <Run> then "Run Project" in the Netbeans editor.  This will build and execute the 
+In the Netbeans editor :  select <Run> then "Run Project". This will build and execute the 
 resulting BTConfig.jar. The file will be in BTConfig/dist
 
 Now BTConfig.exe can be built from inside the BTConfig directory with 'sh build.sh' or 'ant exe'
