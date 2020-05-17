@@ -2,7 +2,7 @@
 Configuration / monitoring software for the Bluetail Technologies P25RX receiver
 
 <BR><BR>Executable
-https://github.com/bluetailtech/BTConfig/blob/master/exe/BTConfig.exe
+https://github.com/bluetailtech/BTConfig/blob/master/exe/BTConfig-2020-05-16_2041.exe
 <BR><BR>User Manual
 https://github.com/bluetailtech/BTConfig/blob/master/Documentation/p25rx_user_manual.pdf
 
