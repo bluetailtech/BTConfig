@@ -5,6 +5,8 @@ Configuration / monitoring software for the Bluetail Technologies P25RX receiver
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-05-16_2041.exe
 <BR><BR>User Manual
 https://github.com/bluetailtech/BTConfig/blob/master/Documentation/p25rx_user_manual.pdf
+<BR><BR><BR>Sample audio (local event 05-17-20)
+https://github.com/bluetailtech/BTConfig/blob/master/audio_samples/local_badguys_found_05-17-20.wav
 
 <BR><BR>Acquiring and Building From Source
 <PRE>
