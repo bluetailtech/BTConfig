@@ -1,6 +1,6 @@
 
 # BTConfig
-Configuration / monitoring software for the Bluetail Technologies P25RX receiver
+Configuration / monitoring software for the Bluetail Technologies <a href="https://www.tindie.com/products/20075/">P25RX Digital Police Scanner </a>   
 
 <BR><BR>Executable
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-05-16_2041.exe
