@@ -1,6 +1,6 @@
 
 # BTConfig
-Configuration Software for the Bluetail Technologies <a href="https://www.tindie.com/products/20075/">P25RX Digital Police Receiver </a>   
+Configuration Software for the Bluetail Technologies <a href="https://www.tindie.com/products/20075/">P25RX Digital Police Receiver </a> <img src="https://raw.githubusercontent.com/bluetailtech/BTConfig/master/images/p25rx_small.png">
 
 <BR><BR>Executable
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-05-16_2041.exe
@@ -48,6 +48,9 @@ For another OS (such as Linux),  you can use the .exe as well.  Start with 'java
 
 <BR><BR>BTConfig Integrated Frequency Database
 <img src="https://raw.githubusercontent.com/bluetailtech/BTConfig/master/images/ss4.png">
+  
+<BR><BR>BTConfig - General Configuration Of P25RX Device
+<img src="https://raw.githubusercontent.com/bluetailtech/BTConfig/master/images/ss2.png">
   
  <BR><BR>
 Other projects used by BTConfig
