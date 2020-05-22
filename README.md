@@ -3,7 +3,7 @@
 Configuration Software for the Bluetail Technologies <a href="https://www.tindie.com/products/20075/">P25RX Digital Police Receiver </a> <img src="https://raw.githubusercontent.com/bluetailtech/BTConfig/master/images/p25rx_small.png">
 
 <BR><BR>Executable
-https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-05-16_2041.exe
+https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-05-22_0746.exe
 <BR><BR>User Manual
 https://github.com/bluetailtech/BTConfig/blob/master/Documentation/p25rx_user_manual.pdf
 <BR><BR><BR>Sample audio (local event 05-17-20)
