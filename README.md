@@ -56,7 +56,10 @@ For another OS (such as Linux),  you can use the .exe as well.  Start with 'java
 <img src="https://raw.githubusercontent.com/bluetailtech/BTConfig/master/images/ss5.png">
   
 <BR><BR>
-Video of configuration software in action https://youtu.be/Pr4ATosuvKU
+Video of BTconfig software in action https://youtu.be/Pr4ATosuvKU
+<BR><BR>
+Video Demonstrating The Decoder / Audio-Quality Of the BlueTail Technologies P25RX Digital Police Recevier As Recorded By BTConfig
+https://youtu.be/tfod62tAcsA
   
  <BR><BR>
 Other projects used by BTConfig
