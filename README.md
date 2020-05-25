@@ -1,6 +1,6 @@
 
 # BTConfig
-Configuration Software for the Bluetail Technologies <a href="https://www.tindie.com/products/20075/">P25RX Digital Police Receiver </a> <img src="https://raw.githubusercontent.com/bluetailtech/BTConfig/master/images/p25rx_small.png">
+Configuration Software for the Bluetail Technologies <a href="https://bluetailtechnologies.com/products/p25rx-digital-police-receiver"> P25RX Digital Police Receiver </a> <img src="https://raw.githubusercontent.com/bluetailtech/BTConfig/master/images/p25rx_small.png">
 
 <BR><BR>Executable
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-05-22_0746.exe
