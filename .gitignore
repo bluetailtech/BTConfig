@@ -1,4 +1,1 @@
-/build/
-dist/README.TXT
-dist/lib/*.jar
-dist/*.jar
+build/
