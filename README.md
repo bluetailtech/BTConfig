@@ -1,13 +1,12 @@
 
 # BTConfig
-Configuration Software for the Bluetail Technologies <a href="https://www.tindie.com/products/20075/">P25RX Digital Police Receiver </a> <img src="https://raw.githubusercontent.com/bluetailtech/BTConfig/master/images/p25rx_small.png">
+Configuration Software for the Bluetail Technologies <a href="https://bluetailtechnologies.com/products/p25rx-digital-police-receiver"> P25RX Digital Police Receiver </a> 
 
 <BR><BR>Executable
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-05-22_0746.exe
 <BR><BR>User Manual
 https://github.com/bluetailtech/BTConfig/blob/master/Documentation/p25rx_user_manual.pdf
-<BR><BR><BR>Sample audio (local event 05-17-20)
-https://github.com/bluetailtech/BTConfig/blob/master/audio_samples/local_suspects_found_05-17-20.wav
+
 
 <BR><BR>Acquiring and Building From Source
 <PRE>
@@ -16,7 +15,7 @@ git clone https://github.com/bluetailtech/BTConfig.git
 
 Install Oracle Java 1.8  (or greater)
 
-Install Netbeans 8.1
+Install Netbeans 8.1   (older version of Netbeans. Not susceptable to security issues like the newer versions)
   
   Dowload Netbeans Installer from https://netbeans.org/downloads/old/8.1/
     Excecute Netbeans installer.
@@ -51,15 +50,6 @@ For another OS (such as Linux),  you can use the .exe as well.  Start with 'java
   
 <BR><BR>BTConfig - General Configuration Of P25RX Device
 <img src="https://raw.githubusercontent.com/bluetailtech/BTConfig/master/images/ss2.png">
-  
-<BR><BR>BTConfig - Talk Group Configuration
-<img src="https://raw.githubusercontent.com/bluetailtech/BTConfig/master/images/ss5.png">
-  
-<BR><BR>
-Video of BTconfig software in action https://youtu.be/Pr4ATosuvKU
-<BR><BR>
-Video Demonstrating The Decoder / Audio-Quality Of the BlueTail Technologies P25RX Digital Police Recevier As Recorded By BTConfig
-https://youtu.be/tfod62tAcsA
   
  <BR><BR>
 Other projects used by BTConfig
