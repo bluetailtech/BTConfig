@@ -30,7 +30,9 @@ git clone https://github.com/bluetailtech/BTConfig.git
 4) In the Netbeans editor :  select <Run> then "Run Project". This will build and execute the 
 resulting BTConfig.jar. The file will be in BTConfig/dist
 
-5) Now BTConfig.exe can be built from inside the BTConfig directory with 'sh build.sh' or 'ant exe' (note: you may be able to skip steps 2-4 for a build-only)
+5) Now BTConfig.exe can be built from inside the BTConfig directory with 'sh build.sh' or 'ant exe' 
+(note: you may be able to skip steps 2-4 for a build-only)
+
 </PRE>
 <BR><BR>
 Starting the software
