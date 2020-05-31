@@ -51,10 +51,6 @@ For another OS (such as Linux),  you can use the .exe as well.  Start with 'java
 <BR><BR>BTConfig - General Configuration Of P25RX Device
 <img src="https://raw.githubusercontent.com/bluetailtech/BTConfig/master/images/ss2.png">
   
-<BR><BR>BTConfig - Talk Group Configuration
-<img src="https://raw.githubusercontent.com/bluetailtech/BTConfig/master/images/ss5.png">
-  
-  
  <BR><BR>
 Other projects used by BTConfig
 <BR>
