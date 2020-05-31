@@ -15,7 +15,7 @@ git clone https://github.com/bluetailtech/BTConfig.git
 
 Install Oracle Java 1.8  (or greater)
 
-Install Netbeans 8.1   (older version of Netbeans, but secure.  Not susceptable to security issues like the newer versions)
+Install Netbeans 8.1   (older version of Netbeans. Not susceptable to security issues like the newer versions)
   
   Dowload Netbeans Installer from https://netbeans.org/downloads/old/8.1/
     Excecute Netbeans installer.
