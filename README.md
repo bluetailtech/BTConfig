@@ -40,8 +40,7 @@ For Windows 7,10 systems with Java 1.8 or greater installed,
   
 For another OS (such as Linux),  you can use the .exe as well.  Start with 'java -jar BTConfig.exe'
 </PRE>
-  
-  
+    
 <BR><BR>BTConfig in Monitor Mode  
 <img src="https://raw.githubusercontent.com/bluetailtech/BTConfig/master/images/ss1.png">
 
