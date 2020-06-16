@@ -264,6 +264,15 @@ float initial_level=0.85f;
 
           Boolean isWindows = System.getProperty("os.name").startsWith("Windows");
 
+          //may reduce java audio glitches
+            if(parent.audio_insert_zero.isSelected()) {
+              if(!sourceDataLine.isRunning()) {
+                byte[] zero = new byte[24000];
+                sourceDataLine.write(zero, 0, zero.length);
+                sourceDataLine.start();
+              }
+            }
+
           if(isWindows) {
             //if(!sourceDataLine.isRunning()) sourceDataLine.start();
             if( parent.audio_buffer_system.isSelected() ) {
@@ -274,6 +283,8 @@ float initial_level=0.85f;
             }
           }
           else {
+
+
             if( parent.audio_buffer_system.isSelected() ) {
               if(!sourceDataLine.isRunning() && start_playing++>100) sourceDataLine.start();
             }
@@ -281,13 +292,6 @@ float initial_level=0.85f;
               if(!sourceDataLine.isRunning()) sourceDataLine.start();
             }
 
-            /*
-            if(!sourceDataLine.isRunning()) {
-              byte[] zero = new byte[48000];
-              sourceDataLine.write(zero, 0, zero.length);
-              sourceDataLine.start();
-            }
-            */
           }
 
           byte[] outbytes = new byte[ buffer_out_agc.length * 2 *2]; 
