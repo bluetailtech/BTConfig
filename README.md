@@ -13,9 +13,10 @@ https://github.com/bluetailtech/BTConfig/blob/master/Documentation/p25rx_user_ma
 Get Latest BTConfig source :
 git clone https://github.com/bluetailtech/BTConfig.git
 
-Install Oracle Java 1.8  (or greater)
+1) Install Oracle Java 1.8  (or greater)
 
-Install Netbeans 8.1   (older version of Netbeans. Not susceptable to security issues like the newer versions)
+2) Install Netbeans 8.1   
+(older version of Netbeans. Not susceptable to the same security issues that some newer versions are )
   
   Dowload Netbeans Installer from https://netbeans.org/downloads/old/8.1/
     Excecute Netbeans installer.
@@ -25,12 +26,14 @@ Install Netbeans 8.1   (older version of Netbeans. Not susceptable to security i
    Windows :
       netbeans-8.1-javase-windows.exe
 
-Start netbeans and open the project BTConfig/Source Packages/btconfig/BTFrame.java
+3) Start netbeans and open the project BTConfig/Source Packages/btconfig/BTFrame.java
 
-In the Netbeans editor :  select <Run> then "Run Project". This will build and execute the 
+4) In the Netbeans editor :  select <Run> then "Run Project". This will build and execute the 
 resulting BTConfig.jar. The file will be in BTConfig/dist
 
-Now BTConfig.exe can be built from inside the BTConfig directory with 'sh build.sh' or 'ant exe'
+5) Now BTConfig.exe can be built from inside the BTConfig directory with 'sh build.sh' or 'ant exe' 
+(note: you may be able to skip steps 2-4 for a build-only)
+
 </PRE>
 <BR><BR>
 Starting the software
