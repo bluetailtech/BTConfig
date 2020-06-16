@@ -455,6 +455,11 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           if(b) cmd = "en_unknown_tg 1\r\n";
                             else cmd = "en_unknown_tg 0\r\n"; 
 
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          Thread.sleep(10);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
                           b = parent.roaming.isSelected();
                           if(b) cmd = "roaming 1\r\n";
                             else cmd = "roaming 0\r\n"; 
