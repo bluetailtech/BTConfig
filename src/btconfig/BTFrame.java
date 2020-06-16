@@ -137,7 +137,12 @@ class updateTask extends java.util.TimerTask
           do_zipsearch=0;
           if(zs==null) zs = new zipsearch(parent);
           String[] args = new String[2];
-          args[0] = zipcode.getText().trim();
+          String zip_str = "";
+          try {
+            zip_str = new Integer(zipcode.getText().trim()).toString();
+          } catch(Exception e) {
+          }
+          args[0] = zip_str; 
           args[1] = search_radius.getText().trim();
           zs.search(args);
         }
@@ -186,6 +191,7 @@ class updateTask extends java.util.TimerTask
 
           enable_mp3.setSelected( prefs.getBoolean("enable_mp3", true) ); 
           enable_audio.setSelected( prefs.getBoolean("enable_audio", true) ); 
+          audio_insert_zero.setSelected( prefs.getBoolean("audio_insert_zero", true) ); 
           initial_audio_level.setValue( prefs.getInt("initial_audio_level", 75) );
           auto_flash_tg.setSelected( prefs.getBoolean("tg_auto_flash", true) );
           disable_encrypted.setSelected( prefs.getBoolean("enc_auto_flash", true) );
@@ -1781,6 +1787,7 @@ Boolean do_tdma_messages=false;
         initial_audio_level = new javax.swing.JSlider();
         initial_audio_level_lb = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        audio_insert_zero = new javax.swing.JCheckBox();
         jPanel13 = new javax.swing.JPanel();
         freqdb_panel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
@@ -2174,20 +2181,20 @@ Boolean do_tdma_messages=false;
                 enable_mp3ActionPerformed(evt);
             }
         });
-        jPanel11.add(enable_mp3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, -1, -1));
+        jPanel11.add(enable_mp3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, -1, -1));
 
         jLabel3.setText("PC Audio AGC Target Level (volume)");
-        jPanel11.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, -1, -1));
+        jPanel11.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 260, -1, -1));
 
         agc_gain.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 agc_gainStateChanged(evt);
             }
         });
-        jPanel11.add(agc_gain, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 200, -1, -1));
+        jPanel11.add(agc_gain, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 260, -1, -1));
 
         agc_level_lb.setText("Default: 50%");
-        jPanel11.add(agc_level_lb, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 200, -1, -1));
+        jPanel11.add(agc_level_lb, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 260, -1, -1));
 
         enable_audio.setSelected(true);
         enable_audio.setText("Enable PC Audio Output (PC Speakers)");
@@ -2196,16 +2203,16 @@ Boolean do_tdma_messages=false;
                 enable_audioActionPerformed(evt);
             }
         });
-        jPanel11.add(enable_audio, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 300, -1, -1));
+        jPanel11.add(enable_audio, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 360, -1, -1));
 
         jLabel8.setText("This option may give better audio performance on some systems");
         jPanel11.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, -1, 20));
 
         jLabel11.setText("If you hear clipping, try setting this lower. (default 75)");
-        jPanel11.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 250, -1, -1));
+        jPanel11.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 310, -1, -1));
 
         jLabel12.setText("Initial Master Volume Level");
-        jPanel11.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, -1, -1));
+        jPanel11.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 310, -1, -1));
 
         initial_audio_level.setValue(85);
         initial_audio_level.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -2213,13 +2220,22 @@ Boolean do_tdma_messages=false;
                 initial_audio_levelStateChanged(evt);
             }
         });
-        jPanel11.add(initial_audio_level, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 250, -1, -1));
+        jPanel11.add(initial_audio_level, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 310, -1, -1));
 
         initial_audio_level_lb.setText("Val 85");
-        jPanel11.add(initial_audio_level_lb, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 250, -1, -1));
+        jPanel11.add(initial_audio_level_lb, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 310, -1, -1));
 
         jLabel13.setText("If you hear clipping, try setting this lower. (default 85)");
-        jPanel11.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 200, -1, -1));
+        jPanel11.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 260, -1, -1));
+
+        audio_insert_zero.setSelected(true);
+        audio_insert_zero.setText("Insert Zeros At Start Of Buffer    (might prevent java audio glitches)");
+        audio_insert_zero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                audio_insert_zeroActionPerformed(evt);
+            }
+        });
+        jPanel11.add(audio_insert_zero, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, -1, -1));
 
         audiopanel.add(jPanel11, java.awt.BorderLayout.CENTER);
 
@@ -4363,6 +4379,10 @@ Boolean do_tdma_messages=false;
         // TODO add your handling code here:
     }//GEN-LAST:event_freq_tableKeyTyped
 
+    private void audio_insert_zeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_audio_insert_zeroActionPerformed
+      prefs.putBoolean("audio_insert_zero", audio_insert_zero.isSelected());
+    }//GEN-LAST:event_audio_insert_zeroActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -4491,6 +4511,7 @@ private void resizeColumns2() {
     public javax.swing.JButton append_cc;
     public javax.swing.JRadioButton audio_buffer_system;
     public javax.swing.JRadioButton audio_buffer_user;
+    public static javax.swing.JCheckBox audio_insert_zero;
     private javax.swing.JPanel audiopanel;
     public javax.swing.JCheckBox auto_flash_tg;
     public javax.swing.JButton backup_roam;
