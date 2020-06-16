@@ -4,9 +4,9 @@ Configuration Software for the Bluetail Technologies <a href="https://bluetailte
 
 <BR><BR>Latest Executable (testing)
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-15_2226.exe
-fixes "allow unknown talk groups" always enabled issue
-fixes "zip code search" issue with leading zero
-add new option to PC speaker audio "insert zero" to get rid of glitches in Java->PC Speaker audio
+<BR>fixes "allow unknown talk groups" always enabled issue
+<BR>fixes "zip code search" issue with leading zero
+<BR>add new option to PC speaker audio "insert zero" to get rid of glitches in Java->PC Speaker audio
   
 <BR><BR>Previous Executable (stable)
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-05-22_0746.exe
