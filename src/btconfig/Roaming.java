@@ -348,7 +348,7 @@ public void restore_roaming(BTFrame parent, BufferedInputStream bis, SerialPort 
                     int count=0;
                     while(serial_port.bytesAvailable()<48) {
                       Thread.sleep(1);
-                      if(count++>150) break;
+                      if(count++>500) break;
                     }
                   } catch(Exception e) {
                     e.printStackTrace();
@@ -522,7 +522,7 @@ public void erase_roaming(BTFrame parent, SerialPort serial_port)
                     int count=0;
                     while(serial_port.bytesAvailable()<48) {
                       Thread.sleep(1);
-                      if(count++>150) break;
+                      if(count++>500) break;
                     }
                   } catch(Exception e) {
                     e.printStackTrace();
@@ -877,7 +877,7 @@ public void send_roaming(BTFrame parent, SerialPort serial_port, int start_offse
                     int count=0;
                     while(serial_port.bytesAvailable()<48) {
                       Thread.sleep(1);
-                      if(count++>150) break;
+                      if(count++>500) break;
                     }
                   } catch(Exception e) {
                     e.printStackTrace();
@@ -1061,7 +1061,7 @@ public void backup_roaming(BTFrame parent, SerialPort serial_port) {
                     int count=0;
                     while(serial_port.bytesAvailable()<48) {
                       Thread.sleep(1);
-                      if(count++>50) break;
+                      if(count++>500) break;
                     }
                   } catch(Exception e) {
                     e.printStackTrace();
@@ -1294,7 +1294,7 @@ public void read_roaming(BTFrame parent, SerialPort serial_port)
                     int count=0;
                     while(serial_port.bytesAvailable()<48) {
                       Thread.sleep(1);
-                      if(count++>50) break;
+                      if(count++>500) break;
                     }
                   } catch(Exception e) {
                     e.printStackTrace();
