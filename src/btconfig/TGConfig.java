@@ -258,7 +258,7 @@ public void restore_talkgroups(BTFrame parent, BufferedInputStream bis, SerialPo
                     int count=0;
                     while(serial_port.bytesAvailable()<48) {
                       Thread.sleep(1);
-                      if(count++>150) break;
+                      if(count++>500) break;
                     }
                   } catch(Exception e) {
                     e.printStackTrace();
@@ -514,7 +514,7 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
                     int count=0;
                     while(serial_port.bytesAvailable()<48) {
                       Thread.sleep(1);
-                      if(count++>150) break;
+                      if(count++>500) break;
                     }
                   } catch(Exception e) {
                     e.printStackTrace();
@@ -679,7 +679,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                     int count=0;
                     while(serial_port.bytesAvailable()<48) {
                       Thread.sleep(1);
-                      if(count++>50) break;
+                      if(count++>500) break;
                     }
                   } catch(Exception e) {
                     e.printStackTrace();
@@ -759,7 +759,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                     int count=0;
                     while(serial_port.bytesAvailable()<48) {
                       Thread.sleep(1);
-                      if(count++>50) break;
+                      if(count++>500) break;
                     }
                   } catch(Exception e) {
                     e.printStackTrace();
