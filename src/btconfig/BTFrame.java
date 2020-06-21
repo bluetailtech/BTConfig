@@ -800,7 +800,7 @@ class updateTask extends java.util.TimerTask
       long time = new java.util.Date().getTime();
       Boolean isWindows = System.getProperty("os.name").startsWith("Windows");
       int stop_time=50;
-      if(isWindows) stop_time=50;
+      if(isWindows || is_mac_osx==1) stop_time=50;
         else stop_time=500; 
       if(time-start_time>stop_time) {
         if(aud!=null) aud.playStop();
@@ -891,6 +891,7 @@ int do_append_roaming=0;
 int do_console_output=0;
 int do_write_roaming_flash_only=0;
 int did_read_talkgroups=0;
+int is_mac_osx=0;
 Hashtable lat_lon_hash1;
 Hashtable lat_lon_hash2;
 Hashtable no_loc_freqs;
@@ -911,6 +912,10 @@ Boolean do_tdma_messages=false;
           if(args[i].equals("-tdma")) {
             do_tdma_messages=true;
             System.out.println("enable tdma / phase 2 messages");
+          }
+          if(args[i].equals("-mac")) {
+            is_mac_osx=1;
+            System.out.println("\r\nenabling MAC_OSX option");
           }
         }
       }
@@ -1184,7 +1189,7 @@ Boolean do_tdma_messages=false;
         if( ports[i].isOpen() ) {
           Boolean isWindows = System.getProperty("os.name").startsWith("Windows");
           //setStatus("Device is currently open by another application.  Please close the application.");
-          if(isWindows) {
+          if(isWindows || is_mac_osx==1) {
             ports[i].closePort();
             return null;
           }
@@ -4139,7 +4144,7 @@ Boolean do_tdma_messages=false;
 
     private void minimizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimizeActionPerformed
       if(minimize.isSelected()) {
-        if(isWindows) {
+        if(isWindows || is_mac_osx==1) {
           setSize(1020,200);
         }
         else  {

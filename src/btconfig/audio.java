@@ -273,7 +273,7 @@ float initial_level=0.85f;
               }
             }
 
-          if(isWindows) {
+          if(isWindows || parent.is_mac_osx==1) {
             //if(!sourceDataLine.isRunning()) sourceDataLine.start();
             if( parent.audio_buffer_system.isSelected() ) {
               if(!sourceDataLine.isRunning() ) sourceDataLine.start();

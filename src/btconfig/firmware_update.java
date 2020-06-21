@@ -407,7 +407,7 @@ SerialPort serial_port;
               parent.setStatus("\r\nresetting device");
 
               Boolean isWindows = System.getProperty("os.name").startsWith("Windows");
-              if(isWindows) {
+              if(isWindows || parent.is_mac_osx==1) {
                 send_cmd("system_reset\r\n", 10);
               }
               else {
