@@ -253,7 +253,7 @@ float initial_level=0.85f;
 
           int nsamp = resamp.resample(buffer_in, buffer_out, 0, 1);
 
-          int[] buffer_out_agc = agc.update_gain_s16(buffer_out, buffer_out.length, 200.0f + (31500.0f*agc_gain*0.9f) , 29.42f, 0.1f);
+          int[] buffer_out_agc = agc.update_gain_s16(buffer_out, buffer_out.length, 200.0f + (31500.0f*agc_gain*0.9f) , 29.42f, 0.05f);
 
           //for(int i=0;i<buffer_out.length;i++) {
            // System.out.println("i="+i+"  "+buffer_out[i]);
