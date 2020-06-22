@@ -2,12 +2,14 @@
 # BTConfig
 Configuration Software for the Bluetail Technologies <a href="https://bluetailtechnologies.com/products/p25rx-digital-police-receiver"> P25RX Digital Police Receiver </a> 
 
-<BR><BR>Latest Executable (testing)
-https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-20_2111.exe
+<BR><BR>Latest Executable (testing / experimental)
+https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-21_1822.exe
 <BR>Change Audio AGC rate in in radio and BTConfig software  (firmware update)
 <BR>Allow voice audio with more bit errors  (firmware update)
 <BR>Slower RF AGC updates (more integration)
-previous fixes
+
+<BR><BR>Previous Release (stable)  
+https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-15_2226.exe  
 <BR>fixes "allow unknown talk groups" always enabled issue
 <BR>fixes "zip code search" issue with leading zero
 <BR>add new option to PC speaker audio "insert zero" to get rid of glitches in Java->PC Speaker audio
