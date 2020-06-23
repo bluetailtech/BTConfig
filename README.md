@@ -4,9 +4,9 @@ Configuration Software for the Bluetail Technologies <a href="https://bluetailte
 
 <BR><BR>Latest Executable (testing / experimental)
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-21_1822.exe
-<BR>Change Audio AGC rate in in radio and BTConfig software  (firmware update)
-<BR>Allow voice audio with more bit errors  (firmware update)
-<BR>Slower RF AGC updates (more integration)
+<BR>Change Audio AGC rate in in radio and BTConfig software. reduce some audio glitches  (firmware update)
+<BR>Allow voiced audio with more bit errors  (firmware update)
+<BR>Increase RF AGC hysteresis
 
 <BR><BR>Previous Release (stable)  
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-15_2226.exe  
