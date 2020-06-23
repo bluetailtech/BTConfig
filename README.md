@@ -1,8 +1,13 @@
 
 # BTConfig
 Configuration Software for the Bluetail Technologies <a href="https://bluetailtechnologies.com/products/p25rx-digital-police-receiver"> P25RX Digital Police Receiver </a> 
+<BR><BR>Latest Experimental (experimental / possibly unstable)
+https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-23_0943.exe
+<BR>Improvements to RF AGC / sensitivity (firmware update)
+<BR>Automatic detection of Mac OS X
+<BR>This update will force 'factory' reset of configuration.  (will not change frequency, roaming flash, talk group flash).
 
-<BR><BR>Latest Executable (testing / experimental)
+<BR><BR>Latest Executable (testing)
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-21_1822.exe
 <BR>Change Audio AGC rate in in radio and BTConfig software. reduce some audio glitches  (firmware update)
 <BR>Allow voiced audio with more bit errors  (firmware update)
