@@ -7,13 +7,13 @@ https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-
 <BR>Automatic detection of Mac OS X
 <BR>This update will force 'factory' reset of configuration.  (will not change frequency, roaming flash, talk group flash).
 
-<BR><BR>Latest Executable (testing)
+<BR>Latest Executable (testing)
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-21_1822.exe
 <BR>Change Audio AGC rate in in radio and BTConfig software. reduce some audio glitches  (firmware update)
 <BR>Allow voiced audio with more bit errors  (firmware update)
 <BR>Increase RF AGC hysteresis
 
-<BR><BR>Previous Release (stable)  
+<BR>Previous Release (stable)  
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-15_2226.exe  
 <BR>fixes "allow unknown talk groups" always enabled issue
 <BR>fixes "zip code search" issue with leading zero
