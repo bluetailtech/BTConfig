@@ -942,6 +942,12 @@ Boolean do_tdma_messages=false;
 
       isWindows = System.getProperty("os.name").startsWith("Windows");
 
+      //Mac OSX
+      if( System.getProperty("os.name").toLowerCase().contains("mac os x") ) {
+          is_mac_osx=1;
+          System.out.println("\r\nenabling MAC_OSX option");
+      }
+
       read_config.setVisible(false);  //read config button
 
       check_firmware.setEnabled(false);
@@ -969,8 +975,8 @@ Boolean do_tdma_messages=false;
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
-      fw_ver.setText("Latest Avail: FW Date: 202006221323");
-      release_date.setText("Release: 2020-06-22 13:23");
+      fw_ver.setText("Latest Avail: FW Date: 202006230943");
+      release_date.setText("Release: 2020-06-23 09:43");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
