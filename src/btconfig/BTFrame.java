@@ -976,8 +976,8 @@ Boolean do_tdma_messages=false;
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
-      fw_ver.setText("Latest Avail: FW Date: 202006242052");
-      release_date.setText("Release: 2020-06-24 20:52");
+      fw_ver.setText("Latest Avail: FW Date: 202006250308");
+      release_date.setText("Release: 2020-06-25 03:08");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1762,12 +1762,12 @@ Boolean do_tdma_messages=false;
         write_config = new javax.swing.JButton();
         fw_ver = new javax.swing.JLabel();
         fw_installed = new javax.swing.JLabel();
+        read_config = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         lineout_vol_slider = new javax.swing.JSlider();
         jLabel6 = new javax.swing.JLabel();
         en_bluetooth_cb = new javax.swing.JCheckBox();
         bt_volume_slider = new javax.swing.JSlider();
-        read_config = new javax.swing.JButton();
         allow_unknown_tg_cb = new javax.swing.JCheckBox();
         volume_label = new javax.swing.JLabel();
         btgain_label = new javax.swing.JLabel();
@@ -1786,6 +1786,8 @@ Boolean do_tdma_messages=false;
         jLabel24 = new javax.swing.JLabel();
         roaming = new javax.swing.JCheckBox();
         jLabel22 = new javax.swing.JLabel();
+        vrep_combo = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
         audiopanel = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         audio_buffer_system = new javax.swing.JRadioButton();
@@ -2049,6 +2051,14 @@ Boolean do_tdma_messages=false;
         fw_installed.setText("FW currently installed:");
         jPanel12.add(fw_installed);
 
+        read_config.setText("Read Config From P25RX");
+        read_config.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                read_configActionPerformed(evt);
+            }
+        });
+        jPanel12.add(read_config);
+
         jPanel1.add(jPanel12);
 
         p25rxconfigpanel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 444, 1110, 70));
@@ -2089,14 +2099,6 @@ Boolean do_tdma_messages=false;
             }
         });
         p25rxconfigpanel.add(bt_volume_slider, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, -1, -1));
-
-        read_config.setText("Read Config From P25RX");
-        read_config.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                read_configActionPerformed(evt);
-            }
-        });
-        p25rxconfigpanel.add(read_config, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 400, -1, -1));
 
         allow_unknown_tg_cb.setSelected(true);
         allow_unknown_tg_cb.setText("Allow Unknown Talkgroups");
@@ -2161,6 +2163,13 @@ Boolean do_tdma_messages=false;
 
         jLabel22.setText("Control Channel Frequency");
         p25rxconfigpanel.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
+
+        vrep_combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OFF (SILENCE)", "1", "2", "3", "4", "ANALOG NOISE" }));
+        vrep_combo.setSelectedIndex(2);
+        p25rxconfigpanel.add(vrep_combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 400, -1, 30));
+
+        jLabel4.setText("Max Voice Subframe Repeat On Bit Errors");
+        p25rxconfigpanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, -1, -1));
 
         jTabbedPane1.addTab("P25RX Configuration", p25rxconfigpanel);
 
@@ -4604,6 +4613,7 @@ private void resizeColumns2() {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -4674,6 +4684,7 @@ private void resizeColumns2() {
     private javax.swing.JLabel tg_lb;
     public javax.swing.JButton use_freq_primary;
     public javax.swing.JLabel volume_label;
+    public javax.swing.JComboBox<String> vrep_combo;
     private javax.swing.JLabel wacn;
     public javax.swing.JButton write_cc;
     private javax.swing.JButton write_config;

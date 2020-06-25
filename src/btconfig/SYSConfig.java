@@ -264,6 +264,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                       System.out.println( String.format("\r\nallow unknown tg: %d",bb3.getInt(130)) );
                       System.out.println( String.format("\r\nenable_roaming %d",bb3.getInt(68)) );
                       System.out.println( String.format("\r\nno_voice_roam_sec",bb3.getInt(280)) );
+                      System.out.println( String.format("\r\nvrep",bb3.getInt(288)) );
 
                       System.out.println( String.format("\r\nconfig verson: %d",bb3.getInt(544)) );
                       System.out.println( String.format("\r\nconfig crc: 0x%08x",config_crc) );
@@ -318,6 +319,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           parent.en_bluetooth_cb.setSelected(b); 
 
 
+
                           vol = bb3.getFloat(176);
                           vol *= 100.0f;
                           parent.bt_volume_slider.setValue( (int) vol );
@@ -327,6 +329,8 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           if(bt_reset>0 && bt_reset<5) bt_reset=10;
                           parent.bluetooth_reset.setText( String.format("%d", bt_reset) );
 
+
+                          parent.vrep_combo.setSelectedIndex( bb3.getInt(288) );
 
                           if(bb3.getInt(130)==1) b=true;
                               else b=false;
@@ -445,6 +449,13 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           if(b) cmd = "bluetooth 1\r\n";
                             else cmd = "bluetooth 0\r\n"; 
 
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          Thread.sleep(10);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
+                          int vrep = parent.vrep_combo.getSelectedIndex();
+                          cmd = "vrep "+vrep+"\r\n";  
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(10);
                           rlen=serial_port.readBytes( result, 64);
