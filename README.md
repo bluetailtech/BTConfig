@@ -2,10 +2,13 @@
 # BTConfig
 Configuration Software for the Bluetail Technologies <a href="https://bluetailtechnologies.com/products/p25rx-digital-police-receiver"> P25RX Digital Police Receiver </a> 
 <BR><BR>Latest Experimental (experimental / possibly unstable)
-https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-23_0943.exe
-<BR>Improvements to RF AGC / sensitivity (firmware update)
+https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-24_1842.exe
+<BR>Correction of rssi offset (was reading 4dB high).
+<BR>Better performance at low signal levels
+<BR>Repeat last good voice subframe up to 3x on corrupt frame detection.  Don't waste time error correcting subframes with too many errors (no more loss of sync due to this).
+<BR>Improvements to RF AGC 
 <BR>Automatic detection of Mac OS X
-<BR>This update will force 'factory' reset of configuration.  (will not change frequency, roaming flash, talk group flash).
+<BR>If you changed low level values with the console in previous versions,  then do a 'factory' command to reset to defaults.
 
 <BR>Latest Executable (testing)
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-21_1822.exe
