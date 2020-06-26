@@ -2,7 +2,7 @@
 # BTConfig
 Configuration Software for the Bluetail Technologies <a href="https://bluetailtechnologies.com/products/p25rx-digital-police-receiver"> P25RX Digital Police Receiver </a> 
 <BR><BR>Latest Experimental (experimental / possibly unstable)
-https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-26_0938.exe
+https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-26_1434.exe
 <BR>NOTE: if you are using these verions, please keep track of which releases work well for your area and which ones don't.  It should make it much easier to isolate issues. Thanks.
 <BR>0983 - may have been an issue with new AGC code.  attempt to fix.
 <BR>Correction of rssi offset (was reading 4dB high).
