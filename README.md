@@ -9,7 +9,7 @@ https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-
 <BR>Improvements to RF AGC
 <BR>Unlock AGC if on control channel and TSBK_PS is falls below 10/sec
 <BR>Automatic detection of Mac OS X
-<BR>If you changed low level values with the console in previous versions,  then do a 'factory' command to reset to defaults.
+<BR>This version will reset the configuration
 
 <BR>Latest Executable (testing)
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-21_1822.exe
