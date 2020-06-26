@@ -2,7 +2,7 @@
 # BTConfig
 Configuration Software for the Bluetail Technologies <a href="https://bluetailtechnologies.com/products/p25rx-digital-police-receiver"> P25RX Digital Police Receiver </a> 
 <BR><BR>Latest Experimental (experimental / possibly unstable)
-https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-25_0308.exe
+https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-26_0042.exe
 <BR>Correction of rssi offset (was reading 4dB high).
 <BR>Better performance at low signal levels
 <BR>Configurable options for corrupted voice sub-frame.  Replace with: Silence, repeat last good voice subframe up to 4 times, analog noise
