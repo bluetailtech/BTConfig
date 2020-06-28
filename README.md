@@ -2,22 +2,14 @@
 # BTConfig
 Configuration Software for the Bluetail Technologies <a href="https://bluetailtechnologies.com/products/p25rx-digital-police-receiver"> P25RX Digital Police Receiver </a> 
 <BR><BR>Latest Experimental (experimental / possibly unstable)
-https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-26_1615.exe
+https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-26_2337.exe
 <BR>NOTE: if you are using these verions, please keep track of which releases work well for your area and which ones don't.  It should make it much easier to isolate issues. Thanks.
-<BR>0983 - may have been an issue with new AGC code.  attempt to fix.
-<BR>Correction of rssi offset (was reading 4dB high).
-<BR>Better performance at low signal levels
-<BR>Configurable options for corrupted voice sub-frame.  Replace with: Silence, repeat last good voice subframe up to 4 times, analog noise
-<BR>Improvements to RF AGC
-<BR>Unlock AGC if on control channel and TSBK_PS is falls below 10/sec
-<BR>Automatic detection of Mac OS X
+<BR>New demodulator, IQ filters, channel BW, IQ offset correction.  Much better decodes than previous versions.
 <BR>This version will reset the configuration
 
 <BR>Latest Executable (testing)
-https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-21_1822.exe
-<BR>Change Audio AGC rate in in radio and BTConfig software. reduce some audio glitches  (firmware update)
-<BR>Allow voiced audio with more bit errors  (firmware update)
-<BR>Increase RF AGC hysteresis
+https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-26_1615.exe
+
 
 <BR>Previous Release (stable)  
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-15_2226.exe  
