@@ -2,8 +2,9 @@
 # BTConfig
 Configuration Software for the Bluetail Technologies <a href="https://bluetailtechnologies.com/products/p25rx-digital-police-receiver"> P25RX Digital Police Receiver </a> 
 <BR><BR>Latest Experimental (experimental / possibly unstable)
-https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-28_1920.exe
+https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-29_0426.exe
 <BR>NOTE: if you are using these verions, please keep track of which releases work well for your area and which ones don't.  It should make it much easier to isolate issues. Thanks.
+<BR>update to 06-29_0426  Keep frequency error tacking from wandering off when in P25 conventional mode (is_control=0).
 <BR>update to 19:20.  Audio related improvements  (highly recommend this release)
 <BR>update to 18:05.  Improved performance with new quadrature agc.
 <BR>New demodulator, IQ filters, channel BW, IQ offset correction.  Much better decodes than previous versions.
