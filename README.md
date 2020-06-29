@@ -4,7 +4,7 @@ Configuration Software for the Bluetail Technologies <a href="https://bluetailte
 <BR><BR>Latest Experimental (experimental / possibly unstable)
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-29_1125.exe
 <BR>NOTE: if you are using these verions, please keep track of which releases work well for your area and which ones don't.  It should make it much easier to isolate issues. Thanks.
-<BR>same as stable version with a change to the frequency error tracking.  Only update frequency correction if RSSI > -112
+<BR><BR>06-29_1125 - Same as stable version with a change to the frequency error tracking.  Only update frequency correction if RSSI > -112
     
 <BR>Recommended Release (stable)  
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-28_1920.exe  
