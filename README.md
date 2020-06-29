@@ -2,24 +2,18 @@
 # BTConfig
 Configuration Software for the Bluetail Technologies <a href="https://bluetailtechnologies.com/products/p25rx-digital-police-receiver"> P25RX Digital Police Receiver </a> 
 <BR><BR>Latest Experimental (experimental / possibly unstable)
-https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-29_0719.exe
+https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-29_0924.exe
 <BR>NOTE: if you are using these verions, please keep track of which releases work well for your area and which ones don't.  It should make it much easier to isolate issues. Thanks.
+<BR>update to 06-29_0924  rescale quad slicer levels. better decodes than 0719
 <BR>update to 06-29_0719   Frequency error correction only updates if RSSI > -112 dBm   (prevents getting off frequency when mobile and in low sig areas)
 <BR>update to 19:20.  Audio related improvements  (highly recommend this release)
 <BR>update to 18:05.  Improved performance with new quadrature agc.
 <BR>New demodulator, IQ filters, channel BW, IQ offset correction.  Much better decodes than previous versions.
 <BR>This version will reset the configuration
 
-<BR>Latest Executable (testing)
-https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-26_1615.exe
-
-
-<BR>Previous Release (stable)  
-https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-15_2226.exe  
-<BR>fixes "allow unknown talk groups" always enabled issue
-<BR>fixes "zip code search" issue with leading zero
-<BR>add new option to PC speaker audio "insert zero" to get rid of glitches in Java->PC Speaker audio
-  
+<BR>Recommended Release (stable)  
+https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-28_1920.exe  
+    
 <BR><BR>Previous Releases
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/
   
