@@ -976,8 +976,8 @@ Boolean do_tdma_messages=false;
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
-      fw_ver.setText("Latest Avail: FW Date: 202006271805");
-      release_date.setText("Release: 2020-06-27 18:05");
+      fw_ver.setText("Latest Avail: FW Date: 202006281920");
+      release_date.setText("Release: 2020-06-28 19:20");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
