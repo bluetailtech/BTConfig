@@ -238,17 +238,20 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                         parent.do_update_firmware2=1;
                         parent.do_read_talkgroups=0;
                         parent.do_read_config=0;
-                          int result2 = JOptionPane.showConfirmDialog(parent, "Would you like to erase talk group and roaming frequency flash?", "Erase Config Areas?", JOptionPane.YES_NO_OPTION);
-                          if(result2==JOptionPane.YES_OPTION) {
-                            String cmd = "clear_configs\r\n";
-                            serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          //int result2 = JOptionPane.showConfirmDialog(parent, "Would you like to erase talk group and roaming frequency flash?", "Erase Config Areas?", JOptionPane.YES_NO_OPTION);
+                          //if(result2==JOptionPane.YES_OPTION) {
+                           // String cmd = "clear_configs\r\n";
+                            //serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                            //Thread.sleep(3000);
+                          //}
                             Thread.sleep(3000);
-                          }
                         return;
                       }
 
 
                     if(crc == config_crc) {
+                        parent.do_read_talkgroups=1;
+                        parent.do_read_config=1;
 
                       parent.system_crc=crc;
 
@@ -331,6 +334,8 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
 
                           parent.vrep_combo.setSelectedIndex( bb3.getInt(288) );
+
+                          parent.rfmaxgain.setSelectedIndex( bb3.getInt(296)-4 );
 
                           if(bb3.getInt(130)==1) b=true;
                               else b=false;
@@ -489,6 +494,15 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
 
+
+
+                          //int maxgain = parent.rfmaxgain.getSelectedIndex()+4;
+                          //cmd = "rf_max_gain "+maxgain+"\r\n"; 
+                          //serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          //Thread.sleep(10);
+                          //rlen=serial_port.readBytes( result, 64);
+                          //System.out.println("result: "+new String(result) );
+
                           //do this one last
                           cmd = "is_control 1\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
@@ -496,6 +510,9 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(10);
+
+
+
 
 
                           cmd = "save\r\n";

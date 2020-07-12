@@ -92,13 +92,25 @@ float initial_level=0.85f;
 
         //try one channel
       if(af==null) {
-            af = new AudioFormat(
-              48000,
-              16,  // sample size in bits
-              2,  // channels
-              true,  // signed
-              false  // bigendian
-            );
+
+              if(parent.audio_slow_rate.isSelected()) {
+                  af = new AudioFormat(
+                    47040,
+                    16,  // sample size in bits
+                    2,  // channels
+                    true,  // signed
+                    false  // bigendian
+                  );
+              }
+              else {
+                  af = new AudioFormat(
+                    48000,
+                    16,  // sample size in bits
+                    2,  // channels
+                    true,  // signed
+                    false  // bigendian
+                  );
+              }
 
             try {
               DataLine.Info dataLineInfo = new DataLine.Info( SourceDataLine.class, af);
@@ -253,7 +265,8 @@ float initial_level=0.85f;
 
           int nsamp = resamp.resample(buffer_in, buffer_out, 0, 1);
 
-          int[] buffer_out_agc = agc.update_gain_s16(buffer_out, buffer_out.length, 200.0f + (31500.0f*agc_gain*0.9f) , 29.42f, 0.05f);
+          //int[] buffer_out_agc = agc.update_gain_s16(buffer_out, buffer_out.length, 200.0f + (31500.0f*agc_gain*1.2f) , 29.42f, 0.05f);
+          int[] buffer_out_agc = agc.update_gain_s16(buffer_out, buffer_out.length, 200.0f + (31500.0f*agc_gain) , 1351.0f, 1.0f);
 
           //for(int i=0;i<buffer_out.length;i++) {
            // System.out.println("i="+i+"  "+buffer_out[i]);

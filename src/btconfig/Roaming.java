@@ -929,6 +929,16 @@ public void send_roaming(BTFrame parent, SerialPort serial_port, int start_offse
             parent.setProgress(100);
             did_write_roaming=1;
             parent.do_read_roaming=1;
+
+          try {
+              for(int i=0;i<250;i++) {
+               parent.freq_table.getModel().setValueAt( null, i, 5); 
+              }
+          } catch(Exception e) {
+            e.printStackTrace();
+          }
+
+          try {
               for(int i=0;i<250;i++) {
                parent.freq_table.getModel().setValueAt( null, i, 0); 
                parent.freq_table.getModel().setValueAt( null, i, 1); 
@@ -942,6 +952,9 @@ public void send_roaming(BTFrame parent, SerialPort serial_port, int start_offse
                parent.freq_table.getModel().setValueAt( null, i, 9); 
                parent.freq_table.getModel().setValueAt( null, i, 10); 
               }
+          } catch(Exception e) {
+          }
+
             parent.freq_table.setRowSelectionInterval(0,0);
             set_freq_binary( parent.frequency_tf1.getText() );
             return;

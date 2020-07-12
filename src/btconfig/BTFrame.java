@@ -192,6 +192,7 @@ class updateTask extends java.util.TimerTask
           enable_mp3.setSelected( prefs.getBoolean("enable_mp3", true) ); 
           enable_audio.setSelected( prefs.getBoolean("enable_audio", true) ); 
           audio_insert_zero.setSelected( prefs.getBoolean("audio_insert_zero", true) ); 
+          audio_slow_rate.setSelected( prefs.getBoolean("audio_slow_rate", true) ); 
           initial_audio_level.setValue( prefs.getInt("initial_audio_level", 75) );
           auto_flash_tg.setSelected( prefs.getBoolean("tg_auto_flash", true) );
           disable_encrypted.setSelected( prefs.getBoolean("enc_auto_flash", true) );
@@ -517,6 +518,8 @@ class updateTask extends java.util.TimerTask
             if(serial_port==null) {
               setStatus("\r\ncan't find device");
               Thread.sleep(600);
+              //JOptionPane.showMessageDialog(parent, "Please re-start the BTConfig Software.  Pressing ok will exit the software.");
+              //System.exit(0);
             }
 
           /*
@@ -587,12 +590,36 @@ class updateTask extends java.util.TimerTask
               int len = serial_port.readBytes(b, avail);
 
               for(int i=0;i<len;i++) {
-                if(skip_bytes>0) {
-                  pcm_bytes[pcm_idx++] = b[i];
+
+                if(skip_bytes>0 && rx_state==5) {
+                  if(const_idx<320) constellation_bytes[const_idx++] = b[i];
+
+                   skip_bytes--;
+                    //System.out.println("constellation "+skip_bytes);
+                  //constellation data
+                  if(skip_bytes==0) {
+                    rx_state=0;
+                    const_idx=0;
+                    //System.out.println("read constellation");
+
+                    //int j=0;
+                    //for(int k=0;k<14;k++) {
+                     // System.out.println( String.format("%d,%d",constellation_bytes[j], constellation_bytes[j+1]) ); 
+                      //j+=2;
+                    //}
+                    //plot here
+                    cpanel.addData( constellation_bytes );
+                    if(do_mini_const) ConstPlotPanel.static_paint(tiny_const.getGraphics(),-15,15,26);
+                  }
+                }
+                else if(skip_bytes>0 && rx_state==4) {
+                  if(pcm_idx<320) pcm_bytes[pcm_idx++] = b[i];
 
                   skip_bytes--;
 
                   if( !enable_mp3.isSelected() && skip_bytes==0 ) {
+                    do_meta();
+                    //System.out.println("read voice");
                     try {
                       start_time = new java.util.Date().getTime();
                           tg_indicator.setBackground(java.awt.Color.yellow);
@@ -611,6 +638,7 @@ class updateTask extends java.util.TimerTask
                     pcm_idx=0;
                   }
                   else if(skip_bytes==0 && record_to_mp3.isSelected() && enable_mp3.isSelected()) {
+                    //System.out.println("read voice");
 
                     try {
                       start_time = new java.util.Date().getTime();
@@ -667,50 +695,7 @@ class updateTask extends java.util.TimerTask
                       }
 
 
-                      if(did_metadata==0 && l3.getText().trim().length()>0) {
-
-                        //META string
-                        String metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dBm,"+mp3_file.length()+", CC_FREQ "+freq_str+" MHz,";
-
-                        if(freq_str==null || freq_str.trim().length()==0) freq_str = frequency_tf1.getText();
-                        if(freq_str.length()==0) metadata=null;
-
-
-                        if(metadata!=null && metadata.length()>0 && !metadata.contains("CTRL ") ) {
-                          fos_meta.write(metadata.getBytes(),0,metadata.length());  //write Int num records
-                          fos_meta.flush();
-
-                          try {
-                            //add meta info to Log tab
-                            String text = log_ta.getText();
-
-                            StringTokenizer st = new StringTokenizer(metadata,",");
-                            String str1 = "";
-                            str1 = str1.concat(st.nextToken()+", ");
-                            str1 = str1.concat(st.nextToken()+", ");
-                            str1 = str1.concat(st.nextToken()+", ");
-                            str1 = str1.concat(st.nextToken()+", ");
-                            str1 = str1.concat(st.nextToken()+", ");
-                            st.nextToken(); //mp3 file len
-                            str1 = str1.concat(st.nextToken()+", ");
-
-                            log_ta.setText(text.concat( new String(str1.getBytes()) ));
-
-                            if( log_ta.getText().length() > 128000 ) {
-                              String new_text = text.substring(64000,text.length()-1);
-                              log_ta.setText(new_text);
-                            }
-
-                            log_ta.setCaretPosition(log_ta.getText().length());
-                            log_ta.getCaret().setVisible(true);
-                            log_ta.getCaret().setBlinkRate(250);
-
-                          } catch(Exception e) {
-                            //e.printStackTrace();
-                          }
-                        }
-                        did_metadata=1;
-                      }
+                      do_meta();
 
                       if(skip_header==1) {
                         skip_header=0;
@@ -721,29 +706,68 @@ class updateTask extends java.util.TimerTask
                       }
 
                     }
-
                     pcm_idx=0;
                     rx_state=0;
                   }
                 }
-                //b2 5f 9c 71
-                else if(rx_state==0 && b[i]==(byte) 0xb2) {
-                  rx_state=1;
+                else if(skip_bytes>0) {
+                  skip_bytes--;
                 }
-                else if(rx_state==1 && b[i]==(byte) 0x5f) {
-                  rx_state=2;
-                }
-                else if(rx_state==2 && b[i]==(byte) 0x9c) {
-                  rx_state=3;
-                }
-                else if(rx_state==3 && b[i]==(byte) 0x71) {
-                  rx_state=4;
-                  //addTextConsole("\r\nfound voice header");
-                  skip_bytes=320;
-                }
-                else if(rx_state==0 && skip_bytes==0 ) {
-                  str_b[str_idx++] = b[i];
 
+                if(skip_bytes==0) {
+
+                  //b2 5f 9c 71
+                  if(rx_state==0 && b[i]==(byte) 0xb2) {
+                    rx_state=1;
+                  }
+                  else if( (rx_state==1 && b[i]==(byte) 0x5f) || (rx_state==1 && b[i]==(byte) 0x5b)) {
+                    rx_state=2;
+                  }
+                  else if( (rx_state==2 && b[i]==(byte) 0x9c) || (rx_state==2 && b[i]==(byte) 0x12)) {
+                    rx_state=3;
+                  }
+                  else if( (rx_state==3 && b[i]==(byte) 0x71) || (rx_state==3 && b[i]==(byte) 0xe4)) {
+                    //addTextConsole("\r\nfound voice header");
+
+                    if(b[i]==(byte) 0x71) {
+                      skip_bytes=320+1;
+                      rx_state=4;
+                      //System.out.println("do voice");
+                    }
+                    if(b[i]==(byte) 0xe4) {
+                      skip_bytes=320+1;
+                      rx_state=5;
+                      //System.out.println("do const");
+                    }
+                  }
+                  else {
+                   // rx_state=0;
+
+                      if(rx_state==0 && skip_bytes==0 ) {
+
+                        /*
+                        if( (b[i]>=(byte) 'a' && b[i]<=(byte) 'z') ||
+                            (b[i]>=(byte) 'A' && b[i]<=(byte) 'Z') ||
+                            (b[i]>=(byte) '0' && b[i]<=(byte) '9') ||
+                            b[i]==(byte) 0x0d || 
+                            b[i]==(byte) 0x0a || 
+                            b[i]==(byte) ',' || 
+                            b[i]==(byte)' ' ||
+                            b[i]==(byte)'-' ||
+                            b[i]==(byte)'+' ||
+                            b[i]==(byte)'_' ||
+                            b[i]==(byte)'*' ||
+                            b[i]==(byte)':' ||
+                            b[i]==(byte)',' ||
+                            b[i]==(byte)'$' ||
+                            b[i]==(byte)'.' 
+                                                   ) { 
+                          str_b[str_idx++] = b[i];
+                        }
+                        */
+                        str_b[str_idx++] = b[i];
+                      }
+                  }
                 }
               }
 
@@ -800,7 +824,8 @@ class updateTask extends java.util.TimerTask
       long time = new java.util.Date().getTime();
       Boolean isWindows = System.getProperty("os.name").startsWith("Windows");
       int stop_time=50;
-      if(isWindows || is_mac_osx==1) stop_time=50;
+      //if(isWindows || is_mac_osx==1) stop_time=50;
+      if(isWindows ) stop_time=50;
         else stop_time=500; 
       if(time-start_time>stop_time) {
         if(aud!=null) aud.playStop();
@@ -849,7 +874,9 @@ int tick_mod;
 int rx_state=0;
 int skip_bytes=0;
 byte[] pcm_bytes;
+byte[] constellation_bytes;
 int pcm_idx=0;
+int const_idx=0;
 LameEncoder encoder=null;
 byte[] mp3_buffer;
 String current_date=null;
@@ -896,10 +923,21 @@ Hashtable lat_lon_hash1;
 Hashtable lat_lon_hash2;
 Hashtable no_loc_freqs;
 Boolean do_tdma_messages=false;
+ConstPlotPanel cpanel;
+Boolean do_mini_const=false;
 
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
       initComponents();
+
+
+      //jPanel25.remove(const_panel);
+      cpanel = new ConstPlotPanel();
+      const_panel.add(cpanel, java.awt.BorderLayout.CENTER);
+      //jPanel25.add(cpanel);
+      //
+
+      jPanel5.remove(jPanel8);
 
       if(zs==null) zs = new zipsearch(this);
 
@@ -916,6 +954,9 @@ Boolean do_tdma_messages=false;
           if(args[i].equals("-mac")) {
             is_mac_osx=1;
             System.out.println("\r\nenabling MAC_OSX option");
+          }
+          if(args[i].equals("-miniconst")) {
+            do_mini_const=true;
           }
         }
       }
@@ -936,6 +977,7 @@ Boolean do_tdma_messages=false;
       fw_installed.setVisible(false);
 
       pcm_bytes = new byte[320];
+      constellation_bytes = new byte[320];
 
       write_config.setEnabled(false);
       disconnect.setEnabled(false);
@@ -950,6 +992,9 @@ Boolean do_tdma_messages=false;
       }
 
       read_config.setVisible(false);  //read config button
+
+      jLabel32.setVisible(false);
+      rfmaxgain.setVisible(false);
 
       check_firmware.setEnabled(false);
       check_firmware.setVisible(false);
@@ -976,8 +1021,8 @@ Boolean do_tdma_messages=false;
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
-      fw_ver.setText("Latest Avail: FW Date: 202006291902");
-      release_date.setText("Release: 2020-06-29 19:02");
+      fw_ver.setText("Latest Avail: FW Date: 202007111849");
+      release_date.setText("Release: 2020-07-12 1240");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1736,9 +1781,12 @@ Boolean do_tdma_messages=false;
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
         buttonGroup3 = new javax.swing.ButtonGroup();
+        buttonGroup4 = new javax.swing.ButtonGroup();
         bottom_panel = new javax.swing.JPanel();
+        jPanel9 = new javax.swing.JPanel();
         status_panel = new javax.swing.JPanel();
         status = new javax.swing.JLabel();
+        tiny_const = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         progress_label = new javax.swing.JLabel();
         progbar = new javax.swing.JProgressBar();
@@ -1788,6 +1836,8 @@ Boolean do_tdma_messages=false;
         jLabel22 = new javax.swing.JLabel();
         vrep_combo = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        rfmaxgain = new javax.swing.JComboBox<>();
         audiopanel = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         audio_buffer_system = new javax.swing.JRadioButton();
@@ -1804,6 +1854,7 @@ Boolean do_tdma_messages=false;
         initial_audio_level_lb = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         audio_insert_zero = new javax.swing.JCheckBox();
+        audio_slow_rate = new javax.swing.JCheckBox();
         jPanel13 = new javax.swing.JPanel();
         freqdb_panel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
@@ -1863,6 +1914,9 @@ Boolean do_tdma_messages=false;
         consolePanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jPanel6 = new javax.swing.JPanel();
+        enable_voice_const = new javax.swing.JRadioButton();
+        enable_commands = new javax.swing.JRadioButton();
         logpanel = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         log_ta = new javax.swing.JTextArea();
@@ -1878,6 +1932,22 @@ Boolean do_tdma_messages=false;
         button_single_follow_tg = new javax.swing.JRadioButton();
         button_single_next_roaming = new javax.swing.JRadioButton();
         button_write_config = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        const_panel = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
+        jLabel29 = new javax.swing.JLabel();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jLabel30 = new javax.swing.JLabel();
+        jComboBox4 = new javax.swing.JComboBox<>();
+        jButton3 = new javax.swing.JButton();
+        jLabel31 = new javax.swing.JLabel();
+        jComboBox5 = new javax.swing.JComboBox<>();
         jPanel10 = new javax.swing.JPanel();
         logo_panel = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -1909,6 +1979,8 @@ Boolean do_tdma_messages=false;
 
         bottom_panel.setLayout(new javax.swing.BoxLayout(bottom_panel, javax.swing.BoxLayout.Y_AXIS));
 
+        jPanel9.setLayout(new java.awt.BorderLayout());
+
         status_panel.setBackground(new java.awt.Color(0, 0, 0));
         status_panel.setMinimumSize(new java.awt.Dimension(99, 33));
         status_panel.setPreferredSize(new java.awt.Dimension(1004, 33));
@@ -1920,7 +1992,14 @@ Boolean do_tdma_messages=false;
         status.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         status_panel.add(status);
 
-        bottom_panel.add(status_panel);
+        jPanel9.add(status_panel, java.awt.BorderLayout.CENTER);
+
+        tiny_const.setBackground(new java.awt.Color(0, 0, 0));
+        tiny_const.setPreferredSize(new java.awt.Dimension(33, 33));
+        tiny_const.setRequestFocusEnabled(false);
+        jPanel9.add(tiny_const, java.awt.BorderLayout.EAST);
+
+        bottom_panel.add(jPanel9);
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 0));
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
@@ -1992,7 +2071,7 @@ Boolean do_tdma_messages=false;
 
         bottom_panel.add(meter_panel);
 
-        getContentPane().add(bottom_panel, java.awt.BorderLayout.PAGE_END);
+        getContentPane().add(bottom_panel, java.awt.BorderLayout.SOUTH);
 
         jTabbedPane1.setPreferredSize(new java.awt.Dimension(1115, 659));
         jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -2151,7 +2230,6 @@ Boolean do_tdma_messages=false;
 
         p25rxconfigpanel.add(no_voice_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 360, 550, 40));
 
-        roaming.setSelected(true);
         roaming.setText("Enable Roaming On Loss Of Signal");
         roaming.setToolTipText("This option is intended for mobile operation.  Disable if you itend to listen to a single local control channel.");
         roaming.addActionListener(new java.awt.event.ActionListener() {
@@ -2170,6 +2248,12 @@ Boolean do_tdma_messages=false;
 
         jLabel4.setText("Max Voice Subframe Repeat On Bit Errors");
         p25rxconfigpanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, -1, -1));
+
+        jLabel32.setText("RF Max Gain");
+        p25rxconfigpanel.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 280, -1, -1));
+
+        rfmaxgain.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "47 dB (max sensitivity)", "44 dB", "41 dB", "38 dB", "35 dB", "32 dB (default)", "29 dB", "26 dB", "23 dB", "20 dB", "14 dB", "8 dB (max linearity)", " " }));
+        p25rxconfigpanel.add(rfmaxgain, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 270, -1, 30));
 
         jTabbedPane1.addTab("P25RX Configuration", p25rxconfigpanel);
 
@@ -2259,6 +2343,15 @@ Boolean do_tdma_messages=false;
             }
         });
         jPanel11.add(audio_insert_zero, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, -1, -1));
+
+        audio_slow_rate.setSelected(true);
+        audio_slow_rate.setText("Use 2% slowed playback rate  (may solve audio glitches due to buffer underrun)");
+        audio_slow_rate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                audio_slow_rateActionPerformed(evt);
+            }
+        });
+        jPanel11.add(audio_slow_rate, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, -1, -1));
 
         audiopanel.add(jPanel11, java.awt.BorderLayout.CENTER);
 
@@ -3887,6 +3980,27 @@ Boolean do_tdma_messages=false;
 
         consolePanel.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
+        buttonGroup4.add(enable_voice_const);
+        enable_voice_const.setSelected(true);
+        enable_voice_const.setText("Enable Logging");
+        enable_voice_const.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enable_voice_constActionPerformed(evt);
+            }
+        });
+        jPanel6.add(enable_voice_const);
+
+        buttonGroup4.add(enable_commands);
+        enable_commands.setText("Enter Commands");
+        enable_commands.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enable_commandsActionPerformed(evt);
+            }
+        });
+        jPanel6.add(enable_commands);
+
+        consolePanel.add(jPanel6, java.awt.BorderLayout.PAGE_END);
+
         jTabbedPane1.addTab("Console", consolePanel);
 
         logpanel.setPreferredSize(new java.awt.Dimension(963, 500));
@@ -3983,6 +4097,71 @@ Boolean do_tdma_messages=false;
         buttong_config.add(jPanel21, java.awt.BorderLayout.CENTER);
 
         jTabbedPane1.addTab("Button CFG", buttong_config);
+
+        jPanel5.setLayout(new javax.swing.BoxLayout(jPanel5, javax.swing.BoxLayout.X_AXIS));
+
+        const_panel.setBackground(new java.awt.Color(0, 0, 0));
+        const_panel.setMaximumSize(new java.awt.Dimension(1512, 1512));
+        const_panel.setMinimumSize(new java.awt.Dimension(512, 512));
+        const_panel.setPreferredSize(new java.awt.Dimension(512, 512));
+        const_panel.setLayout(new java.awt.BorderLayout());
+        jPanel5.add(const_panel);
+
+        jPanel8.setMaximumSize(new java.awt.Dimension(1512, 2147483647));
+        jPanel8.setPreferredSize(new java.awt.Dimension(512, 1065));
+        jPanel8.setLayout(new java.awt.BorderLayout());
+
+        jPanel7.setEnabled(false);
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setEnabled(false);
+        jPanel7.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, -1, -1));
+
+        jLabel27.setText("Max RF Gain");
+        jPanel7.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 95, -1, 20));
+
+        jLabel28.setText("AGC Hysteresis");
+        jPanel7.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, -1, -1));
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setEnabled(false);
+        jPanel7.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, -1, -1));
+
+        jButton2.setText("Test Changes");
+        jButton2.setEnabled(false);
+        jPanel7.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 440, -1, -1));
+
+        jLabel29.setText("SOFT AGC BW");
+        jPanel7.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, -1, -1));
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox3.setEnabled(false);
+        jPanel7.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, -1, -1));
+
+        jLabel30.setText("HW AGC REF");
+        jPanel7.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, -1, -1));
+
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox4.setEnabled(false);
+        jPanel7.add(jComboBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, -1, -1));
+
+        jButton3.setText("Reset To Defaults");
+        jButton3.setEnabled(false);
+        jPanel7.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 440, -1, -1));
+
+        jLabel31.setText("DVGA GAIN");
+        jPanel7.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, -1, -1));
+
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox5.setEnabled(false);
+        jPanel7.add(jComboBox5, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, -1, -1));
+
+        jPanel8.add(jPanel7, java.awt.BorderLayout.CENTER);
+
+        jPanel5.add(jPanel8);
+
+        jTabbedPane1.addTab("Constellation View", jPanel5);
 
         getContentPane().add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
@@ -4093,7 +4272,10 @@ Boolean do_tdma_messages=false;
     // TODO add your handling code here:
       char c = evt.getKeyChar();
 
-      if(skip_bytes==0 && do_update_firmware==0) {
+      //System.out.println("got key");
+
+      //if(skip_bytes==0 && do_update_firmware==0) {
+      if(do_update_firmware==0) {
         if(c=='\n') {
           String str = String.copyValueOf(keydata,0,keyindex);
           str = str.trim()+"\r\n";
@@ -4339,6 +4521,13 @@ Boolean do_tdma_messages=false;
     }//GEN-LAST:event_append_ccActionPerformed
 
     private void use_freq_primaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_use_freq_primaryActionPerformed
+          try {
+              for(int i=0;i<250;i++) {
+               freq_table.getModel().setValueAt( null, i, 5); 
+              }
+          } catch(Exception e) {
+            e.printStackTrace();
+          }
       if(is_connected==0) do_connect();
       do_roam_freq=1;
     }//GEN-LAST:event_use_freq_primaryActionPerformed
@@ -4406,6 +4595,27 @@ Boolean do_tdma_messages=false;
       prefs.putBoolean("audio_insert_zero", audio_insert_zero.isSelected());
     }//GEN-LAST:event_audio_insert_zeroActionPerformed
 
+    private void enable_voice_constActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enable_voice_constActionPerformed
+      //String cmd= new String("en_voice_send 1\r\n");
+      //serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+      String cmd= new String("logging 0\r\n");
+      serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+      if(jTabbedPane1.getSelectedIndex()==4) jTextArea1.requestFocus();
+    }//GEN-LAST:event_enable_voice_constActionPerformed
+
+    private void enable_commandsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enable_commandsActionPerformed
+      //String cmd= new String("en_voice_send 0\r\n");
+      //serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+      String cmd= new String("logging -999\r\n");
+      serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+      if(jTabbedPane1.getSelectedIndex()==4) jTextArea1.requestFocus();
+    }//GEN-LAST:event_enable_commandsActionPerformed
+
+    private void audio_slow_rateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_audio_slow_rateActionPerformed
+      prefs.putBoolean("audio_slow_rate", audio_slow_rate.isSelected());
+      JOptionPane.showMessageDialog(parent, "Change will take place on next software start-up.");
+    }//GEN-LAST:event_audio_slow_rateActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -4418,6 +4628,67 @@ Boolean do_tdma_messages=false;
       roaming.setEnabled(true);
     }
 
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+public void do_meta() {
+
+  if(did_metadata==0 && l3.getText().trim().length()>0) {
+
+    //meta String
+    String metadata =""; 
+    if(enable_mp3.isSelected()) {
+      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+mp3_file.length()+", cc_freq "+freq_str+" mhz,";
+    }
+    else {
+      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+"0"+", cc_freq "+freq_str+" mhz,";
+    }
+
+    if(freq_str==null || freq_str.trim().length()==0) freq_str = frequency_tf1.getText();
+    if(freq_str.length()==0) metadata=null;
+
+
+    if(metadata!=null && metadata.length()>0 && !metadata.contains("ctrl ") ) {
+      if(enable_mp3.isSelected()) {
+        try {
+          fos_meta.write(metadata.getBytes(),0,metadata.length());  //write int num records
+          fos_meta.flush();
+        } catch(Exception e) {
+          e.printStackTrace();
+        }
+      }
+
+      try {
+        //add meta info to log tab
+        String text = log_ta.getText();
+
+        StringTokenizer st = new StringTokenizer(metadata,",");
+        String str1 = "";
+        str1 = str1.concat(st.nextToken()+", ");
+        str1 = str1.concat(st.nextToken()+", ");
+        str1 = str1.concat(st.nextToken()+", ");
+        str1 = str1.concat(st.nextToken()+", ");
+        str1 = str1.concat(st.nextToken()+", ");
+        st.nextToken(); //mp3 file len
+        str1 = str1.concat(st.nextToken()+", ");
+
+        log_ta.setText(text.concat( new String(str1.getBytes()) ));
+
+        if( log_ta.getText().length() > 128000 ) {
+          String new_text = text.substring(64000,text.length()-1);
+          log_ta.setText(new_text);
+        }
+
+        log_ta.setCaretPosition(log_ta.getText().length());
+        log_ta.getCaret().setVisible(true);
+        log_ta.getCaret().setBlinkRate(250);
+
+      } catch(Exception e) {
+        //e.printstacktrace();
+      }
+    }
+    did_metadata=1;
+  }
+}
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -4535,6 +4806,7 @@ private void resizeColumns2() {
     public javax.swing.JRadioButton audio_buffer_system;
     public javax.swing.JRadioButton audio_buffer_user;
     public static javax.swing.JCheckBox audio_insert_zero;
+    public javax.swing.JCheckBox audio_slow_rate;
     private javax.swing.JPanel audiopanel;
     public javax.swing.JCheckBox auto_flash_tg;
     public javax.swing.JButton backup_roam;
@@ -4550,6 +4822,7 @@ private void resizeColumns2() {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
+    private javax.swing.ButtonGroup buttonGroup4;
     public javax.swing.JRadioButton button_single_follow_tg;
     public javax.swing.JRadioButton button_single_next_roaming;
     private javax.swing.JButton button_write_config;
@@ -4557,6 +4830,7 @@ private void resizeColumns2() {
     private javax.swing.JButton check_firmware;
     private javax.swing.JTextField city;
     private javax.swing.JPanel consolePanel;
+    private javax.swing.JPanel const_panel;
     private javax.swing.JPanel desc_panel;
     public javax.swing.JCheckBox disable_encrypted;
     private javax.swing.JButton disable_table_rows;
@@ -4564,9 +4838,11 @@ private void resizeColumns2() {
     private javax.swing.JButton discover;
     public javax.swing.JCheckBox en_bluetooth_cb;
     public javax.swing.JCheckBox enable_audio;
+    private javax.swing.JRadioButton enable_commands;
     public javax.swing.JCheckBox enable_leds;
     public javax.swing.JCheckBox enable_mp3;
     private javax.swing.JButton enable_table_rows;
+    private javax.swing.JRadioButton enable_voice_const;
     public javax.swing.JButton erase_roaming;
     public javax.swing.JLabel freq;
     private javax.swing.JButton freq_search;
@@ -4590,9 +4866,16 @@ private void resizeColumns2() {
     public javax.swing.JSlider initial_audio_level;
     private javax.swing.JLabel initial_audio_level_lb;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JCheckBox jCheckBox5;
     private javax.swing.JCheckBox jCheckBox6;
     private javax.swing.JCheckBox jCheckBox7;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -4612,7 +4895,13 @@ private void resizeColumns2() {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -4637,6 +4926,11 @@ private void resizeColumns2() {
     private javax.swing.JPanel jPanel23;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane7;
@@ -4668,6 +4962,7 @@ private void resizeColumns2() {
     public javax.swing.JButton restore_roam;
     private javax.swing.JButton restore_tg;
     public javax.swing.JLabel rfid;
+    public javax.swing.JComboBox<String> rfmaxgain;
     public javax.swing.JCheckBox roaming;
     private javax.swing.JTextField search_radius;
     private javax.swing.JButton send_tg;
@@ -4682,6 +4977,7 @@ private void resizeColumns2() {
     public javax.swing.JButton testfreqs;
     private javax.swing.JToggleButton tg_indicator;
     private javax.swing.JLabel tg_lb;
+    private javax.swing.JPanel tiny_const;
     public javax.swing.JButton use_freq_primary;
     public javax.swing.JLabel volume_label;
     public javax.swing.JComboBox<String> vrep_combo;

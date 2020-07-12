@@ -79,15 +79,15 @@ public class audio_agc {
     if (aud_agc_max > 0.0f) {
       gainfactor = (target / aud_agc_max);
     } else {
-      gainfactor = 40.0f+0.1f; 
+      gainfactor = 30.0f+0.1f; 
     }
     if (gainfactor < aout_gain) {
       aout_gain = gainfactor;
       gaindelta = 0.0f;
     } else {
-      if (gainfactor > 40.0f) {
+      if (gainfactor > 30.0f) {
           //gainfactor = (float) java.lang.Math.log10(gainfactor+1.0f)*29.42f;
-          gainfactor = 40.0f; 
+          gainfactor = 30.0f; 
       }
       gaindelta = gainfactor - aout_gain;
       if (gaindelta > (rate * aout_gain)) {
