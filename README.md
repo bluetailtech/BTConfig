@@ -1,16 +1,8 @@
 
 # BTConfig
 Configuration Software for the Bluetail Technologies <a href="https://bluetailtechnologies.com/products/p25rx-digital-police-receiver"> P25RX Digital Police Receiver </a> 
-<BR><BR>Latest Experimental (experimental / possibly unstable)
-https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-29_1902.exe
-<BR>NOTE: if you are using these verions, please keep track of which releases work well for your area and which ones don't.  It should make it much easier to isolate issues. Thanks.
-<BR><BR>06-29_1411 - Same as stable version with the following changes:
-<LI>Don't clip incoming samples.
-<LI>Only update frequency correction if RSSI > -112
-<LI>Don't drop voice channel right away due to corrupt voice frames at the start.
-    
 <BR>Recommended Release (stable)  
-https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-06-28_1920.exe  
+https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-07-12_1240.exe  
     
 <BR><BR>Previous Releases
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/
