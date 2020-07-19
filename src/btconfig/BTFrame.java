@@ -921,6 +921,7 @@ int did_read_talkgroups=0;
 int is_mac_osx=0;
 Hashtable lat_lon_hash1;
 Hashtable lat_lon_hash2;
+Hashtable supergroup_hash;
 Hashtable no_loc_freqs;
 Boolean do_tdma_messages=false;
 ConstPlotPanel cpanel;
@@ -930,9 +931,10 @@ Boolean do_mini_const=false;
     public BTFrame(String[] args) {
       initComponents();
 
+      supergroup_hash = new Hashtable();
 
       //jPanel25.remove(const_panel);
-      cpanel = new ConstPlotPanel();
+      cpanel = new ConstPlotPanel(this);
       const_panel.add(cpanel, java.awt.BorderLayout.CENTER);
       //jPanel25.add(cpanel);
       //
@@ -1021,8 +1023,8 @@ Boolean do_mini_const=false;
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
-      fw_ver.setText("Latest Avail: FW Date: 202007130934");
-      release_date.setText("Release: 2020-07-13 0934");
+      fw_ver.setText("Latest Avail: FW Date: 202007191048");
+      release_date.setText("Release: 2020-07-19 1048");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1342,6 +1344,26 @@ Boolean do_mini_const=false;
         start_time = new java.util.Date().getTime();
       }
 
+      if(console_line.contains("\r\n") && (console_line.contains("tgroup") && console_line.contains("rf_channel")) ) {
+      }
+      if(console_line.contains("\r\n") && (console_line.contains("supergroup") && console_line.contains("rf_channel")) ) {
+        StringTokenizer st = new StringTokenizer(console_line," \r\n");
+        String st1 = ""; 
+        while(st.hasMoreTokens()) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.contains("supergroup") && st.hasMoreTokens()) {
+            try {
+              int supergroup = new Integer( st.nextToken() ).intValue();
+              String sg = new Integer(supergroup).toString();
+              supergroup_hash.put( sg, sg ); 
+              break;
+            } catch(Exception e) {
+              break;
+            }
+          }
+        }
+      }
+
       if(console_line.contains("\r\n") && (console_line.contains("Time:") || console_line.contains("ue")) ) {
 
         try {
@@ -1368,10 +1390,25 @@ Boolean do_mini_const=false;
           while(st.hasMoreTokens()) {
             String st1 = st.nextToken();
 
-            if(st1.equals("TGroup:")) {
+            if(st1.equals("TGroup:") && st.hasMoreTokens()) {
               String tg_id = st.nextToken();
-              talkgroup = ", TG "+tg_id;
-              talkgroup = talkgroup.substring(0,talkgroup.length()-1)+" ";
+
+
+              if(tg_id!=null) {
+                talkgroup = ", TG "+tg_id;
+
+
+                talkgroup = talkgroup.substring(0,talkgroup.length()-1)+" ";
+
+                try {
+                  //System.out.println("checking tgroup superg: "+tg_id.trim().substring(0,tg_id.length()-1));
+                  if( supergroup_hash.get( tg_id.trim().substring(0,tg_id.length()-1)  ) != null ) {
+                    talkgroup = talkgroup+"(P) ";
+                  } 
+                } catch(Exception e) {
+                }
+              }
+
 
               if( tg_id!=null && tg_id.length()>0 && tg_config!=null && current_sys_id!=0) {
                 String city="unknown";
@@ -1384,8 +1421,12 @@ Boolean do_mini_const=false;
                   } catch(Exception e) {
                   }
                   city = prefs.get("city_state_"+ff, "unknown");
+                  if(city==null) city="";
+
+
                 } catch(Exception e) {
                 }
+
                 tg_config.addUknownTG(parent, tg_id, new Integer(current_sys_id).toString(), city); 
               }
             }
@@ -1512,7 +1553,7 @@ Boolean do_mini_const=false;
               freqval = " "+freqval+" MHz, ";
             }
 
-            if(st1.contains("Skipping") && do_tdma_messages) {
+            if( (st1.contains("Skipping") && do_tdma_messages) || st1.contains("MOT_GRG") ) {
               String text = log_ta.getText();
               String phase2_str = console_line.trim();
               log_ta.setText(text.concat("\r\n"+phase2_str));
@@ -1623,21 +1664,15 @@ Boolean do_mini_const=false;
 
             String st2 = new String("");
             if(st1.contains("Desc:")) {
-              st2 = st2.concat(st.nextToken()+" ");
-              if(st2.contains(",")) {
-                l3.setText(freqval+st2.substring(0,st2.length()-2)+talkgroup);
-                break;
-              } 
-              st2 = st2.concat(st.nextToken()+" ");
-              if(st2.contains(",")) { 
-                l3.setText(freqval+st2.substring(0,st2.length()-2)+talkgroup);
-                break;
+
+              while(st.hasMoreTokens()) {
+                st2 = st2.concat( st.nextToken()+" " );
+                if(st2.contains(",") && st2.length()>2) {
+                  l3.setText(freqval+st2.substring(0,st2.length()-2)+talkgroup);
+                  break;
+                }
               }
-              st2 = st2.concat(st.nextToken()+" ");
-              if(st2.contains(",")) {
-                l3.setText(freqval+st2.substring(0,st2.length()-2)+talkgroup);
-                break;
-              } 
+
             }
           }
 
@@ -1782,6 +1817,7 @@ Boolean do_mini_const=false;
         buttonGroup2 = new javax.swing.ButtonGroup();
         buttonGroup3 = new javax.swing.ButtonGroup();
         buttonGroup4 = new javax.swing.ButtonGroup();
+        buttonGroup5 = new javax.swing.ButtonGroup();
         bottom_panel = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         status_panel = new javax.swing.JPanel();
@@ -1934,6 +1970,11 @@ Boolean do_mini_const=false;
         button_write_config = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
+        jPanel24 = new javax.swing.JPanel();
+        jLabel33 = new javax.swing.JLabel();
+        linear_const = new javax.swing.JRadioButton();
+        log_const = new javax.swing.JRadioButton();
+        autoscale_const = new javax.swing.JCheckBox();
         jPanel8 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -4105,6 +4146,37 @@ Boolean do_mini_const=false;
         const_panel.setMinimumSize(new java.awt.Dimension(512, 512));
         const_panel.setPreferredSize(new java.awt.Dimension(512, 512));
         const_panel.setLayout(new java.awt.BorderLayout());
+
+        jPanel24.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel33.setText("Constellation Plot");
+        jPanel24.add(jLabel33);
+
+        buttonGroup5.add(linear_const);
+        linear_const.setSelected(true);
+        linear_const.setText("Linear");
+        linear_const.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                linear_constActionPerformed(evt);
+            }
+        });
+        jPanel24.add(linear_const);
+
+        buttonGroup5.add(log_const);
+        log_const.setText("Log");
+        log_const.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                log_constActionPerformed(evt);
+            }
+        });
+        jPanel24.add(log_const);
+
+        autoscale_const.setSelected(true);
+        autoscale_const.setText("Auto Scale");
+        jPanel24.add(autoscale_const);
+
+        const_panel.add(jPanel24, java.awt.BorderLayout.NORTH);
+
         jPanel5.add(const_panel);
 
         jPanel8.setMaximumSize(new java.awt.Dimension(1512, 2147483647));
@@ -4616,6 +4688,14 @@ Boolean do_mini_const=false;
       JOptionPane.showMessageDialog(parent, "Change will take place on next software start-up.");
     }//GEN-LAST:event_audio_slow_rateActionPerformed
 
+    private void log_constActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_log_constActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_log_constActionPerformed
+
+    private void linear_constActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_linear_constActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_linear_constActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -4632,7 +4712,9 @@ Boolean do_mini_const=false;
 //////////////////////////////////////////////////////////////////////////////
 public void do_meta() {
 
-  if(did_metadata==0 && l3.getText().trim().length()>0) {
+  if(l3!=null & did_metadata==0 && l3.getText().trim().length()>0) {
+
+    if(l3.getText().contains("CONTROL CHANNEL TSBK")) return; 
 
     //meta String
     String metadata =""; 
@@ -4663,13 +4745,13 @@ public void do_meta() {
 
         StringTokenizer st = new StringTokenizer(metadata,",");
         String str1 = "";
-        str1 = str1.concat(st.nextToken()+", ");
-        str1 = str1.concat(st.nextToken()+", ");
-        str1 = str1.concat(st.nextToken()+", ");
-        str1 = str1.concat(st.nextToken()+", ");
-        str1 = str1.concat(st.nextToken()+", ");
-        st.nextToken(); //mp3 file len
-        str1 = str1.concat(st.nextToken()+", ");
+        if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
+        if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
+        if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
+        if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
+        if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
+        if(st.hasMoreTokens()) st.nextToken(); //mp3 file len
+        if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
 
         log_ta.setText(text.concat( new String(str1.getBytes()) ));
 
@@ -4809,6 +4891,7 @@ private void resizeColumns2() {
     public javax.swing.JCheckBox audio_slow_rate;
     private javax.swing.JPanel audiopanel;
     public javax.swing.JCheckBox auto_flash_tg;
+    public javax.swing.JCheckBox autoscale_const;
     public javax.swing.JButton backup_roam;
     private javax.swing.JButton backup_tg;
     public javax.swing.JTextField bluetooth_reset;
@@ -4823,6 +4906,7 @@ private void resizeColumns2() {
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.ButtonGroup buttonGroup4;
+    private javax.swing.ButtonGroup buttonGroup5;
     public javax.swing.JRadioButton button_single_follow_tg;
     public javax.swing.JRadioButton button_single_next_roaming;
     private javax.swing.JButton button_write_config;
@@ -4902,6 +4986,7 @@ private void resizeColumns2() {
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -4924,6 +5009,7 @@ private void resizeColumns2() {
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel23;
+    public javax.swing.JPanel jPanel24;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -4942,7 +5028,9 @@ private void resizeColumns2() {
     public javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel level_panel;
+    public javax.swing.JRadioButton linear_const;
     public javax.swing.JSlider lineout_vol_slider;
+    public javax.swing.JRadioButton log_const;
     private javax.swing.JTextArea log_ta;
     private javax.swing.JPanel logo_panel;
     private javax.swing.JPanel logpanel;
