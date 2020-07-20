@@ -56,6 +56,14 @@ public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String 
   talkgroup = talkgroup.trim();
 
   talkgroup = talkgroup.trim();
+
+  try {
+    int tg = new Integer(talkgroup).intValue();
+    if(tg==0) return;
+  } catch(Exception e) {
+  }
+
+
   sys_id = sys_id.trim();
 
   if(tg_hash==null) tg_hash = new java.util.Hashtable();

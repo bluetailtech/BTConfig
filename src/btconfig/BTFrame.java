@@ -197,7 +197,7 @@ class updateTask extends java.util.TimerTask
           auto_flash_tg.setSelected( prefs.getBoolean("tg_auto_flash", true) );
           disable_encrypted.setSelected( prefs.getBoolean("enc_auto_flash", true) );
           autoscale_const.setSelected( prefs.getBoolean("autoscale_const", false) );
-          nsymbols.setSelectedIndex( prefs.getInt("nsymbols", 0) );
+          nsymbols.setSelectedIndex( prefs.getInt("nsymbols", 2) );
 
           int constellation = prefs.getInt("const_select", 1);
           if(constellation==0) off_const.setSelected(true);
@@ -1030,8 +1030,8 @@ Boolean do_mini_const=false;
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
-      fw_ver.setText("Latest Avail: FW Date: 202007201003");
-      release_date.setText("Release: 2020-07-20 1003");
+      fw_ver.setText("Latest Avail: FW Date: 202007201042");
+      release_date.setText("Release: 2020-07-20 1216");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
