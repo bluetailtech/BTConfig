@@ -1031,7 +1031,7 @@ Boolean do_mini_const=false;
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
       fw_ver.setText("Latest Avail: FW Date: 202007191048");
-      release_date.setText("Release: 2020-07-19 2122");
+      release_date.setText("Release: 2020-07-19 2320");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);

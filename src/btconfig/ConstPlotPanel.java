@@ -121,14 +121,15 @@ public class ConstPlotPanel extends JPanel {
        int ii = (int) ((double) plot_data[j++]);
        int qq = (int) ((double) plot_data[j++]);
        try {
-         avg_mag += java.lang.Math.pow( ((double) ii * (double) ii) + ((double) qq * (double) qq), 0.5 );
+         double mag = java.lang.Math.pow( ((double) ii * (double) ii) + ((double) qq * (double) qq), 0.5 );
+         if(mag > avg_mag) avg_mag = mag; 
        } catch(Exception e) {
        }
 
      }
 
-     avg_mag /= DATA_SIZE; 
-     scale = 50.0 / avg_mag;
+     //avg_mag /= DATA_SIZE; 
+     scale = 100.0 / avg_mag;
 
      if(!parent.autoscale_const.isSelected()) scale=2.0;
 
