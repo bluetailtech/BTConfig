@@ -3,7 +3,7 @@
 Configuration Software for the Bluetail Technologies <a href="https://bluetailtechnologies.com/products/p25rx-digital-police-receiver"> P25RX Digital Police Receiver </a> 
 <BR>
 <BR>Recommended Release (stable)  
-https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-07-19_1048.exe  
+https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-07-20_1216.exe  
     
 <BR><BR>Previous Releases (recommend using stable)
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/
