@@ -196,6 +196,8 @@ class updateTask extends java.util.TimerTask
           initial_audio_level.setValue( prefs.getInt("initial_audio_level", 75) );
           auto_flash_tg.setSelected( prefs.getBoolean("tg_auto_flash", true) );
           disable_encrypted.setSelected( prefs.getBoolean("enc_auto_flash", true) );
+          autoscale_const.setSelected( prefs.getBoolean("autoscale_const", false) );
+          nsymbols.setSelectedIndex( prefs.getInt("nsymbols", 2) );
 
           int constellation = prefs.getInt("const_select", 1);
           if(constellation==0) off_const.setSelected(true);
@@ -4189,9 +4191,19 @@ Boolean do_mini_const=false;
 
         autoscale_const.setSelected(true);
         autoscale_const.setText("Auto Scale");
+        autoscale_const.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                autoscale_constActionPerformed(evt);
+            }
+        });
         jPanel24.add(autoscale_const);
 
         nsymbols.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "256 Symbols", "512 Symbols", "1024 Symbols", "2048 Symbols", "4096 Symbols", "8192 Symbols" }));
+        nsymbols.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nsymbolsActionPerformed(evt);
+            }
+        });
         jPanel24.add(nsymbols);
 
         const_panel.add(jPanel24, java.awt.BorderLayout.NORTH);
@@ -4724,6 +4736,14 @@ Boolean do_mini_const=false;
        if(linear_const.isSelected()) prefs.putInt("const_select", 1);
        if(log_const.isSelected()) prefs.putInt("const_select", 2);
     }//GEN-LAST:event_off_constActionPerformed
+
+    private void autoscale_constActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoscale_constActionPerformed
+      prefs.putBoolean("autoscale_const", autoscale_const.isSelected());
+    }//GEN-LAST:event_autoscale_constActionPerformed
+
+    private void nsymbolsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nsymbolsActionPerformed
+       prefs.putInt("nsymbols", nsymbols.getSelectedIndex());
+    }//GEN-LAST:event_nsymbolsActionPerformed
 
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
