@@ -196,6 +196,11 @@ class updateTask extends java.util.TimerTask
           initial_audio_level.setValue( prefs.getInt("initial_audio_level", 75) );
           auto_flash_tg.setSelected( prefs.getBoolean("tg_auto_flash", true) );
           disable_encrypted.setSelected( prefs.getBoolean("enc_auto_flash", true) );
+
+          int constellation = prefs.getInt("const_select", 1);
+          if(constellation==0) off_const.setSelected(true);
+          else if(constellation==1) linear_const.setSelected(true);
+          else if(constellation==2) log_const.setSelected(true);
         }
 
         //keep this after prefs
@@ -609,7 +614,7 @@ class updateTask extends java.util.TimerTask
                     //}
                     //plot here
                     cpanel.addData( constellation_bytes );
-                    if(do_mini_const) ConstPlotPanel.static_paint(tiny_const.getGraphics(),-15,15,26);
+                    //if(do_mini_const) ConstPlotPanel.static_paint(tiny_const.getGraphics(),-15,15,26);
                   }
                 }
                 else if(skip_bytes>0 && rx_state==4) {
@@ -1024,7 +1029,7 @@ Boolean do_mini_const=false;
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
       fw_ver.setText("Latest Avail: FW Date: 202007191048");
-      release_date.setText("Release: 2020-07-19 1048");
+      release_date.setText("Release: 2020-07-19 2122");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1972,9 +1977,11 @@ Boolean do_mini_const=false;
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
         jLabel33 = new javax.swing.JLabel();
+        off_const = new javax.swing.JRadioButton();
         linear_const = new javax.swing.JRadioButton();
         log_const = new javax.swing.JRadioButton();
         autoscale_const = new javax.swing.JCheckBox();
+        nsymbols = new javax.swing.JComboBox<>();
         jPanel8 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -4152,6 +4159,15 @@ Boolean do_mini_const=false;
         jLabel33.setText("Constellation Plot");
         jPanel24.add(jLabel33);
 
+        buttonGroup5.add(off_const);
+        off_const.setText("Off");
+        off_const.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                off_constActionPerformed(evt);
+            }
+        });
+        jPanel24.add(off_const);
+
         buttonGroup5.add(linear_const);
         linear_const.setSelected(true);
         linear_const.setText("Linear");
@@ -4174,6 +4190,9 @@ Boolean do_mini_const=false;
         autoscale_const.setSelected(true);
         autoscale_const.setText("Auto Scale");
         jPanel24.add(autoscale_const);
+
+        nsymbols.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "256 Symbols", "512 Symbols", "1024 Symbols", "2048 Symbols", "4096 Symbols", "8192 Symbols" }));
+        jPanel24.add(nsymbols);
 
         const_panel.add(jPanel24, java.awt.BorderLayout.NORTH);
 
@@ -4689,12 +4708,22 @@ Boolean do_mini_const=false;
     }//GEN-LAST:event_audio_slow_rateActionPerformed
 
     private void log_constActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_log_constActionPerformed
-        // TODO add your handling code here:
+       if(off_const.isSelected()) prefs.putInt("const_select", 0);
+       if(linear_const.isSelected()) prefs.putInt("const_select", 1);
+       if(log_const.isSelected()) prefs.putInt("const_select", 2);
     }//GEN-LAST:event_log_constActionPerformed
 
     private void linear_constActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_linear_constActionPerformed
-        // TODO add your handling code here:
+       if(off_const.isSelected()) prefs.putInt("const_select", 0);
+       if(linear_const.isSelected()) prefs.putInt("const_select", 1);
+       if(log_const.isSelected()) prefs.putInt("const_select", 2);
     }//GEN-LAST:event_linear_constActionPerformed
+
+    private void off_constActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_off_constActionPerformed
+       if(off_const.isSelected()) prefs.putInt("const_select", 0);
+       if(linear_const.isSelected()) prefs.putInt("const_select", 1);
+       if(log_const.isSelected()) prefs.putInt("const_select", 2);
+    }//GEN-LAST:event_off_constActionPerformed
 
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
@@ -5040,6 +5069,8 @@ private void resizeColumns2() {
     private javax.swing.JLabel nac;
     public javax.swing.JPanel no_voice_panel;
     public javax.swing.JTextField no_voice_secs;
+    public javax.swing.JComboBox<String> nsymbols;
+    public javax.swing.JRadioButton off_const;
     private javax.swing.JPanel p25rxconfigpanel;
     private javax.swing.JProgressBar progbar;
     private javax.swing.JLabel progress_label;

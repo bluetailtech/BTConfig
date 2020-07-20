@@ -8,14 +8,18 @@ import java.nio.*;
 
 public class ConstPlotPanel extends JPanel {
 
+   static int DATA_SIZE=256;
+
    boolean do_log=true;
 
    static int[] plot_data;
+    int[] scaled_data;
    int plot_idx=0;
 
    int xoff=0;
    int yoff=+96;
    double avg_mag=0.0;
+   double scale=1.0;
 
    int gains_idx;
    static float[] gains = new float[256*3];
@@ -26,7 +30,9 @@ public class ConstPlotPanel extends JPanel {
    public ConstPlotPanel(BTFrame parent) {
      this.parent = parent;
 
-     plot_data = new int[2048];
+     plot_data = new int[8192*2];
+     scaled_data = new int[ 8192*2 ];
+     DATA_SIZE = 256;
 
      for(int i=0;i<256*3;i++) {
        gains[i] = 1024.0f;
@@ -34,62 +40,26 @@ public class ConstPlotPanel extends JPanel {
    }
    
    public void addData( byte[] data ) {
-     do_log = parent.log_const.isSelected();
 
      int j=0;
      //System.out.println("add data");
      try {
-       avg_mag = 0.0;
 
        for(int i=0;i<316/2;i++) {
 
          int ii = (int) ((double) data[j++]);
          int qq = (int) ((double) data[j++]);
 
+         plot_data[plot_idx++] = ii;
+         plot_data[plot_idx++] = qq;
 
-         try {
-           avg_mag += java.lang.Math.pow( ((double) ii * (double) ii) + ((double) qq * (double) qq), 0.5 );
-         } catch(Exception e) {
-         }
-
-
-         if(plot_idx>=2048) {
+         if(plot_idx>=DATA_SIZE) {
            plot_idx=0;
            //System.out.println("rollover");
+           DATA_SIZE = (int) java.lang.Math.pow( 2.0, parent.nsymbols.getSelectedIndex()+8 ); 
          }
        }
 
-       avg_mag /= 158.0;
-       //System.out.println("avg "+avg_mag);
-
-       double scale = 80.0 / avg_mag;
-
-       if(!parent.autoscale_const.isSelected()) scale=2.0;
-
-       j = 0;
-       for(int i=0;i<316/2;i++) {
-
-         int ii = (int) ((double) data[j++]);
-         int qq = (int) ((double) data[j++]);
-
-         if(do_log) {
-           int idir=1;
-           int qdir=1;
-           if(ii<0) idir=-1;
-           if(qq<0) qdir=-1;
-
-           plot_data[plot_idx++] = (int) ((double) java.lang.Math.log10( java.lang.Math.abs(ii))*10.0*4.0*idir ); 
-           plot_data[plot_idx++] = (int) ((double) java.lang.Math.log10( java.lang.Math.abs(qq))*10.0*4.0*qdir ); 
-         }
-         else {
-           plot_data[plot_idx++] = (int) ((double)ii*scale); 
-           plot_data[plot_idx++] = (int) ((double)qq*scale); 
-         }
-
-         if(plot_idx>=2048) {
-           plot_idx=0;
-         }
-       }
        
        ByteBuffer bb = ByteBuffer.wrap(data);
        bb.order(ByteOrder.LITTLE_ENDIAN);
@@ -108,6 +78,7 @@ public class ConstPlotPanel extends JPanel {
        parent.jPanel24.repaint();
      } catch(Exception e) {
        plot_idx=0;
+       DATA_SIZE = (int) java.lang.Math.pow( 2.0, parent.nsymbols.getSelectedIndex()+8 ); 
        e.printStackTrace();
      }
    }
@@ -118,10 +89,7 @@ public class ConstPlotPanel extends JPanel {
 
      //Rectangle r = g2d.getClipBounds();
      Rectangle r = getBounds(); 
-     
      g2d.setStroke( new BasicStroke(2.0f) );
-
-
       //clear to black
      g2d.setColor( Color.black ); 
      g2d.fill3DRect(r.x-250,r.y-250,r.width+500,r.height+500,false); 
@@ -130,11 +98,58 @@ public class ConstPlotPanel extends JPanel {
      g2d.drawLine(xoff+128,256-yoff,xoff+128+256,256-yoff); 
      g2d.drawLine(xoff+256,128-yoff,xoff+256,128+256-yoff); 
 
+
+     //System.out.println("avg "+avg_mag);
+     do_log = parent.log_const.isSelected();
+
+     if( parent.off_const.isSelected() ) return;
+
+     int j = 0;
+     avg_mag = 0.0;
+     for(int i=0;i<DATA_SIZE;i++) {
+
+       int ii = (int) ((double) plot_data[j++]);
+       int qq = (int) ((double) plot_data[j++]);
+       try {
+         avg_mag += java.lang.Math.pow( ((double) ii * (double) ii) + ((double) qq * (double) qq), 0.5 );
+       } catch(Exception e) {
+       }
+
+     }
+
+     avg_mag /= DATA_SIZE; 
+     scale = 50.0 / avg_mag;
+
+     if(!parent.autoscale_const.isSelected()) scale=2.0;
+
+
+     j=0;
+     int j2=0;
+     for(int i=0;i<DATA_SIZE;i++) {
+
+         int ii = (int) ((double) plot_data[j++]);
+         int qq = (int) ((double) plot_data[j++]);
+
+         if(do_log) {
+           int idir=1;
+           int qdir=1;
+           if(ii<0) idir=-1;
+           if(qq<0) qdir=-1;
+
+           scaled_data[j2++] = (int) ((double) java.lang.Math.log10( java.lang.Math.abs(ii))*10.0*4.0*idir ); 
+           scaled_data[j2++] = (int) ((double) java.lang.Math.log10( java.lang.Math.abs(qq))*10.0*4.0*qdir ); 
+         }
+         else {
+           scaled_data[j2++] = (int) ((double)ii*scale); 
+           scaled_data[j2++] = (int) ((double)qq*scale); 
+         }
+      }
+
      g2d.setColor( Color.yellow ); 
-     int j=0;
-     for(int i=0;i<2048/2;i++) {
-       int ii = plot_data[j++];
-       int qq = plot_data[j++];
+     j=0;
+     for(int i=0;i<DATA_SIZE/2;i++) {
+       int ii = scaled_data[j++];
+       int qq = scaled_data[j++];
        g2d.drawRoundRect(xoff+256+ii, 256+qq-yoff, 1, 1, 1, 1);
      }
 
@@ -149,41 +164,6 @@ public class ConstPlotPanel extends JPanel {
 
      g2d.setColor( Color.white ); 
      g2d.drawString(current_gain, 300+256,50);
-   }
-
-
-
-
-   static public void static_paint(Graphics g, int x, int y, int scale ) {
-     //super.paint(g);
-     Graphics2D g2d = (Graphics2D) g;
-
-     g2d.setStroke( new BasicStroke(2.0f) );
-
-      //clear to black
-     g2d.setColor( Color.black ); 
-     g2d.fill3DRect(0,0,256,256,false); 
-
-     g2d.setColor( Color.green ); 
-
-     //default w/h  is 256 x 256
-     int scale1 = scale;
-     int scale2 = scale/2;
-
-     g2d.drawLine(x+5+scale2,scale-y+5,x+5+scale2+scale,scale-y+5); 
-     g2d.drawLine(x+5+scale,scale2-y+5,x+5+scale,scale2+scale-y+5); 
-
-     //draw constellation
-     g2d.setColor( Color.yellow ); 
-     int j=0;
-     for(int i=0;i<2048/2;i++) {
-       int ii = (int) ((float) plot_data[j++] * (float) 1.0f/84.0f * (float) scale2);
-       int qq = (int) ((float) plot_data[j++] * (float) 1.0f/84.0f * (float) scale2);
-       g2d.drawRoundRect(4+ii+scale/2, 4+qq+scale/2, 1, 1, 1, 1);
-     }
-
-
-
    }
 
 }
