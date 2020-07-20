@@ -10,6 +10,7 @@ public class ConstPlotPanel extends JPanel {
 
    static int DATA_SIZE=256;
 
+   int draw_mod=0;
    boolean do_log=true;
 
    static int[] plot_data;
@@ -27,6 +28,10 @@ public class ConstPlotPanel extends JPanel {
    static String current_gain="";
    BTFrame parent;
 
+   ByteBuffer bb;
+
+   ///////////////////////////////////////////////////////////////////////////////////////
+   ///////////////////////////////////////////////////////////////////////////////////////
    public ConstPlotPanel(BTFrame parent) {
      this.parent = parent;
 
@@ -39,6 +44,8 @@ public class ConstPlotPanel extends JPanel {
      }
    }
    
+   ///////////////////////////////////////////////////////////////////////////////////////
+   ///////////////////////////////////////////////////////////////////////////////////////
    public void addData( byte[] data ) {
 
      int j=0;
@@ -61,7 +68,7 @@ public class ConstPlotPanel extends JPanel {
        }
 
        
-       ByteBuffer bb = ByteBuffer.wrap(data);
+       bb = ByteBuffer.wrap(data);
        bb.order(ByteOrder.LITTLE_ENDIAN);
 
        float gain = bb.getFloat(316);
@@ -72,10 +79,11 @@ public class ConstPlotPanel extends JPanel {
        gains[gains_idx++] = (float) java.lang.Math.log10(gain)*20.0f;
        if(gains_idx==256*3) gains_idx=0;
 
+       if(draw_mod++%2==0) {
+         repaint();
+         parent.jPanel24.repaint();
+       }
 
-       //invalidate();
-       repaint();
-       parent.jPanel24.repaint();
      } catch(Exception e) {
        plot_idx=0;
        DATA_SIZE = (int) java.lang.Math.pow( 2.0, parent.nsymbols.getSelectedIndex()+8 ); 
@@ -83,6 +91,8 @@ public class ConstPlotPanel extends JPanel {
      }
    }
    
+   ///////////////////////////////////////////////////////////////////////////////////////
+   ///////////////////////////////////////////////////////////////////////////////////////
    public void paint(Graphics g){
      //super.paint(g);
      Graphics2D g2d = (Graphics2D) g;
