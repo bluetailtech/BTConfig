@@ -5,7 +5,7 @@ Configuration Software for the Bluetail Technologies <a href="https://bluetailte
 <BR>Recommended Release (stable)  
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-07-19_1048.exe  
     
-<BR><BR>Previous Releases
+<BR><BR>Previous Releases (recommend using stable)
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/
   
 <BR><BR>User Manual
