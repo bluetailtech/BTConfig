@@ -197,7 +197,7 @@ class updateTask extends java.util.TimerTask
           auto_flash_tg.setSelected( prefs.getBoolean("tg_auto_flash", true) );
           disable_encrypted.setSelected( prefs.getBoolean("enc_auto_flash", true) );
           autoscale_const.setSelected( prefs.getBoolean("autoscale_const", false) );
-          nsymbols.setSelectedIndex( prefs.getInt("nsymbols", 2) );
+          nsymbols.setSelectedIndex( prefs.getInt("nsymbols", 0) );
 
           int constellation = prefs.getInt("const_select", 1);
           if(constellation==0) off_const.setSelected(true);
