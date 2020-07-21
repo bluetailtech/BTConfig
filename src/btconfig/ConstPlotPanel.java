@@ -31,6 +31,7 @@ public class ConstPlotPanel extends JPanel {
    static String current_gain="";
    static String sync_state="";
    BTFrame parent;
+   int last_sync_state=0;
 
    ByteBuffer bb;
 
@@ -92,6 +93,8 @@ public class ConstPlotPanel extends JPanel {
        syncs[sync_idx++] = synced; 
        if(sync_idx==256*3) sync_idx=0;
 
+       last_sync_state=synced;
+
        if(draw_mod++%2==0) {
          repaint();
          parent.jPanel24.repaint();
@@ -99,6 +102,8 @@ public class ConstPlotPanel extends JPanel {
 
      } catch(Exception e) {
        plot_idx=0;
+       gains_idx=0;
+       sync_idx=0;
        DATA_SIZE = (int) java.lang.Math.pow( 2.0, parent.nsymbols.getSelectedIndex()+8 ); 
        e.printStackTrace();
      }
@@ -211,12 +216,25 @@ public class ConstPlotPanel extends JPanel {
          g2d.setColor( Color.black ); 
          sync_off=0;
        }
-
        g2d.drawRoundRect(i+128, (int) 470 - syncs[j++]*sync_off,1, 1, 1, 1);
      }
 
-     g2d.setColor( Color.green ); 
-     g2d.drawString(sync_state, 300+256,75);
+     if(last_sync_state==1) {
+       g2d.setColor( Color.green ); 
+       g2d.drawString(sync_state, 300+256,75);
+     }
+     else if(last_sync_state==0)  {
+       g2d.setColor( Color.red ); 
+       g2d.drawString(sync_state, 300+256,75);
+     }
+     else if(last_sync_state==-2)  {
+       g2d.setColor( Color.yellow ); 
+       g2d.drawString(sync_state, 300+256,75);
+     }
+     else {
+       g2d.setColor( Color.black ); 
+       g2d.drawString(sync_state, 300+256,75);
+     }
 
    }
 
