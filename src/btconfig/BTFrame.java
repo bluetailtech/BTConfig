@@ -1030,8 +1030,8 @@ Boolean do_mini_const=false;
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
-      fw_ver.setText("Latest Avail: FW Date: 202007201042");
-      release_date.setText("Release: 2020-07-20 1216");
+      fw_ver.setText("Latest Avail: FW Date: 202007202347");
+      release_date.setText("Release: 2020-07-20 2347");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1148,7 +1148,7 @@ Boolean do_mini_const=false;
       //do this last
       utimer = new java.util.Timer();
       utimer.schedule( new updateTask(), 100, 1);
-      setSize(1054,720);
+      setSize(1054,750);
 
       //parentSize = Toolkit.getDefaultToolkit().getScreenSize();
       //setSize(new Dimension((int) (parentSize.width * 0.75), (int) (parentSize.height * 0.8)));
@@ -4455,7 +4455,7 @@ Boolean do_mini_const=false;
         }
       }
       else {
-        setSize(1054,720);
+        setSize(1054,750);
         //parentSize = Toolkit.getDefaultToolkit().getScreenSize();
         //setSize(new Dimension((int) (parentSize.width * 0.75), (int) (parentSize.height * 0.8)));
       }
