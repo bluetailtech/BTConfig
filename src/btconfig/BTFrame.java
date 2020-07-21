@@ -78,6 +78,13 @@ class updateTask extends java.util.TimerTask
     {
       try {
 
+        if(bluetooth_streaming_timer>0) {
+          bluetooth_streaming_timer--;
+          if(bluetooth_streaming_timer==0) {
+            bluetooth_streaming=0;
+          }
+        }
+
         if(is_connected==1 && do_test_freqs==1 && do_update_firmware==0) {
           do_test_freqs=0;
           if(roaming_tests!=null) roaming_tests.test_selected_freqs(parent,serial_port);
@@ -926,6 +933,8 @@ int do_console_output=0;
 int do_write_roaming_flash_only=0;
 int did_read_talkgroups=0;
 int is_mac_osx=0;
+int tsbk_ps_i=0;
+int bluetooth_streaming_timer=0;
 Hashtable lat_lon_hash1;
 Hashtable lat_lon_hash2;
 Hashtable supergroup_hash;
@@ -1030,8 +1039,8 @@ Boolean do_mini_const=false;
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
-      fw_ver.setText("Latest Avail: FW Date: 202007210833");
-      release_date.setText("Release: 2020-07-21 0833");
+      fw_ver.setText("Latest Avail: FW Date: 202007211629");
+      release_date.setText("Release: 2020-07-21 1629");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1336,6 +1345,7 @@ Boolean do_mini_const=false;
 
       if(command_input==1) return;
 
+
       if(str!=null && do_console_output==1) System.out.println(str.trim());
 
       String talkgroup="";
@@ -1371,7 +1381,8 @@ Boolean do_mini_const=false;
         }
       }
 
-      if(console_line.contains("\r\n") && (console_line.contains("Time:") || console_line.contains("ue")) ) {
+      //if(console_line.contains("\r\n") && (console_line.contains("Time:") || console_line.contains("ue")) ) {
+      if( (console_line.contains("rssi:") || console_line.contains("->(VOICE)")) && console_line.contains("$") ) {
 
         try {
             if(console_line.contains("ue 0")) {
@@ -1391,6 +1402,10 @@ Boolean do_mini_const=false;
               if(bluetooth_streaming==0 && bluetooth_error==0) setStatus("Bluetooth Audio Streaming Started");
               bluetooth_streaming=1;
             }
+
+          if(console_line.contains("sa 1")) {
+            bluetooth_streaming_timer=100;
+          }
 
           //do_add=0;
           StringTokenizer st = new StringTokenizer(console_line," \r\n");
@@ -1626,7 +1641,7 @@ Boolean do_mini_const=false;
               }
 
               try {
-                int tsbk_ps_i = new Integer(tsbk_ps);
+                tsbk_ps_i = new Integer(tsbk_ps);
 
                 long time = new java.util.Date().getTime();
                 if(time-start_time > 1500) {
@@ -1683,39 +1698,6 @@ Boolean do_mini_const=false;
             }
           }
 
-          /*
-          if(console_line.contains("*")) rssim2.setValue(-120,false);
-          if(console_line.contains("**")) rssim2.setValue(-110,false);
-          if(console_line.contains("***")) rssim2.setValue(-105,false);
-          if(console_line.contains("****")) rssim2.setValue(-105,false);
-          if(console_line.contains("****")) rssim2.setValue(-100,false);
-          if(console_line.contains("*****")) rssim2.setValue(-95,false);
-          if(console_line.contains("******")) rssim2.setValue(-90,false);
-          if(console_line.contains("*******")) rssim2.setValue(-85,false);
-          if(console_line.contains("*******")) rssim2.setValue(-80,false);
-          if(console_line.contains("*******")) rssim2.setValue(-50,false);
-          */
-          
-          /*
-          if(console_line.contains("\n") && !console_line.contains("_") ) {
-            if(console_line.contains("********")) { 
-              sq_indicator.setForeground( java.awt.Color.green );
-              sq_indicator.setBackground( java.awt.Color.green );
-            }
-            else if(console_line.contains("*******")) { 
-              sq_indicator.setForeground( java.awt.Color.blue );
-              sq_indicator.setBackground( java.awt.Color.blue );
-            }
-            else if(console_line.contains("*")) { 
-              sq_indicator.setForeground( java.awt.Color.red );
-              sq_indicator.setBackground( java.awt.Color.red );
-            }
-            else { 
-              //sq_indicator.setForeground( java.awt.Color.black );
-              //sq_indicator.setBackground( java.awt.Color.black );
-            }
-          }
-          */
             if(console_line.contains("vqg")) { 
               sq_indicator.setForeground( java.awt.Color.green );
               sq_indicator.setBackground( java.awt.Color.green );
@@ -1728,9 +1710,27 @@ Boolean do_mini_const=false;
               sq_indicator.setForeground( java.awt.Color.black );
               sq_indicator.setBackground( java.awt.Color.black );
             }
+            else if(console_line.contains("vql")) { 
+              sq_indicator.setForeground( java.awt.Color.black );
+              sq_indicator.setBackground( java.awt.Color.black );
+            }
             else { 
-              //sq_indicator.setForeground( java.awt.Color.black );
-              //sq_indicator.setBackground( java.awt.Color.black );
+              if( tsbk_ps_i > 20) {
+                sq_indicator.setForeground( java.awt.Color.green );
+                sq_indicator.setBackground( java.awt.Color.green );
+              }
+              else if( tsbk_ps_i > 10) {
+                sq_indicator.setForeground( java.awt.Color.blue );
+                sq_indicator.setBackground( java.awt.Color.blue );
+              }
+              else if( tsbk_ps_i > 0) {
+                sq_indicator.setForeground( java.awt.Color.red );
+                sq_indicator.setBackground( java.awt.Color.red );
+              }
+              else {
+                sq_indicator.setForeground( java.awt.Color.black );
+                sq_indicator.setBackground( java.awt.Color.black );
+              }
             }
 
           console_line = new String("");
@@ -1748,29 +1748,6 @@ Boolean do_mini_const=false;
 
       //TODO: fix
       if(do_add==1) {
-
-        /*
-        str = str.replace("*"," ");
-        //str = str.trim();
-        if(str.equals("_")) str="";
-        if(str.equals("__")) str="";
-        if(str.equals("___")) str="";
-        if(str.equals("____")) str="";
-        if(str.equals("_____")) str="";
-        if(str.equals("______")) str="";
-        if(str.equals("_______")) str="";
-        if(str.equals("________")) str="";
-
-        int do_append=1;
-        /*
-        for(int i=0;i<str.length();i++) {
-          if(!str.substring(i,i+1).equals(" ") && !str.substring(i,i+1).equals("_")) {
-            do_append=1;
-            break;
-          }
-        }
-        */
-
 
         if(str.length()>0 ) {
           jTextArea1.append(str);
