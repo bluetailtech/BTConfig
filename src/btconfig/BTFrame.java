@@ -1404,7 +1404,7 @@ Boolean do_mini_const=false;
             }
 
           if(console_line.contains("sa 1")) {
-            bluetooth_streaming_timer=100;
+            bluetooth_streaming_timer=60000;
           }
 
           //do_add=0;
