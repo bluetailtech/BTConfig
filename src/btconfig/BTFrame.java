@@ -1040,7 +1040,7 @@ Boolean do_mini_const=false;
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
       fw_ver.setText("Latest Avail: FW Date: 202007211959");
-      release_date.setText("Release: 2020-07-21 1959");
+      release_date.setText("Release: 2020-07-22 0828");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1381,8 +1381,7 @@ Boolean do_mini_const=false;
         }
       }
 
-      //if(console_line.contains("\r\n") && (console_line.contains("Time:") || console_line.contains("ue")) ) {
-      if( (console_line.contains("rssi:") || console_line.contains("->(VOICE)")) && console_line.contains("$") ) {
+      if( (console_line.contains("\r\nrssi:") || console_line.contains("\r\n->(VOICE)")) && console_line.contains("$") ) {
 
         try {
             if(console_line.contains("ue 0")) {
@@ -1416,8 +1415,12 @@ Boolean do_mini_const=false;
               String tg_id = st.nextToken();
 
 
+              int has_comma=0;
+
               if(tg_id!=null) {
                 talkgroup = ", TG "+tg_id;
+
+                if(tg_id.contains(",")) has_comma=1;
 
 
                 talkgroup = talkgroup.substring(0,talkgroup.length()-1)+" ";
@@ -1449,7 +1452,7 @@ Boolean do_mini_const=false;
                 } catch(Exception e) {
                 }
 
-                tg_config.addUknownTG(parent, tg_id, new Integer(current_sys_id).toString(), city); 
+                if(has_comma==1) tg_config.addUknownTG(parent, tg_id, new Integer(current_sys_id).toString(), city); 
               }
             }
 
