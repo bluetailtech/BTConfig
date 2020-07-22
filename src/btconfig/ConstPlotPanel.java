@@ -221,19 +221,19 @@ public class ConstPlotPanel extends JPanel {
 
      if(last_sync_state==1) {
        g2d.setColor( Color.green ); 
-       g2d.drawString(sync_state, 300+256,75);
+       g2d.drawString(sync_state+" (Synced)", 300+256,75);
      }
      else if(last_sync_state==0)  {
        g2d.setColor( Color.red ); 
-       g2d.drawString(sync_state, 300+256,75);
+       g2d.drawString(sync_state+" (No Sync)", 300+256,75);
      }
      else if(last_sync_state==-2)  {
        g2d.setColor( Color.yellow ); 
-       g2d.drawString(sync_state, 300+256,75);
+       g2d.drawString(sync_state+" (TDU)", 300+256,75);
      }
      else {
        g2d.setColor( Color.black ); 
-       g2d.drawString(sync_state, 300+256,75);
+       g2d.drawString(sync_state+" (No Signal)", 300+256,75);
      }
 
    }
