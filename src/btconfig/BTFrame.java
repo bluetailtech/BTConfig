@@ -1040,7 +1040,7 @@ Boolean do_mini_const=false;
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
       fw_ver.setText("Latest Avail: FW Date: 202007211959");
-      release_date.setText("Release: 2020-07-22 0828");
+      release_date.setText("Release: 2020-07-22 0844");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1381,7 +1381,7 @@ Boolean do_mini_const=false;
         }
       }
 
-      if( (console_line.contains("\r\nrssi:") || console_line.contains("\r\n->(VOICE)")) && console_line.contains("$") ) {
+      if( (console_line.contains("\r\nrssi:") || console_line.contains("\r\n  ->(VOICE)")) && console_line.contains("$") ) {
 
         try {
             if(console_line.contains("ue 0")) {
