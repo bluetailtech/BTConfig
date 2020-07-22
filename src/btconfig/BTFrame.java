@@ -1039,8 +1039,8 @@ Boolean do_mini_const=false;
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
-      fw_ver.setText("Latest Avail: FW Date: 202007211629");
-      release_date.setText("Release: 2020-07-21 1629");
+      fw_ver.setText("Latest Avail: FW Date: 202007211959");
+      release_date.setText("Release: 2020-07-21 1959");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1858,6 +1858,8 @@ Boolean do_mini_const=false;
         jLabel4 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
         rfmaxgain = new javax.swing.JComboBox<>();
+        vtimeout = new javax.swing.JComboBox<>();
+        jLabel34 = new javax.swing.JLabel();
         audiopanel = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         audio_buffer_system = new javax.swing.JRadioButton();
@@ -2281,6 +2283,14 @@ Boolean do_mini_const=false;
 
         rfmaxgain.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "47 dB (max sensitivity)", "44 dB", "41 dB", "38 dB", "35 dB", "32 dB (default)", "29 dB", "26 dB", "23 dB", "20 dB", "14 dB", "8 dB (max linearity)", " " }));
         p25rxconfigpanel.add(rfmaxgain, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 270, -1, 30));
+
+        vtimeout.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10ms", "80ms", "150ms", "300ms" }));
+        vtimeout.setSelectedIndex(2);
+        vtimeout.setToolTipText("The time in milliseconds after the last TDU/TDULC before the receiver switches from a voice channel back to the control channel.");
+        p25rxconfigpanel.add(vtimeout, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 120, -1, -1));
+
+        jLabel34.setText("Voice Timeout");
+        p25rxconfigpanel.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 130, -1, -1));
 
         jTabbedPane1.addTab("P25RX Configuration", p25rxconfigpanel);
 
@@ -5013,6 +5023,7 @@ private void resizeColumns2() {
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -5097,6 +5108,7 @@ private void resizeColumns2() {
     public javax.swing.JButton use_freq_primary;
     public javax.swing.JLabel volume_label;
     public javax.swing.JComboBox<String> vrep_combo;
+    public javax.swing.JComboBox<String> vtimeout;
     private javax.swing.JLabel wacn;
     public javax.swing.JButton write_cc;
     private javax.swing.JButton write_config;

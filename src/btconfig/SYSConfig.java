@@ -335,6 +335,25 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
                           parent.vrep_combo.setSelectedIndex( bb3.getInt(288) );
 
+                          int vtimeout = bb3.getInt(368);
+                          switch(vtimeout) {
+                            case  10  :
+                              parent.vtimeout.setSelectedIndex(0);
+                            break;
+                            case  80  :
+                              parent.vtimeout.setSelectedIndex(1);
+                            break;
+                            case  150  :
+                              parent.vtimeout.setSelectedIndex(2);
+                            break;
+                            case  300  :
+                              parent.vtimeout.setSelectedIndex(3);
+                            break;
+                            default :
+                              parent.vtimeout.setSelectedIndex(2);
+                            break;
+                          }
+
                           parent.rfmaxgain.setSelectedIndex( bb3.getInt(296)-4 );
 
                           if(bb3.getInt(130)==1) b=true;
@@ -436,6 +455,33 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           System.out.println("result: "+new String(result) );
 
                           cmd = "bt_gain "+(float) parent.bt_volume_slider.getValue()/100.0f+"\r\n";
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          Thread.sleep(10);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
+
+                          int vt = parent.vtimeout.getSelectedIndex();
+                          int vto = 150;
+                          switch(vt) {
+                            case  0  :
+                              vto = 10;
+                            break;
+                            case  1  :
+                              vto = 80;
+                            break;
+                            case  2  :
+                              vto = 150;
+                            break;
+                            case  3  :
+                              vto = 300;
+                            break;
+
+                            default :
+                              vto = 150;
+                            break;
+                          }
+                          cmd = "vtimeout "+vto+"\r\n";  
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(10);
                           rlen=serial_port.readBytes( result, 64);
