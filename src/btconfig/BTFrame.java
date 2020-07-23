@@ -1040,7 +1040,7 @@ Boolean do_mini_const=false;
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
       fw_ver.setText("Latest Avail: FW Date: 202007222231");
-      release_date.setText("Release: 2020-07-22 2231");
+      release_date.setText("Release: 2020-07-23 1352");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1863,6 +1863,8 @@ Boolean do_mini_const=false;
         rfmaxgain = new javax.swing.JComboBox<>();
         vtimeout = new javax.swing.JComboBox<>();
         jLabel34 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        agc_kp = new javax.swing.JComboBox<>();
         audiopanel = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         audio_buffer_system = new javax.swing.JRadioButton();
@@ -2287,13 +2289,18 @@ Boolean do_mini_const=false;
         rfmaxgain.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "47 dB (max sensitivity)", "44 dB", "41 dB", "38 dB", "35 dB", "32 dB (default)", "29 dB", "26 dB", "23 dB", "20 dB", "14 dB", "8 dB (max linearity)", " " }));
         p25rxconfigpanel.add(rfmaxgain, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 270, -1, 30));
 
-        vtimeout.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10ms", "80ms", "150ms", "300ms" }));
-        vtimeout.setSelectedIndex(2);
+        vtimeout.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "80ms", "160ms" }));
         vtimeout.setToolTipText("The time in milliseconds after the last TDU/TDULC before the receiver switches from a voice channel back to the control channel.");
-        p25rxconfigpanel.add(vtimeout, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 120, -1, -1));
+        p25rxconfigpanel.add(vtimeout, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 120, -1, -1));
 
         jLabel34.setText("Voice Timeout");
-        p25rxconfigpanel.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 130, -1, -1));
+        p25rxconfigpanel.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 130, -1, -1));
+
+        jLabel35.setText("AGC Kp");
+        p25rxconfigpanel.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 180, -1, -1));
+
+        agc_kp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Low (optimized for fixed location)", "Med", "High (optimized for mobile)" }));
+        p25rxconfigpanel.add(agc_kp, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 170, -1, -1));
 
         jTabbedPane1.addTab("P25RX Configuration", p25rxconfigpanel);
 
@@ -4921,6 +4928,7 @@ private void resizeColumns2() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JSlider agc_gain;
+    public javax.swing.JComboBox<String> agc_kp;
     private javax.swing.JLabel agc_level_lb;
     public javax.swing.JCheckBox allow_unknown_tg_cb;
     public javax.swing.JButton append_cc;
@@ -5027,6 +5035,7 @@ private void resizeColumns2() {
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

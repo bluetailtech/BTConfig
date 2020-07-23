@@ -337,21 +337,31 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
                           int vtimeout = bb3.getInt(368);
                           switch(vtimeout) {
-                            case  10  :
+                            case  80  :
                               parent.vtimeout.setSelectedIndex(0);
                             break;
-                            case  80  :
+                            case  160  :
                               parent.vtimeout.setSelectedIndex(1);
                             break;
-                            case  150  :
-                              parent.vtimeout.setSelectedIndex(2);
-                            break;
-                            case  300  :
-                              parent.vtimeout.setSelectedIndex(3);
-                            break;
                             default :
-                              parent.vtimeout.setSelectedIndex(2);
+                              parent.vtimeout.setSelectedIndex(0);
                             break;
+                          }
+
+
+                          float kp = bb3.getFloat(292);
+
+                          if(kp == 0.0001f) {
+                            parent.agc_kp.setSelectedIndex(0);
+                          }
+                          else if(kp == 0.00025f) {
+                            parent.agc_kp.setSelectedIndex(1);
+                          }
+                          else if(kp == 0.0005f) {
+                            parent.agc_kp.setSelectedIndex(2);
+                          }
+                          else {
+                            parent.agc_kp.setSelectedIndex(2);
                           }
 
                           parent.rfmaxgain.setSelectedIndex( bb3.getInt(296)-4 );
@@ -460,25 +470,44 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
 
+                          int agckp = parent.agc_kp.getSelectedIndex();
+                          float kp = 0.0005f;
 
-                          int vt = parent.vtimeout.getSelectedIndex();
-                          int vto = 150;
-                          switch(vt) {
+                          switch(agckp) {
                             case  0  :
-                              vto = 10;
+                              kp = 0.0001f;
                             break;
                             case  1  :
-                              vto = 80;
+                              kp = 0.00025f;
                             break;
                             case  2  :
-                              vto = 150;
-                            break;
-                            case  3  :
-                              vto = 300;
+                              kp = 0.0005f;
                             break;
 
                             default :
-                              vto = 150;
+                              kp = 0.0005f;
+                              parent.agc_kp.setSelectedIndex(2);
+                            break;
+                          }
+
+                          cmd = "quad_agc_bw "+kp+"\r\n";  
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          Thread.sleep(10);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
+
+                          int vt = parent.vtimeout.getSelectedIndex();
+                          int vto = 80;
+                          switch(vt) {
+                            case  0  :
+                              vto = 80;
+                            break;
+                            case  1  :
+                              vto = 160;
+                            break;
+                            default :
+                              vto = 80;
                             break;
                           }
                           cmd = "vtimeout "+vto+"\r\n";  
