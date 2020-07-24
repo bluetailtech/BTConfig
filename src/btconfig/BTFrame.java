@@ -85,6 +85,25 @@ class updateTask extends java.util.TimerTask
           }
         }
 
+        if(p25_status_timeout>0) {
+          p25_status_timeout--;
+          if(p25_status_timeout==0) {
+            p25_status_timeout=0;
+            status.setText("");
+            l3.setText("");
+            tg_indicator.setBackground(java.awt.Color.black);
+            tg_indicator.setForeground(java.awt.Color.black);
+            sq_indicator.setForeground( java.awt.Color.black );
+            sq_indicator.setBackground( java.awt.Color.black );
+
+            do_synced=false;
+          }
+          else {
+            do_synced=true;
+          }
+        }
+
+
         if(is_connected==1 && do_test_freqs==1 && do_update_firmware==0) {
           do_test_freqs=0;
           if(roaming_tests!=null) roaming_tests.test_selected_freqs(parent,serial_port);
@@ -622,7 +641,7 @@ class updateTask extends java.util.TimerTask
                       //j+=2;
                     //}
                     //plot here
-                    cpanel.addData( constellation_bytes );
+                    cpanel.addData( constellation_bytes, do_synced );
                     //if(do_mini_const) ConstPlotPanel.static_paint(tiny_const.getGraphics(),-15,15,26);
                   }
                 }
@@ -935,6 +954,7 @@ int did_read_talkgroups=0;
 int is_mac_osx=0;
 int tsbk_ps_i=0;
 int bluetooth_streaming_timer=0;
+int p25_status_timeout=0;
 Hashtable lat_lon_hash1;
 Hashtable lat_lon_hash2;
 Hashtable supergroup_hash;
@@ -942,6 +962,7 @@ Hashtable no_loc_freqs;
 Boolean do_tdma_messages=false;
 ConstPlotPanel cpanel;
 Boolean do_mini_const=false;
+boolean do_synced;
 
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
@@ -1039,8 +1060,8 @@ Boolean do_mini_const=false;
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
-      fw_ver.setText("Latest Avail: FW Date: 202007222231");
-      release_date.setText("Release: 2020-07-23 1352");
+      fw_ver.setText("Latest Avail: FW Date: 202007240311");
+      release_date.setText("Release: 2020-07-24 0311");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1361,6 +1382,25 @@ Boolean do_mini_const=false;
         start_time = new java.util.Date().getTime();
       }
 
+      if(console_line.contains("\r\ngrant 0x02") && (console_line.contains("tgroup") && console_line.contains("TDMA")) ) {
+        StringTokenizer st = new StringTokenizer(console_line," \r\n");
+        String st1 = ""; 
+        while(st.hasMoreTokens()) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.contains("tgroup") && st.hasMoreTokens()) {
+            try {
+              int tg = new Integer( st.nextToken() ).intValue();
+              String tg_str = new Integer(tg).toString();
+
+              tg_config.addTDMA(parent, tg_str, new Integer(current_sys_id).toString()); 
+              break;
+            } catch(Exception e) {
+              break;
+            }
+          }
+        }
+      }
+
       if(console_line.contains("\r\n") && (console_line.contains("tgroup") && console_line.contains("rf_channel")) ) {
       }
       if(console_line.contains("\r\n") && (console_line.contains("supergroup") && console_line.contains("rf_channel")) ) {
@@ -1384,6 +1424,11 @@ Boolean do_mini_const=false;
       if( (console_line.contains("\r\nrssi:") || console_line.contains("\r\n  ->(VOICE)")) && console_line.contains("$") ) {
 
         try {
+
+            if(console_line.contains("VOICE")) {
+              p25_status_timeout=5000;
+            }
+
             if(console_line.contains("ue 0")) {
               bluetooth_error=0;
             }
@@ -1621,6 +1666,7 @@ Boolean do_mini_const=false;
 
               //l3.setText("  CTRL TSBK_PS "+tsbk_ps+"  "+sys_id_str);
               l3.setText("  CONTROL CHANNEL TSBK_PER_SEC "+tsbk_ps);
+              p25_status_timeout=5000;
               String city="";
               try {
 
@@ -1639,6 +1685,7 @@ Boolean do_mini_const=false;
                   if(city.contains("null")) city="";
                   if(city.contains("NULL")) city="";
                   status.setText("    System: "+city+"  "+sys_id_str);
+                  p25_status_timeout=5000;
                 }
               } catch(Exception e) {
               }

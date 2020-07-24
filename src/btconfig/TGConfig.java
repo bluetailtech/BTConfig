@@ -44,6 +44,84 @@ java.text.SimpleDateFormat formatter_date;
 int did_write_tg=0;
 java.util.Hashtable tg_hash;
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public void addTDMA(BTFrame parent, String talkgroup, String sys_id) {
+  int first_empty_row=0;
+
+  if(talkgroup==null || sys_id==null) return;
+
+  talkgroup = talkgroup.replace(",","");
+  talkgroup = talkgroup.trim();
+
+  try {
+    int tg = new Integer(talkgroup).intValue();
+    if(tg==0) return;
+  } catch(Exception e) {
+  }
+
+
+  sys_id = sys_id.trim();
+
+  if(tg_hash==null) tg_hash = new java.util.Hashtable();
+    else tg_hash.clear();
+
+  for(int i=0;i<1000;i++) {
+    try {
+      Object o1 = parent.getTableObject(i,1);
+      Object o2 = parent.getTableObject(i,3);
+      if(o1!=null && o2!=null)  {
+        tg_hash.put(o1.toString().trim()+"_"+o2.toString().trim(),o1.toString().trim()+"_"+o2.toString().trim());
+      }
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  if(tg_hash.get(sys_id+"_"+talkgroup)!=null) return;  //already found this one
+
+  try {
+    int i = new Integer(talkgroup).intValue();
+  } catch(Exception e) {
+    e.printStackTrace();
+    return;
+  }
+
+  for(int i=0;i<1000;i++) {
+    try {
+      Object o1 = parent.getTableObject(i,1);
+      Object o2 = parent.getTableObject(i,3);
+      if(o1!=null && o2!=null)  {
+        first_empty_row++;
+      }
+      else {
+        break;
+      }
+
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  System.out.println("first empty row "+first_empty_row);
+
+  int idx = first_empty_row;
+
+    try {
+
+        parent.addTableObject( false, idx, 0);
+        parent.addTableObject( new Integer(sys_id), idx, 1);
+        parent.addTableObject( new Integer(1), idx, 2);
+        parent.addTableObject( new Integer(talkgroup), idx, 3);
+        parent.addTableObject( new String(talkgroup), idx, 4);
+        parent.addTableObject( "TDMA DISABLED", idx, 5);
+
+        if(parent.did_read_talkgroups==1 && parent.auto_flash_tg.isSelected()) parent.tg_update_pending=1;  //write them to flash
+
+     } catch(Exception e) {
+      e.printStackTrace();
+     }
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,8 +131,6 @@ public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String 
   if(talkgroup==null || sys_id==null) return;
 
   talkgroup = talkgroup.replace(",","");
-  talkgroup = talkgroup.trim();
-
   talkgroup = talkgroup.trim();
 
   try {

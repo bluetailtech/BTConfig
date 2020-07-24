@@ -34,6 +34,7 @@ public class ConstPlotPanel extends JPanel {
    int last_sync_state=0;
 
    ByteBuffer bb;
+   boolean do_synced=false;
 
    ///////////////////////////////////////////////////////////////////////////////////////
    ///////////////////////////////////////////////////////////////////////////////////////
@@ -54,11 +55,12 @@ public class ConstPlotPanel extends JPanel {
    
    ///////////////////////////////////////////////////////////////////////////////////////
    ///////////////////////////////////////////////////////////////////////////////////////
-   public void addData( byte[] data ) {
+   public void addData( byte[] data , boolean do_synced) {
 
      int j=0;
      //System.out.println("add data");
      try {
+       this.do_synced = do_synced;
 
        for(int i=0;i<312/2;i++) {
 
@@ -196,44 +198,46 @@ public class ConstPlotPanel extends JPanel {
 
      int sync_off=5;
 
-     //draw sync status 
-     g2d.setColor( Color.green ); 
-     j=0;
-     for(int i=0;i<256*3;i++) {
-       if(syncs[j]==1) {
+     if(do_synced) {
+       //draw sync status 
+       g2d.setColor( Color.green ); 
+       j=0;
+       for(int i=0;i<256*3;i++) {
+         if(syncs[j]==1) {
+           g2d.setColor( Color.green ); 
+           sync_off=5;
+         }
+         else if(syncs[j]==0)  {
+           g2d.setColor( Color.red ); 
+           sync_off=0;
+         }
+         else if(syncs[j]==-2)  {
+           g2d.setColor( Color.yellow ); 
+           sync_off=0;
+         }
+         else {
+           g2d.setColor( Color.black ); 
+           sync_off=0;
+         }
+         g2d.drawRoundRect(i+128, (int) 470 - syncs[j++]*sync_off,1, 1, 1, 1);
+       }
+
+       if(last_sync_state==1) {
          g2d.setColor( Color.green ); 
-         sync_off=5;
+         g2d.drawString(sync_state+" (Synced)", 300+256,75);
        }
-       else if(syncs[j]==0)  {
+       else if(last_sync_state==0)  {
          g2d.setColor( Color.red ); 
-         sync_off=0;
+         g2d.drawString(sync_state+" (No Sync)", 300+256,75);
        }
-       else if(syncs[j]==-2)  {
+       else if(last_sync_state==-2)  {
          g2d.setColor( Color.yellow ); 
-         sync_off=0;
+         g2d.drawString(sync_state+" (TDU)", 300+256,75);
        }
        else {
          g2d.setColor( Color.black ); 
-         sync_off=0;
+         g2d.drawString(sync_state+" (No Signal)", 300+256,75);
        }
-       g2d.drawRoundRect(i+128, (int) 470 - syncs[j++]*sync_off,1, 1, 1, 1);
-     }
-
-     if(last_sync_state==1) {
-       g2d.setColor( Color.green ); 
-       g2d.drawString(sync_state+" (Synced)", 300+256,75);
-     }
-     else if(last_sync_state==0)  {
-       g2d.setColor( Color.red ); 
-       g2d.drawString(sync_state+" (No Sync)", 300+256,75);
-     }
-     else if(last_sync_state==-2)  {
-       g2d.setColor( Color.yellow ); 
-       g2d.drawString(sync_state+" (TDU)", 300+256,75);
-     }
-     else {
-       g2d.setColor( Color.black ); 
-       g2d.drawString(sync_state+" (No Signal)", 300+256,75);
      }
 
    }

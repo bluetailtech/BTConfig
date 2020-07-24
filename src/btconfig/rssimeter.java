@@ -133,8 +133,9 @@ public class rssimeter extends javax.swing.JPanel
 
         g2d.setColor(new java.awt.Color(255,255,255));
         if(show_sig) {
-          if(rssi>-120) g2d.drawString( String.format("%d dBm",rssi), 130, 12);
-          else g2d.drawString( String.format("No Sig"), 130, 12);
+          g2d.drawString( String.format("%d dBm",rssi), 130, 12);
+          //if(rssi>-120) g2d.drawString( String.format("%d dBm",rssi), 130, 12);
+          //else g2d.drawString( String.format("No Sig"), 130, 12);
         }
 
     }
