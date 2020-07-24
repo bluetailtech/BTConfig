@@ -95,6 +95,11 @@ class updateTask extends java.util.TimerTask
             tg_indicator.setForeground(java.awt.Color.black);
             sq_indicator.setForeground( java.awt.Color.black );
             sq_indicator.setBackground( java.awt.Color.black );
+            sysid.setText("");
+            wacn.setText("");
+            nac.setText("");
+            rfid.setText("");
+            siteid.setText("");
 
             do_synced=false;
           }
@@ -1060,8 +1065,8 @@ boolean do_synced;
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
-      fw_ver.setText("Latest Avail: FW Date: 202007240311");
-      release_date.setText("Release: 2020-07-24 0311");
+      fw_ver.setText("Latest Avail: FW Date: 202007240736");
+      release_date.setText("Release: 2020-07-24 0736");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
