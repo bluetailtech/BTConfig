@@ -968,6 +968,7 @@ Boolean do_tdma_messages=false;
 ConstPlotPanel cpanel;
 Boolean do_mini_const=false;
 boolean do_synced;
+boolean disable_tdma=false;
 
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
@@ -994,6 +995,10 @@ boolean do_synced;
           if(args[i].equals("-tdma")) {
             do_tdma_messages=true;
             System.out.println("enable tdma / phase 2 messages");
+          }
+          if(args[i].equals("-disable-tdma")) {
+            disable_tdma=true;
+            System.out.println("disabled talkgroups that use TDMA");
           }
           if(args[i].equals("-mac")) {
             is_mac_osx=1;
@@ -1065,8 +1070,8 @@ boolean do_synced;
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
-      fw_ver.setText("Latest Avail: FW Date: 202007240736");
-      release_date.setText("Release: 2020-07-24 0736");
+      fw_ver.setText("Latest Avail: FW Date: 202007240917");
+      release_date.setText("Release: 2020-07-24 0917");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1397,7 +1402,9 @@ boolean do_synced;
               int tg = new Integer( st.nextToken() ).intValue();
               String tg_str = new Integer(tg).toString();
 
-              tg_config.addTDMA(parent, tg_str, new Integer(current_sys_id).toString()); 
+              if(disable_tdma) {
+                tg_config.addTDMA(parent, tg_str, new Integer(current_sys_id).toString()); 
+              }
               break;
             } catch(Exception e) {
               break;
