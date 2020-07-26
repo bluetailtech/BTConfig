@@ -755,7 +755,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel35">
+            <Component class="javax.swing.JLabel" name="agc_kp_lb">
               <Properties>
                 <Property name="text" type="java.lang.String" value="AGC Kp"/>
               </Properties>

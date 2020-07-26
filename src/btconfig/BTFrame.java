@@ -976,6 +976,9 @@ boolean disable_tdma=false;
 
       supergroup_hash = new Hashtable();
 
+      agc_kp.setVisible(false);
+      agc_kp_lb.setVisible(false);
+
       //jPanel25.remove(const_panel);
       cpanel = new ConstPlotPanel(this);
       const_panel.add(cpanel, java.awt.BorderLayout.CENTER);
@@ -1070,8 +1073,8 @@ boolean disable_tdma=false;
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
-      fw_ver.setText("Latest Avail: FW Date: 202007240917");
-      release_date.setText("Release: 2020-07-24 0917");
+      fw_ver.setText("Latest Avail: FW Date: 202007251929");
+      release_date.setText("Release: 2020-07-25 1929");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1922,7 +1925,7 @@ boolean disable_tdma=false;
         rfmaxgain = new javax.swing.JComboBox<>();
         vtimeout = new javax.swing.JComboBox<>();
         jLabel34 = new javax.swing.JLabel();
-        jLabel35 = new javax.swing.JLabel();
+        agc_kp_lb = new javax.swing.JLabel();
         agc_kp = new javax.swing.JComboBox<>();
         audiopanel = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
@@ -2355,8 +2358,8 @@ boolean disable_tdma=false;
         jLabel34.setText("Voice Timeout");
         p25rxconfigpanel.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 130, -1, -1));
 
-        jLabel35.setText("AGC Kp");
-        p25rxconfigpanel.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 180, -1, -1));
+        agc_kp_lb.setText("AGC Kp");
+        p25rxconfigpanel.add(agc_kp_lb, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 180, -1, -1));
 
         agc_kp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Low (optimized for fixed location)", "Med", "High (optimized for mobile)" }));
         p25rxconfigpanel.add(agc_kp, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 170, -1, -1));
@@ -4988,6 +4991,7 @@ private void resizeColumns2() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JSlider agc_gain;
     public javax.swing.JComboBox<String> agc_kp;
+    private javax.swing.JLabel agc_kp_lb;
     private javax.swing.JLabel agc_level_lb;
     public javax.swing.JCheckBox allow_unknown_tg_cb;
     public javax.swing.JButton append_cc;
@@ -5094,7 +5098,6 @@ private void resizeColumns2() {
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

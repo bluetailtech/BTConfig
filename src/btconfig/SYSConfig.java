@@ -490,6 +490,9 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                             break;
                           }
 
+                          //fixed value of "high"
+                          kp = 0.0005f;
+
                           cmd = "quad_agc_bw "+kp+"\r\n";  
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(10);
