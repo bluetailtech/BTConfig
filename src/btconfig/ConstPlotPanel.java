@@ -184,13 +184,15 @@ public class ConstPlotPanel extends JPanel {
        g2d.drawRoundRect(xoff+256+ii, 256+qq-yoff, 1, 1, 1, 1);
      }
 
+     int yoff2=-80;
+
      //draw agc gains
      g2d.setColor( Color.white ); 
      j=0;
      for(int i=0;i<256*3;i++) {
        //g2d.drawLine( j+128, (int) gains[j]+256, j+129, (int) gains[j+1]+256 );
        //j+=2;
-       g2d.drawRoundRect(i+128, (int) (875 - ((2.5f*gains[j++])+320) ),1, 1, 1, 1);
+       g2d.drawRoundRect(i+128, (int) (yoff2 + 875 - ((2.5f*gains[j++])+320) ),1, 1, 1, 1);
      }
 
      g2d.setColor( Color.white ); 
@@ -219,7 +221,7 @@ public class ConstPlotPanel extends JPanel {
            g2d.setColor( Color.black ); 
            sync_off=0;
          }
-         g2d.drawRoundRect(i+128, (int) 470 - syncs[j++]*sync_off,1, 1, 1, 1);
+         g2d.drawRoundRect(i+128, (int) yoff2 + 470 - syncs[j++]*sync_off,1, 1, 1, 1);
        }
 
        if(last_sync_state==1) {
