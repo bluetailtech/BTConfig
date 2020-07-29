@@ -65,3 +65,6 @@ https://github.com/xiasc01/java-lame
 https://github.com/Fazecast/jSerialComm
 <BR>
 https://github.com/hendriks73/pcmsampledsp
+
+2020-07-28
+add decoders dir for decoders covered by GPL licensing
