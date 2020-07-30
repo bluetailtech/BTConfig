@@ -335,16 +335,31 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
                           parent.vrep_combo.setSelectedIndex( bb3.getInt(288) );
 
-                          int vtimeout = bb3.getInt(368);
-                          switch(vtimeout) {
-                            case  80  :
+                          int tgtimeout = bb3.getInt(372);
+                          switch(tgtimeout) {
+                            case  100  :
                               parent.vtimeout.setSelectedIndex(0);
                             break;
-                            case  160  :
+                            case  250  :
                               parent.vtimeout.setSelectedIndex(1);
                             break;
+                            case  500  :
+                              parent.vtimeout.setSelectedIndex(2);
+                            break;
+                            case  1000  :
+                              parent.vtimeout.setSelectedIndex(3);
+                            break;
+                            case  1500  :
+                              parent.vtimeout.setSelectedIndex(4);
+                            break;
+                            case  2000  :
+                              parent.vtimeout.setSelectedIndex(5);
+                            break;
+                            case  3000  :
+                              parent.vtimeout.setSelectedIndex(6);
+                            break;
                             default :
-                              parent.vtimeout.setSelectedIndex(0);
+                              parent.vtimeout.setSelectedIndex(3);
                             break;
                           }
 
@@ -501,19 +516,34 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
 
                           int vt = parent.vtimeout.getSelectedIndex();
-                          int vto = 80;
+                          int vto = 1000;
                           switch(vt) {
                             case  0  :
-                              vto = 80;
+                              vto = 100;
                             break;
                             case  1  :
-                              vto = 160;
+                              vto = 250;
+                            break;
+                            case  2  :
+                              vto = 500;
+                            break;
+                            case  3  :
+                              vto = 1000;
+                            break;
+                            case  4  :
+                              vto = 1500;
+                            break;
+                            case  5  :
+                              vto = 2000;
+                            break;
+                            case  6  :
+                              vto = 3000;
                             break;
                             default :
-                              vto = 80;
+                              vto = 1000;
                             break;
                           }
-                          cmd = "vtimeout "+vto+"\r\n";  
+                          cmd = "tgtimeout "+vto+"\r\n";  
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(10);
                           rlen=serial_port.readBytes( result, 64);

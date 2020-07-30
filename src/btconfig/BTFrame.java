@@ -1073,8 +1073,8 @@ boolean disable_tdma=false;
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
-      fw_ver.setText("Latest Avail: FW Date: 202007261320");
-      release_date.setText("Release: 2020-07-26 1320");
+      fw_ver.setText("Latest Avail: FW Date: 202007291856");
+      release_date.setText("Release: 2020-07-29 1856");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2351,12 +2351,12 @@ boolean disable_tdma=false;
         rfmaxgain.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "47 dB (max sensitivity)", "44 dB", "41 dB", "38 dB", "35 dB", "32 dB (default)", "29 dB", "26 dB", "23 dB", "20 dB", "14 dB", "8 dB (max linearity)", " " }));
         p25rxconfigpanel.add(rfmaxgain, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 270, -1, 30));
 
-        vtimeout.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "80ms", "160ms" }));
-        vtimeout.setToolTipText("The time in milliseconds after the last TDU/TDULC before the receiver switches from a voice channel back to the control channel.");
+        vtimeout.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "100ms", "250ms", "500ms", "1sec", "1.5sec", "2sec", "3sec" }));
+        vtimeout.setToolTipText("The time since the last activity on a talk group before the receiver will follow a different talk group.");
         p25rxconfigpanel.add(vtimeout, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 120, -1, -1));
 
-        jLabel34.setText("Voice Timeout");
-        p25rxconfigpanel.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 130, -1, -1));
+        jLabel34.setText("Talk Group Timeout");
+        p25rxconfigpanel.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 125, -1, -1));
 
         agc_kp_lb.setText("AGC Kp");
         p25rxconfigpanel.add(agc_kp_lb, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 180, -1, -1));

@@ -728,12 +728,17 @@
             <Component class="javax.swing.JComboBox" name="vtimeout">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="2">
-                    <StringItem index="0" value="80ms"/>
-                    <StringItem index="1" value="160ms"/>
+                  <StringArray count="7">
+                    <StringItem index="0" value="100ms"/>
+                    <StringItem index="1" value="250ms"/>
+                    <StringItem index="2" value="500ms"/>
+                    <StringItem index="3" value="1sec"/>
+                    <StringItem index="4" value="1.5sec"/>
+                    <StringItem index="5" value="2sec"/>
+                    <StringItem index="6" value="3sec"/>
                   </StringArray>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="The time in milliseconds after the last TDU/TDULC before the receiver switches from a voice channel back to the control channel."/>
+                <Property name="toolTipText" type="java.lang.String" value="The time since the last activity on a talk group before the receiver will follow a different talk group."/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -747,11 +752,11 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel34">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Voice Timeout"/>
+                <Property name="text" type="java.lang.String" value="Talk Group Timeout"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="650" y="130" width="-1" height="-1"/>
+                  <AbsoluteConstraints x="610" y="125" width="-1" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
