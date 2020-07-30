@@ -337,29 +337,32 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
                           int tgtimeout = bb3.getInt(372);
                           switch(tgtimeout) {
-                            case  100  :
+                            case  1  :
                               parent.vtimeout.setSelectedIndex(0);
                             break;
-                            case  250  :
+                            case  100  :
                               parent.vtimeout.setSelectedIndex(1);
                             break;
-                            case  500  :
+                            case  250  :
                               parent.vtimeout.setSelectedIndex(2);
                             break;
-                            case  1000  :
+                            case  500  :
                               parent.vtimeout.setSelectedIndex(3);
                             break;
-                            case  1500  :
+                            case  1000  :
                               parent.vtimeout.setSelectedIndex(4);
                             break;
-                            case  2000  :
+                            case  1500  :
                               parent.vtimeout.setSelectedIndex(5);
                             break;
-                            case  3000  :
+                            case  2000  :
                               parent.vtimeout.setSelectedIndex(6);
                             break;
+                            case  3000  :
+                              parent.vtimeout.setSelectedIndex(7);
+                            break;
                             default :
-                              parent.vtimeout.setSelectedIndex(3);
+                              parent.vtimeout.setSelectedIndex(4);
                             break;
                           }
 
@@ -519,24 +522,27 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           int vto = 1000;
                           switch(vt) {
                             case  0  :
-                              vto = 100;
+                              vto = 1;
                             break;
                             case  1  :
-                              vto = 250;
+                              vto = 100;
                             break;
                             case  2  :
-                              vto = 500;
+                              vto = 250;
                             break;
                             case  3  :
-                              vto = 1000;
+                              vto = 500;
                             break;
                             case  4  :
-                              vto = 1500;
+                              vto = 1000;
                             break;
                             case  5  :
-                              vto = 2000;
+                              vto = 1500;
                             break;
                             case  6  :
+                              vto = 2000;
+                            break;
+                            case  7  :
                               vto = 3000;
                             break;
                             default :
