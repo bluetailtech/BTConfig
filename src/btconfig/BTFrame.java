@@ -1073,8 +1073,8 @@ boolean disable_tdma=false;
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
-      fw_ver.setText("Latest Avail: FW Date: 202007301531");
-      release_date.setText("Release: 2020-07-30 1531");
+      fw_ver.setText("Latest Avail: FW Date: 202008101335");
+      release_date.setText("Release: 2020-08-10 1335");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1395,6 +1395,18 @@ boolean disable_tdma=false;
         start_time = new java.util.Date().getTime();
       }
 
+      if(console_line.contains("sig 1")) {
+        sq_indicator.setForeground( java.awt.Color.green );
+        sq_indicator.setBackground( java.awt.Color.green );
+        p25_status_timeout=5000;
+        l3.setText("");
+        setStatus("");
+      }
+      if(console_line.contains("sig 0")) {
+        sq_indicator.setForeground( java.awt.Color.black );
+        sq_indicator.setBackground( java.awt.Color.black );
+      }
+
       if(console_line.contains("\r\ngrant 0x02") && (console_line.contains("tgroup") && console_line.contains("TDMA")) ) {
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
@@ -1436,7 +1448,7 @@ boolean disable_tdma=false;
         }
       }
 
-      if( (console_line.contains("\r\nrssi:") || console_line.contains("\r\n  ->(VOICE)")) && console_line.contains("$") ) {
+      if( (console_line.contains("rssi:") || console_line.contains("\r\n  ->(VOICE)")) && console_line.contains("$") ) {
 
         try {
 
@@ -1465,6 +1477,7 @@ boolean disable_tdma=false;
           if(console_line.contains("sa 1")) {
             bluetooth_streaming_timer=60000;
           }
+
 
           //do_add=0;
           StringTokenizer st = new StringTokenizer(console_line," \r\n");
@@ -1658,6 +1671,7 @@ boolean disable_tdma=false;
               sig_meter_timeout=5000;
             }
 
+
             if(st1.equals("tsbk_ps")) {
               did_metadata=0;
               tsbk_ps = st.nextToken();
@@ -1779,7 +1793,7 @@ boolean disable_tdma=false;
               sq_indicator.setForeground( java.awt.Color.black );
               sq_indicator.setBackground( java.awt.Color.black );
             }
-            else { 
+            else if( console_line.contains("tsbk_ps") ) { 
               if( tsbk_ps_i > 20) {
                 sq_indicator.setForeground( java.awt.Color.green );
                 sq_indicator.setBackground( java.awt.Color.green );
