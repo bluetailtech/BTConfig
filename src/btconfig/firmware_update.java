@@ -205,7 +205,7 @@ SerialPort serial_port;
               send_cmd("system_reset\r\n", 100);
 
               try {
-                Thread.sleep(3000);
+                Thread.sleep(5000);
               } catch(Exception e) {
               }
               //serial_port.closePort();
@@ -306,7 +306,7 @@ SerialPort serial_port;
               send_cmd("system_reset\r\n", 10);
 
               try {
-                Thread.sleep(5000);
+                Thread.sleep(7000);
               } catch(Exception e) {
               }
               //serial_port.closePort();
@@ -416,7 +416,7 @@ SerialPort serial_port;
               }
 
               try {
-                Thread.sleep(3000);
+                Thread.sleep(5000);
               } catch(Exception e) {
               }
               //serial_port.closePort();

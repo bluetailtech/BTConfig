@@ -663,7 +663,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                         serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
 
                         try {
-                          Thread.sleep(3000);
+                          Thread.sleep(5000);
                         } catch(Exception e) {
                         }
 
