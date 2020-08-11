@@ -29,6 +29,7 @@ public class ConstPlotPanel extends JPanel {
    static int[] syncs = new int[256*3];
 
    static String current_gain="";
+   static String current_rf_gain="";
    static String sync_state="";
    BTFrame parent;
    int last_sync_state=0;
@@ -62,7 +63,7 @@ public class ConstPlotPanel extends JPanel {
      try {
        this.do_synced = do_synced;
 
-       for(int i=0;i<312/2;i++) {
+       for(int i=0;i<308/2;i++) {
 
          int ii = (int) ((double) data[j++]);
          int qq = (int) ((double) data[j++]);
@@ -81,9 +82,12 @@ public class ConstPlotPanel extends JPanel {
        bb = ByteBuffer.wrap(data);
        bb.order(ByteOrder.LITTLE_ENDIAN);
 
+       int rfgain = bb.getInt(308);
        float gain = bb.getFloat(312);
+
        //System.out.println("gain: "+java.lang.Math.log10(gain)*20.0f);
        current_gain = "soft agc gain: "+String.format("%3.1f", java.lang.Math.log10(gain)*20.0f)+" dB";
+       current_rf_gain = "front-end RF gain: "+String.format("%d", rfgain)+" dB";
 
 
        gains[gains_idx++] = (float) java.lang.Math.log10(gain)*20.0f;
@@ -197,6 +201,7 @@ public class ConstPlotPanel extends JPanel {
 
      g2d.setColor( Color.white ); 
      g2d.drawString(current_gain, 300+256,50);
+     g2d.drawString(current_rf_gain, 300+256,75);
 
      int sync_off=5;
 
@@ -226,19 +231,19 @@ public class ConstPlotPanel extends JPanel {
 
        if(last_sync_state==1) {
          g2d.setColor( Color.green ); 
-         g2d.drawString(sync_state+" (Synced)", 300+256,75);
+         g2d.drawString(sync_state+" (Synced)", 300+256,100);
        }
        else if(last_sync_state==0)  {
          g2d.setColor( Color.red ); 
-         g2d.drawString(sync_state+" (No Sync)", 300+256,75);
+         g2d.drawString(sync_state+" (No Sync)", 300+256,100);
        }
        else if(last_sync_state==-2)  {
          g2d.setColor( Color.yellow ); 
-         g2d.drawString(sync_state+" (TDU)", 300+256,75);
+         g2d.drawString(sync_state+" (TDU)", 300+256,100);
        }
        else {
          g2d.setColor( Color.black ); 
-         g2d.drawString(sync_state+" (No Signal)", 300+256,75);
+         g2d.drawString(sync_state+" (No Signal)", 300+256,100);
        }
      }
 
