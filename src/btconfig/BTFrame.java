@@ -723,9 +723,11 @@ class updateTask extends java.util.TimerTask
 
                           mp3_file = new File(home_dir+"p25rx/p25rx_recording_"+current_date+".mp3");
                           meta_file = new File(home_dir+"p25rx/p25rx_recmeta_"+current_date+".txt");
+                          conlog_file = new File(home_dir+"p25rx/p25rx_conlog_"+current_date+".txt");
 
                           fos_mp3 = new FileOutputStream( mp3_file, true ); 
                           fos_meta = new FileOutputStream( meta_file, true ); 
+                          fos_conlog = new FileOutputStream( conlog_file, true ); 
                         } catch(Exception e) {
                           //e.printStackTrace();
                         }
@@ -921,8 +923,10 @@ String current_date=null;
 String home_dir=null;
 FileOutputStream fos_mp3;
 FileOutputStream fos_meta;
+FileOutputStream fos_conlog;
 File mp3_file=null;
 File meta_file=null;
+File conlog_file=null;
 java.text.SimpleDateFormat formatter_date;
 java.text.SimpleDateFormat time_format;
 int current_sys_id = 0;
@@ -1073,8 +1077,8 @@ boolean disable_tdma=false;
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
-      fw_ver.setText("Latest Avail: FW Date: 202008110415");
-      release_date.setText("Release: 2020-08-11 0415");
+      fw_ver.setText("Latest Avail: FW Date: 202008110906");
+      release_date.setText("Release: 2020-08-11 0906");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1381,6 +1385,14 @@ boolean disable_tdma=false;
 
 
       if(str!=null && do_console_output==1) System.out.println(str.trim());
+
+      if( enable_conlog.isSelected() ) {
+        try {
+          fos_conlog.write(str.getBytes(),0,str.length());  //write Int num records
+          fos_conlog.flush();
+        } catch(Exception e) {
+        }
+      }
 
       String talkgroup="";
       String freqval="";
@@ -2020,6 +2032,7 @@ boolean disable_tdma=false;
         jPanel6 = new javax.swing.JPanel();
         enable_voice_const = new javax.swing.JRadioButton();
         enable_commands = new javax.swing.JRadioButton();
+        enable_conlog = new javax.swing.JCheckBox();
         logpanel = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         log_ta = new javax.swing.JTextArea();
@@ -4122,6 +4135,14 @@ boolean disable_tdma=false;
         });
         jPanel6.add(enable_commands);
 
+        enable_conlog.setText("Enable Console Logging ");
+        enable_conlog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enable_conlogActionPerformed(evt);
+            }
+        });
+        jPanel6.add(enable_conlog);
+
         consolePanel.add(jPanel6, java.awt.BorderLayout.PAGE_END);
 
         jTabbedPane1.addTab("Console", consolePanel);
@@ -4818,6 +4839,10 @@ boolean disable_tdma=false;
        prefs.putInt("nsymbols", nsymbols.getSelectedIndex());
     }//GEN-LAST:event_nsymbolsActionPerformed
 
+    private void enable_conlogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enable_conlogActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_enable_conlogActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5047,6 +5072,7 @@ private void resizeColumns2() {
     public javax.swing.JCheckBox en_bluetooth_cb;
     public javax.swing.JCheckBox enable_audio;
     private javax.swing.JRadioButton enable_commands;
+    private javax.swing.JCheckBox enable_conlog;
     public javax.swing.JCheckBox enable_leds;
     public javax.swing.JCheckBox enable_mp3;
     private javax.swing.JButton enable_table_rows;
