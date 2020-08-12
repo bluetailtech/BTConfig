@@ -707,8 +707,10 @@ class updateTask extends java.util.TimerTask
                           if(fos_mp3!=null) fos_mp3.close();
                           if(fos_meta!=null) fos_meta.close();
                           if(encoder!=null) encoder.close();
+                          if(fos_conlog!=null) fos_conlog.close();
                           fos_mp3 = null;
                           fos_meta = null;
+                          fos_conlog=null;
                           encoder=null;
                           skip_header=1;
                         } catch(Exception e) {
@@ -1077,9 +1079,28 @@ boolean disable_tdma=false;
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
-      fw_ver.setText("Latest Avail: FW Date: 202008111828");
-      release_date.setText("Release: 2020-08-11 1828");
+      fw_ver.setText("Latest Avail: FW Date: 202008120519");
+      release_date.setText("Release: 2020-08-12 0519");
       fw_installed.setText("   Installed FW: ");
+
+
+
+        try {
+          Path path = Paths.get(home_dir+"p25rx");
+          Files.createDirectories(path);
+          String date = formatter_date.format(new java.util.Date() );
+
+          if( current_date==null || !current_date.equals(date) ) {
+            current_date=new String(date);  //date changed
+          }
+
+          conlog_file = new File(home_dir+"p25rx/p25rx_conlog_"+current_date+".txt");
+          fos_conlog = new FileOutputStream( conlog_file, true ); 
+        } catch(Exception e) {
+          e.printStackTrace();
+        }
+
+
 
       setProgress(-1);
 
