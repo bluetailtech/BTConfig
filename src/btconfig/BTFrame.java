@@ -1077,8 +1077,8 @@ boolean disable_tdma=false;
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
-      fw_ver.setText("Latest Avail: FW Date: 202008110906");
-      release_date.setText("Release: 2020-08-11 0906");
+      fw_ver.setText("Latest Avail: FW Date: 202008111828");
+      release_date.setText("Release: 2020-08-11 1828");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4135,7 +4135,7 @@ boolean disable_tdma=false;
         });
         jPanel6.add(enable_commands);
 
-        enable_conlog.setText("Enable Console Logging ");
+        enable_conlog.setText("Enable Log To File");
         enable_conlog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 enable_conlogActionPerformed(evt);

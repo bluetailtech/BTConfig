@@ -4685,7 +4685,7 @@
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="enable_conlog">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Enable Console Logging "/>
+                    <Property name="text" type="java.lang.String" value="Enable Log To File"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="enable_conlogActionPerformed"/>
