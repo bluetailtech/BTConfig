@@ -716,8 +716,6 @@ class updateTask extends java.util.TimerTask
                         }
 
                         try {
-
-
                           Path path = Paths.get(home_dir+"p25rx");
                           Files.createDirectories(path);
 
@@ -1077,8 +1075,30 @@ boolean disable_tdma=false;
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
 
-      fw_ver.setText("Latest Avail: FW Date: 202008120838");
-      release_date.setText("Release: 2020-08-12 0838");
+
+      try {
+        Path path = Paths.get(home_dir+"p25rx");
+        Files.createDirectories(path);
+
+        String date = formatter_date.format(new java.util.Date() );
+        current_date=new String(date);  //date changed
+
+        mp3_file = new File(home_dir+"p25rx/p25rx_recording_"+current_date+".mp3");
+        meta_file = new File(home_dir+"p25rx/p25rx_recmeta_"+current_date+".txt");
+        conlog_file = new File(home_dir+"p25rx/p25rx_conlog_"+current_date+".txt");
+
+        fos_mp3 = new FileOutputStream( mp3_file, true ); 
+        fos_meta = new FileOutputStream( meta_file, true ); 
+        fos_conlog = new FileOutputStream( conlog_file, true ); 
+      } catch(Exception e) {
+        //e.printStackTrace();
+      }
+
+
+
+
+      fw_ver.setText("Latest Avail: FW Date: 202008120913");
+      release_date.setText("Release: 2020-08-12 0913");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
