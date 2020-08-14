@@ -1097,8 +1097,8 @@ boolean disable_tdma=false;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008120913");
-      release_date.setText("Release: 2020-08-12 0913");
+      fw_ver.setText("Latest Avail: FW Date: 202008141048");
+      release_date.setText("Release: 2020-08-14 1048");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1408,6 +1408,10 @@ boolean disable_tdma=false;
 
       if( enable_conlog.isSelected() ) {
         try {
+          String date = time_format.format(new java.util.Date() );
+          str = str.replaceAll("DATA_SYNC",date+" "+"DATA_SYNC");
+          str = str.replaceAll("found DMR_BS_VOICE_SYNC",date+" "+"found DMR_BS_VOICE_SYNC");
+
           fos_conlog.write(str.getBytes(),0,str.length());  //write Int num records
           fos_conlog.flush();
         } catch(Exception e) {
@@ -1861,6 +1865,11 @@ boolean disable_tdma=false;
       if(do_add==1) {
 
         if(str.length()>0 ) {
+
+          String date = time_format.format(new java.util.Date() );
+          str = str.replaceAll("DATA_SYNC",date+" "+"DATA_SYNC");
+          str = str.replaceAll("found DMR_BS_VOICE_SYNC",date+" "+"found DMR_BS_VOICE_SYNC");
+
           jTextArea1.append(str);
           jTextArea1.setCaretPosition(jTextArea1.getText().length());
 
