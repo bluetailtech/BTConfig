@@ -1097,8 +1097,8 @@ boolean disable_tdma=false;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008141845");
-      release_date.setText("Release: 2020-08-14 1845");
+      fw_ver.setText("Latest Avail: FW Date: 202008150138");
+      release_date.setText("Release: 2020-08-15 0138");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1418,6 +1418,7 @@ boolean disable_tdma=false;
         }
       }
 
+
       String talkgroup="";
       String freqval="";
       String tsbk_ps="";
@@ -1429,6 +1430,14 @@ boolean disable_tdma=false;
 
       if(console_line.contains("\r\n") && console_line.contains("Return To Control") ) {
         start_time = new java.util.Date().getTime();
+      }
+
+      if( console_line.contains("DATA_SYNC") ) {
+        sysid.setText("");
+        wacn.setText("");
+        nac.setText("");
+        rfid.setText("");
+        siteid.setText("");
       }
 
       if(console_line.contains("sig 1")) {
@@ -1684,7 +1693,10 @@ boolean disable_tdma=false;
             if(st1.equals("freq:")) {
               freqval = st.nextToken();
               freqval = freqval.substring(0,freqval.length()-1);
+
+              freq.setText("Freq: "+freqval);
               freqval = " "+freqval+" MHz, ";
+
             }
 
             if( (st1.contains("Skipping") && do_tdma_messages) || st1.contains("MOT_GRG") ) {
@@ -1704,7 +1716,7 @@ boolean disable_tdma=false;
               String rssi = st.nextToken();
               rssi = rssi.replace(","," ").trim();
               rssim1.setValue( Integer.valueOf(rssi).intValue(),true );
-              sig_meter_timeout=5000;
+              sig_meter_timeout=20000;
             }
 
 
