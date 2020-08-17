@@ -323,11 +323,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
 
 
-                          vol = bb3.getFloat(176);
-                          vol *= 100.0f;
-                          parent.bt_volume_slider.setValue( (int) vol );
-                          parent.btgain_label.setText( String.format("%3.2f", vol/100.0f) );
-
                           int bt_reset = bb3.getInt(260)/60;
                           if(bt_reset>0 && bt_reset<5) bt_reset=10;
                           parent.bluetooth_reset.setText( String.format("%d", bt_reset) );
@@ -477,12 +472,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
                           //if( ! new String(result).trim().contains("frequency: "+parent.frequency_tf.getText().trim()) ) return;
                           cmd = "vol "+(float) parent.lineout_vol_slider.getValue()/100.0f+"\r\n";
-                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-                          Thread.sleep(10);
-                          rlen=serial_port.readBytes( result, 64);
-                          System.out.println("result: "+new String(result) );
-
-                          cmd = "bt_gain "+(float) parent.bt_volume_slider.getValue()/100.0f+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(10);
                           rlen=serial_port.readBytes( result, 64);

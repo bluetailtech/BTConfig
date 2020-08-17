@@ -1105,8 +1105,8 @@ boolean disable_tdma=false;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008170756");
-      release_date.setText("Release: 2020-08-17 0756");
+      fw_ver.setText("Latest Avail: FW Date: 202008171612");
+      release_date.setText("Release: 2020-08-17 1612");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1973,14 +1973,10 @@ boolean disable_tdma=false;
         read_config = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         lineout_vol_slider = new javax.swing.JSlider();
-        jLabel6 = new javax.swing.JLabel();
         en_bluetooth_cb = new javax.swing.JCheckBox();
-        bt_volume_slider = new javax.swing.JSlider();
         allow_unknown_tg_cb = new javax.swing.JCheckBox();
         volume_label = new javax.swing.JLabel();
-        btgain_label = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         enable_leds = new javax.swing.JCheckBox();
         btreset1 = new javax.swing.JLabel();
         bluetooth_reset = new javax.swing.JTextField();
@@ -2002,6 +1998,8 @@ boolean disable_tdma=false;
         jLabel34 = new javax.swing.JLabel();
         agc_kp_lb = new javax.swing.JLabel();
         agc_kp = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        jComboBox6 = new javax.swing.JComboBox<>();
         audiopanel = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         audio_buffer_system = new javax.swing.JRadioButton();
@@ -2328,9 +2326,6 @@ boolean disable_tdma=false;
         });
         p25rxconfigpanel.add(lineout_vol_slider, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, -1, 30));
 
-        jLabel6.setText("BlueTooth Volume");
-        p25rxconfigpanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, -1, -1));
-
         en_bluetooth_cb.setSelected(true);
         en_bluetooth_cb.setText("Enable Bluetooth On Power-Up");
         en_bluetooth_cb.addActionListener(new java.awt.event.ActionListener() {
@@ -2340,17 +2335,6 @@ boolean disable_tdma=false;
         });
         p25rxconfigpanel.add(en_bluetooth_cb, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
 
-        bt_volume_slider.setPaintLabels(true);
-        bt_volume_slider.setPaintTicks(true);
-        bt_volume_slider.setToolTipText("This option control the audio level sent wirelessly to a remote bluetooth audio device.");
-        bt_volume_slider.setValue(100);
-        bt_volume_slider.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                bt_volume_sliderStateChanged(evt);
-            }
-        });
-        p25rxconfigpanel.add(bt_volume_slider, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, -1, -1));
-
         allow_unknown_tg_cb.setSelected(true);
         allow_unknown_tg_cb.setText("Allow Unknown Talkgroups");
         p25rxconfigpanel.add(allow_unknown_tg_cb, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, -1, -1));
@@ -2358,14 +2342,8 @@ boolean disable_tdma=false;
         volume_label.setText("1.0");
         p25rxconfigpanel.add(volume_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, -1, -1));
 
-        btgain_label.setText("1.0");
-        p25rxconfigpanel.add(btgain_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 210, -1, -1));
-
         jLabel9.setText("Default: 0.8");
         p25rxconfigpanel.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 130, -1, -1));
-
-        jLabel10.setText("Default 0.8");
-        p25rxconfigpanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 210, -1, -1));
 
         enable_leds.setSelected(true);
         enable_leds.setText("Enable Status LEDS");
@@ -2439,6 +2417,12 @@ boolean disable_tdma=false;
 
         agc_kp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Low (optimized for fixed location)", "Med", "High (optimized for mobile)" }));
         p25rxconfigpanel.add(agc_kp, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 170, -1, -1));
+
+        jLabel6.setText("Mode");
+        p25rxconfigpanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, -1));
+
+        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "P25", "DMR" }));
+        p25rxconfigpanel.add(jComboBox6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, -1, 30));
 
         jTabbedPane1.addTab("P25RX Configuration", p25rxconfigpanel);
 
@@ -4652,10 +4636,6 @@ boolean disable_tdma=false;
       volume_label.setText( String.format( "%3.2f", (float) lineout_vol_slider.getValue() / 100.0f ) );
     }//GEN-LAST:event_lineout_vol_sliderStateChanged
 
-    private void bt_volume_sliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_bt_volume_sliderStateChanged
-      btgain_label.setText( String.format( "%3.2f", (float) bt_volume_slider.getValue() / 100.0f ) );
-    }//GEN-LAST:event_bt_volume_sliderStateChanged
-
     private void disable_table_rowsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disable_table_rowsActionPerformed
       int[] rows = jTable1.getSelectedRows();
       if(rows.length>0) {
@@ -5096,8 +5076,6 @@ private void resizeColumns2() {
     private javax.swing.JPanel bottom_panel;
     private javax.swing.JToggleButton bt_indicator;
     private javax.swing.JLabel bt_lb;
-    public javax.swing.JSlider bt_volume_slider;
-    public javax.swing.JLabel btgain_label;
     private javax.swing.JLabel btreset1;
     private javax.swing.JLabel btreset2;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -5159,8 +5137,8 @@ private void resizeColumns2() {
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox5;
+    private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
