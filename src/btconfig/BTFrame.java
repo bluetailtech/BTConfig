@@ -721,7 +721,11 @@ class updateTask extends java.util.TimerTask
 
                           mp3_file = new File(home_dir+"p25rx/p25rx_recording_"+current_date+".mp3");
                           meta_file = new File(home_dir+"p25rx/p25rx_recmeta_"+current_date+".txt");
-                          conlog_file = new File(home_dir+"p25rx/p25rx_conlog_"+current_date+".txt");
+                          //conlog_file = new File(home_dir+"p25rx/p25rx_conlog_"+current_date+".txt");
+                          String exe_path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath().toString();
+                          exe_path = exe_path.replace("BTConfig.exe", "");
+                          conlog_file = new File(exe_path+"p25rx_conlog_"+current_date+".txt");
+                          System.out.println("log file path: "+exe_path+"p25rx_conlog_"+current_date+".txt");
 
                           fos_mp3 = new FileOutputStream( mp3_file, true ); 
                           fos_meta = new FileOutputStream( meta_file, true ); 
@@ -1085,7 +1089,11 @@ boolean disable_tdma=false;
 
         mp3_file = new File(home_dir+"p25rx/p25rx_recording_"+current_date+".mp3");
         meta_file = new File(home_dir+"p25rx/p25rx_recmeta_"+current_date+".txt");
-        conlog_file = new File(home_dir+"p25rx/p25rx_conlog_"+current_date+".txt");
+        //conlog_file = new File(home_dir+"p25rx_conlog_"+current_date+".txt");
+        String exe_path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath().toString();
+        exe_path = exe_path.replace("BTConfig.exe", "");
+        conlog_file = new File(exe_path+"p25rx_conlog_"+current_date+".txt");
+        System.out.println("log file path: "+exe_path+"p25rx_conlog_"+current_date+".txt");
 
         fos_mp3 = new FileOutputStream( mp3_file, true ); 
         fos_meta = new FileOutputStream( meta_file, true ); 
@@ -1097,8 +1105,8 @@ boolean disable_tdma=false;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008151035");
-      release_date.setText("Release: 2020-08-15 1035");
+      fw_ver.setText("Latest Avail: FW Date: 202008170756");
+      release_date.setText("Release: 2020-08-17 0756");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
