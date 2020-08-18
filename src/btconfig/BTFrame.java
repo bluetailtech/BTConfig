@@ -963,6 +963,7 @@ int do_console_output=0;
 int do_write_roaming_flash_only=0;
 int did_read_talkgroups=0;
 int is_mac_osx=0;
+int is_dmr_mode=0;
 int tsbk_ps_i=0;
 int bluetooth_streaming_timer=0;
 int p25_status_timeout=0;
@@ -1105,8 +1106,8 @@ boolean disable_tdma=false;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008171612");
-      release_date.setText("Release: 2020-08-17 1612");
+      fw_ver.setText("Latest Avail: FW Date: 202008180934");
+      release_date.setText("Release: 2020-08-18 0934");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1501,7 +1502,7 @@ boolean disable_tdma=false;
         }
       }
 
-      if( (console_line.contains("rssi:") || console_line.contains("\r\n  ->(VOICE)")) && console_line.contains("$") ) {
+      if( (console_line.contains("DMR")) || (console_line.contains("rssi:") || console_line.contains("\r\n  ->(VOICE)")) && console_line.contains("$") ) {
 
         try {
 
@@ -1666,6 +1667,10 @@ boolean disable_tdma=false;
               }
             }
 
+            if(st1.equals("DMR")) {
+              is_dmr_mode=1;
+            }
+
             if(st1.equals("sys_id")) {
               String sys_id_str = st.nextToken();
               try {
@@ -1737,7 +1742,7 @@ boolean disable_tdma=false;
                 sys_id_str = "SYS_ID: "+sys_id_str;
                 String hex_nac = String.format("0x%03x", current_sys_id);
                 sys_id_str = sys_id_str.concat(" ("+hex_nac+" hex)");
-              if(current_sys_id==0) {
+              if(is_dmr_mode==0 && current_sys_id==0) {
                 //sys_id_str = new Integer(current_sys_id).toString();
                 //sys_id_str = "SYS_ID: "+sys_id_str;
                 //sys_id_str = sys_id_str.concat("<-invalid");
@@ -1820,10 +1825,13 @@ boolean disable_tdma=false;
             }
 
             String st2 = new String("");
-            if(st1.contains("Desc:")) {
+            if(st1.contains("Desc:") ) {
 
               while(st.hasMoreTokens()) {
-                st2 = st2.concat( st.nextToken()+" " );
+                String next_str  = st.nextToken()+" ";
+                if(next_str.contains("Con+")) break;
+                
+                st2 = st2.concat(next_str);
                 if(st2.contains(",") && st2.length()>2) {
                   l3.setText(freqval+st2.substring(0,st2.length()-2)+talkgroup);
                   break;
@@ -2422,6 +2430,7 @@ boolean disable_tdma=false;
         p25rxconfigpanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, -1));
 
         jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "P25", "DMR" }));
+        jComboBox6.setEnabled(false);
         p25rxconfigpanel.add(jComboBox6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, -1, 30));
 
         jTabbedPane1.addTab("P25RX Configuration", p25rxconfigpanel);
