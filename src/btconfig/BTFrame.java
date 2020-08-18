@@ -1753,8 +1753,12 @@ boolean disable_tdma=false;
                 do_update_talkgroups=1;
               }
 
-              //l3.setText("  CTRL TSBK_PS "+tsbk_ps+"  "+sys_id_str);
-              l3.setText("  CONTROL CHANNEL TSBK_PER_SEC "+tsbk_ps);
+              if(is_dmr_mode==1) {
+                l3.setText("  DMR CONTROL CHANNEL TSBK_PER_SEC "+tsbk_ps);
+              }
+              else {
+                l3.setText("  P25 CONTROL CHANNEL TSBK_PER_SEC "+tsbk_ps);
+              }
               p25_status_timeout=5000;
               String city="";
               try {
