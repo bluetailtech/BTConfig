@@ -1106,8 +1106,8 @@ boolean disable_tdma=false;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008180934");
-      release_date.setText("Release: 2020-08-18 0934");
+      fw_ver.setText("Latest Avail: FW Date: 202008180953");
+      release_date.setText("Release: 2020-08-18 0953");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1669,6 +1669,7 @@ boolean disable_tdma=false;
 
             if(st1.equals("DMR")) {
               is_dmr_mode=1;
+              p25_status_timeout=5000;
             }
 
             if(st1.equals("sys_id")) {
@@ -1834,6 +1835,7 @@ boolean disable_tdma=false;
                 st2 = st2.concat(next_str);
                 if(st2.contains(",") && st2.length()>2) {
                   l3.setText(freqval+st2.substring(0,st2.length()-2)+talkgroup);
+                  p25_status_timeout=5000;
                   break;
                 }
               }
