@@ -1106,8 +1106,8 @@ boolean disable_tdma=false;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008180953");
-      release_date.setText("Release: 2020-08-18 0953");
+      fw_ver.setText("Latest Avail: FW Date: 202008181108");
+      release_date.setText("Release: 2020-08-18 1108");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4905,6 +4905,8 @@ public void do_meta() {
   if(l3!=null & did_metadata==0 && l3.getText().trim().length()>0) {
 
     if(l3.getText().contains("CONTROL CHANNEL TSBK")) return; 
+
+    if( is_dmr_mode==1 ) freq_str = freq.getText();
 
     //meta String
     String metadata =""; 
