@@ -1858,6 +1858,7 @@ boolean disable_tdma=false;
               sq_indicator.setBackground( java.awt.Color.black );
             }
             else if( console_line.contains("tsbk_ps") ) { 
+              if( is_dmr_mode==1 ) tsbk_ps_i*=2;
               if( tsbk_ps_i > 20) {
                 sq_indicator.setForeground( java.awt.Color.green );
                 sq_indicator.setBackground( java.awt.Color.green );
