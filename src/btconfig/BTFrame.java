@@ -1453,8 +1453,6 @@ boolean disable_tdma=false;
         sq_indicator.setForeground( java.awt.Color.green );
         sq_indicator.setBackground( java.awt.Color.green );
         p25_status_timeout=5000;
-        l3.setText("");
-        setStatus("");
       }
       if(console_line.contains("sig 0")) {
         sq_indicator.setForeground( java.awt.Color.black );
