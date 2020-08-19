@@ -267,7 +267,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                       System.out.println( String.format("\r\nallow unknown tg: %d",bb3.getInt(130)) );
                       System.out.println( String.format("\r\nenable_roaming %d",bb3.getInt(68)) );
                       System.out.println( String.format("\r\nno_voice_roam_sec",bb3.getInt(280)) );
-                      System.out.println( String.format("\r\nvrep",bb3.getInt(288)) );
 
                       System.out.println( String.format("\r\nconfig verson: %d",bb3.getInt(544)) );
                       System.out.println( String.format("\r\nconfig crc: 0x%08x",config_crc) );
@@ -328,7 +327,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           parent.bluetooth_reset.setText( String.format("%d", bt_reset) );
 
 
-                          parent.vrep_combo.setSelectedIndex( bb3.getInt(288) );
 
                           int tgtimeout = bb3.getInt(372);
                           switch(tgtimeout) {
@@ -561,14 +559,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           Thread.sleep(10);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
-
-                          int vrep = parent.vrep_combo.getSelectedIndex();
-                          cmd = "vrep "+vrep+"\r\n";  
-                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-                          Thread.sleep(10);
-                          rlen=serial_port.readBytes( result, 64);
-                          System.out.println("result: "+new String(result) );
-
 
                           b = parent.allow_unknown_tg_cb.isSelected();
                           if(b) cmd = "en_unknown_tg 1\r\n";

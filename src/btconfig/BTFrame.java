@@ -2006,8 +2006,6 @@ boolean disable_tdma=false;
         jLabel24 = new javax.swing.JLabel();
         roaming = new javax.swing.JCheckBox();
         jLabel22 = new javax.swing.JLabel();
-        vrep_combo = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
         rfmaxgain = new javax.swing.JComboBox<>();
         vtimeout = new javax.swing.JComboBox<>();
@@ -2516,13 +2514,6 @@ boolean disable_tdma=false;
 
         jLabel22.setText("Control Channel Frequency");
         p25rxconfigpanel.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
-
-        vrep_combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OFF (SILENCE)", "1", "2", "3", "4", "ANALOG NOISE" }));
-        vrep_combo.setSelectedIndex(2);
-        p25rxconfigpanel.add(vrep_combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 400, -1, 30));
-
-        jLabel4.setText("Max Voice Subframe Repeat On Bit Errors");
-        p25rxconfigpanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, -1, -1));
 
         jLabel32.setText("RF Max Gain");
         p25rxconfigpanel.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 280, -1, -1));
@@ -5731,7 +5722,6 @@ private void resizeColumns2() {
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
@@ -5895,7 +5885,6 @@ private void resizeColumns2() {
     private javax.swing.JPanel tiny_const;
     public javax.swing.JButton use_freq_primary;
     public javax.swing.JLabel volume_label;
-    public javax.swing.JComboBox<String> vrep_combo;
     public javax.swing.JComboBox<String> vtimeout;
     private javax.swing.JLabel wacn;
     public javax.swing.JButton write_cc;
