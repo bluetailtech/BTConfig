@@ -2016,6 +2016,115 @@ boolean disable_tdma=false;
         agc_kp = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jComboBox6 = new javax.swing.JComboBox<>();
+        jPanel25 = new javax.swing.JPanel();
+        jPanel26 = new javax.swing.JPanel();
+        jPanel27 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jPanel28 = new javax.swing.JPanel();
+        jPanel29 = new javax.swing.JPanel();
+        dmr_cc_en1 = new javax.swing.JCheckBox();
+        jSeparator4 = new javax.swing.JSeparator();
+        jLabel35 = new javax.swing.JLabel();
+        jSeparator5 = new javax.swing.JSeparator();
+        lcn1_freq = new javax.swing.JTextField();
+        jPanel31 = new javax.swing.JPanel();
+        dmr_cc_en2 = new javax.swing.JCheckBox();
+        jSeparator6 = new javax.swing.JSeparator();
+        jLabel36 = new javax.swing.JLabel();
+        jSeparator7 = new javax.swing.JSeparator();
+        lcn2_freq = new javax.swing.JTextField();
+        jPanel32 = new javax.swing.JPanel();
+        dmr_cc_en3 = new javax.swing.JCheckBox();
+        jSeparator8 = new javax.swing.JSeparator();
+        jLabel37 = new javax.swing.JLabel();
+        jSeparator9 = new javax.swing.JSeparator();
+        lcn3_freq = new javax.swing.JTextField();
+        jPanel33 = new javax.swing.JPanel();
+        dmr_cc_en4 = new javax.swing.JCheckBox();
+        jSeparator10 = new javax.swing.JSeparator();
+        jLabel38 = new javax.swing.JLabel();
+        jSeparator11 = new javax.swing.JSeparator();
+        lcn4_freq = new javax.swing.JTextField();
+        jPanel34 = new javax.swing.JPanel();
+        dmr_cc_en5 = new javax.swing.JCheckBox();
+        jSeparator12 = new javax.swing.JSeparator();
+        jLabel39 = new javax.swing.JLabel();
+        jSeparator13 = new javax.swing.JSeparator();
+        lcn5_freq = new javax.swing.JTextField();
+        jPanel35 = new javax.swing.JPanel();
+        dmr_cc_en6 = new javax.swing.JCheckBox();
+        jSeparator14 = new javax.swing.JSeparator();
+        jLabel40 = new javax.swing.JLabel();
+        jSeparator15 = new javax.swing.JSeparator();
+        lcn6_freq = new javax.swing.JTextField();
+        jPanel36 = new javax.swing.JPanel();
+        dmr_cc_en7 = new javax.swing.JCheckBox();
+        jSeparator16 = new javax.swing.JSeparator();
+        jLabel41 = new javax.swing.JLabel();
+        jSeparator17 = new javax.swing.JSeparator();
+        lcn7_freq = new javax.swing.JTextField();
+        jPanel37 = new javax.swing.JPanel();
+        dmr_cc_en8 = new javax.swing.JCheckBox();
+        jSeparator18 = new javax.swing.JSeparator();
+        jLabel42 = new javax.swing.JLabel();
+        jSeparator19 = new javax.swing.JSeparator();
+        lcn8_freq = new javax.swing.JTextField();
+        jPanel38 = new javax.swing.JPanel();
+        dmr_cc_en9 = new javax.swing.JCheckBox();
+        jSeparator20 = new javax.swing.JSeparator();
+        jLabel43 = new javax.swing.JLabel();
+        jSeparator21 = new javax.swing.JSeparator();
+        lcn9_freq = new javax.swing.JTextField();
+        jPanel39 = new javax.swing.JPanel();
+        dmr_cc_en10 = new javax.swing.JCheckBox();
+        jSeparator22 = new javax.swing.JSeparator();
+        jLabel44 = new javax.swing.JLabel();
+        jSeparator23 = new javax.swing.JSeparator();
+        lcn10_freq = new javax.swing.JTextField();
+        jPanel40 = new javax.swing.JPanel();
+        dmr_cc_en11 = new javax.swing.JCheckBox();
+        jSeparator24 = new javax.swing.JSeparator();
+        jLabel45 = new javax.swing.JLabel();
+        jSeparator25 = new javax.swing.JSeparator();
+        lcn11_freq = new javax.swing.JTextField();
+        jPanel41 = new javax.swing.JPanel();
+        dmr_cc_en12 = new javax.swing.JCheckBox();
+        jSeparator26 = new javax.swing.JSeparator();
+        jLabel46 = new javax.swing.JLabel();
+        jSeparator27 = new javax.swing.JSeparator();
+        lcn12_freq = new javax.swing.JTextField();
+        jPanel42 = new javax.swing.JPanel();
+        dmr_cc_en13 = new javax.swing.JCheckBox();
+        jSeparator28 = new javax.swing.JSeparator();
+        jLabel47 = new javax.swing.JLabel();
+        jSeparator29 = new javax.swing.JSeparator();
+        lcn13_freq = new javax.swing.JTextField();
+        jPanel43 = new javax.swing.JPanel();
+        dmr_cc_en14 = new javax.swing.JCheckBox();
+        jSeparator30 = new javax.swing.JSeparator();
+        jLabel48 = new javax.swing.JLabel();
+        jSeparator31 = new javax.swing.JSeparator();
+        lcn14_freq = new javax.swing.JTextField();
+        jPanel44 = new javax.swing.JPanel();
+        dmr_cc_en15 = new javax.swing.JCheckBox();
+        jSeparator32 = new javax.swing.JSeparator();
+        jLabel49 = new javax.swing.JLabel();
+        jSeparator33 = new javax.swing.JSeparator();
+        lcn15_freq = new javax.swing.JTextField();
+        jPanel45 = new javax.swing.JPanel();
+        jPanel46 = new javax.swing.JPanel();
+        dmr_conplus = new javax.swing.JRadioButton();
+        dmr_conventional = new javax.swing.JRadioButton();
+        jSeparator36 = new javax.swing.JSeparator();
+        dmr_slot1 = new javax.swing.JCheckBox();
+        dmr_slot2 = new javax.swing.JCheckBox();
+        jPanel30 = new javax.swing.JPanel();
+        dmr_backup = new javax.swing.JButton();
+        jSeparator34 = new javax.swing.JSeparator();
+        dmr_restore = new javax.swing.JButton();
+        jSeparator35 = new javax.swing.JSeparator();
+        dmr_write_config = new javax.swing.JButton();
+        jPanel47 = new javax.swing.JPanel();
         audiopanel = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         audio_buffer_system = new javax.swing.JRadioButton();
@@ -2134,114 +2243,6 @@ boolean disable_tdma=false;
         jButton3 = new javax.swing.JButton();
         jLabel31 = new javax.swing.JLabel();
         jComboBox5 = new javax.swing.JComboBox<>();
-        jPanel25 = new javax.swing.JPanel();
-        jPanel26 = new javax.swing.JPanel();
-        jPanel27 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jPanel28 = new javax.swing.JPanel();
-        jPanel29 = new javax.swing.JPanel();
-        dmr_cc_en1 = new javax.swing.JCheckBox();
-        jSeparator4 = new javax.swing.JSeparator();
-        jLabel35 = new javax.swing.JLabel();
-        jSeparator5 = new javax.swing.JSeparator();
-        lcn1_freq = new javax.swing.JTextField();
-        jPanel31 = new javax.swing.JPanel();
-        dmr_cc_en2 = new javax.swing.JCheckBox();
-        jSeparator6 = new javax.swing.JSeparator();
-        jLabel36 = new javax.swing.JLabel();
-        jSeparator7 = new javax.swing.JSeparator();
-        lcn2_freq = new javax.swing.JTextField();
-        jPanel32 = new javax.swing.JPanel();
-        dmr_cc_en3 = new javax.swing.JCheckBox();
-        jSeparator8 = new javax.swing.JSeparator();
-        jLabel37 = new javax.swing.JLabel();
-        jSeparator9 = new javax.swing.JSeparator();
-        lcn3_freq = new javax.swing.JTextField();
-        jPanel33 = new javax.swing.JPanel();
-        dmr_cc_en4 = new javax.swing.JCheckBox();
-        jSeparator10 = new javax.swing.JSeparator();
-        jLabel38 = new javax.swing.JLabel();
-        jSeparator11 = new javax.swing.JSeparator();
-        lcn4_freq = new javax.swing.JTextField();
-        jPanel34 = new javax.swing.JPanel();
-        dmr_cc_en5 = new javax.swing.JCheckBox();
-        jSeparator12 = new javax.swing.JSeparator();
-        jLabel39 = new javax.swing.JLabel();
-        jSeparator13 = new javax.swing.JSeparator();
-        lcn5_freq = new javax.swing.JTextField();
-        jPanel35 = new javax.swing.JPanel();
-        dmr_cc_en6 = new javax.swing.JCheckBox();
-        jSeparator14 = new javax.swing.JSeparator();
-        jLabel40 = new javax.swing.JLabel();
-        jSeparator15 = new javax.swing.JSeparator();
-        lcn6_freq = new javax.swing.JTextField();
-        jPanel36 = new javax.swing.JPanel();
-        dmr_cc_en7 = new javax.swing.JCheckBox();
-        jSeparator16 = new javax.swing.JSeparator();
-        jLabel41 = new javax.swing.JLabel();
-        jSeparator17 = new javax.swing.JSeparator();
-        lcn7_freq = new javax.swing.JTextField();
-        jPanel37 = new javax.swing.JPanel();
-        dmr_cc_en8 = new javax.swing.JCheckBox();
-        jSeparator18 = new javax.swing.JSeparator();
-        jLabel42 = new javax.swing.JLabel();
-        jSeparator19 = new javax.swing.JSeparator();
-        lcn8_freq = new javax.swing.JTextField();
-        jPanel38 = new javax.swing.JPanel();
-        dmr_cc_en9 = new javax.swing.JCheckBox();
-        jSeparator20 = new javax.swing.JSeparator();
-        jLabel43 = new javax.swing.JLabel();
-        jSeparator21 = new javax.swing.JSeparator();
-        lcn9_freq = new javax.swing.JTextField();
-        jPanel39 = new javax.swing.JPanel();
-        dmr_cc_en10 = new javax.swing.JCheckBox();
-        jSeparator22 = new javax.swing.JSeparator();
-        jLabel44 = new javax.swing.JLabel();
-        jSeparator23 = new javax.swing.JSeparator();
-        lcn10_freq = new javax.swing.JTextField();
-        jPanel40 = new javax.swing.JPanel();
-        dmr_cc_en11 = new javax.swing.JCheckBox();
-        jSeparator24 = new javax.swing.JSeparator();
-        jLabel45 = new javax.swing.JLabel();
-        jSeparator25 = new javax.swing.JSeparator();
-        lcn11_freq = new javax.swing.JTextField();
-        jPanel41 = new javax.swing.JPanel();
-        dmr_cc_en12 = new javax.swing.JCheckBox();
-        jSeparator26 = new javax.swing.JSeparator();
-        jLabel46 = new javax.swing.JLabel();
-        jSeparator27 = new javax.swing.JSeparator();
-        lcn12_freq = new javax.swing.JTextField();
-        jPanel42 = new javax.swing.JPanel();
-        dmr_cc_en13 = new javax.swing.JCheckBox();
-        jSeparator28 = new javax.swing.JSeparator();
-        jLabel47 = new javax.swing.JLabel();
-        jSeparator29 = new javax.swing.JSeparator();
-        lcn13_freq = new javax.swing.JTextField();
-        jPanel43 = new javax.swing.JPanel();
-        dmr_cc_en14 = new javax.swing.JCheckBox();
-        jSeparator30 = new javax.swing.JSeparator();
-        jLabel48 = new javax.swing.JLabel();
-        jSeparator31 = new javax.swing.JSeparator();
-        lcn14_freq = new javax.swing.JTextField();
-        jPanel44 = new javax.swing.JPanel();
-        dmr_cc_en15 = new javax.swing.JCheckBox();
-        jSeparator32 = new javax.swing.JSeparator();
-        jLabel49 = new javax.swing.JLabel();
-        jSeparator33 = new javax.swing.JSeparator();
-        lcn15_freq = new javax.swing.JTextField();
-        jPanel45 = new javax.swing.JPanel();
-        jPanel46 = new javax.swing.JPanel();
-        dmr_conplus = new javax.swing.JRadioButton();
-        dmr_conventional = new javax.swing.JRadioButton();
-        jSeparator36 = new javax.swing.JSeparator();
-        dmr_slot1 = new javax.swing.JCheckBox();
-        dmr_slot2 = new javax.swing.JCheckBox();
-        jPanel30 = new javax.swing.JPanel();
-        dmr_backup = new javax.swing.JButton();
-        jSeparator34 = new javax.swing.JSeparator();
-        dmr_restore = new javax.swing.JButton();
-        jSeparator35 = new javax.swing.JSeparator();
-        dmr_write_config = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         logo_panel = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -2550,6 +2551,399 @@ boolean disable_tdma=false;
         p25rxconfigpanel.add(jComboBox6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, -1, 30));
 
         jTabbedPane1.addTab("P25RX Configuration", p25rxconfigpanel);
+
+        jPanel25.setLayout(new java.awt.BorderLayout());
+
+        jPanel26.setLayout(new java.awt.GridLayout(20, 0));
+
+        jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel10.setText("DMR Configuration");
+        jPanel27.add(jLabel10);
+
+        jPanel26.add(jPanel27);
+        jPanel26.add(jPanel28);
+
+        jPanel29.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        dmr_cc_en1.setText("Control Channel");
+        jPanel29.add(dmr_cc_en1);
+
+        jSeparator4.setMinimumSize(new java.awt.Dimension(150, 0));
+        jSeparator4.setPreferredSize(new java.awt.Dimension(150, 0));
+        jPanel29.add(jSeparator4);
+
+        jLabel35.setText("LCN1 Frequency");
+        jPanel29.add(jLabel35);
+
+        jSeparator5.setMinimumSize(new java.awt.Dimension(50, 0));
+        jSeparator5.setPreferredSize(new java.awt.Dimension(50, 0));
+        jPanel29.add(jSeparator5);
+
+        lcn1_freq.setColumns(15);
+        jPanel29.add(lcn1_freq);
+
+        jPanel26.add(jPanel29);
+
+        jPanel31.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        dmr_cc_en2.setText("Control Channel");
+        jPanel31.add(dmr_cc_en2);
+
+        jSeparator6.setMinimumSize(new java.awt.Dimension(150, 0));
+        jSeparator6.setPreferredSize(new java.awt.Dimension(150, 0));
+        jPanel31.add(jSeparator6);
+
+        jLabel36.setText("LCN2 Frequency");
+        jPanel31.add(jLabel36);
+
+        jSeparator7.setMinimumSize(new java.awt.Dimension(50, 0));
+        jSeparator7.setPreferredSize(new java.awt.Dimension(50, 0));
+        jPanel31.add(jSeparator7);
+
+        lcn2_freq.setColumns(15);
+        jPanel31.add(lcn2_freq);
+
+        jPanel26.add(jPanel31);
+
+        jPanel32.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        dmr_cc_en3.setText("Control Channel");
+        jPanel32.add(dmr_cc_en3);
+
+        jSeparator8.setMinimumSize(new java.awt.Dimension(150, 0));
+        jSeparator8.setPreferredSize(new java.awt.Dimension(150, 0));
+        jPanel32.add(jSeparator8);
+
+        jLabel37.setText("LCN3 Frequency");
+        jPanel32.add(jLabel37);
+
+        jSeparator9.setMinimumSize(new java.awt.Dimension(50, 0));
+        jSeparator9.setPreferredSize(new java.awt.Dimension(50, 0));
+        jPanel32.add(jSeparator9);
+
+        lcn3_freq.setColumns(15);
+        jPanel32.add(lcn3_freq);
+
+        jPanel26.add(jPanel32);
+
+        jPanel33.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        dmr_cc_en4.setText("Control Channel");
+        jPanel33.add(dmr_cc_en4);
+
+        jSeparator10.setMinimumSize(new java.awt.Dimension(150, 0));
+        jSeparator10.setPreferredSize(new java.awt.Dimension(150, 0));
+        jPanel33.add(jSeparator10);
+
+        jLabel38.setText("LCN4 Frequency");
+        jPanel33.add(jLabel38);
+
+        jSeparator11.setMinimumSize(new java.awt.Dimension(50, 0));
+        jSeparator11.setPreferredSize(new java.awt.Dimension(50, 0));
+        jPanel33.add(jSeparator11);
+
+        lcn4_freq.setColumns(15);
+        jPanel33.add(lcn4_freq);
+
+        jPanel26.add(jPanel33);
+
+        jPanel34.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        dmr_cc_en5.setText("Control Channel");
+        jPanel34.add(dmr_cc_en5);
+
+        jSeparator12.setMinimumSize(new java.awt.Dimension(150, 0));
+        jSeparator12.setPreferredSize(new java.awt.Dimension(150, 0));
+        jPanel34.add(jSeparator12);
+
+        jLabel39.setText("LCN5 Frequency");
+        jPanel34.add(jLabel39);
+
+        jSeparator13.setMinimumSize(new java.awt.Dimension(50, 0));
+        jSeparator13.setPreferredSize(new java.awt.Dimension(50, 0));
+        jPanel34.add(jSeparator13);
+
+        lcn5_freq.setColumns(15);
+        jPanel34.add(lcn5_freq);
+
+        jPanel26.add(jPanel34);
+
+        jPanel35.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        dmr_cc_en6.setText("Control Channel");
+        jPanel35.add(dmr_cc_en6);
+
+        jSeparator14.setMinimumSize(new java.awt.Dimension(150, 0));
+        jSeparator14.setPreferredSize(new java.awt.Dimension(150, 0));
+        jPanel35.add(jSeparator14);
+
+        jLabel40.setText("LCN6 Frequency");
+        jPanel35.add(jLabel40);
+
+        jSeparator15.setMinimumSize(new java.awt.Dimension(50, 0));
+        jSeparator15.setPreferredSize(new java.awt.Dimension(50, 0));
+        jPanel35.add(jSeparator15);
+
+        lcn6_freq.setColumns(15);
+        jPanel35.add(lcn6_freq);
+
+        jPanel26.add(jPanel35);
+
+        jPanel36.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        dmr_cc_en7.setText("Control Channel");
+        jPanel36.add(dmr_cc_en7);
+
+        jSeparator16.setMinimumSize(new java.awt.Dimension(150, 0));
+        jSeparator16.setPreferredSize(new java.awt.Dimension(150, 0));
+        jPanel36.add(jSeparator16);
+
+        jLabel41.setText("LCN7 Frequency");
+        jPanel36.add(jLabel41);
+
+        jSeparator17.setMinimumSize(new java.awt.Dimension(50, 0));
+        jSeparator17.setPreferredSize(new java.awt.Dimension(50, 0));
+        jPanel36.add(jSeparator17);
+
+        lcn7_freq.setColumns(15);
+        jPanel36.add(lcn7_freq);
+
+        jPanel26.add(jPanel36);
+
+        jPanel37.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        dmr_cc_en8.setText("Control Channel");
+        jPanel37.add(dmr_cc_en8);
+
+        jSeparator18.setMinimumSize(new java.awt.Dimension(150, 0));
+        jSeparator18.setPreferredSize(new java.awt.Dimension(150, 0));
+        jPanel37.add(jSeparator18);
+
+        jLabel42.setText("LCN8 Frequency");
+        jPanel37.add(jLabel42);
+
+        jSeparator19.setMinimumSize(new java.awt.Dimension(50, 0));
+        jSeparator19.setPreferredSize(new java.awt.Dimension(50, 0));
+        jPanel37.add(jSeparator19);
+
+        lcn8_freq.setColumns(15);
+        jPanel37.add(lcn8_freq);
+
+        jPanel26.add(jPanel37);
+
+        jPanel38.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        dmr_cc_en9.setText("Control Channel");
+        jPanel38.add(dmr_cc_en9);
+
+        jSeparator20.setMinimumSize(new java.awt.Dimension(150, 0));
+        jSeparator20.setPreferredSize(new java.awt.Dimension(150, 0));
+        jPanel38.add(jSeparator20);
+
+        jLabel43.setText("LCN9 Frequency");
+        jPanel38.add(jLabel43);
+
+        jSeparator21.setMinimumSize(new java.awt.Dimension(50, 0));
+        jSeparator21.setPreferredSize(new java.awt.Dimension(50, 0));
+        jPanel38.add(jSeparator21);
+
+        lcn9_freq.setColumns(15);
+        jPanel38.add(lcn9_freq);
+
+        jPanel26.add(jPanel38);
+
+        jPanel39.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        dmr_cc_en10.setText("Control Channel");
+        jPanel39.add(dmr_cc_en10);
+
+        jSeparator22.setMinimumSize(new java.awt.Dimension(150, 0));
+        jSeparator22.setPreferredSize(new java.awt.Dimension(150, 0));
+        jPanel39.add(jSeparator22);
+
+        jLabel44.setText("LCN10 Frequency");
+        jPanel39.add(jLabel44);
+
+        jSeparator23.setMinimumSize(new java.awt.Dimension(50, 0));
+        jSeparator23.setPreferredSize(new java.awt.Dimension(50, 0));
+        jPanel39.add(jSeparator23);
+
+        lcn10_freq.setColumns(15);
+        jPanel39.add(lcn10_freq);
+
+        jPanel26.add(jPanel39);
+
+        jPanel40.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        dmr_cc_en11.setText("Control Channel");
+        jPanel40.add(dmr_cc_en11);
+
+        jSeparator24.setMinimumSize(new java.awt.Dimension(150, 0));
+        jSeparator24.setPreferredSize(new java.awt.Dimension(150, 0));
+        jPanel40.add(jSeparator24);
+
+        jLabel45.setText("LCN11 Frequency");
+        jPanel40.add(jLabel45);
+
+        jSeparator25.setMinimumSize(new java.awt.Dimension(50, 0));
+        jSeparator25.setPreferredSize(new java.awt.Dimension(50, 0));
+        jPanel40.add(jSeparator25);
+
+        lcn11_freq.setColumns(15);
+        jPanel40.add(lcn11_freq);
+
+        jPanel26.add(jPanel40);
+
+        jPanel41.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        dmr_cc_en12.setText("Control Channel");
+        jPanel41.add(dmr_cc_en12);
+
+        jSeparator26.setMinimumSize(new java.awt.Dimension(150, 0));
+        jSeparator26.setPreferredSize(new java.awt.Dimension(150, 0));
+        jPanel41.add(jSeparator26);
+
+        jLabel46.setText("LCN12 Frequency");
+        jPanel41.add(jLabel46);
+
+        jSeparator27.setMinimumSize(new java.awt.Dimension(50, 0));
+        jSeparator27.setPreferredSize(new java.awt.Dimension(50, 0));
+        jPanel41.add(jSeparator27);
+
+        lcn12_freq.setColumns(15);
+        jPanel41.add(lcn12_freq);
+
+        jPanel26.add(jPanel41);
+
+        jPanel42.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        dmr_cc_en13.setText("Control Channel");
+        jPanel42.add(dmr_cc_en13);
+
+        jSeparator28.setMinimumSize(new java.awt.Dimension(150, 0));
+        jSeparator28.setPreferredSize(new java.awt.Dimension(150, 0));
+        jPanel42.add(jSeparator28);
+
+        jLabel47.setText("LCN13 Frequency");
+        jPanel42.add(jLabel47);
+
+        jSeparator29.setMinimumSize(new java.awt.Dimension(50, 0));
+        jSeparator29.setPreferredSize(new java.awt.Dimension(50, 0));
+        jPanel42.add(jSeparator29);
+
+        lcn13_freq.setColumns(15);
+        jPanel42.add(lcn13_freq);
+
+        jPanel26.add(jPanel42);
+
+        jPanel43.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        dmr_cc_en14.setText("Control Channel");
+        jPanel43.add(dmr_cc_en14);
+
+        jSeparator30.setMinimumSize(new java.awt.Dimension(150, 0));
+        jSeparator30.setPreferredSize(new java.awt.Dimension(150, 0));
+        jPanel43.add(jSeparator30);
+
+        jLabel48.setText("LCN14 Frequency");
+        jPanel43.add(jLabel48);
+
+        jSeparator31.setMinimumSize(new java.awt.Dimension(50, 0));
+        jSeparator31.setPreferredSize(new java.awt.Dimension(50, 0));
+        jPanel43.add(jSeparator31);
+
+        lcn14_freq.setColumns(15);
+        jPanel43.add(lcn14_freq);
+
+        jPanel26.add(jPanel43);
+
+        jPanel44.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        dmr_cc_en15.setText("Control Channel");
+        jPanel44.add(dmr_cc_en15);
+
+        jSeparator32.setMinimumSize(new java.awt.Dimension(150, 0));
+        jSeparator32.setPreferredSize(new java.awt.Dimension(150, 0));
+        jPanel44.add(jSeparator32);
+
+        jLabel49.setText("LCN15 Frequency");
+        jPanel44.add(jLabel49);
+
+        jSeparator33.setMinimumSize(new java.awt.Dimension(50, 0));
+        jSeparator33.setPreferredSize(new java.awt.Dimension(50, 0));
+        jPanel44.add(jSeparator33);
+
+        lcn15_freq.setColumns(15);
+        jPanel44.add(lcn15_freq);
+
+        jPanel26.add(jPanel44);
+        jPanel26.add(jPanel45);
+
+        buttonGroup6.add(dmr_conplus);
+        dmr_conplus.setSelected(true);
+        dmr_conplus.setText("Con+ Control");
+        dmr_conplus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dmr_conplusActionPerformed(evt);
+            }
+        });
+        jPanel46.add(dmr_conplus);
+
+        buttonGroup6.add(dmr_conventional);
+        dmr_conventional.setText("Conventional");
+        jPanel46.add(dmr_conventional);
+
+        jSeparator36.setPreferredSize(new java.awt.Dimension(100, 0));
+        jPanel46.add(jSeparator36);
+
+        dmr_slot1.setSelected(true);
+        dmr_slot1.setText("Enable Slot1");
+        jPanel46.add(dmr_slot1);
+
+        dmr_slot2.setSelected(true);
+        dmr_slot2.setText("Enable Slot2");
+        jPanel46.add(dmr_slot2);
+
+        jPanel26.add(jPanel46);
+
+        jPanel25.add(jPanel26, java.awt.BorderLayout.CENTER);
+
+        dmr_backup.setText("Backup To File");
+        dmr_backup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dmr_backupActionPerformed(evt);
+            }
+        });
+        jPanel30.add(dmr_backup);
+
+        jSeparator34.setPreferredSize(new java.awt.Dimension(150, 0));
+        jPanel30.add(jSeparator34);
+
+        dmr_restore.setText("Restore From File");
+        dmr_restore.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dmr_restoreActionPerformed(evt);
+            }
+        });
+        jPanel30.add(dmr_restore);
+
+        jSeparator35.setPreferredSize(new java.awt.Dimension(150, 0));
+        jPanel30.add(jSeparator35);
+
+        dmr_write_config.setText("Write Configuration");
+        dmr_write_config.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dmr_write_configActionPerformed(evt);
+            }
+        });
+        jPanel30.add(dmr_write_config);
+
+        jPanel25.add(jPanel30, java.awt.BorderLayout.SOUTH);
+
+        jPanel47.setPreferredSize(new java.awt.Dimension(50, 100));
+        jPanel25.add(jPanel47, java.awt.BorderLayout.WEST);
+
+        jTabbedPane1.addTab("DMR", jPanel25);
 
         audiopanel.setLayout(new java.awt.BorderLayout());
 
@@ -4518,396 +4912,6 @@ boolean disable_tdma=false;
 
         jTabbedPane1.addTab("Constellation View", jPanel5);
 
-        jPanel25.setLayout(new java.awt.BorderLayout());
-
-        jPanel26.setLayout(new java.awt.GridLayout(20, 0));
-
-        jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel10.setText("DMR Configuration");
-        jPanel27.add(jLabel10);
-
-        jPanel26.add(jPanel27);
-        jPanel26.add(jPanel28);
-
-        jPanel29.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        dmr_cc_en1.setText("Control Channel");
-        jPanel29.add(dmr_cc_en1);
-
-        jSeparator4.setMinimumSize(new java.awt.Dimension(150, 0));
-        jSeparator4.setPreferredSize(new java.awt.Dimension(150, 0));
-        jPanel29.add(jSeparator4);
-
-        jLabel35.setText("LCN1 Frequency");
-        jPanel29.add(jLabel35);
-
-        jSeparator5.setMinimumSize(new java.awt.Dimension(50, 0));
-        jSeparator5.setPreferredSize(new java.awt.Dimension(50, 0));
-        jPanel29.add(jSeparator5);
-
-        lcn1_freq.setColumns(15);
-        jPanel29.add(lcn1_freq);
-
-        jPanel26.add(jPanel29);
-
-        jPanel31.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        dmr_cc_en2.setText("Control Channel");
-        jPanel31.add(dmr_cc_en2);
-
-        jSeparator6.setMinimumSize(new java.awt.Dimension(150, 0));
-        jSeparator6.setPreferredSize(new java.awt.Dimension(150, 0));
-        jPanel31.add(jSeparator6);
-
-        jLabel36.setText("LCN2 Frequency");
-        jPanel31.add(jLabel36);
-
-        jSeparator7.setMinimumSize(new java.awt.Dimension(50, 0));
-        jSeparator7.setPreferredSize(new java.awt.Dimension(50, 0));
-        jPanel31.add(jSeparator7);
-
-        lcn2_freq.setColumns(15);
-        jPanel31.add(lcn2_freq);
-
-        jPanel26.add(jPanel31);
-
-        jPanel32.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        dmr_cc_en3.setText("Control Channel");
-        jPanel32.add(dmr_cc_en3);
-
-        jSeparator8.setMinimumSize(new java.awt.Dimension(150, 0));
-        jSeparator8.setPreferredSize(new java.awt.Dimension(150, 0));
-        jPanel32.add(jSeparator8);
-
-        jLabel37.setText("LCN3 Frequency");
-        jPanel32.add(jLabel37);
-
-        jSeparator9.setMinimumSize(new java.awt.Dimension(50, 0));
-        jSeparator9.setPreferredSize(new java.awt.Dimension(50, 0));
-        jPanel32.add(jSeparator9);
-
-        lcn3_freq.setColumns(15);
-        jPanel32.add(lcn3_freq);
-
-        jPanel26.add(jPanel32);
-
-        jPanel33.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        dmr_cc_en4.setText("Control Channel");
-        jPanel33.add(dmr_cc_en4);
-
-        jSeparator10.setMinimumSize(new java.awt.Dimension(150, 0));
-        jSeparator10.setPreferredSize(new java.awt.Dimension(150, 0));
-        jPanel33.add(jSeparator10);
-
-        jLabel38.setText("LCN4 Frequency");
-        jPanel33.add(jLabel38);
-
-        jSeparator11.setMinimumSize(new java.awt.Dimension(50, 0));
-        jSeparator11.setPreferredSize(new java.awt.Dimension(50, 0));
-        jPanel33.add(jSeparator11);
-
-        lcn4_freq.setColumns(15);
-        jPanel33.add(lcn4_freq);
-
-        jPanel26.add(jPanel33);
-
-        jPanel34.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        dmr_cc_en5.setText("Control Channel");
-        jPanel34.add(dmr_cc_en5);
-
-        jSeparator12.setMinimumSize(new java.awt.Dimension(150, 0));
-        jSeparator12.setPreferredSize(new java.awt.Dimension(150, 0));
-        jPanel34.add(jSeparator12);
-
-        jLabel39.setText("LCN5 Frequency");
-        jPanel34.add(jLabel39);
-
-        jSeparator13.setMinimumSize(new java.awt.Dimension(50, 0));
-        jSeparator13.setPreferredSize(new java.awt.Dimension(50, 0));
-        jPanel34.add(jSeparator13);
-
-        lcn5_freq.setColumns(15);
-        jPanel34.add(lcn5_freq);
-
-        jPanel26.add(jPanel34);
-
-        jPanel35.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        dmr_cc_en6.setText("Control Channel");
-        jPanel35.add(dmr_cc_en6);
-
-        jSeparator14.setMinimumSize(new java.awt.Dimension(150, 0));
-        jSeparator14.setPreferredSize(new java.awt.Dimension(150, 0));
-        jPanel35.add(jSeparator14);
-
-        jLabel40.setText("LCN6 Frequency");
-        jPanel35.add(jLabel40);
-
-        jSeparator15.setMinimumSize(new java.awt.Dimension(50, 0));
-        jSeparator15.setPreferredSize(new java.awt.Dimension(50, 0));
-        jPanel35.add(jSeparator15);
-
-        lcn6_freq.setColumns(15);
-        jPanel35.add(lcn6_freq);
-
-        jPanel26.add(jPanel35);
-
-        jPanel36.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        dmr_cc_en7.setText("Control Channel");
-        jPanel36.add(dmr_cc_en7);
-
-        jSeparator16.setMinimumSize(new java.awt.Dimension(150, 0));
-        jSeparator16.setPreferredSize(new java.awt.Dimension(150, 0));
-        jPanel36.add(jSeparator16);
-
-        jLabel41.setText("LCN7 Frequency");
-        jPanel36.add(jLabel41);
-
-        jSeparator17.setMinimumSize(new java.awt.Dimension(50, 0));
-        jSeparator17.setPreferredSize(new java.awt.Dimension(50, 0));
-        jPanel36.add(jSeparator17);
-
-        lcn7_freq.setColumns(15);
-        jPanel36.add(lcn7_freq);
-
-        jPanel26.add(jPanel36);
-
-        jPanel37.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        dmr_cc_en8.setText("Control Channel");
-        jPanel37.add(dmr_cc_en8);
-
-        jSeparator18.setMinimumSize(new java.awt.Dimension(150, 0));
-        jSeparator18.setPreferredSize(new java.awt.Dimension(150, 0));
-        jPanel37.add(jSeparator18);
-
-        jLabel42.setText("LCN8 Frequency");
-        jPanel37.add(jLabel42);
-
-        jSeparator19.setMinimumSize(new java.awt.Dimension(50, 0));
-        jSeparator19.setPreferredSize(new java.awt.Dimension(50, 0));
-        jPanel37.add(jSeparator19);
-
-        lcn8_freq.setColumns(15);
-        jPanel37.add(lcn8_freq);
-
-        jPanel26.add(jPanel37);
-
-        jPanel38.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        dmr_cc_en9.setText("Control Channel");
-        jPanel38.add(dmr_cc_en9);
-
-        jSeparator20.setMinimumSize(new java.awt.Dimension(150, 0));
-        jSeparator20.setPreferredSize(new java.awt.Dimension(150, 0));
-        jPanel38.add(jSeparator20);
-
-        jLabel43.setText("LCN9 Frequency");
-        jPanel38.add(jLabel43);
-
-        jSeparator21.setMinimumSize(new java.awt.Dimension(50, 0));
-        jSeparator21.setPreferredSize(new java.awt.Dimension(50, 0));
-        jPanel38.add(jSeparator21);
-
-        lcn9_freq.setColumns(15);
-        jPanel38.add(lcn9_freq);
-
-        jPanel26.add(jPanel38);
-
-        jPanel39.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        dmr_cc_en10.setText("Control Channel");
-        jPanel39.add(dmr_cc_en10);
-
-        jSeparator22.setMinimumSize(new java.awt.Dimension(150, 0));
-        jSeparator22.setPreferredSize(new java.awt.Dimension(150, 0));
-        jPanel39.add(jSeparator22);
-
-        jLabel44.setText("LCN10 Frequency");
-        jPanel39.add(jLabel44);
-
-        jSeparator23.setMinimumSize(new java.awt.Dimension(50, 0));
-        jSeparator23.setPreferredSize(new java.awt.Dimension(50, 0));
-        jPanel39.add(jSeparator23);
-
-        lcn10_freq.setColumns(15);
-        jPanel39.add(lcn10_freq);
-
-        jPanel26.add(jPanel39);
-
-        jPanel40.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        dmr_cc_en11.setText("Control Channel");
-        jPanel40.add(dmr_cc_en11);
-
-        jSeparator24.setMinimumSize(new java.awt.Dimension(150, 0));
-        jSeparator24.setPreferredSize(new java.awt.Dimension(150, 0));
-        jPanel40.add(jSeparator24);
-
-        jLabel45.setText("LCN11 Frequency");
-        jPanel40.add(jLabel45);
-
-        jSeparator25.setMinimumSize(new java.awt.Dimension(50, 0));
-        jSeparator25.setPreferredSize(new java.awt.Dimension(50, 0));
-        jPanel40.add(jSeparator25);
-
-        lcn11_freq.setColumns(15);
-        jPanel40.add(lcn11_freq);
-
-        jPanel26.add(jPanel40);
-
-        jPanel41.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        dmr_cc_en12.setText("Control Channel");
-        jPanel41.add(dmr_cc_en12);
-
-        jSeparator26.setMinimumSize(new java.awt.Dimension(150, 0));
-        jSeparator26.setPreferredSize(new java.awt.Dimension(150, 0));
-        jPanel41.add(jSeparator26);
-
-        jLabel46.setText("LCN12 Frequency");
-        jPanel41.add(jLabel46);
-
-        jSeparator27.setMinimumSize(new java.awt.Dimension(50, 0));
-        jSeparator27.setPreferredSize(new java.awt.Dimension(50, 0));
-        jPanel41.add(jSeparator27);
-
-        lcn12_freq.setColumns(15);
-        jPanel41.add(lcn12_freq);
-
-        jPanel26.add(jPanel41);
-
-        jPanel42.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        dmr_cc_en13.setText("Control Channel");
-        jPanel42.add(dmr_cc_en13);
-
-        jSeparator28.setMinimumSize(new java.awt.Dimension(150, 0));
-        jSeparator28.setPreferredSize(new java.awt.Dimension(150, 0));
-        jPanel42.add(jSeparator28);
-
-        jLabel47.setText("LCN13 Frequency");
-        jPanel42.add(jLabel47);
-
-        jSeparator29.setMinimumSize(new java.awt.Dimension(50, 0));
-        jSeparator29.setPreferredSize(new java.awt.Dimension(50, 0));
-        jPanel42.add(jSeparator29);
-
-        lcn13_freq.setColumns(15);
-        jPanel42.add(lcn13_freq);
-
-        jPanel26.add(jPanel42);
-
-        jPanel43.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        dmr_cc_en14.setText("Control Channel");
-        jPanel43.add(dmr_cc_en14);
-
-        jSeparator30.setMinimumSize(new java.awt.Dimension(150, 0));
-        jSeparator30.setPreferredSize(new java.awt.Dimension(150, 0));
-        jPanel43.add(jSeparator30);
-
-        jLabel48.setText("LCN14 Frequency");
-        jPanel43.add(jLabel48);
-
-        jSeparator31.setMinimumSize(new java.awt.Dimension(50, 0));
-        jSeparator31.setPreferredSize(new java.awt.Dimension(50, 0));
-        jPanel43.add(jSeparator31);
-
-        lcn14_freq.setColumns(15);
-        jPanel43.add(lcn14_freq);
-
-        jPanel26.add(jPanel43);
-
-        jPanel44.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        dmr_cc_en15.setText("Control Channel");
-        jPanel44.add(dmr_cc_en15);
-
-        jSeparator32.setMinimumSize(new java.awt.Dimension(150, 0));
-        jSeparator32.setPreferredSize(new java.awt.Dimension(150, 0));
-        jPanel44.add(jSeparator32);
-
-        jLabel49.setText("LCN15 Frequency");
-        jPanel44.add(jLabel49);
-
-        jSeparator33.setMinimumSize(new java.awt.Dimension(50, 0));
-        jSeparator33.setPreferredSize(new java.awt.Dimension(50, 0));
-        jPanel44.add(jSeparator33);
-
-        lcn15_freq.setColumns(15);
-        jPanel44.add(lcn15_freq);
-
-        jPanel26.add(jPanel44);
-        jPanel26.add(jPanel45);
-
-        buttonGroup6.add(dmr_conplus);
-        dmr_conplus.setSelected(true);
-        dmr_conplus.setText("Con+ Control");
-        dmr_conplus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dmr_conplusActionPerformed(evt);
-            }
-        });
-        jPanel46.add(dmr_conplus);
-
-        buttonGroup6.add(dmr_conventional);
-        dmr_conventional.setText("Conventional");
-        jPanel46.add(dmr_conventional);
-
-        jSeparator36.setPreferredSize(new java.awt.Dimension(100, 0));
-        jPanel46.add(jSeparator36);
-
-        dmr_slot1.setSelected(true);
-        dmr_slot1.setText("Enable Slot1");
-        jPanel46.add(dmr_slot1);
-
-        dmr_slot2.setSelected(true);
-        dmr_slot2.setText("Enable Slot2");
-        jPanel46.add(dmr_slot2);
-
-        jPanel26.add(jPanel46);
-
-        jPanel25.add(jPanel26, java.awt.BorderLayout.CENTER);
-
-        dmr_backup.setText("Backup To File");
-        dmr_backup.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dmr_backupActionPerformed(evt);
-            }
-        });
-        jPanel30.add(dmr_backup);
-
-        jSeparator34.setPreferredSize(new java.awt.Dimension(150, 0));
-        jPanel30.add(jSeparator34);
-
-        dmr_restore.setText("Restore From File");
-        dmr_restore.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dmr_restoreActionPerformed(evt);
-            }
-        });
-        jPanel30.add(dmr_restore);
-
-        jSeparator35.setPreferredSize(new java.awt.Dimension(150, 0));
-        jPanel30.add(jSeparator35);
-
-        dmr_write_config.setText("Write Configuration");
-        dmr_write_config.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dmr_write_configActionPerformed(evt);
-            }
-        });
-        jPanel30.add(dmr_write_config);
-
-        jPanel25.add(jPanel30, java.awt.BorderLayout.SOUTH);
-
-        jTabbedPane1.addTab("DMR", jPanel25);
-
         getContentPane().add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
@@ -5784,6 +5788,7 @@ private void resizeColumns2() {
     private javax.swing.JPanel jPanel44;
     private javax.swing.JPanel jPanel45;
     private javax.swing.JPanel jPanel46;
+    private javax.swing.JPanel jPanel47;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
