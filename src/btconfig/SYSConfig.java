@@ -30,10 +30,32 @@ import javax.swing.filechooser.*;
 import javax.swing.*;
 import javax.swing.*;
 
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class SYSConfig
 {
+
+  public final int DMR_CC1=(1<<0);
+  public final int DMR_CC2=(1<<1);
+  public final int DMR_CC3=(1<<2);
+  public final int DMR_CC4=(1<<3);
+  public final int DMR_CC5=(1<<4);
+  public final int DMR_CC6=(1<<5);
+  public final int DMR_CC7=(1<<6);
+  public final int DMR_CC8=(1<<7);
+  public final int DMR_CC9=(1<<8);
+  public final int DMR_CC10=(1<<9);
+  public final int DMR_CC11=(1<<10);
+  public final int DMR_CC12=(1<<11);
+  public final int DMR_CC13=(1<<12);
+  public final int DMR_CC14=(1<<13);
+  public final int DMR_CC15=(1<<14);
+  public final int DMR_ISCC=(1<<15);
+  public final int DMR_SLOT1=(1<<16);
+  public final int DMR_SLOT2=(1<<17);
 
 java.util.Timer utimer;
 BTFrame parent;
@@ -309,6 +331,47 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                       if( parent.do_write_config==0) {
                         try {
 
+                          int dmr_config = bb3.getInt(512);
+
+                          if( (dmr_config & DMR_CC1) > 0 ) parent.dmr_cc_en1.setSelected(true);
+                            else parent.dmr_cc_en1.setSelected(false);
+                          if( (dmr_config & DMR_CC2) > 0 ) parent.dmr_cc_en2.setSelected(true);
+                            else parent.dmr_cc_en2.setSelected(false);
+                          if( (dmr_config & DMR_CC3) > 0 ) parent.dmr_cc_en3.setSelected(true);
+                            else parent.dmr_cc_en3.setSelected(false);
+                          if( (dmr_config & DMR_CC4) > 0 ) parent.dmr_cc_en4.setSelected(true);
+                            else parent.dmr_cc_en4.setSelected(false);
+                          if( (dmr_config & DMR_CC5) > 0 ) parent.dmr_cc_en5.setSelected(true);
+                            else parent.dmr_cc_en5.setSelected(false);
+                          if( (dmr_config & DMR_CC6) > 0 ) parent.dmr_cc_en6.setSelected(true);
+                            else parent.dmr_cc_en6.setSelected(false);
+                          if( (dmr_config & DMR_CC7) > 0 ) parent.dmr_cc_en7.setSelected(true);
+                            else parent.dmr_cc_en7.setSelected(false);
+                          if( (dmr_config & DMR_CC8) > 0 ) parent.dmr_cc_en8.setSelected(true);
+                            else parent.dmr_cc_en8.setSelected(false);
+                          if( (dmr_config & DMR_CC9) > 0 ) parent.dmr_cc_en9.setSelected(true);
+                            else parent.dmr_cc_en9.setSelected(false);
+                          if( (dmr_config & DMR_CC10) > 0 ) parent.dmr_cc_en10.setSelected(true);
+                            else parent.dmr_cc_en10.setSelected(false);
+                          if( (dmr_config & DMR_CC11) > 0 ) parent.dmr_cc_en11.setSelected(true);
+                            else parent.dmr_cc_en11.setSelected(false);
+                          if( (dmr_config & DMR_CC12) > 0 ) parent.dmr_cc_en12.setSelected(true);
+                            else parent.dmr_cc_en12.setSelected(false);
+                          if( (dmr_config & DMR_CC13) > 0 ) parent.dmr_cc_en13.setSelected(true);
+                            else parent.dmr_cc_en13.setSelected(false);
+                          if( (dmr_config & DMR_CC14) > 0 ) parent.dmr_cc_en14.setSelected(true);
+                            else parent.dmr_cc_en14.setSelected(false);
+                          if( (dmr_config & DMR_CC15) > 0 ) parent.dmr_cc_en15.setSelected(true);
+                            else parent.dmr_cc_en15.setSelected(false);
+
+                          if( (dmr_config & DMR_ISCC) > 0 ) parent.dmr_conplus.setSelected(true);
+                            else parent.dmr_conventional.setSelected(true);
+
+                          if( (dmr_config & DMR_SLOT1) > 0 ) parent.dmr_slot1.setSelected(true);
+                            else parent.dmr_slot1.setSelected(false);
+
+                          if( (dmr_config & DMR_SLOT2) > 0 ) parent.dmr_slot2.setSelected(true);
+                            else parent.dmr_slot2.setSelected(false);
 
                           float vol = bb3.getFloat(12);
                           vol *= 100.0f;
@@ -326,6 +389,22 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           if(bt_reset>0 && bt_reset<5) bt_reset=10;
                           parent.bluetooth_reset.setText( String.format("%d", bt_reset) );
 
+
+                          parent.lcn1_freq.setText( String.format("%3.6f", bb3.getDouble(384)) );
+                          parent.lcn2_freq.setText( String.format("%3.6f", bb3.getDouble(392)) );
+                          parent.lcn3_freq.setText( String.format("%3.6f", bb3.getDouble(400)) );
+                          parent.lcn4_freq.setText( String.format("%3.6f", bb3.getDouble(408)) );
+                          parent.lcn5_freq.setText( String.format("%3.6f", bb3.getDouble(416)) );
+                          parent.lcn6_freq.setText( String.format("%3.6f", bb3.getDouble(424)) );
+                          parent.lcn7_freq.setText( String.format("%3.6f", bb3.getDouble(432)) );
+                          parent.lcn8_freq.setText( String.format("%3.6f", bb3.getDouble(440)) );
+                          parent.lcn9_freq.setText( String.format("%3.6f", bb3.getDouble(448)) );
+                          parent.lcn10_freq.setText( String.format("%3.6f", bb3.getDouble(456)) );
+                          parent.lcn11_freq.setText( String.format("%3.6f", bb3.getDouble(464)) );
+                          parent.lcn12_freq.setText( String.format("%3.6f", bb3.getDouble(472)) );
+                          parent.lcn13_freq.setText( String.format("%3.6f", bb3.getDouble(480)) );
+                          parent.lcn14_freq.setText( String.format("%3.6f", bb3.getDouble(488)) );
+                          parent.lcn15_freq.setText( String.format("%3.6f", bb3.getDouble(496)) );
 
 
                           int tgtimeout = bb3.getInt(372);

@@ -1106,8 +1106,8 @@ boolean disable_tdma=false;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008182046");
-      release_date.setText("Release: 2020-08-18 2046");
+      fw_ver.setText("Latest Avail: FW Date: 202008191230");
+      release_date.setText("Release: 2020-08-19 1230");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2018,7 +2018,6 @@ boolean disable_tdma=false;
         jPanel26 = new javax.swing.JPanel();
         jPanel27 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jPanel28 = new javax.swing.JPanel();
         jPanel29 = new javax.swing.JPanel();
         dmr_cc_en1 = new javax.swing.JCheckBox();
         jSeparator4 = new javax.swing.JSeparator();
@@ -2483,13 +2482,13 @@ boolean disable_tdma=false;
 
         frequency_tf1.setColumns(10);
         frequency_tf1.setToolTipText("Optionally, Use The <Search DB For Nearby Control Channels> Tab To Configure The Primary Control Channel.");
-        p25rxconfigpanel.add(frequency_tf1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, -1, 30));
+        p25rxconfigpanel.add(frequency_tf1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 40, -1, 30));
 
         jLabel7.setText("MHz");
-        p25rxconfigpanel.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 50, -1, -1));
+        p25rxconfigpanel.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 50, -1, -1));
 
         jLabel2.setText("<primary>");
-        p25rxconfigpanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 50, -1, -1));
+        p25rxconfigpanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 50, -1, -1));
 
         jLabel25.setText("Shuffle Control Channels After");
         no_voice_panel.add(jLabel25);
@@ -2512,8 +2511,8 @@ boolean disable_tdma=false;
         });
         p25rxconfigpanel.add(roaming, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, -1, -1));
 
-        jLabel22.setText("Control Channel Frequency");
-        p25rxconfigpanel.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
+        jLabel22.setText("P25 Control Channel Frequency");
+        p25rxconfigpanel.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
 
         jLabel32.setText("RF Max Gain");
         p25rxconfigpanel.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 280, -1, -1));
@@ -2534,12 +2533,11 @@ boolean disable_tdma=false;
         agc_kp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Low (optimized for fixed location)", "Med", "High (optimized for mobile)" }));
         p25rxconfigpanel.add(agc_kp, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 170, -1, -1));
 
-        jLabel6.setText("Mode");
+        jLabel6.setText("Power-on Mode");
         p25rxconfigpanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, -1));
 
         jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "P25", "DMR" }));
-        jComboBox6.setEnabled(false);
-        p25rxconfigpanel.add(jComboBox6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, -1, 30));
+        p25rxconfigpanel.add(jComboBox6, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 80, 30));
 
         jTabbedPane1.addTab("P25RX Configuration", p25rxconfigpanel);
 
@@ -2552,7 +2550,6 @@ boolean disable_tdma=false;
         jPanel27.add(jLabel10);
 
         jPanel26.add(jPanel27);
-        jPanel26.add(jPanel28);
 
         jPanel29.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
@@ -5757,7 +5754,6 @@ private void resizeColumns2() {
     private javax.swing.JPanel jPanel25;
     private javax.swing.JPanel jPanel26;
     private javax.swing.JPanel jPanel27;
-    private javax.swing.JPanel jPanel28;
     private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel30;
