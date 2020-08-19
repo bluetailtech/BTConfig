@@ -1106,8 +1106,8 @@ boolean disable_tdma=false;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008181108");
-      release_date.setText("Release: 2020-08-18 1108");
+      fw_ver.setText("Latest Avail: FW Date: 202008182046");
+      release_date.setText("Release: 2020-08-18 2046");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1696,6 +1696,8 @@ boolean disable_tdma=false;
                 else {
                   wacn.setText("");
                 }
+
+                is_dmr_mode=0;
               } catch(Exception e) {
                   wacn.setText("");
                 //e.printStackTrace();
