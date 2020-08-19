@@ -1106,8 +1106,8 @@ boolean disable_tdma=false;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008191230");
-      release_date.setText("Release: 2020-08-19 1230");
+      fw_ver.setText("Latest Avail: FW Date: 202008191335");
+      release_date.setText("Release: 2020-08-19 1335");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2108,7 +2108,7 @@ boolean disable_tdma=false;
         jLabel49 = new javax.swing.JLabel();
         jSeparator33 = new javax.swing.JSeparator();
         lcn15_freq = new javax.swing.JTextField();
-        jPanel45 = new javax.swing.JPanel();
+        jPanel28 = new javax.swing.JPanel();
         jPanel46 = new javax.swing.JPanel();
         dmr_conplus = new javax.swing.JRadioButton();
         dmr_conventional = new javax.swing.JRadioButton();
@@ -2543,7 +2543,7 @@ boolean disable_tdma=false;
 
         jPanel25.setLayout(new java.awt.BorderLayout());
 
-        jPanel26.setLayout(new java.awt.GridLayout(20, 0));
+        jPanel26.setLayout(new java.awt.GridLayout(18, 0));
 
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel10.setText("DMR Configuration");
@@ -2865,7 +2865,7 @@ boolean disable_tdma=false;
         jPanel44.add(lcn15_freq);
 
         jPanel26.add(jPanel44);
-        jPanel26.add(jPanel45);
+        jPanel26.add(jPanel28);
 
         buttonGroup6.add(dmr_conplus);
         dmr_conplus.setSelected(true);
@@ -2897,6 +2897,7 @@ boolean disable_tdma=false;
         jPanel25.add(jPanel26, java.awt.BorderLayout.CENTER);
 
         dmr_backup.setText("Backup To File");
+        dmr_backup.setEnabled(false);
         dmr_backup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dmr_backupActionPerformed(evt);
@@ -2908,6 +2909,7 @@ boolean disable_tdma=false;
         jPanel30.add(jSeparator34);
 
         dmr_restore.setText("Restore From File");
+        dmr_restore.setEnabled(false);
         dmr_restore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dmr_restoreActionPerformed(evt);
@@ -5388,7 +5390,14 @@ boolean disable_tdma=false;
     }//GEN-LAST:event_dmr_restoreActionPerformed
 
     private void dmr_write_configActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dmr_write_configActionPerformed
-        // TODO add your handling code here:
+      do_read_config=1;
+      do_write_config=1;
+
+      current_sys_id = 0;
+      current_wacn_id = 0; 
+      wacn.setText("");
+      sysid.setText("");
+      nac.setText("");
     }//GEN-LAST:event_dmr_write_configActionPerformed
 
     private void dmr_conplusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dmr_conplusActionPerformed
@@ -5754,6 +5763,7 @@ private void resizeColumns2() {
     private javax.swing.JPanel jPanel25;
     private javax.swing.JPanel jPanel26;
     private javax.swing.JPanel jPanel27;
+    private javax.swing.JPanel jPanel28;
     private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel30;
@@ -5772,7 +5782,6 @@ private void resizeColumns2() {
     private javax.swing.JPanel jPanel42;
     private javax.swing.JPanel jPanel43;
     private javax.swing.JPanel jPanel44;
-    private javax.swing.JPanel jPanel45;
     private javax.swing.JPanel jPanel46;
     private javax.swing.JPanel jPanel47;
     private javax.swing.JPanel jPanel5;

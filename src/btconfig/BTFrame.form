@@ -757,7 +757,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
                 <Property name="columns" type="int" value="0"/>
-                <Property name="rows" type="int" value="20"/>
+                <Property name="rows" type="int" value="18"/>
               </Layout>
               <SubComponents>
                 <Container class="javax.swing.JPanel" name="jPanel27">
@@ -1509,7 +1509,7 @@
                     </Component>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JPanel" name="jPanel45">
+                <Container class="javax.swing.JPanel" name="jPanel28">
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
                 </Container>
@@ -1584,6 +1584,7 @@
                 <Component class="javax.swing.JButton" name="dmr_backup">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Backup To File"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dmr_backupActionPerformed"/>
@@ -1599,6 +1600,7 @@
                 <Component class="javax.swing.JButton" name="dmr_restore">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Restore From File"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dmr_restoreActionPerformed"/>
