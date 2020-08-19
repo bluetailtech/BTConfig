@@ -331,6 +331,9 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                       if( parent.do_write_config==0) {
                         try {
 
+                          int op_mode = bb3.getInt(516);
+                          parent.op_mode.setSelectedIndex( op_mode-1 );
+
                           int dmr_config = bb3.getInt(512);
 
                           if( (dmr_config & DMR_CC1) > 0 ) parent.dmr_cc_en1.setSelected(true);
@@ -804,6 +807,15 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(10);
 
+                          int op_mode = parent.op_mode.getSelectedIndex();
+                          op_mode++;
+
+                          cmd = "op_mode "+op_mode+"\r\n";
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          Thread.sleep(20);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+                          Thread.sleep(10);
 
 
 

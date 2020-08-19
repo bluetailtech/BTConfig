@@ -1106,8 +1106,8 @@ boolean disable_tdma=false;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008191335");
-      release_date.setText("Release: 2020-08-19 1335");
+      fw_ver.setText("Latest Avail: FW Date: 202008191431");
+      release_date.setText("Release: 2020-08-19 1431");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2013,7 +2013,7 @@ boolean disable_tdma=false;
         agc_kp_lb = new javax.swing.JLabel();
         agc_kp = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        jComboBox6 = new javax.swing.JComboBox<>();
+        op_mode = new javax.swing.JComboBox<>();
         jPanel25 = new javax.swing.JPanel();
         jPanel26 = new javax.swing.JPanel();
         jPanel27 = new javax.swing.JPanel();
@@ -2511,7 +2511,7 @@ boolean disable_tdma=false;
         });
         p25rxconfigpanel.add(roaming, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, -1, -1));
 
-        jLabel22.setText("P25 Control Channel Frequency");
+        jLabel22.setText("Control Channel Frequency");
         p25rxconfigpanel.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
 
         jLabel32.setText("RF Max Gain");
@@ -2536,8 +2536,8 @@ boolean disable_tdma=false;
         jLabel6.setText("Power-on Mode");
         p25rxconfigpanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, -1));
 
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "P25", "DMR" }));
-        p25rxconfigpanel.add(jComboBox6, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 80, 30));
+        op_mode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "P25", "DMR" }));
+        p25rxconfigpanel.add(op_mode, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 80, 30));
 
         jTabbedPane1.addTab("P25RX Configuration", p25rxconfigpanel);
 
@@ -5694,7 +5694,6 @@ private void resizeColumns2() {
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox5;
-    private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -5862,6 +5861,7 @@ private void resizeColumns2() {
     public javax.swing.JTextField no_voice_secs;
     public javax.swing.JComboBox<String> nsymbols;
     public javax.swing.JRadioButton off_const;
+    public javax.swing.JComboBox<String> op_mode;
     private javax.swing.JPanel p25rxconfigpanel;
     private javax.swing.JProgressBar progbar;
     private javax.swing.JLabel progress_label;
