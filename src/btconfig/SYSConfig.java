@@ -412,6 +412,22 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           parent.lcn14_freq.setText( String.format("%3.6f", bb3.getDouble(488)) );
                           parent.lcn15_freq.setText( String.format("%3.6f", bb3.getDouble(496)) );
 
+                          if(parent.lcn1_freq.getText().equals("0.000000")) parent.lcn1_freq.setText("");
+                          if(parent.lcn2_freq.getText().equals("0.000000")) parent.lcn2_freq.setText("");
+                          if(parent.lcn3_freq.getText().equals("0.000000")) parent.lcn3_freq.setText("");
+                          if(parent.lcn4_freq.getText().equals("0.000000")) parent.lcn4_freq.setText("");
+                          if(parent.lcn5_freq.getText().equals("0.000000")) parent.lcn5_freq.setText("");
+                          if(parent.lcn6_freq.getText().equals("0.000000")) parent.lcn6_freq.setText("");
+                          if(parent.lcn7_freq.getText().equals("0.000000")) parent.lcn7_freq.setText("");
+                          if(parent.lcn8_freq.getText().equals("0.000000")) parent.lcn8_freq.setText("");
+                          if(parent.lcn9_freq.getText().equals("0.000000")) parent.lcn9_freq.setText("");
+                          if(parent.lcn10_freq.getText().equals("0.000000")) parent.lcn10_freq.setText("");
+                          if(parent.lcn11_freq.getText().equals("0.000000")) parent.lcn11_freq.setText("");
+                          if(parent.lcn12_freq.getText().equals("0.000000")) parent.lcn12_freq.setText("");
+                          if(parent.lcn13_freq.getText().equals("0.000000")) parent.lcn13_freq.setText("");
+                          if(parent.lcn14_freq.getText().equals("0.000000")) parent.lcn14_freq.setText("");
+                          if(parent.lcn15_freq.getText().equals("0.000000")) parent.lcn15_freq.setText("");
+
 
                           int tgtimeout = bb3.getInt(372);
                           switch(tgtimeout) {
@@ -715,6 +731,22 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(10);
+
+                          if( parent.lcn1_freq.getText().equals("") ) parent.lcn1_freq.setText("0.000000");
+                          if( parent.lcn2_freq.getText().equals("") ) parent.lcn2_freq.setText("0.000000");
+                          if( parent.lcn3_freq.getText().equals("") ) parent.lcn3_freq.setText("0.000000");
+                          if( parent.lcn4_freq.getText().equals("") ) parent.lcn4_freq.setText("0.000000");
+                          if( parent.lcn5_freq.getText().equals("") ) parent.lcn5_freq.setText("0.000000");
+                          if( parent.lcn6_freq.getText().equals("") ) parent.lcn6_freq.setText("0.000000");
+                          if( parent.lcn7_freq.getText().equals("") ) parent.lcn7_freq.setText("0.000000");
+                          if( parent.lcn8_freq.getText().equals("") ) parent.lcn8_freq.setText("0.000000");
+                          if( parent.lcn9_freq.getText().equals("") ) parent.lcn9_freq.setText("0.000000");
+                          if( parent.lcn10_freq.getText().equals("") ) parent.lcn10_freq.setText("0.000000");
+                          if( parent.lcn11_freq.getText().equals("") ) parent.lcn11_freq.setText("0.000000");
+                          if( parent.lcn12_freq.getText().equals("") ) parent.lcn12_freq.setText("0.000000");
+                          if( parent.lcn13_freq.getText().equals("") ) parent.lcn13_freq.setText("0.000000");
+                          if( parent.lcn14_freq.getText().equals("") ) parent.lcn14_freq.setText("0.000000");
+                          if( parent.lcn15_freq.getText().equals("") ) parent.lcn15_freq.setText("0.000000");
 
                           cmd = "dmr_lcn1 "+String.format("%3.6f", Double.valueOf(parent.lcn1_freq.getText()))+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
