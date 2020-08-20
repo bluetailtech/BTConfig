@@ -2016,14 +2016,14 @@ boolean disable_tdma=false;
         op_mode = new javax.swing.JComboBox<>();
         jPanel25 = new javax.swing.JPanel();
         jPanel26 = new javax.swing.JPanel();
-        jPanel27 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
         jPanel29 = new javax.swing.JPanel();
         dmr_cc_en1 = new javax.swing.JCheckBox();
         jSeparator4 = new javax.swing.JSeparator();
         jLabel35 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         lcn1_freq = new javax.swing.JTextField();
+        jSeparator38 = new javax.swing.JSeparator();
+        dmr_clear_freqs = new javax.swing.JButton();
         jPanel31 = new javax.swing.JPanel();
         dmr_cc_en2 = new javax.swing.JCheckBox();
         jSeparator6 = new javax.swing.JSeparator();
@@ -2108,13 +2108,13 @@ boolean disable_tdma=false;
         jLabel49 = new javax.swing.JLabel();
         jSeparator33 = new javax.swing.JSeparator();
         lcn15_freq = new javax.swing.JTextField();
-        jPanel28 = new javax.swing.JPanel();
         jPanel46 = new javax.swing.JPanel();
         dmr_conplus = new javax.swing.JRadioButton();
         dmr_conventional = new javax.swing.JRadioButton();
         jSeparator36 = new javax.swing.JSeparator();
         dmr_slot1 = new javax.swing.JCheckBox();
         dmr_slot2 = new javax.swing.JCheckBox();
+        jSeparator37 = new javax.swing.JSeparator();
         jPanel30 = new javax.swing.JPanel();
         dmr_backup = new javax.swing.JButton();
         jSeparator34 = new javax.swing.JSeparator();
@@ -2543,13 +2543,7 @@ boolean disable_tdma=false;
 
         jPanel25.setLayout(new java.awt.BorderLayout());
 
-        jPanel26.setLayout(new java.awt.GridLayout(18, 0));
-
-        jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel10.setText("DMR Configuration");
-        jPanel27.add(jLabel10);
-
-        jPanel26.add(jPanel27);
+        jPanel26.setLayout(new java.awt.GridLayout(16, 0));
 
         jPanel29.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
@@ -2569,6 +2563,18 @@ boolean disable_tdma=false;
 
         lcn1_freq.setColumns(15);
         jPanel29.add(lcn1_freq);
+
+        jSeparator38.setMinimumSize(new java.awt.Dimension(50, 0));
+        jSeparator38.setPreferredSize(new java.awt.Dimension(50, 0));
+        jPanel29.add(jSeparator38);
+
+        dmr_clear_freqs.setText("Clear All Frequencies");
+        dmr_clear_freqs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dmr_clear_freqsActionPerformed(evt);
+            }
+        });
+        jPanel29.add(dmr_clear_freqs);
 
         jPanel26.add(jPanel29);
 
@@ -2865,7 +2871,8 @@ boolean disable_tdma=false;
         jPanel44.add(lcn15_freq);
 
         jPanel26.add(jPanel44);
-        jPanel26.add(jPanel28);
+
+        jPanel46.setPreferredSize(new java.awt.Dimension(885, 50));
 
         buttonGroup6.add(dmr_conplus);
         dmr_conplus.setSelected(true);
@@ -2891,6 +2898,9 @@ boolean disable_tdma=false;
         dmr_slot2.setSelected(true);
         dmr_slot2.setText("Enable Slot2");
         jPanel46.add(dmr_slot2);
+
+        jSeparator37.setPreferredSize(new java.awt.Dimension(100, 0));
+        jPanel46.add(jSeparator37);
 
         jPanel26.add(jPanel46);
 
@@ -5404,6 +5414,24 @@ boolean disable_tdma=false;
         // TODO add your handling code here:
     }//GEN-LAST:event_dmr_conplusActionPerformed
 
+    private void dmr_clear_freqsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dmr_clear_freqsActionPerformed
+      lcn1_freq.setText("");
+      lcn2_freq.setText("");
+      lcn3_freq.setText("");
+      lcn4_freq.setText("");
+      lcn5_freq.setText("");
+      lcn6_freq.setText("");
+      lcn7_freq.setText("");
+      lcn8_freq.setText("");
+      lcn9_freq.setText("");
+      lcn10_freq.setText("");
+      lcn11_freq.setText("");
+      lcn12_freq.setText("");
+      lcn13_freq.setText("");
+      lcn14_freq.setText("");
+      lcn15_freq.setText("");
+    }//GEN-LAST:event_dmr_clear_freqsActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5647,6 +5675,7 @@ private void resizeColumns2() {
     public javax.swing.JCheckBox dmr_cc_en7;
     public javax.swing.JCheckBox dmr_cc_en8;
     public javax.swing.JCheckBox dmr_cc_en9;
+    private javax.swing.JButton dmr_clear_freqs;
     public javax.swing.JRadioButton dmr_conplus;
     public javax.swing.JRadioButton dmr_conventional;
     private javax.swing.JButton dmr_restore;
@@ -5695,7 +5724,6 @@ private void resizeColumns2() {
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -5761,8 +5789,6 @@ private void resizeColumns2() {
     public javax.swing.JPanel jPanel24;
     private javax.swing.JPanel jPanel25;
     private javax.swing.JPanel jPanel26;
-    private javax.swing.JPanel jPanel27;
-    private javax.swing.JPanel jPanel28;
     private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel30;
@@ -5822,6 +5848,8 @@ private void resizeColumns2() {
     private javax.swing.JSeparator jSeparator34;
     private javax.swing.JSeparator jSeparator35;
     private javax.swing.JSeparator jSeparator36;
+    private javax.swing.JSeparator jSeparator37;
+    private javax.swing.JSeparator jSeparator38;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
