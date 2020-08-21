@@ -1106,8 +1106,8 @@ boolean disable_tdma=false;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008191836");
-      release_date.setText("Release: 2020-08-19 1836");
+      fw_ver.setText("Latest Avail: FW Date: 202008201806");
+      release_date.setText("Release: 2020-08-20 1806");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1439,6 +1439,13 @@ boolean disable_tdma=false;
 
       if(console_line.contains("\r\n") && console_line.contains("Return To Control") ) {
         start_time = new java.util.Date().getTime();
+      }
+
+      try {
+        if(console_line.contains("dmr mode enabled")) {
+          freq.setText("");
+        }
+      } catch(Exception e) {
       }
 
       if( console_line.contains("DATA_SYNC") ) {
@@ -1838,7 +1845,13 @@ boolean disable_tdma=false;
                 
                 st2 = st2.concat(next_str);
                 if(st2.contains(",") && st2.length()>2) {
-                  l3.setText(freqval+st2.substring(0,st2.length()-2)+talkgroup);
+
+                  //String l3_line = freqval+st2.substring(0,st2.length()-2)+talkgroup;
+                  freqval = freqval.substring(0,freqval.length()-2);
+                  String l3_line = freqval+talkgroup+", "+st2.substring(0,st2.length()-2);
+                  if(l3_line!=null && l3_line.length()>46) l3_line = l3_line.substring(0,45);
+
+                  l3.setText(l3_line);
                   p25_status_timeout=5000;
                   break;
                 }

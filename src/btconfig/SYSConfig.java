@@ -534,6 +534,17 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                             rlen=serial_port.readBytes( result, 64);
                           }
                           */
+                          byte[] result=new byte[64];
+
+                          int op_mode = parent.op_mode.getSelectedIndex();
+                          op_mode++;
+
+                          cmd = "op_mode "+op_mode+"\r\n";
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          Thread.sleep(20);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+                          Thread.sleep(10);
 
 
                           String freq_to_use="";
@@ -556,7 +567,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                             cmd = "freq "+freq_to_use+"\r\n";  
                           }
 
-                          byte[] result=new byte[64];
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(10);
                           rlen=serial_port.readBytes( result, 64);
@@ -833,16 +843,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(10);
                           cmd = "dmr_lcn15 "+String.format("%3.6f", Double.valueOf(parent.lcn15_freq.getText()))+"\r\n";
-                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-                          Thread.sleep(20);
-                          rlen=serial_port.readBytes( result, 64);
-                          System.out.println("result: "+new String(result) );
-                          Thread.sleep(10);
-
-                          int op_mode = parent.op_mode.getSelectedIndex();
-                          op_mode++;
-
-                          cmd = "op_mode "+op_mode+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(20);
                           rlen=serial_port.readBytes( result, 64);
