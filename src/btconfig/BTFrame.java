@@ -1106,8 +1106,8 @@ boolean disable_tdma=false;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008201806");
-      release_date.setText("Release: 2020-08-20 1806");
+      fw_ver.setText("Latest Avail: FW Date: 202008210942");
+      release_date.setText("Release: 2020-08-21 0942");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
