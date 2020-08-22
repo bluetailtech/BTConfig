@@ -1106,8 +1106,8 @@ boolean disable_tdma=false;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008210942");
-      release_date.setText("Release: 2020-08-21 0942");
+      fw_ver.setText("Latest Avail: FW Date: 202008212243");
+      release_date.setText("Release: 2020-08-21 2243");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2027,6 +2027,11 @@ boolean disable_tdma=false;
         agc_kp = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         op_mode = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        ref_freq = new javax.swing.JTextField();
+        jLabel50 = new javax.swing.JLabel();
+        freqoff = new javax.swing.JTextField();
+        jLabel51 = new javax.swing.JLabel();
         jPanel25 = new javax.swing.JPanel();
         jPanel26 = new javax.swing.JPanel();
         jPanel29 = new javax.swing.JPanel();
@@ -2551,6 +2556,26 @@ boolean disable_tdma=false;
 
         op_mode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "P25", "DMR" }));
         p25rxconfigpanel.add(op_mode, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 80, 30));
+
+        jLabel4.setText("Ref Freq");
+        p25rxconfigpanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 50, -1, -1));
+
+        ref_freq.setColumns(12);
+        ref_freq.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ref_freqActionPerformed(evt);
+            }
+        });
+        p25rxconfigpanel.add(ref_freq, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 50, -1, -1));
+
+        jLabel50.setText("Freq Offset");
+        p25rxconfigpanel.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 80, -1, 20));
+
+        freqoff.setColumns(12);
+        p25rxconfigpanel.add(freqoff, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 80, -1, -1));
+
+        jLabel51.setText("Ref Freq / Freq Off should match the label");
+        p25rxconfigpanel.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 20, -1, -1));
 
         jTabbedPane1.addTab("P25RX Configuration", p25rxconfigpanel);
 
@@ -5445,6 +5470,10 @@ boolean disable_tdma=false;
       lcn15_freq.setText("");
     }//GEN-LAST:event_dmr_clear_freqsActionPerformed
 
+    private void ref_freqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ref_freqActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ref_freqActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5709,6 +5738,7 @@ private void resizeColumns2() {
     private javax.swing.JButton freq_search2;
     public javax.swing.JTable freq_table;
     private javax.swing.JPanel freqdb_panel;
+    public javax.swing.JTextField freqoff;
     public javax.swing.JTextField frequency_tf1;
     public javax.swing.JLabel fw_installed;
     public javax.swing.JLabel fw_ver;
@@ -5768,6 +5798,7 @@ private void resizeColumns2() {
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
@@ -5779,6 +5810,8 @@ private void resizeColumns2() {
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -5909,6 +5942,7 @@ private void resizeColumns2() {
     private javax.swing.JButton read_config;
     private javax.swing.JButton read_tg;
     private javax.swing.JToggleButton record_to_mp3;
+    public javax.swing.JTextField ref_freq;
     private javax.swing.JLabel release_date;
     public javax.swing.JButton restore_roam;
     private javax.swing.JButton restore_tg;

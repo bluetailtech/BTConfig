@@ -331,6 +331,11 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                       if( parent.do_write_config==0) {
                         try {
 
+                          double reffreq = bb3.getDouble(112);
+                          parent.ref_freq.setText( String.format("%5.0f", reffreq) );
+                          double freq_off = bb3.getDouble(120);
+                          parent.freqoff.setText( String.format("%5.0f", freq_off) );
+
                           int op_mode = bb3.getInt(516);
                           parent.op_mode.setSelectedIndex( op_mode-1 );
 
@@ -850,6 +855,19 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           Thread.sleep(10);
 
 
+                          cmd = "ref_freq "+String.format("%5.0f", Double.valueOf(parent.ref_freq.getText()))+"\r\n";
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          Thread.sleep(20);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+                          Thread.sleep(10);
+
+                          cmd = "freqoff "+String.format("%5.0f", Double.valueOf(parent.freqoff.getText()))+"\r\n";
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          Thread.sleep(20);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+                          Thread.sleep(10);
 
                           cmd = "save\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
