@@ -1107,8 +1107,8 @@ double current_freq=0.0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008220146");
-      release_date.setText("Release: 2020-08-22 0831");
+      fw_ver.setText("Latest Avail: FW Date: 202008221128");
+      release_date.setText("Release: 2020-08-22 1128");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1512,7 +1512,7 @@ double current_freq=0.0;
 
         try {
 
-            if(console_line.contains("VOICE")) {
+            if(console_line.contains("VOICE") || console_line.contains("rssi:") ) {
               p25_status_timeout=5000;
             }
 
