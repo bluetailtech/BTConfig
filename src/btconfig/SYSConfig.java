@@ -481,7 +481,9 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                             parent.agc_kp.setSelectedIndex(2);
                           }
 
-                          parent.rfmaxgain.setSelectedIndex( bb3.getInt(296)-4 );
+                          //int rfmg = bb3.getInt(296)-4;
+                          //if(rfmg<0) rfmg=0;
+                          //parent.rfmaxgain.setSelectedIndex( rfmg ); 
 
                           if(bb3.getInt(130)==1) b=true;
                               else b=false;

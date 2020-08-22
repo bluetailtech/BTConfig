@@ -30,6 +30,8 @@ public class ConstPlotPanel extends JPanel {
 
    static String current_gain="";
    static String current_rf_gain="";
+   static String err_hz="";
+   static String est_hz="";
    static String sync_state="";
    BTFrame parent;
    int last_sync_state=0;
@@ -63,7 +65,7 @@ public class ConstPlotPanel extends JPanel {
      try {
        this.do_synced = do_synced;
 
-       for(int i=0;i<308/2;i++) {
+       for(int i=0;i<300/2;i++) {
 
          int ii = (int) ((double) data[j++]);
          int qq = (int) ((double) data[j++]);
@@ -82,8 +84,13 @@ public class ConstPlotPanel extends JPanel {
        bb = ByteBuffer.wrap(data);
        bb.order(ByteOrder.LITTLE_ENDIAN);
 
+       float err_hz_f = bb.getFloat(300);
+       float est_hz_f = bb.getFloat(304);
        int rfgain = bb.getInt(308);
        float gain = bb.getFloat(312);
+
+       est_hz = "Frequency Error Estimate: "+String.format("%3.1f", est_hz_f)+" Hz";
+       err_hz = "Applied Frequency Correction: "+String.format("%3.1f", err_hz_f)+" Hz";
 
        //System.out.println("gain: "+java.lang.Math.log10(gain)*20.0f);
        current_gain = "soft agc gain: "+String.format("%3.1f", java.lang.Math.log10(gain)*20.0f)+" dB";
@@ -202,6 +209,12 @@ public class ConstPlotPanel extends JPanel {
      g2d.setColor( Color.white ); 
      g2d.drawString(current_gain, 300+256,50);
      g2d.drawString(current_rf_gain, 300+256,75);
+
+     try {
+       g2d.drawString(est_hz, 300+256,125);
+       g2d.drawString(err_hz, 300+256,150);
+     } catch(Exception e) {
+     }
 
      int sync_off=5;
 
