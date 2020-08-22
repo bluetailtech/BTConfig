@@ -976,6 +976,7 @@ ConstPlotPanel cpanel;
 Boolean do_mini_const=false;
 boolean do_synced;
 boolean disable_tdma=false;
+double current_freq=0.0;
 
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
@@ -1598,6 +1599,11 @@ boolean disable_tdma=false;
               if(freq_str!=null) {
                 try {
                   double fval = new Double(freq_str).doubleValue();
+                  try {
+                    current_freq = Double.valueOf(freq_str)*1e6;
+                  } catch(Exception e) {
+                  }
+
                   if(fval!=0) {
                     freq.setText("Freq: "+freq_str);
                   }
@@ -1714,6 +1720,11 @@ boolean disable_tdma=false;
             if(st1.equals("freq:")) {
               freqval = st.nextToken();
               freqval = freqval.substring(0,freqval.length()-1);
+
+              try {
+                current_freq = Double.valueOf(freqval)*1e6;
+              } catch(Exception e) {
+              }
 
               freq.setText("Freq: "+freqval);
               freqval = " "+freqval+" MHz, ";

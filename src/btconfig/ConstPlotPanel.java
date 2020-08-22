@@ -89,8 +89,20 @@ public class ConstPlotPanel extends JPanel {
        int rfgain = bb.getInt(308);
        float gain = bb.getFloat(312);
 
-       est_hz = "Frequency Error Estimate: "+String.format("%3.1f", est_hz_f)+" Hz";
-       err_hz = "Applied Frequency Correction: "+String.format("%3.1f", err_hz_f)+" Hz";
+       double ppb_est = 0.0; 
+       if(parent.current_freq!=0.0) {
+         ppb_est = est_hz_f / parent.current_freq;
+         ppb_est *= 1e9;
+       }
+
+       if(ppb_est!=0.0) {
+         est_hz = "Frequency Error Estimate: "+String.format("%3.1f", est_hz_f)+" Hz,   "+String.format("%3.0f", ppb_est)+" ppb";
+         err_hz = "Applied Frequency Correction: "+String.format("%3.1f", err_hz_f)+" Hz";
+       }
+       else {
+         est_hz = "Frequency Error Estimate: "+String.format("%3.1f", est_hz_f)+" Hz";
+         err_hz = "Applied Frequency Correction: "+String.format("%3.1f", err_hz_f)+" Hz";
+       }
 
        //System.out.println("gain: "+java.lang.Math.log10(gain)*20.0f);
        current_gain = "soft agc gain: "+String.format("%3.1f", java.lang.Math.log10(gain)*20.0f)+" dB";
