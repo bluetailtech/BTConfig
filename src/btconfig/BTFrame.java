@@ -1107,8 +1107,8 @@ double current_freq=0.0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008221128");
-      release_date.setText("Release: 2020-08-22 1128");
+      fw_ver.setText("Latest Avail: FW Date: 202008221816");
+      release_date.setText("Release: 2020-08-22 1816");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1421,13 +1421,13 @@ double current_freq=0.0;
           String date = time_format.format(new java.util.Date() );
           str = str.replaceAll("DATA_SYNC",date+" "+"DATA_SYNC");
           str = str.replaceAll("found DMR_BS_VOICE_SYNC",date+" "+"found DMR_BS_VOICE_SYNC");
+          str = str.replaceAll("$TDMA",date+" "+"$TDMA");
 
           fos_conlog.write(str.getBytes(),0,str.length());  //write Int num records
           fos_conlog.flush();
         } catch(Exception e) {
         }
       }
-
 
       String talkgroup="";
       String freqval="";
