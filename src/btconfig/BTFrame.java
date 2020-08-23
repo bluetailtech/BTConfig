@@ -1107,8 +1107,8 @@ double current_freq=0.0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008221816");
-      release_date.setText("Release: 2020-08-22 1816");
+      fw_ver.setText("Latest Avail: FW Date: 202008221846");
+      release_date.setText("Release: 2020-08-22 1846");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
