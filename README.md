@@ -6,7 +6,7 @@ Configuration Software for the Bluetail Technologies <a href="https://bluetailte
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-07-30_1531.exe 
 <BR>
 <BR>Testing Release (experimental)  
-https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-08-25_1558.exe
+https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-08-25_1635.exe
 <BR><BR>Previous Releases (recommend using stable)
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/
   
