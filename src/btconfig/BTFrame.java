@@ -629,7 +629,21 @@ class updateTask extends java.util.TimerTask
 
               for(int i=0;i<len;i++) {
 
-                if(skip_bytes>0 && rx_state==5) {
+                if(skip_bytes>0 && rx_state==6) {
+                    try {
+                      if(tdma_idx<256) tdma_bytes[tdma_idx++] = b[i];
+                      skip_bytes--;
+
+                      if(tdma_idx==256) {
+                        tdma_idx=0;
+                        rx_state=0;
+                        //fos_tdma.write(tdma_bytes,0,256);
+                        //fos_tdma.flush();
+                      }
+                    } catch(Exception e) {
+                    }
+                }
+                else if(skip_bytes>0 && rx_state==5) {
                   if(const_idx<320) constellation_bytes[const_idx++] = b[i];
 
                    skip_bytes--;
@@ -727,9 +741,12 @@ class updateTask extends java.util.TimerTask
                           conlog_file = new File(exe_path+"p25rx_conlog_"+current_date+".txt");
                           System.out.println("log file path: "+exe_path+"p25rx_conlog_"+current_date+".txt");
 
+                          //tdma_file = new File(exe_path+"p25rx_TDMA_PACKED_DIBITS_"+current_date+".bin");
+
                           fos_mp3 = new FileOutputStream( mp3_file, true ); 
                           fos_meta = new FileOutputStream( meta_file, true ); 
                           fos_conlog = new FileOutputStream( conlog_file, true ); 
+                          //fos_tdma = new FileOutputStream( tdma_file, true ); 
                         } catch(Exception e) {
                           //e.printStackTrace();
                         }
@@ -762,13 +779,13 @@ class updateTask extends java.util.TimerTask
                   if(rx_state==0 && b[i]==(byte) 0xb2) {
                     rx_state=1;
                   }
-                  else if( (rx_state==1 && b[i]==(byte) 0x5f) || (rx_state==1 && b[i]==(byte) 0x5b)) {
+                  else if( (rx_state==1 && b[i]==(byte) 0x5f) || (rx_state==1 && b[i]==(byte) 0x5b) || (rx_state==1 && b[i]==(byte) 0x59)) {
                     rx_state=2;
                   }
-                  else if( (rx_state==2 && b[i]==(byte) 0x9c) || (rx_state==2 && b[i]==(byte) 0x12)) {
+                  else if( (rx_state==2 && b[i]==(byte) 0x9c) || (rx_state==2 && b[i]==(byte) 0x12) || (rx_state==2 && b[i]==(byte) 0xef)) {
                     rx_state=3;
                   }
-                  else if( (rx_state==3 && b[i]==(byte) 0x71) || (rx_state==3 && b[i]==(byte) 0xe4)) {
+                  else if( (rx_state==3 && b[i]==(byte) 0x71) || (rx_state==3 && b[i]==(byte) 0xe4) || (rx_state==3 && b[i]==(byte) 0x72)) {
                     //addTextConsole("\r\nfound voice header");
 
                     if(b[i]==(byte) 0x71) {
@@ -780,6 +797,11 @@ class updateTask extends java.util.TimerTask
                       skip_bytes=320+1;
                       rx_state=5;
                       //System.out.println("do const");
+                    }
+                    if(b[i]==(byte) 0x72) {
+                      skip_bytes=256+1;
+                      rx_state=6;
+                      //System.out.println("do tdma");
                     }
                   }
                   else {
@@ -917,8 +939,10 @@ int rx_state=0;
 int skip_bytes=0;
 byte[] pcm_bytes;
 byte[] constellation_bytes;
+byte[] tdma_bytes;
 int pcm_idx=0;
 int const_idx=0;
+int tdma_idx=0;
 LameEncoder encoder=null;
 byte[] mp3_buffer;
 String current_date=null;
@@ -926,9 +950,11 @@ String home_dir=null;
 FileOutputStream fos_mp3;
 FileOutputStream fos_meta;
 FileOutputStream fos_conlog;
+FileOutputStream fos_tdma;
 File mp3_file=null;
 File meta_file=null;
 File conlog_file=null;
+File tdma_file=null;
 java.text.SimpleDateFormat formatter_date;
 java.text.SimpleDateFormat time_format;
 int current_sys_id = 0;
@@ -1038,6 +1064,7 @@ double current_freq=0.0;
 
       pcm_bytes = new byte[320];
       constellation_bytes = new byte[320];
+      tdma_bytes = new byte[256];
 
       write_config.setEnabled(false);
       disconnect.setEnabled(false);
@@ -1096,10 +1123,12 @@ double current_freq=0.0;
         exe_path = exe_path.replace("BTConfig.exe", "");
         conlog_file = new File(exe_path+"p25rx_conlog_"+current_date+".txt");
         System.out.println("log file path: "+exe_path+"p25rx_conlog_"+current_date+".txt");
+        //tdma_file = new File(exe_path+"p25rx_TDMA_PACKED_DIBITS_"+current_date+".bin");
 
         fos_mp3 = new FileOutputStream( mp3_file, true ); 
         fos_meta = new FileOutputStream( meta_file, true ); 
         fos_conlog = new FileOutputStream( conlog_file, true ); 
+        //fos_tdma = new FileOutputStream( tdma_file, true ); 
       } catch(Exception e) {
         //e.printStackTrace();
       }
@@ -1107,8 +1136,8 @@ double current_freq=0.0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008221846");
-      release_date.setText("Release: 2020-08-22 1846");
+      fw_ver.setText("Latest Avail: FW Date: 202008251558");
+      release_date.setText("Release: 2020-08-25 1558");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1455,6 +1484,10 @@ double current_freq=0.0;
         nac.setText("");
         rfid.setText("");
         siteid.setText("");
+      }
+
+      if(console_line.contains("$TDMA")) {
+        p25_status_timeout=5000;
       }
 
       if(console_line.contains("sig 1")) {
