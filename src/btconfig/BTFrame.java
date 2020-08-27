@@ -1136,8 +1136,8 @@ double current_freq=0.0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008251727");
-      release_date.setText("Release: 2020-08-25 1727");
+      fw_ver.setText("Latest Avail: FW Date: 202008271424");
+      release_date.setText("Release: 2020-08-27 1424");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1253,7 +1253,7 @@ double current_freq=0.0;
 
       //do this last
       utimer = new java.util.Timer();
-      utimer.schedule( new updateTask(), 100, 1);
+      utimer.schedule( new updateTask(), 1, 1);
       setSize(1054,750);
 
       //parentSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -2582,7 +2582,7 @@ double current_freq=0.0;
         rfmaxgain.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "47 dB (max sensitivity)", "44 dB", "41 dB", "38 dB", "35 dB", "32 dB (default)", "29 dB", "26 dB", "23 dB", "20 dB", "14 dB", "8 dB (max linearity)", " " }));
         p25rxconfigpanel.add(rfmaxgain, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 270, -1, 30));
 
-        vtimeout.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1ms", "100ms", "250ms", "500ms", "1sec", "1.5sec", "2sec", "3sec" }));
+        vtimeout.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "100ms", "250ms", "500ms", "1sec", "1.5sec", "2sec", "3sec" }));
         vtimeout.setToolTipText("The time since the last activity on a talk group before the receiver will follow a different talk group.");
         p25rxconfigpanel.add(vtimeout, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 120, -1, -1));
 
