@@ -78,6 +78,8 @@ class updateTask extends java.util.TimerTask
     {
       try {
 
+
+
         if(bluetooth_streaming_timer>0) {
           bluetooth_streaming_timer--;
           if(bluetooth_streaming_timer==0) {
@@ -1136,8 +1138,8 @@ double current_freq=0.0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008271424");
-      release_date.setText("Release: 2020-08-27 1424");
+      fw_ver.setText("Latest Avail: FW Date: 202008281204");
+      release_date.setText("Release: 2020-08-28 1204");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
