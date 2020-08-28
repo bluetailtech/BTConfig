@@ -47,6 +47,11 @@ FloatControl src_volume;
 BTFrame parent;
 float initial_level=0.85f;
 
+  byte[] dbuffer1 = new byte[9600 * 4];
+  byte[] dbuffer2 = new byte[9600 * 4];
+  int dbuffer_mod=0;
+  int dbuffer_tot=0;
+
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
   public audio(BTFrame p) {
@@ -93,6 +98,7 @@ float initial_level=0.85f;
         //try one channel
       if(af==null) {
 
+        /*
               if(parent.audio_slow_rate.isSelected()) {
                   af = new AudioFormat(
                     47040,
@@ -103,6 +109,7 @@ float initial_level=0.85f;
                   );
               }
               else {
+                */
                   af = new AudioFormat(
                     48000,
                     16,  // sample size in bits
@@ -110,18 +117,21 @@ float initial_level=0.85f;
                     true,  // signed
                     false  // bigendian
                   );
-              }
+              //}
 
             try {
               DataLine.Info dataLineInfo = new DataLine.Info( SourceDataLine.class, af);
               sourceDataLine = (SourceDataLine)AudioSystem.getLine( dataLineInfo);
 
+                /*
               if(parent.audio_buffer_system.isSelected()) {
                 sourceDataLine.open(af);
               }
               else {
                 sourceDataLine.open(af, 48000*4);
               }
+                */
+                sourceDataLine.open(af, 48000*4*4);
 
 
               sourceDataLine.start();
@@ -224,6 +234,11 @@ float initial_level=0.85f;
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
   public void playStop() {
+
+    dbuffer_mod=0;
+    dbuffer_tot=0;
+
+
     if(sourceDataLine==null) return;
 
 
@@ -276,6 +291,7 @@ float initial_level=0.85f;
 
           Boolean isWindows = System.getProperty("os.name").startsWith("Windows");
 
+          /*
           //may reduce java audio glitches
             if(parent.audio_insert_zero.isSelected()) {
               if(!sourceDataLine.isRunning()) {
@@ -305,6 +321,7 @@ float initial_level=0.85f;
             }
 
           }
+          */
 
           byte[] outbytes = new byte[ buffer_out_agc.length * 2 *2]; 
 
@@ -319,7 +336,33 @@ float initial_level=0.85f;
             idx+=4;
           }
 
-          sourceDataLine.write(outbytes, 0, outbytes.length);
+          if( dbuffer_mod == 0 ) {
+            for(int i=0;i<idx;i++) {
+              dbuffer1[dbuffer_tot++] = outbytes[i];
+            }
+          }
+          else {
+            for(int i=0;i<idx;i++) {
+              dbuffer2[dbuffer_tot++] = outbytes[i];
+            }
+          }
+
+          if(dbuffer_tot==9600*4) {
+            dbuffer_mod ^= 0x01;
+
+            if( dbuffer_mod==1 ) {
+              sourceDataLine.write(dbuffer1, 0, 9600*4);
+              //System.out.println("dbuffer 1");
+            }
+            else {
+              sourceDataLine.write(dbuffer2, 0, 9600*4);
+              if(!sourceDataLine.isRunning()) sourceDataLine.start();
+              //System.out.println("dbuffer 2");
+            }
+
+            dbuffer_tot=0;
+          }
+
 
         }
 

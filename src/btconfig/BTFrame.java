@@ -1138,8 +1138,8 @@ double current_freq=0.0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008281204");
-      release_date.setText("Release: 2020-08-28 1204");
+      fw_ver.setText("Latest Avail: FW Date: 202008281435");
+      release_date.setText("Release: 2020-08-28 1435");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3036,6 +3036,7 @@ double current_freq=0.0;
         buttonGroup2.add(audio_buffer_system);
         audio_buffer_system.setSelected(true);
         audio_buffer_system.setText("Let System Set Audio Buffer Size");
+        audio_buffer_system.setEnabled(false);
         audio_buffer_system.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 audio_buffer_systemActionPerformed(evt);
@@ -3045,6 +3046,7 @@ double current_freq=0.0;
 
         buttonGroup2.add(audio_buffer_user);
         audio_buffer_user.setText("Use Large Audio Buffer Size");
+        audio_buffer_user.setEnabled(false);
         audio_buffer_user.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 audio_buffer_userActionPerformed(evt);
@@ -3109,6 +3111,7 @@ double current_freq=0.0;
 
         audio_insert_zero.setSelected(true);
         audio_insert_zero.setText("Insert Zeros At Start Of Buffer    (might prevent java audio glitches)");
+        audio_insert_zero.setEnabled(false);
         audio_insert_zero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 audio_insert_zeroActionPerformed(evt);
@@ -3118,6 +3121,7 @@ double current_freq=0.0;
 
         audio_slow_rate.setSelected(true);
         audio_slow_rate.setText("Use 2% slowed playback rate  (may solve audio glitches due to buffer underrun)");
+        audio_slow_rate.setEnabled(false);
         audio_slow_rate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 audio_slow_rateActionPerformed(evt);
