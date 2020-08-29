@@ -226,13 +226,9 @@ class updateTask extends java.util.TimerTask
 
         if(prefs!=null) {
           int i = prefs.getInt("audio_buffer_system",1);
-          if(i==1) audio_buffer_system.setSelected(true);
-            else audio_buffer_user.setSelected(true);
 
           enable_mp3.setSelected( prefs.getBoolean("enable_mp3", true) ); 
           enable_audio.setSelected( prefs.getBoolean("enable_audio", true) ); 
-          audio_insert_zero.setSelected( prefs.getBoolean("audio_insert_zero", true) ); 
-          audio_slow_rate.setSelected( prefs.getBoolean("audio_slow_rate", true) ); 
           initial_audio_level.setValue( prefs.getInt("initial_audio_level", 75) );
           auto_flash_tg.setSelected( prefs.getBoolean("tg_auto_flash", true) );
           disable_encrypted.setSelected( prefs.getBoolean("enc_auto_flash", true) );
@@ -1159,8 +1155,8 @@ long audio_tick_start=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008282145");
-      release_date.setText("Release: 2020-08-28 2145");
+      fw_ver.setText("Latest Avail: FW Date: 202008282218");
+      release_date.setText("Release: 2020-08-28 2218");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2209,21 +2205,16 @@ long audio_tick_start=0;
         jPanel47 = new javax.swing.JPanel();
         audiopanel = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
-        audio_buffer_system = new javax.swing.JRadioButton();
-        audio_buffer_user = new javax.swing.JRadioButton();
         enable_mp3 = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
         agc_gain = new javax.swing.JSlider();
         agc_level_lb = new javax.swing.JLabel();
         enable_audio = new javax.swing.JCheckBox();
-        jLabel8 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         initial_audio_level = new javax.swing.JSlider();
         initial_audio_level_lb = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        audio_insert_zero = new javax.swing.JCheckBox();
-        audio_slow_rate = new javax.swing.JCheckBox();
         jPanel13 = new javax.swing.JPanel();
         freqdb_panel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
@@ -3054,27 +3045,6 @@ long audio_tick_start=0;
 
         jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        buttonGroup2.add(audio_buffer_system);
-        audio_buffer_system.setSelected(true);
-        audio_buffer_system.setText("Let System Set Audio Buffer Size");
-        audio_buffer_system.setEnabled(false);
-        audio_buffer_system.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                audio_buffer_systemActionPerformed(evt);
-            }
-        });
-        jPanel11.add(audio_buffer_system, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, -1, -1));
-
-        buttonGroup2.add(audio_buffer_user);
-        audio_buffer_user.setText("Use Large Audio Buffer Size");
-        audio_buffer_user.setEnabled(false);
-        audio_buffer_user.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                audio_buffer_userActionPerformed(evt);
-            }
-        });
-        jPanel11.add(audio_buffer_user, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, -1, -1));
-
         enable_mp3.setSelected(true);
         enable_mp3.setText("Enable .mp3 audio file generation");
         enable_mp3.setToolTipText("This option will generate mp3 files in the p25rx directory located in the user home directory.  ~/p25rx on Linux and Documents/p25rx on Windows.");
@@ -3107,10 +3077,6 @@ long audio_tick_start=0;
         });
         jPanel11.add(enable_audio, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 360, -1, -1));
 
-        jLabel8.setText("This option may give better audio performance on some systems");
-        jLabel8.setEnabled(false);
-        jPanel11.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, -1, 20));
-
         jLabel11.setText("If you hear clipping, try setting this lower. (default 75)");
         jPanel11.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 310, -1, -1));
 
@@ -3130,26 +3096,6 @@ long audio_tick_start=0;
 
         jLabel13.setText("If you hear clipping, try setting this lower. (default 85)");
         jPanel11.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 260, -1, -1));
-
-        audio_insert_zero.setSelected(true);
-        audio_insert_zero.setText("Insert Zeros At Start Of Buffer    (might prevent java audio glitches)");
-        audio_insert_zero.setEnabled(false);
-        audio_insert_zero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                audio_insert_zeroActionPerformed(evt);
-            }
-        });
-        jPanel11.add(audio_insert_zero, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, -1, -1));
-
-        audio_slow_rate.setSelected(true);
-        audio_slow_rate.setText("Use 2% slowed playback rate  (may solve audio glitches due to buffer underrun)");
-        audio_slow_rate.setEnabled(false);
-        audio_slow_rate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                audio_slow_rateActionPerformed(evt);
-            }
-        });
-        jPanel11.add(audio_slow_rate, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, -1, -1));
 
         audiopanel.add(jPanel11, java.awt.BorderLayout.CENTER);
 
@@ -5312,22 +5258,6 @@ long audio_tick_start=0;
       do_agc_update=1;
     }//GEN-LAST:event_agc_gainStateChanged
 
-    private void audio_buffer_systemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_audio_buffer_systemActionPerformed
-      //if(aud!=null) aud.closeAll();
-      //aud = new audio(parent);
-      prefs.putInt("audio_buffer_system",1);
-      //if(aud!=null) aud.setAgcGain( (0.01f + (float) agc_gain.getValue()) / 100.0f );
-      JOptionPane.showMessageDialog(parent, "Change will take place on next software start-up.");
-    }//GEN-LAST:event_audio_buffer_systemActionPerformed
-
-    private void audio_buffer_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_audio_buffer_userActionPerformed
-      //if(aud!=null) aud.closeAll();
-      //aud = new audio(parent);
-      prefs.putInt("audio_buffer_system",0);
-      //if(aud!=null) aud.setAgcGain( ( 0.01f + (float) agc_gain.getValue()) / 100.0f );
-      JOptionPane.showMessageDialog(parent, "Change will take place on next software start-up.");
-    }//GEN-LAST:event_audio_buffer_userActionPerformed
-
     private void enable_mp3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enable_mp3ActionPerformed
       prefs.putBoolean("enable_mp3", enable_mp3.isSelected());
     }//GEN-LAST:event_enable_mp3ActionPerformed
@@ -5446,10 +5376,6 @@ long audio_tick_start=0;
         // TODO add your handling code here:
     }//GEN-LAST:event_freq_tableKeyTyped
 
-    private void audio_insert_zeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_audio_insert_zeroActionPerformed
-      prefs.putBoolean("audio_insert_zero", audio_insert_zero.isSelected());
-    }//GEN-LAST:event_audio_insert_zeroActionPerformed
-
     private void enable_voice_constActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enable_voice_constActionPerformed
       //String cmd= new String("en_voice_send 1\r\n");
       //serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
@@ -5465,11 +5391,6 @@ long audio_tick_start=0;
       serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
       if(jTabbedPane1.getSelectedIndex()==4) jTextArea1.requestFocus();
     }//GEN-LAST:event_enable_commandsActionPerformed
-
-    private void audio_slow_rateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_audio_slow_rateActionPerformed
-      prefs.putBoolean("audio_slow_rate", audio_slow_rate.isSelected());
-      JOptionPane.showMessageDialog(parent, "Change will take place on next software start-up.");
-    }//GEN-LAST:event_audio_slow_rateActionPerformed
 
     private void log_constActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_log_constActionPerformed
        if(off_const.isSelected()) prefs.putInt("const_select", 0);
@@ -5739,10 +5660,6 @@ private void resizeColumns2() {
     private javax.swing.JLabel agc_level_lb;
     public javax.swing.JCheckBox allow_unknown_tg_cb;
     public javax.swing.JButton append_cc;
-    public javax.swing.JRadioButton audio_buffer_system;
-    public javax.swing.JRadioButton audio_buffer_user;
-    public static javax.swing.JCheckBox audio_insert_zero;
-    public javax.swing.JCheckBox audio_slow_rate;
     private javax.swing.JPanel audiopanel;
     public javax.swing.JCheckBox auto_flash_tg;
     public javax.swing.JCheckBox autoscale_const;
@@ -5886,7 +5803,6 @@ private void resizeColumns2() {
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
