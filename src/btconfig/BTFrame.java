@@ -1159,8 +1159,8 @@ long audio_tick_start=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008282047");
-      release_date.setText("Release: 2020-08-28 2047");
+      fw_ver.setText("Latest Avail: FW Date: 202008282145");
+      release_date.setText("Release: 2020-08-28 2145");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2605,7 +2605,7 @@ long audio_tick_start=0;
         rfmaxgain.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "47 dB (max sensitivity)", "44 dB", "41 dB", "38 dB", "35 dB", "32 dB (default)", "29 dB", "26 dB", "23 dB", "20 dB", "14 dB", "8 dB (max linearity)", " " }));
         p25rxconfigpanel.add(rfmaxgain, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 270, -1, 30));
 
-        vtimeout.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "100ms", "250ms", "500ms", "1sec", "1.5sec", "2sec", "3sec" }));
+        vtimeout.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "100ms", "250ms", "500ms", "1sec", "1.5sec", "2sec", "3sec", "5sec", "10sec", "30sec" }));
         vtimeout.setToolTipText("The time since the last activity on a talk group before the receiver will follow a different talk group.");
         p25rxconfigpanel.add(vtimeout, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 120, -1, -1));
 
@@ -3108,6 +3108,7 @@ long audio_tick_start=0;
         jPanel11.add(enable_audio, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 360, -1, -1));
 
         jLabel8.setText("This option may give better audio performance on some systems");
+        jLabel8.setEnabled(false);
         jPanel11.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, -1, 20));
 
         jLabel11.setText("If you hear clipping, try setting this lower. (default 75)");

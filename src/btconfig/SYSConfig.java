@@ -457,8 +457,17 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                             case  3000  :
                               parent.vtimeout.setSelectedIndex(6);
                             break;
-                            default :
+                            case  5000  :
                               parent.vtimeout.setSelectedIndex(7);
+                            break;
+                            case  10000  :
+                              parent.vtimeout.setSelectedIndex(8);
+                            break;
+                            case  30000  :
+                              parent.vtimeout.setSelectedIndex(9);
+                            break;
+                            default :
+                              parent.vtimeout.setSelectedIndex(5);
                             break;
                           }
 
@@ -644,8 +653,17 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                             case  6  :
                               vto = 3000;
                             break;
+                            case  7  :
+                              vto = 5000;
+                            break;
+                            case  8  :
+                              vto = 10000;
+                            break;
+                            case  9  :
+                              vto = 30000;
+                            break;
                             default :
-                              vto = 100;
+                              vto = 2000;
                             break;
                           }
                           cmd = "tgtimeout "+vto+"\r\n";  
