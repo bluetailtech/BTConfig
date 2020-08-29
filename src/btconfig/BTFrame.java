@@ -81,7 +81,7 @@ class updateTask extends java.util.TimerTask
       try {
 
 
-        if(  aud!=null && ( new java.util.Date().getTime() - audio_tick_start ) > 60) {
+        if(  aud!=null && ( new java.util.Date().getTime() - audio_tick_start ) > 55) {
           aud.audio_tick();
           audio_tick_start = new java.util.Date().getTime();
         }
@@ -1155,8 +1155,8 @@ long audio_tick_start=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008282218");
-      release_date.setText("Release: 2020-08-28 2218");
+      fw_ver.setText("Latest Avail: FW Date: 202008291537");
+      release_date.setText("Release: 2020-08-29 1537");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
