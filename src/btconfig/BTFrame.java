@@ -47,6 +47,7 @@ import java.util.prefs.Preferences;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 public class BTFrame extends javax.swing.JFrame {
 
+  /*
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class insertZeroTask extends java.util.TimerTask
@@ -68,6 +69,7 @@ class insertZeroTask extends java.util.TimerTask
       }
     }
 }
+  */
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,6 +80,11 @@ class updateTask extends java.util.TimerTask
     {
       try {
 
+
+        if(  aud!=null && ( new java.util.Date().getTime() - audio_tick_start ) > 60) {
+          aud.audio_tick();
+          audio_tick_start = new java.util.Date().getTime();
+        }
 
 
         if(bluetooth_streaming_timer>0) {
@@ -682,6 +689,8 @@ class updateTask extends java.util.TimerTask
                       if(aud!=null ) {
                         //if(iztimer!=null) iztimer.cancel();
                         if(aud!=null) aud.playBuf(pcm_bytes);
+                        do_audio_tick=0;
+                        audio_tick_start = new java.util.Date().getTime();
                         //iztimer = new java.util.Timer();
                         //iztimer.schedule( new insertZeroTask(), 22, 22);
                       }
@@ -702,6 +711,8 @@ class updateTask extends java.util.TimerTask
                       if(aud!=null ) {
                         //if(iztimer!=null) iztimer.cancel();
                         if(aud!=null) aud.playBuf(pcm_bytes);
+                        do_audio_tick=0;
+                        audio_tick_start = new java.util.Date().getTime();
                         //iztimer = new java.util.Timer();
                         //iztimer.schedule( new insertZeroTask(), 22, 22);
                       }
@@ -911,6 +922,7 @@ class updateTask extends java.util.TimerTask
     }
 }
 
+int do_audio_tick=0;
 int do_zipsearch=0;
 int do_zipsearch2=0;
 Boolean isWindows=true;
@@ -1013,6 +1025,7 @@ Boolean do_mini_const=false;
 boolean do_synced;
 boolean disable_tdma=false;
 double current_freq=0.0;
+long audio_tick_start=0;
 
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
@@ -1146,8 +1159,8 @@ double current_freq=0.0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008281717");
-      release_date.setText("Release: 2020-08-28 1717");
+      fw_ver.setText("Latest Avail: FW Date: 202008282047");
+      release_date.setText("Release: 2020-08-28 2047");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);

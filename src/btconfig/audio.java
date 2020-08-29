@@ -47,8 +47,8 @@ FloatControl src_volume;
 BTFrame parent;
 float initial_level=0.85f;
 
-  byte[] dbuffer1 = new byte[9600 * 4];
-  byte[] dbuffer2 = new byte[9600 * 4];
+  byte[] dbuffer1 = new byte[7680 * 4];
+  byte[] dbuffer2 = new byte[7680 * 4];
   int dbuffer_mod=0;
   int dbuffer_tot=0;
 
@@ -231,13 +231,13 @@ float initial_level=0.85f;
     agc_gain = val;
   }
 
-  /////////////////////////////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////////////////////////////
-  public void playStop() {
 
+  /////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////
+  public void audio_tick() {
     if(sourceDataLine==null) return;
 
-    if(sourceDataLine.isOpen() && sourceDataLine.isRunning()) { 
+    if(sourceDataLine.isOpen() && sourceDataLine.isRunning() && dbuffer_tot > 0) { 
       if( dbuffer_mod == 0 ) {
         //dbuffer1
         sourceDataLine.write(dbuffer1, 0, dbuffer_tot);
@@ -246,7 +246,16 @@ float initial_level=0.85f;
         //dbuffer2
         sourceDataLine.write(dbuffer2, 0, dbuffer_tot);
       }
+
+      dbuffer_mod=0;
+      dbuffer_tot=0;
     }
+  }
+
+  /////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////
+  public void playStop() {
+
 
     Boolean isWindows = System.getProperty("os.name").startsWith("Windows");
 
@@ -256,10 +265,6 @@ float initial_level=0.85f;
       if(sourceDataLine.isOpen() && sourceDataLine.isRunning()) sourceDataLine.drain();
       if(sourceDataLine.isRunning()) sourceDataLine.stop();
     //}
-
-    dbuffer_mod=0;
-    dbuffer_tot=0;
-
 
 
   }
@@ -357,15 +362,15 @@ float initial_level=0.85f;
             }
           }
 
-          if(dbuffer_tot==9600*4) {
+          if(dbuffer_tot==7680*4) {
             dbuffer_mod ^= 0x01;
 
             if( dbuffer_mod==1 ) {
-              sourceDataLine.write(dbuffer1, 0, 9600*4);
+              sourceDataLine.write(dbuffer1, 0, 7680*4);
               //System.out.println("dbuffer 1");
             }
             else {
-              sourceDataLine.write(dbuffer2, 0, 9600*4);
+              sourceDataLine.write(dbuffer2, 0, 7680*4);
               if(!sourceDataLine.isRunning()) sourceDataLine.start();
               //System.out.println("dbuffer 2");
             }
