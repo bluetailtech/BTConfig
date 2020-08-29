@@ -781,13 +781,13 @@ class updateTask extends java.util.TimerTask
                   if(rx_state==0 && b[i]==(byte) 0xb2) {
                     rx_state=1;
                   }
-                  else if( (rx_state==1 && b[i]==(byte) 0x5f) || (rx_state==1 && b[i]==(byte) 0x5b) || (rx_state==1 && b[i]==(byte) 0x59)) {
+                  else if( (rx_state==1 && b[i]==(byte) 0x5f) || (rx_state==1 && b[i]==(byte) 0x5b) || (rx_state==1 && b[i]==(byte) 0x59) || (rx_state==1 && b[i]==(byte) 0x98)) {
                     rx_state=2;
                   }
-                  else if( (rx_state==2 && b[i]==(byte) 0x9c) || (rx_state==2 && b[i]==(byte) 0x12) || (rx_state==2 && b[i]==(byte) 0xef)) {
+                  else if( (rx_state==2 && b[i]==(byte) 0x9c) || (rx_state==2 && b[i]==(byte) 0x12) || (rx_state==2 && b[i]==(byte) 0xef) || (rx_state==2 && b[i]==(byte) 0x72)) {
                     rx_state=3;
                   }
-                  else if( (rx_state==3 && b[i]==(byte) 0x71) || (rx_state==3 && b[i]==(byte) 0xe4) || (rx_state==3 && b[i]==(byte) 0x72)) {
+                  else if( (rx_state==3 && b[i]==(byte) 0x71) || (rx_state==3 && b[i]==(byte) 0xe4) || (rx_state==3 && b[i]==(byte) 0x72) || (rx_state==3 && b[i]==(byte) 0x31)) {
                     //addTextConsole("\r\nfound voice header");
 
                     if(b[i]==(byte) 0x71) {
@@ -804,6 +804,14 @@ class updateTask extends java.util.TimerTask
                       skip_bytes=256+1;
                       rx_state=6;
                       //System.out.println("do tdma");
+                    }
+
+                    if(b[i]==(byte) 0x31) {
+                      //audio flush
+                      //System.out.println("\r\naudio flush");
+                      if(aud!=null) aud.playStop();
+                      rx_state=0;
+                      skip_bytes=0;
                     }
                   }
                   else {
@@ -894,7 +902,7 @@ class updateTask extends java.util.TimerTask
       if(isWindows ) stop_time=50;
         else stop_time=500; 
       if(time-start_time>stop_time) {
-        if(aud!=null) aud.playStop();
+        //if(aud!=null) aud.playStop();
         tg_indicator.setBackground(java.awt.Color.black);
         tg_indicator.setForeground(java.awt.Color.black);
       }
@@ -1138,8 +1146,8 @@ double current_freq=0.0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008281435");
-      release_date.setText("Release: 2020-08-28 1435");
+      fw_ver.setText("Latest Avail: FW Date: 202008281717");
+      release_date.setText("Release: 2020-08-28 1717");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);

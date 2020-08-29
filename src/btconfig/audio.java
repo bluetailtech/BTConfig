@@ -235,12 +235,18 @@ float initial_level=0.85f;
   /////////////////////////////////////////////////////////////////////////////////
   public void playStop() {
 
-    dbuffer_mod=0;
-    dbuffer_tot=0;
-
-
     if(sourceDataLine==null) return;
 
+    if(sourceDataLine.isOpen() && sourceDataLine.isRunning()) { 
+      if( dbuffer_mod == 0 ) {
+        //dbuffer1
+        sourceDataLine.write(dbuffer1, 0, dbuffer_tot);
+      }
+      else {
+        //dbuffer2
+        sourceDataLine.write(dbuffer2, 0, dbuffer_tot);
+      }
+    }
 
     Boolean isWindows = System.getProperty("os.name").startsWith("Windows");
 
@@ -250,6 +256,10 @@ float initial_level=0.85f;
       if(sourceDataLine.isOpen() && sourceDataLine.isRunning()) sourceDataLine.drain();
       if(sourceDataLine.isRunning()) sourceDataLine.stop();
     //}
+
+    dbuffer_mod=0;
+    dbuffer_tot=0;
+
 
 
   }
