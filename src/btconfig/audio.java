@@ -131,7 +131,7 @@ float initial_level=0.85f;
                 sourceDataLine.open(af, 48000*4);
               }
                 */
-                sourceDataLine.open(af, 48000*4*4);
+                sourceDataLine.open(af, 48000*4*2);
 
 
               sourceDataLine.start();
