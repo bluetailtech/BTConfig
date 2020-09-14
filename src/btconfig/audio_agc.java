@@ -45,7 +45,7 @@ public class audio_agc {
     float[] tmp_buffer_f = new float[len];
 
     for(int i=0;i<len;i++) {
-      tmp_buffer_f[i] = ((float) audio_in[i]) / 10.0f; 
+      tmp_buffer_f[i] = ((float) audio_in[i]);
     }
 
     int[] audio_out = update_gain_f32(tmp_buffer_f,len, target, log_mult, rate);
@@ -56,6 +56,8 @@ public class audio_agc {
   // audio agc
   //////////////////////////////////////////////////////////////////////////////////
   int[] update_gain_f32(float[] audio, int len, float target, float log_mult, float rate) {
+
+    float thresh = 10.0f;
 
     audio_max_idx &= (AUD_AGC_LEN-1);
 
@@ -79,15 +81,15 @@ public class audio_agc {
     if (aud_agc_max > 0.0f) {
       gainfactor = (target / aud_agc_max);
     } else {
-      gainfactor = 60.0f+0.1f; 
+      gainfactor = thresh + 0.1f; 
     }
     if (gainfactor < aout_gain) {
       aout_gain = gainfactor;
       gaindelta = 0.0f;
     } else {
-      if (gainfactor > 60.0f) {
+      if (gainfactor > thresh) {
           //gainfactor = (float) java.lang.Math.log10(gainfactor+1.0f)*29.42f;
-          gainfactor = 60.0f; 
+          gainfactor = thresh; 
       }
       gaindelta = gainfactor - aout_gain;
       if (gaindelta > (rate * aout_gain)) {

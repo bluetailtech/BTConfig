@@ -782,6 +782,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                     if( bb_verify.getInt()==0x8120000+offset) { //address
                       bb_verify.getInt();  //len
                       nrecs = bb_verify.getInt();
+                      if(nrecs>2048) nrecs=2048;
                     }
                     else {
                       rlen=0;  //need this to keep loop going

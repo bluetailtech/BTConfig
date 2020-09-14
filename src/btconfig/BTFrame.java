@@ -144,6 +144,7 @@ class updateTask extends java.util.TimerTask
 
                 do_read_config=1;
                 do_write_config=1;
+                cpanel.reset_ref_est();
 
                 current_sys_id = 0;
                 current_wacn_id = 0; 
@@ -230,8 +231,8 @@ class updateTask extends java.util.TimerTask
           enable_mp3.setSelected( prefs.getBoolean("enable_mp3", true) ); 
           enable_audio.setSelected( prefs.getBoolean("enable_audio", true) ); 
           initial_audio_level.setValue( prefs.getInt("initial_audio_level", 75) );
-          auto_flash_tg.setSelected( prefs.getBoolean("tg_auto_flash", true) );
-          disable_encrypted.setSelected( prefs.getBoolean("enc_auto_flash", true) );
+          auto_flash_tg.setSelected( prefs.getBoolean("tg_auto_flash", false) );
+          disable_encrypted.setSelected( prefs.getBoolean("enc_auto_flash", false) );
           autoscale_const.setSelected( prefs.getBoolean("autoscale_const", false) );
           nsymbols.setSelectedIndex( prefs.getInt("nsymbols", 2) );
 
@@ -559,7 +560,7 @@ class updateTask extends java.util.TimerTask
 
             serial_port = find_serial_port();
             if(serial_port==null) {
-              setStatus("\r\ncan't find device");
+              setStatus("\r\ncan't find device.  Please wait...");
               Thread.sleep(600);
               //JOptionPane.showMessageDialog(parent, "Please re-start the BTConfig Software.  Pressing ok will exit the software.");
               //System.exit(0);
@@ -577,7 +578,7 @@ class updateTask extends java.util.TimerTask
 
 
             if(serial_port!=null && serial_port.openPort(200)==false) {
-              setStatus("\r\ncould not open the device serial port (another app may have the port open). try again....");
+              setStatus("\r\ncould not open serial port (another app may have the port open). please wait while retrying....");
             }
             else if(serial_port!=null) {
               do_connect=0;
@@ -1155,8 +1156,8 @@ long audio_tick_start=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202008291644");
-      release_date.setText("Release: 2020-08-29 1644");
+      fw_ver.setText("Latest Avail: FW Date: 202009131930");
+      release_date.setText("Release: 2020-09-13 1930");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2034,6 +2035,7 @@ long audio_tick_start=0;
         buttonGroup4 = new javax.swing.ButtonGroup();
         buttonGroup5 = new javax.swing.ButtonGroup();
         buttonGroup6 = new javax.swing.ButtonGroup();
+        buttonGroup7 = new javax.swing.ButtonGroup();
         bottom_panel = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         status_panel = new javax.swing.JPanel();
@@ -2081,7 +2083,7 @@ long audio_tick_start=0;
         no_voice_secs = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
         roaming = new javax.swing.JCheckBox();
-        jLabel22 = new javax.swing.JLabel();
+        freq_label = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
         rfmaxgain = new javax.swing.JComboBox<>();
         vtimeout = new javax.swing.JComboBox<>();
@@ -2092,9 +2094,9 @@ long audio_tick_start=0;
         op_mode = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         ref_freq = new javax.swing.JTextField();
-        jLabel50 = new javax.swing.JLabel();
-        freqoff = new javax.swing.JTextField();
-        jLabel51 = new javax.swing.JLabel();
+        controlchannel = new javax.swing.JRadioButton();
+        conventionalchannel = new javax.swing.JRadioButton();
+        analog_out = new javax.swing.JRadioButton();
         jPanel25 = new javax.swing.JPanel();
         jPanel26 = new javax.swing.JPanel();
         jPanel29 = new javax.swing.JPanel();
@@ -2117,6 +2119,9 @@ long audio_tick_start=0;
         jLabel37 = new javax.swing.JLabel();
         jSeparator9 = new javax.swing.JSeparator();
         lcn3_freq = new javax.swing.JTextField();
+        jSeparator39 = new javax.swing.JSeparator();
+        jLabel8 = new javax.swing.JLabel();
+        dmr_sys_id = new javax.swing.JTextField();
         jPanel33 = new javax.swing.JPanel();
         dmr_cc_en4 = new javax.swing.JCheckBox();
         jSeparator10 = new javax.swing.JSeparator();
@@ -2587,8 +2592,8 @@ long audio_tick_start=0;
         });
         p25rxconfigpanel.add(roaming, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, -1, -1));
 
-        jLabel22.setText("Control Channel Frequency");
-        p25rxconfigpanel.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
+        freq_label.setText("Control Channel Frequency");
+        p25rxconfigpanel.add(freq_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
 
         jLabel32.setText("RF Max Gain");
         p25rxconfigpanel.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 280, -1, -1));
@@ -2613,6 +2618,11 @@ long audio_tick_start=0;
         p25rxconfigpanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, -1));
 
         op_mode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "P25", "DMR" }));
+        op_mode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                op_modeActionPerformed(evt);
+            }
+        });
         p25rxconfigpanel.add(op_mode, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 80, 30));
 
         jLabel4.setText("Ref Freq");
@@ -2626,14 +2636,33 @@ long audio_tick_start=0;
         });
         p25rxconfigpanel.add(ref_freq, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 50, -1, -1));
 
-        jLabel50.setText("Freq Offset");
-        p25rxconfigpanel.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 80, -1, 20));
+        buttonGroup7.add(controlchannel);
+        controlchannel.setSelected(true);
+        controlchannel.setText("Control Channel");
+        controlchannel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                controlchannelActionPerformed(evt);
+            }
+        });
+        p25rxconfigpanel.add(controlchannel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, -1, -1));
 
-        freqoff.setColumns(12);
-        p25rxconfigpanel.add(freqoff, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 80, -1, -1));
+        buttonGroup7.add(conventionalchannel);
+        conventionalchannel.setText("Conventional");
+        conventionalchannel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                conventionalchannelActionPerformed(evt);
+            }
+        });
+        p25rxconfigpanel.add(conventionalchannel, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, -1, -1));
 
-        jLabel51.setText("Ref Freq / Freq Off should match the label");
-        p25rxconfigpanel.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 20, -1, -1));
+        buttonGroup7.add(analog_out);
+        analog_out.setText("FM NB Analog Line-out");
+        analog_out.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                analog_outActionPerformed(evt);
+            }
+        });
+        p25rxconfigpanel.add(analog_out, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 90, -1, -1));
 
         jTabbedPane1.addTab("P25RX Configuration", p25rxconfigpanel);
 
@@ -2713,6 +2742,17 @@ long audio_tick_start=0;
 
         lcn3_freq.setColumns(15);
         jPanel32.add(lcn3_freq);
+
+        jSeparator39.setMinimumSize(new java.awt.Dimension(50, 0));
+        jSeparator39.setPreferredSize(new java.awt.Dimension(50, 0));
+        jPanel32.add(jSeparator39);
+
+        jLabel8.setText("Sys ID");
+        jPanel32.add(jLabel8);
+
+        dmr_sys_id.setColumns(5);
+        dmr_sys_id.setText("1");
+        jPanel32.add(dmr_sys_id);
 
         jPanel26.add(jPanel32);
 
@@ -5193,6 +5233,7 @@ long audio_tick_start=0;
     private void write_configActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_write_configActionPerformed
       do_read_config=1;
       do_write_config=1;
+      cpanel.reset_ref_est();
 
       current_sys_id = 0;
       current_wacn_id = 0; 
@@ -5342,6 +5383,7 @@ long audio_tick_start=0;
     private void button_write_configActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_write_configActionPerformed
       do_read_config=1;
       do_write_config=1;
+      cpanel.reset_ref_est();
 
       current_sys_id = 0;
       current_wacn_id = 0; 
@@ -5434,6 +5476,11 @@ long audio_tick_start=0;
       do_read_config=1;
       do_write_config=1;
 
+      op_mode.setSelectedIndex(1);
+
+      cpanel.reset_ref_est();
+
+
       current_sys_id = 0;
       current_wacn_id = 0; 
       wacn.setText("");
@@ -5466,6 +5513,29 @@ long audio_tick_start=0;
     private void ref_freqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ref_freqActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ref_freqActionPerformed
+
+    private void op_modeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_op_modeActionPerformed
+      if( op_mode.getSelectedIndex() == 0) {
+        controlchannel.setVisible(true);
+        conventionalchannel.setVisible(true);
+      }
+      else {
+        controlchannel.setVisible(false);
+        conventionalchannel.setVisible(false);
+      }
+    }//GEN-LAST:event_op_modeActionPerformed
+
+    private void controlchannelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_controlchannelActionPerformed
+      freq_label.setText("Control Channel Frequency");
+    }//GEN-LAST:event_controlchannelActionPerformed
+
+    private void conventionalchannelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conventionalchannelActionPerformed
+      freq_label.setText("Conventional Channel Frequency");
+    }//GEN-LAST:event_conventionalchannelActionPerformed
+
+    private void analog_outActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analog_outActionPerformed
+      freq_label.setText("Analog FM NB Frequency");
+    }//GEN-LAST:event_analog_outActionPerformed
 
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
@@ -5659,6 +5729,7 @@ private void resizeColumns2() {
     private javax.swing.JLabel agc_kp_lb;
     private javax.swing.JLabel agc_level_lb;
     public javax.swing.JCheckBox allow_unknown_tg_cb;
+    public javax.swing.JRadioButton analog_out;
     public javax.swing.JButton append_cc;
     private javax.swing.JPanel audiopanel;
     public javax.swing.JCheckBox auto_flash_tg;
@@ -5677,6 +5748,7 @@ private void resizeColumns2() {
     private javax.swing.ButtonGroup buttonGroup4;
     private javax.swing.ButtonGroup buttonGroup5;
     private javax.swing.ButtonGroup buttonGroup6;
+    private javax.swing.ButtonGroup buttonGroup7;
     public javax.swing.JRadioButton button_single_follow_tg;
     public javax.swing.JRadioButton button_single_next_roaming;
     private javax.swing.JButton button_write_config;
@@ -5685,6 +5757,8 @@ private void resizeColumns2() {
     private javax.swing.JTextField city;
     private javax.swing.JPanel consolePanel;
     private javax.swing.JPanel const_panel;
+    public javax.swing.JRadioButton controlchannel;
+    public javax.swing.JRadioButton conventionalchannel;
     private javax.swing.JPanel desc_panel;
     public javax.swing.JCheckBox disable_encrypted;
     private javax.swing.JButton disable_table_rows;
@@ -5712,6 +5786,7 @@ private void resizeColumns2() {
     private javax.swing.JButton dmr_restore;
     public javax.swing.JCheckBox dmr_slot1;
     public javax.swing.JCheckBox dmr_slot2;
+    public javax.swing.JTextField dmr_sys_id;
     private javax.swing.JButton dmr_write_config;
     public javax.swing.JCheckBox en_bluetooth_cb;
     public javax.swing.JCheckBox enable_audio;
@@ -5723,11 +5798,11 @@ private void resizeColumns2() {
     private javax.swing.JRadioButton enable_voice_const;
     public javax.swing.JButton erase_roaming;
     public javax.swing.JLabel freq;
+    public javax.swing.JLabel freq_label;
     private javax.swing.JButton freq_search;
     private javax.swing.JButton freq_search2;
     public javax.swing.JTable freq_table;
     private javax.swing.JPanel freqdb_panel;
-    public javax.swing.JTextField freqoff;
     public javax.swing.JTextField frequency_tf1;
     public javax.swing.JLabel fw_installed;
     public javax.swing.JLabel fw_ver;
@@ -5768,7 +5843,6 @@ private void resizeColumns2() {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
@@ -5799,10 +5873,9 @@ private void resizeColumns2() {
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel50;
-    private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -5884,6 +5957,7 @@ private void resizeColumns2() {
     private javax.swing.JSeparator jSeparator36;
     private javax.swing.JSeparator jSeparator37;
     private javax.swing.JSeparator jSeparator38;
+    private javax.swing.JSeparator jSeparator39;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;

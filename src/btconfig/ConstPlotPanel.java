@@ -33,11 +33,19 @@ public class ConstPlotPanel extends JPanel {
    static String err_hz="";
    static String est_hz="";
    static String sync_state="";
+   static String ref_freq_est="";
    BTFrame parent;
    int last_sync_state=0;
 
    ByteBuffer bb;
    boolean do_synced=false;
+
+   int est_ref_cnt=0;
+   double[] est_ref_array = new double[2048];
+   int est_ref_tot=0;
+   double ref_freq_error=0.0;
+
+   boolean do_display_ref_est=true;
 
    ///////////////////////////////////////////////////////////////////////////////////////
    ///////////////////////////////////////////////////////////////////////////////////////
@@ -54,6 +62,15 @@ public class ConstPlotPanel extends JPanel {
      for(int i=0;i<256*3;i++) {
        syncs[i] = -1; 
      }
+   }
+
+   ///////////////////////////////////////////////////////////////////////////////////////
+   ///////////////////////////////////////////////////////////////////////////////////////
+   public void reset_ref_est() {
+     est_ref_cnt=0;
+     est_ref_array = new double[2048];
+     est_ref_tot=0;
+     ref_freq_error=0.0;
    }
    
    ///////////////////////////////////////////////////////////////////////////////////////
@@ -80,6 +97,16 @@ public class ConstPlotPanel extends JPanel {
          }
        }
 
+       do_display_ref_est=false;
+
+       /*
+       if( parent.op_mode.getSelectedIndex()==1 && parent.dmr_conventional.isSelected()) {
+       }
+       */
+       if( parent.op_mode.getSelectedIndex()==0 && parent.controlchannel.isSelected()) {
+         do_display_ref_est=true;
+       }
+
        
        bb = ByteBuffer.wrap(data);
        bb.order(ByteOrder.LITTLE_ENDIAN);
@@ -90,10 +117,50 @@ public class ConstPlotPanel extends JPanel {
        float gain = bb.getFloat(312);
 
        double ppb_est = 0.0; 
+       double ppb2 = 0.0;
        if(parent.current_freq!=0.0) {
          ppb_est = est_hz_f / parent.current_freq;
          ppb_est *= 1e9;
+         ppb2 = err_hz_f / parent.current_freq;
+         ppb2 *= 1e9;
        }
+
+       double rfreq = 0.0;
+       int ref_correct = 0;
+       double rfreq_cor=0.0;
+       double est_ref_sum=0.0;
+
+       try {
+         rfreq = new Double( parent.ref_freq.getText() ).doubleValue();
+         rfreq_cor = rfreq/1e9;
+         rfreq_cor *= (ppb_est+ppb2);
+         ref_correct = (int) (rfreq-rfreq_cor);;
+
+         est_ref_array[est_ref_cnt++] = ref_correct; 
+         if(est_ref_cnt==2048) est_ref_cnt=0;
+         est_ref_tot++;
+
+         for(int i=0;i<2048;i++) {
+           est_ref_sum += est_ref_array[i];
+         }
+         est_ref_sum /= 2048.0;
+
+         ref_freq_error = java.lang.Math.abs( rfreq-est_ref_sum );
+
+       } catch(Exception e) {
+       }
+       
+       //if( ppb_est!=0.0 && ppb2!=0.0) {
+         if(est_ref_tot>2048 && est_ref_sum > 39999820 && est_ref_sum < 39999965 ) {
+           ref_freq_est = "Estimated Reference Frequency: "+ String.format( "%3.0f", est_ref_sum);
+         }
+         else {
+           ref_freq_est = "Estimated Reference Frequency: ";
+         }
+       //}
+       //else {
+        //   ref_freq_est = "";
+       //}
 
        if(ppb_est!=0.0) {
          est_hz = "Frequency Error Estimate: "+String.format("%3.1f", est_hz_f)+" Hz,   "+String.format("%3.0f", ppb_est)+" ppb";
@@ -225,6 +292,26 @@ public class ConstPlotPanel extends JPanel {
      try {
        g2d.drawString(est_hz, 300+256,125);
        g2d.drawString(err_hz, 300+256,150);
+     } catch(Exception e) {
+     }
+
+     try {
+        if( (int) ref_freq_error < 3 ) {
+          g2d.setColor( Color.green ); 
+        }
+        else if( (int) ref_freq_error < 4 ) {
+          g2d.setColor( Color.white ); 
+        }
+        else if( (int) ref_freq_error < 8 ) {
+          g2d.setColor( Color.yellow ); 
+        }
+        else {
+          g2d.setColor( Color.red ); 
+        }
+
+        if( do_display_ref_est )  {
+          if(est_ref_tot>2048 && ref_freq_est!=null )  g2d.drawString(ref_freq_est, 300+256,175);
+        }
      } catch(Exception e) {
      }
 

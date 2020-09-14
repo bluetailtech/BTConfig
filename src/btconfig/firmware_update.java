@@ -174,6 +174,8 @@ SerialPort serial_port;
           //state switch to bootloader mode
           if(state==3 && is_bl==0) {
 
+              Thread.sleep(500);
+
               parent.setStatus("\r\nsetting boot cmd to bootloader state");
 
               byte[] out_buffer = new byte[48]; //size of bl_op
@@ -197,7 +199,7 @@ SerialPort serial_port;
 
               //TODO: need to check for ack
               try {
-                Thread.sleep(100);
+                Thread.sleep(500);
               } catch(Exception e) {
               }
 
@@ -273,6 +275,11 @@ SerialPort serial_port;
           //state switch to application mode
           if(state==2 && is_bl==1) {
 
+              try {
+                Thread.sleep(500);
+              } catch(Exception e) {
+              }
+
             if(app_crc_valid==1) {
               parent.setStatus("\r\nsetting boot cmd to applicaton state");
 
@@ -297,7 +304,7 @@ SerialPort serial_port;
 
               //TODO: need to check for ack
               try {
-                Thread.sleep(100);
+                Thread.sleep(500);
               } catch(Exception e) {
               }
 

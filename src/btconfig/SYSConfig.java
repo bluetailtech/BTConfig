@@ -326,6 +326,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
 
 
+
                       parent.do_read_config=0;
 
                       if( parent.do_write_config==0) {
@@ -333,8 +334,21 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
                           double reffreq = bb3.getDouble(112);
                           parent.ref_freq.setText( String.format("%5.0f", reffreq) );
-                          short freq_off = bb3.getShort(128);
-                          parent.freqoff.setText( String.format("%1d", freq_off) );
+
+
+                          int iscontrol = bb3.getInt(36);
+                          int is_analog = bb3.getInt(52);
+
+                          if( is_analog==0 ) {
+                            if( iscontrol==0 ) parent.conventionalchannel.setSelected(true);
+                              else parent.controlchannel.setSelected(true);
+                          }
+                          else {
+                              parent.analog_out.setSelected(true);
+                          }
+                          if(parent.conventionalchannel.isSelected()) parent.freq_label.setText("Conventional Channel Frequency");
+                          if(parent.controlchannel.isSelected()) parent.freq_label.setText("Control Channel Frequency");
+                          if(parent.analog_out.isSelected()) parent.freq_label.setText("Analog FM NB Frequency");
 
                           int op_mode = bb3.getInt(516);
                           parent.op_mode.setSelectedIndex( op_mode-1 );
@@ -382,6 +396,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                             else parent.dmr_slot2.setSelected(false);
 
 
+                          parent.dmr_sys_id.setText( String.format("%d", bb3.getInt(536)) );
 
 
                           float vol = bb3.getFloat(12);
@@ -676,17 +691,38 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           //cmd = "bt_reset "+parent.bluetooth_reset.getText()+"\r\n";
                           cmd = "bt_reset 0"+"\r\n";  //always disabled for now
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-                          Thread.sleep(10);
+                          Thread.sleep(50);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
 
 
-                          Boolean b = parent.en_bluetooth_cb.isSelected();
+                          Boolean b = parent.analog_out.isSelected();
+                          if(b) cmd = "audio_out 1\r\n";
+                            else cmd = "audio_out 0\r\n";
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          Thread.sleep(50);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
+
+
+                          b = parent.controlchannel.isSelected();
+                          if(b) cmd = "is_control 1\r\n";
+                            else cmd = "is_control 0\r\n"; 
+
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          Thread.sleep(50);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
+
+
+                          b = parent.en_bluetooth_cb.isSelected();
                           if(b) cmd = "bluetooth 1\r\n";
                             else cmd = "bluetooth 0\r\n"; 
 
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-                          Thread.sleep(10);
+                          Thread.sleep(50);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
 
@@ -727,12 +763,25 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           //System.out.println("result: "+new String(result) );
 
                           //do this one last
-                          cmd = "is_control 1\r\n";
+                          //cmd = "is_control 1\r\n";
+                          //serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          //Thread.sleep(20);
+                          //rlen=serial_port.readBytes( result, 64);
+                          //System.out.println("result: "+new String(result) );
+                          //Thread.sleep(10);
+
+                          int dmr_sys_id = 1; 
+                          try {
+                            dmr_sys_id = new Integer( parent.dmr_sys_id.getText() ).intValue();
+                          } catch(Exception e) {
+                          }
+                          cmd = "dmr_sys_id "+dmr_sys_id+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(20);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(10);
+
 
                           int dmr_config = 0;
                           if(parent.dmr_slot1.isSelected()) dmr_config |= DMR_SLOT1;
@@ -870,13 +919,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
 
                           cmd = "ref_freq "+String.format("%5.0f", Double.valueOf(parent.ref_freq.getText()))+"\r\n";
-                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-                          Thread.sleep(20);
-                          rlen=serial_port.readBytes( result, 64);
-                          System.out.println("result: "+new String(result) );
-                          Thread.sleep(10);
-
-                          cmd = "freqoff "+String.format("%1d", Integer.valueOf(parent.freqoff.getText()))+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(20);
                           rlen=serial_port.readBytes( result, 64);
