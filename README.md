@@ -71,7 +71,7 @@ https://github.com/hendriks73/pcmsampledsp
 2020-07-28
 add decoders dir for decoders covered by GPL licensing
 <BR><BR>
-2020-09-13 The P25RX firmware contains firmware which has been inspired by portions of the following projects:<BR>
+2020-09-13 The P25RX firmware was inspired by portions of the following projects:<BR>
 https://github.com/jgaeddert/liquid-dsp<BR>
 https://github.com/szechyjs/dsd<BR>
 https://github.com/szechyjs/mbelib<BR>
