@@ -11,7 +11,7 @@ https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/
   
 <BR><BR>User Manual
-https://github.com/bluetailtech/BTConfig/blob/master/Documentation/p25rx_user_manual.pdf  (updated 2020-08-03)
+https://github.com/bluetailtech/BTConfig/blob/master/Documentation/p25rx_user_manual.pdf  (updated 2020-09-13)
 
 
 <BR><BR>Acquiring and Building From Source
@@ -70,12 +70,12 @@ https://github.com/hendriks73/pcmsampledsp
 
 2020-07-28
 add decoders dir for decoders covered by GPL licensing
-
-2020-09-13
+<BR>
+2020-09-13<BR>
 The P25RX firmware contains firmware which has been inspired by portions of the following projects:
-
-https://github.com/jgaeddert/liquid-dsp
-https://github.com/szechyjs/dsd
-https://github.com/szechyjs/mbelib
-https://github.com/uwarc/dsd-dmr
+<BR>
+https://github.com/jgaeddert/liquid-dsp<BR>
+https://github.com/szechyjs/dsd<BR>
+https://github.com/szechyjs/mbelib<BR>
+https://github.com/uwarc/dsd-dmr<BR>
 https://github.com/osmocom/op25  (Our partial port of TDMA to C can be found on our github page in the decoders/p25_phase_2 directory)
