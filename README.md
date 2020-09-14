@@ -6,7 +6,7 @@ Configuration Software for the Bluetail Technologies <a href="https://bluetailte
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-07-30_1531.exe 
 <BR>
 <BR>Testing Release (Now Includes P2 TDMA and DMR Support)  
-https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-08-29_1644.exe
+https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-09-13_1930.exe
 <BR><BR>Previous Releases (recommend using stable)
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/
   
@@ -70,3 +70,12 @@ https://github.com/hendriks73/pcmsampledsp
 
 2020-07-28
 add decoders dir for decoders covered by GPL licensing
+
+2020-09-13
+The P25RX firmware contains firmware which has been inspired by portions of the following projects:
+
+https://github.com/jgaeddert/liquid-dsp
+https://github.com/szechyjs/dsd
+https://github.com/szechyjs/mbelib
+https://github.com/uwarc/dsd-dmr
+https://github.com/osmocom/op25  (Our partial port of TDMA to C can be found on our github page in the decoders/p25_phase_2 directory)
