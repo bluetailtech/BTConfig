@@ -11,7 +11,7 @@ https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/
   
 <BR><BR>User Manual
-https://github.com/bluetailtech/BTConfig/blob/master/Documentation/p25rx_user_manual.pdf  (updated 2020-09-13)
+https://github.com/bluetailtech/BTConfig/blob/master/Documentation/p25rx_user_manual.pdf  (updated 2020-09-14)
 
 
 <BR><BR>Acquiring and Building From Source
