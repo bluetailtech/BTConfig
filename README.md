@@ -3,12 +3,7 @@
 Configuration Software for the Bluetail Technologies <a href="https://bluetailtechnologies.com/products/p25rx-digital-police-receiver"> P25RX Digital Police Receiver </a> 
 <BR>
 <BR>Recommended Release (stable)  
-https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-07-30_1531.exe 
-<BR>
-<BR>Testing Release (Now Includes P2 TDMA and DMR Support)  
-https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-09-13_1930.exe
-<BR><BR>Previous Releases (recommend using stable)
-https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/
+https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-09-15_0947.exe 
   
 <BR><BR>User Manual
 https://github.com/bluetailtech/BTConfig/blob/master/Documentation/p25rx_user_manual.pdf  (updated 2020-09-14)
