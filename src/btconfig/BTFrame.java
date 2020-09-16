@@ -220,7 +220,7 @@ class updateTask extends java.util.TimerTask
 
         if(prefs==null) {
           prefs = Preferences.userRoot().node(this.getClass().getName());
-          agc_gain.setValue(prefs.getInt("agc_gain", 85));
+          agc_gain.setValue(prefs.getInt("agc_gain", 50));
           //agc_gain.setValue(65);
           do_agc_update=1;
         }
@@ -1156,8 +1156,8 @@ long audio_tick_start=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202009150947");
-      release_date.setText("Release: 2020-09-15 0947");
+      fw_ver.setText("Latest Avail: FW Date: 202009161118");
+      release_date.setText("Release: 2020-09-16 1118");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3134,7 +3134,7 @@ long audio_tick_start=0;
         initial_audio_level_lb.setText("Val 85");
         jPanel11.add(initial_audio_level_lb, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 310, -1, -1));
 
-        jLabel13.setText("If you hear clipping, try setting this lower. (default 85)");
+        jLabel13.setText("If you hear clipping, try setting this lower. (default 50)");
         jPanel11.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 260, -1, -1));
 
         audiopanel.add(jPanel11, java.awt.BorderLayout.CENTER);
