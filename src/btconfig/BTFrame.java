@@ -220,6 +220,11 @@ class updateTask extends java.util.TimerTask
 
         if(prefs==null) {
           prefs = Preferences.userRoot().node(this.getClass().getName());
+
+          if( !prefs.getBoolean("did_new_agc1", false) ) {
+            prefs.putInt("agc_gain", 50);
+            prefs.putBoolean("did_new_agc1", true);
+          }
           agc_gain.setValue(prefs.getInt("agc_gain", 50));
           //agc_gain.setValue(65);
           do_agc_update=1;
@@ -1156,8 +1161,8 @@ long audio_tick_start=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202009161118");
-      release_date.setText("Release: 2020-09-16 1118");
+      fw_ver.setText("Latest Avail: FW Date: 202009161213");
+      release_date.setText("Release: 2020-09-16 1213");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
