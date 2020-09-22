@@ -57,7 +57,7 @@ public class audio_agc {
   //////////////////////////////////////////////////////////////////////////////////
   int[] update_gain_f32(float[] audio, int len, float target, float log_mult, float rate) {
 
-    float thresh = 10.0f;
+    float thresh = 7.0f;
 
     audio_max_idx &= (AUD_AGC_LEN-1);
 
@@ -81,10 +81,10 @@ public class audio_agc {
     if (aud_agc_max > 0.0f) {
       gainfactor = (target / aud_agc_max);
     } else {
-      gainfactor = thresh + 0.1f; 
+      //gainfactor = 0.0f; 
     }
     if (gainfactor < aout_gain) {
-      aout_gain = gainfactor;
+      aout_gain = gainfactor*0.75f;
       gaindelta = 0.0f;
     } else {
       if (gainfactor > thresh) {
