@@ -81,7 +81,7 @@ public class audio_agc {
     if (aud_agc_max > 0.0f) {
       gainfactor = (target / aud_agc_max);
     } else {
-      //gainfactor = 0.0f; 
+      gainfactor = thresh + 0.1f;
     }
     if (gainfactor < aout_gain) {
       aout_gain = gainfactor*0.75f;
