@@ -564,6 +564,15 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           */
                           byte[] result=new byte[64];
 
+                          cmd = "logging -999"+"\r\n";
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          Thread.sleep(20);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+                          Thread.sleep(10);
+
+
+
                           int op_mode = parent.op_mode.getSelectedIndex();
                           op_mode++;
 
