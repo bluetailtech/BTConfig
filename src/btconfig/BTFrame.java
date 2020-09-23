@@ -1161,8 +1161,8 @@ long audio_tick_start=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202009221912");
-      release_date.setText("Release: 2020-09-22 1912");
+      fw_ver.setText("Latest Avail: FW Date: 202009231142");
+      release_date.setText("Release: 2020-09-23 1142");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1832,7 +1832,7 @@ long audio_tick_start=0;
               }
 
               if(is_dmr_mode==1) {
-                l3.setText("  DMR CONTROL CHANNEL TSBK_PER_SEC "+tsbk_ps);
+                l3.setText("  DMR TSBK_PER_SEC "+tsbk_ps);
               }
               else {
                 l3.setText("  P25 CONTROL CHANNEL TSBK_PER_SEC "+tsbk_ps);
