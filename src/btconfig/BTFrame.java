@@ -565,7 +565,7 @@ class updateTask extends java.util.TimerTask
 
             serial_port = find_serial_port();
             if(serial_port==null) {
-              setStatus("\r\ncan't find device.  Please wait...");
+              setStatus("\r\ndiscovering device.  Please wait...");
               Thread.sleep(600);
               //JOptionPane.showMessageDialog(parent, "Please re-start the BTConfig Software.  Pressing ok will exit the software.");
               //System.exit(0);
@@ -583,7 +583,7 @@ class updateTask extends java.util.TimerTask
 
 
             if(serial_port!=null && serial_port.openPort(200)==false) {
-              setStatus("\r\ncould not open serial port (another app may have the port open). please wait while retrying....");
+              setStatus("\r\nserial port busy. please wait. retrying....");
             }
             else if(serial_port!=null) {
               do_connect=0;
@@ -1161,8 +1161,8 @@ long audio_tick_start=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202009231808");
-      release_date.setText("Release: 2020-09-23 1808");
+      fw_ver.setText("Latest Avail: FW Date: 202009231845");
+      release_date.setText("Release: 2020-09-23 1845");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5519,6 +5519,15 @@ long audio_tick_start=0;
         conventionalchannel.setVisible(false);
       }
 
+      if( op_mode.getSelectedIndex() == 0) {
+        freq_label.setText("P25 Frequency");
+      }
+      if( op_mode.getSelectedIndex() == 1) {
+        freq_label.setText("Frequency");
+      }
+      if( op_mode.getSelectedIndex() == 2) {
+        freq_label.setText("NXDN Frequency");
+      }
       if( op_mode.getSelectedIndex() == 3) {
         freq_label.setText("FM NB Frequency");
       }
