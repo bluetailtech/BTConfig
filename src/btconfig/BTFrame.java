@@ -109,6 +109,7 @@ class updateTask extends java.util.TimerTask
             nac.setText("");
             rfid.setText("");
             siteid.setText("");
+            setStatus("NO SIG");
 
             do_synced=false;
           }
@@ -380,6 +381,7 @@ class updateTask extends java.util.TimerTask
           if(sig_meter_timeout<=0) {
             rssim1.setValue(-130,false);
             rssim2.setValue(-130,false);
+            p25_status_timeout=1;
             //l3.setText("Desc:                          ");
             //l3.setText("");
           }
@@ -1161,8 +1163,8 @@ long audio_tick_start=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202009231845");
-      release_date.setText("Release: 2020-09-23 1845");
+      fw_ver.setText("Latest Avail: FW Date: 202009240702");
+      release_date.setText("Release: 2020-09-24 0702");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1212,6 +1214,7 @@ long audio_tick_start=0;
       rssim2.setVisible(true);
       rssim1.setValue(-130,false);
       rssim2.setValue(-130,false);
+      p25_status_timeout=1;
       l3.setText("");
 
       /*
