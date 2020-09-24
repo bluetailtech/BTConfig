@@ -109,7 +109,7 @@ class updateTask extends java.util.TimerTask
             nac.setText("");
             rfid.setText("");
             siteid.setText("");
-            setStatus("NO SIG");
+            l3.setText("NO SIG");
 
             do_synced=false;
           }
@@ -1163,8 +1163,8 @@ long audio_tick_start=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202009240702");
-      release_date.setText("Release: 2020-09-24 0702");
+      fw_ver.setText("Latest Avail: FW Date: 202009240904");
+      release_date.setText("Release: 2020-09-24 0904");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1197,7 +1197,8 @@ long audio_tick_start=0;
       l3.setForeground(java.awt.Color.white);
       l3.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
 
-      l3.setText("");
+      //l3.setText("");
+      l3.setText("NO SIG");
       desc_panel.add(l3);
 
 
@@ -1835,10 +1836,20 @@ long audio_tick_start=0;
               }
 
               if(is_dmr_mode==1) {
-                l3.setText("  DMR TSBK_PER_SEC "+tsbk_ps);
+                if( rssim1.getValue()<-127 ) {
+                  l3.setText("NO SIG");
+                }
+                else {
+                  l3.setText("  DMR TSBK_PER_SEC "+tsbk_ps);
+                }
               }
               else {
-                l3.setText("  P25 CONTROL CHANNEL TSBK_PER_SEC "+tsbk_ps);
+                if( rssim1.getValue()<-127 ) {
+                  l3.setText("NO SIG");
+                }
+                else {
+                  l3.setText("  P25 CONTROL CHANNEL TSBK_PER_SEC "+tsbk_ps);
+                }
               }
               p25_status_timeout=5000;
               String city="";
