@@ -539,6 +539,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           parent.no_voice_secs.setText( String.format("%d", no_voice_secs) );
 
 
+                          parent.update_op_mode(op_mode-1);
 
                         } catch(Exception e) {
                           e.printStackTrace();

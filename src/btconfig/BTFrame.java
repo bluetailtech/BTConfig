@@ -610,6 +610,7 @@ class updateTask extends java.util.TimerTask
               //else {
                 do_read_talkgroups=1;
                 do_read_roaming=1;
+                do_read_config=1;
               //}
 
               discover.setEnabled(false);
@@ -1168,8 +1169,8 @@ long audio_tick_start=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202009240904");
-      release_date.setText("Release: 2020-09-24 0904");
+      fw_ver.setText("Latest Avail: FW Date: 202009240946");
+      release_date.setText("Release: 2020-09-24 0946");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5539,19 +5540,42 @@ long audio_tick_start=0;
         conventionalchannel.setVisible(false);
       }
 
-      if( op_mode.getSelectedIndex() == 0) {
+      //update_op_mode( op_mode.getSelectedIndex() );
+      int mode = op_mode.getSelectedIndex();
+      if( mode == 0) {
         freq_label.setText("P25 Frequency");
       }
-      if( op_mode.getSelectedIndex() == 1) {
+      if( mode == 1) {
         freq_label.setText("Frequency");
       }
-      if( op_mode.getSelectedIndex() == 2) {
+      if( mode == 2) {
         freq_label.setText("NXDN Frequency");
       }
-      if( op_mode.getSelectedIndex() == 3) {
+      if( mode == 3) {
         freq_label.setText("FM NB Frequency");
       }
+
     }//GEN-LAST:event_op_modeActionPerformed
+
+    public void update_op_mode(int mode) {
+
+      if( mode == 0) {
+        freq_label.setText("P25 Frequency");
+        jTabbedPane1.setEnabledAt(3, true);
+      }
+      if( mode == 1) {
+        freq_label.setText("Frequency");
+        jTabbedPane1.setEnabledAt(3, false);
+      }
+      if( mode == 2) {
+        freq_label.setText("NXDN Frequency");
+        jTabbedPane1.setEnabledAt(3, false);
+      }
+      if( mode == 3) {
+        freq_label.setText("FM NB Frequency");
+        jTabbedPane1.setEnabledAt(3, false);
+      }
+    }
 
     private void controlchannelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_controlchannelActionPerformed
       freq_label.setText("Control Channel Frequency");
