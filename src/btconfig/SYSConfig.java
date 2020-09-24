@@ -965,6 +965,8 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           //parent.do_read_config=1;
 
                           parent.setStatus("sys_config update ok."); 
+                          parent.is_connected=0;
+                          parent.do_connect=1;
                         } catch(Exception e) {
                           e.printStackTrace();
                         }

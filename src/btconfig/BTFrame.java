@@ -170,6 +170,11 @@ class updateTask extends java.util.TimerTask
         //auto re-connect?
         if(serial_port!=null && !serial_port.isOpen() && is_connected==1 && do_update_firmware==0) {
           is_connected=0;
+          try {
+            setStatus("device reset detected");
+            Thread.sleep(100);
+          } catch(Exception e) {
+          }
           do_connect=1;
           do_read_config=1;
         }
