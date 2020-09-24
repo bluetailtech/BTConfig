@@ -1816,6 +1816,7 @@ long audio_tick_start=0;
               rssi = rssi.replace(","," ").trim();
               rssim1.setValue( Integer.valueOf(rssi).intValue(),true );
               sig_meter_timeout=20000;
+              if(l3.getText().contains("NO SIG")) l3.setText("");
             }
 
 
