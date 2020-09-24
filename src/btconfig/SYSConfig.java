@@ -339,18 +339,16 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           int iscontrol = bb3.getInt(36);
                           int is_analog = bb3.getInt(52);
 
-                          if( is_analog==0 ) {
-                            if( iscontrol==0 ) parent.conventionalchannel.setSelected(true);
-                              else parent.controlchannel.setSelected(true);
-                          }
-                          else {
-                              parent.analog_out.setSelected(true);
-                          }
+                          if( iscontrol==0 ) parent.conventionalchannel.setSelected(true);
+                            else parent.controlchannel.setSelected(true);
+
                           if(parent.conventionalchannel.isSelected()) parent.freq_label.setText("Conventional Channel Frequency");
                           if(parent.controlchannel.isSelected()) parent.freq_label.setText("Control Channel Frequency");
-                          if(parent.analog_out.isSelected()) parent.freq_label.setText("Analog FM NB Frequency");
 
                           int op_mode = bb3.getInt(516);
+
+                          if(op_mode==3) parent.freq_label.setText("FM NB Frequency");
+
                           parent.op_mode.setSelectedIndex( op_mode-1 );
 
                           int dmr_config = bb3.getInt(512);
@@ -572,10 +570,10 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           Thread.sleep(10);
 
 
-
                           int op_mode = parent.op_mode.getSelectedIndex();
                           op_mode++;
 
+                          result=new byte[64];
                           cmd = "op_mode "+op_mode+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(20);
@@ -596,6 +594,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                             freq_to_use="859.9625";
                           }
 
+                          result=new byte[64];
                           cmd = "freq "+freq_to_use+"\r\n";  
 
                           if( !is_valid_freq(freq_d) ) {
@@ -604,11 +603,13 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                             cmd = "freq "+freq_to_use+"\r\n";  
                           }
 
+                          result=new byte[64];
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(10);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
 
+                          result=new byte[64];
                           cmd = "no_voice_roam_sec "+parent.no_voice_secs.getText()+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(10);
@@ -616,6 +617,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           System.out.println("result: "+new String(result) );
 
 
+                          result=new byte[64];
                           //if( ! new String(result).trim().contains("frequency: "+parent.frequency_tf.getText().trim()) ) return;
                           cmd = "vol "+(float) parent.lineout_vol_slider.getValue()/100.0f+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
@@ -646,6 +648,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           //fixed value of "high"
                           kp = 0.0005f;
 
+                          result=new byte[64];
                           cmd = "quad_agc_bw "+kp+"\r\n";  
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(10);
@@ -690,12 +693,14 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                               vto = 2000;
                             break;
                           }
+                          result=new byte[64];
                           cmd = "tgtimeout "+vto+"\r\n";  
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(10);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
 
+                          result=new byte[64];
 
                           //cmd = "bt_reset "+parent.bluetooth_reset.getText()+"\r\n";
                           cmd = "bt_reset 0"+"\r\n";  //always disabled for now
@@ -705,17 +710,9 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           System.out.println("result: "+new String(result) );
 
 
-                          Boolean b = parent.analog_out.isSelected();
-                          if(b) cmd = "audio_out 1\r\n";
-                            else cmd = "audio_out 0\r\n";
-                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-                          Thread.sleep(50);
-                          rlen=serial_port.readBytes( result, 64);
-                          System.out.println("result: "+new String(result) );
+                          result=new byte[64];
 
-
-
-                          b = parent.controlchannel.isSelected();
+                          boolean b = parent.controlchannel.isSelected();
                           if(b) cmd = "is_control 1\r\n";
                             else cmd = "is_control 0\r\n"; 
 
@@ -725,6 +722,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           System.out.println("result: "+new String(result) );
 
 
+                          result=new byte[64];
 
                           b = parent.en_bluetooth_cb.isSelected();
                           if(b) cmd = "bluetooth 1\r\n";
@@ -739,6 +737,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           if(b) cmd = "en_unknown_tg 1\r\n";
                             else cmd = "en_unknown_tg 0\r\n"; 
 
+                          result=new byte[64];
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(10);
                           rlen=serial_port.readBytes( result, 64);
@@ -748,12 +747,14 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           if(b) cmd = "roaming 1\r\n";
                             else cmd = "roaming 0\r\n"; 
 
+                          result=new byte[64];
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(10);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
 
 
+                          result=new byte[64];
                           b = parent.enable_leds.isSelected();
                           if(b) cmd = "led_mode 1\r\n";
                             else cmd = "led_mode 0\r\n"; 
@@ -779,6 +780,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           //System.out.println("result: "+new String(result) );
                           //Thread.sleep(10);
 
+                          result=new byte[64];
                           int dmr_sys_id = 1; 
                           try {
                             dmr_sys_id = new Integer( parent.dmr_sys_id.getText() ).intValue();
@@ -812,6 +814,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           if(parent.dmr_cc_en15.isSelected()) dmr_config |= DMR_CC15;
                           if(parent.dmr_conplus.isSelected()) dmr_config |= DMR_ISCC;
 
+                          result=new byte[64];
                           cmd = "dmr_config "+String.format("%08x", dmr_config)+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(20);
@@ -835,54 +838,63 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           if( parent.lcn14_freq.getText().equals("") ) parent.lcn14_freq.setText("0.000000");
                           if( parent.lcn15_freq.getText().equals("") ) parent.lcn15_freq.setText("0.000000");
 
+                          result=new byte[64];
                           cmd = "dmr_lcn1 "+String.format("%3.6f", Double.valueOf(parent.lcn1_freq.getText()))+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(20);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(10);
+                          result=new byte[64];
                           cmd = "dmr_lcn2 "+String.format("%3.6f", Double.valueOf(parent.lcn2_freq.getText()))+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(20);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(10);
+                          result=new byte[64];
                           cmd = "dmr_lcn3 "+String.format("%3.6f", Double.valueOf(parent.lcn3_freq.getText()))+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(20);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(10);
+                          result=new byte[64];
                           cmd = "dmr_lcn4 "+String.format("%3.6f", Double.valueOf(parent.lcn4_freq.getText()))+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(20);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(10);
+                          result=new byte[64];
                           cmd = "dmr_lcn5 "+String.format("%3.6f", Double.valueOf(parent.lcn5_freq.getText()))+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(20);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(10);
+                          result=new byte[64];
                           cmd = "dmr_lcn6 "+String.format("%3.6f", Double.valueOf(parent.lcn6_freq.getText()))+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(20);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(10);
+                          result=new byte[64];
                           cmd = "dmr_lcn7 "+String.format("%3.6f", Double.valueOf(parent.lcn7_freq.getText()))+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(20);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(10);
+                          result=new byte[64];
                           cmd = "dmr_lcn8 "+String.format("%3.6f", Double.valueOf(parent.lcn8_freq.getText()))+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(20);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(10);
+                          result=new byte[64];
                           cmd = "dmr_lcn9 "+String.format("%3.6f", Double.valueOf(parent.lcn9_freq.getText()))+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(20);
@@ -890,42 +902,49 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(10);
                           cmd = "dmr_lcn10 "+String.format("%3.6f", Double.valueOf(parent.lcn10_freq.getText()))+"\r\n";
+                          result=new byte[64];
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(20);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(10);
                           cmd = "dmr_lcn11 "+String.format("%3.6f", Double.valueOf(parent.lcn11_freq.getText()))+"\r\n";
+                          result=new byte[64];
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(20);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(10);
                           cmd = "dmr_lcn12 "+String.format("%3.6f", Double.valueOf(parent.lcn12_freq.getText()))+"\r\n";
+                          result=new byte[64];
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(20);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(10);
                           cmd = "dmr_lcn13 "+String.format("%3.6f", Double.valueOf(parent.lcn13_freq.getText()))+"\r\n";
+                          result=new byte[64];
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(20);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(10);
                           cmd = "dmr_lcn14 "+String.format("%3.6f", Double.valueOf(parent.lcn14_freq.getText()))+"\r\n";
+                          result=new byte[64];
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(20);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(10);
                           cmd = "dmr_lcn15 "+String.format("%3.6f", Double.valueOf(parent.lcn15_freq.getText()))+"\r\n";
+                          result=new byte[64];
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(20);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(10);
 
+                          result=new byte[64];
 
                           cmd = "ref_freq "+String.format("%5.0f", Double.valueOf(parent.ref_freq.getText()))+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
@@ -934,15 +953,16 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(10);
 
+                          result=new byte[64];
                           cmd = "save\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(10);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
-                          Thread.sleep(1500);
+                          Thread.sleep(2000);
 
                           parent.do_write_config=0;
-                          parent.do_read_config=1;
+                          //parent.do_read_config=1;
 
                           parent.setStatus("sys_config update ok."); 
                         } catch(Exception e) {

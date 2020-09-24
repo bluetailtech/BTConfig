@@ -96,7 +96,7 @@ class updateTask extends java.util.TimerTask
 
         if(p25_status_timeout>0) {
           p25_status_timeout--;
-          if(p25_status_timeout==0) {
+          if(p25_status_timeout==0 || do_write_config==1) {
             p25_status_timeout=0;
             status.setText("");
             l3.setText("");
@@ -1161,8 +1161,8 @@ long audio_tick_start=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202009231245");
-      release_date.setText("Release: 2020-09-23 1245");
+      fw_ver.setText("Latest Avail: FW Date: 202009231808");
+      release_date.setText("Release: 2020-09-23 1808");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2101,7 +2101,6 @@ long audio_tick_start=0;
         ref_freq = new javax.swing.JTextField();
         controlchannel = new javax.swing.JRadioButton();
         conventionalchannel = new javax.swing.JRadioButton();
-        analog_out = new javax.swing.JRadioButton();
         jPanel25 = new javax.swing.JPanel();
         jPanel26 = new javax.swing.JPanel();
         jPanel29 = new javax.swing.JPanel();
@@ -2622,7 +2621,7 @@ long audio_tick_start=0;
         jLabel6.setText("Power-on Mode");
         p25rxconfigpanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, -1));
 
-        op_mode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "P25", "DMR", "NXDN4800" }));
+        op_mode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "P25", "DMR", "NXDN4800", "FM NB" }));
         op_mode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 op_modeActionPerformed(evt);
@@ -2659,15 +2658,6 @@ long audio_tick_start=0;
             }
         });
         p25rxconfigpanel.add(conventionalchannel, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, -1, -1));
-
-        buttonGroup7.add(analog_out);
-        analog_out.setText("FM NB Analog Line-out");
-        analog_out.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                analog_outActionPerformed(evt);
-            }
-        });
-        p25rxconfigpanel.add(analog_out, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 90, -1, -1));
 
         jTabbedPane1.addTab("P25RX Configuration", p25rxconfigpanel);
 
@@ -5528,6 +5518,10 @@ long audio_tick_start=0;
         controlchannel.setVisible(false);
         conventionalchannel.setVisible(false);
       }
+
+      if( op_mode.getSelectedIndex() == 3) {
+        freq_label.setText("FM NB Frequency");
+      }
     }//GEN-LAST:event_op_modeActionPerformed
 
     private void controlchannelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_controlchannelActionPerformed
@@ -5537,10 +5531,6 @@ long audio_tick_start=0;
     private void conventionalchannelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conventionalchannelActionPerformed
       freq_label.setText("Conventional Channel Frequency");
     }//GEN-LAST:event_conventionalchannelActionPerformed
-
-    private void analog_outActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analog_outActionPerformed
-      freq_label.setText("Analog FM NB Frequency");
-    }//GEN-LAST:event_analog_outActionPerformed
 
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
@@ -5734,7 +5724,6 @@ private void resizeColumns2() {
     private javax.swing.JLabel agc_kp_lb;
     private javax.swing.JLabel agc_level_lb;
     public javax.swing.JCheckBox allow_unknown_tg_cb;
-    public javax.swing.JRadioButton analog_out;
     public javax.swing.JButton append_cc;
     private javax.swing.JPanel audiopanel;
     public javax.swing.JCheckBox auto_flash_tg;
