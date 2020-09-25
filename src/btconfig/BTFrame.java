@@ -5447,7 +5447,7 @@ long audio_tick_start=0;
       //serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
       String cmd= new String("logging -999\r\n");
       serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-      if(jTabbedPane1.getSelectedIndex()==4) jTextArea1.requestFocus();
+      if(jTabbedPane1.getSelectedIndex()==5) jTextArea1.requestFocus();
     }//GEN-LAST:event_enable_commandsActionPerformed
 
     private void log_constActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_log_constActionPerformed
