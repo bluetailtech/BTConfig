@@ -5604,6 +5604,7 @@ public void do_meta() {
   if(l3!=null & did_metadata==0 && l3.getText().trim().length()>0) {
 
     if(l3.getText().contains("CONTROL CHANNEL TSBK")) return; 
+    if(l3.getText().contains("DMR TSBK_PER_SEC")) return; 
 
     if( is_dmr_mode==1 ) freq_str = freq.getText();
 
