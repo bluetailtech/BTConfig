@@ -1169,8 +1169,8 @@ long audio_tick_start=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202009250607");
-      release_date.setText("Release: 2020-09-25 0607");
+      fw_ver.setText("Latest Avail: FW Date: 202009250733");
+      release_date.setText("Release: 2020-09-25 0733");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5605,6 +5605,7 @@ public void do_meta() {
 
     if(l3.getText().contains("CONTROL CHANNEL TSBK")) return; 
     if(l3.getText().contains("DMR TSBK_PER_SEC")) return; 
+    if(l3.getText().contains("NO SIG")) return; 
 
     if( is_dmr_mode==1 ) freq_str = freq.getText();
 
