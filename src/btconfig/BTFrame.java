@@ -244,8 +244,8 @@ class updateTask extends java.util.TimerTask
           initial_audio_level.setValue( prefs.getInt("initial_audio_level", 75) );
           auto_flash_tg.setSelected( prefs.getBoolean("tg_auto_flash", false) );
           disable_encrypted.setSelected( prefs.getBoolean("enc_auto_flash", false) );
-          autoscale_const.setSelected( prefs.getBoolean("autoscale_const", false) );
-          nsymbols.setSelectedIndex( prefs.getInt("nsymbols", 2) );
+          autoscale_const.setSelected( prefs.getBoolean("autoscale_const", true) );
+          nsymbols.setSelectedIndex( prefs.getInt("nsymbols", 0) );
 
           int constellation = prefs.getInt("const_select", 1);
           if(constellation==0) off_const.setSelected(true);
@@ -1169,8 +1169,8 @@ long audio_tick_start=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202009250537");
-      release_date.setText("Release: 2020-09-25 0537");
+      fw_ver.setText("Latest Avail: FW Date: 202009250607");
+      release_date.setText("Release: 2020-09-25 0607");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
