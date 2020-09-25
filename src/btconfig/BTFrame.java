@@ -97,7 +97,7 @@ class updateTask extends java.util.TimerTask
         if(p25_status_timeout>0) {
           p25_status_timeout--;
           if(p25_status_timeout==0 || do_write_config==1) {
-            p25_status_timeout=0;
+            p25_status_timeout=1000;
             status.setText("");
             l3.setText("");
             tg_indicator.setBackground(java.awt.Color.black);
@@ -387,6 +387,7 @@ class updateTask extends java.util.TimerTask
             rssim1.setValue(-130,false);
             rssim2.setValue(-130,false);
             p25_status_timeout=1;
+            sig_meter_timeout=1000;
             //l3.setText("Desc:                          ");
             //l3.setText("");
           }
@@ -397,6 +398,7 @@ class updateTask extends java.util.TimerTask
         if(status_timeout>0) {
           status_timeout--;
           if(status_timeout==0) {
+            status_timeout=1000;
             setStatus("");
           }
         }
@@ -953,11 +955,11 @@ String serial_port_name="";
 char keydata[];
 int keyindex;
 int command_input=0;
-int status_timeout;
+int status_timeout=1;
 rssimeter rssim1;
 rssimeter rssim2;
 String console_line;
-int sig_meter_timeout=0;
+int sig_meter_timeout=1;
 javax.swing.JLabel l1;
 javax.swing.JLabel l2;
 javax.swing.JLabel l3;
@@ -1024,7 +1026,7 @@ int is_mac_osx=0;
 int is_dmr_mode=0;
 int tsbk_ps_i=0;
 int bluetooth_streaming_timer=0;
-int p25_status_timeout=0;
+int p25_status_timeout=1;
 Hashtable lat_lon_hash1;
 Hashtable lat_lon_hash2;
 Hashtable supergroup_hash;
