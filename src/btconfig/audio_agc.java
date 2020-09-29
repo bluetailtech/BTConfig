@@ -25,7 +25,7 @@ package btconfig;
 public class audio_agc {
 
   //audio agc related
-  final static int AUD_AGC_LEN=32; //must be power of two
+  final static int AUD_AGC_LEN=256; //must be power of two
   float[] audio_max = new float[AUD_AGC_LEN];
   int audio_max_idx;
   float aout_gain=1.0f;
