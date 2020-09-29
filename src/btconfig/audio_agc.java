@@ -77,6 +77,14 @@ public class audio_agc {
       if(audio_max[i] > aud_agc_max) aud_agc_max = audio_max[i];
     }
 
+    if(aud_agc_max > 8192) {
+      for(int n = 0; n < len; n++) {
+        if( audio[n] > 8192 ) {
+          audio[n] = 3000.0f * (float) java.lang.Math.log10( audio[n] );
+        } 
+      }
+    }
+
     // determine optimal gain level
     if (aud_agc_max > 0.0f) {
       gainfactor = (target / aud_agc_max);
