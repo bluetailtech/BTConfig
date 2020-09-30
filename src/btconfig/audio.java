@@ -35,7 +35,6 @@ public class audio {
   Mixer mixer=null;
   SourceDataLine sourceDataLine;
   Resampler resamp;
-  audio_agc agc;
   float agc_gain = 1.0f;
   int start_playing=0;
 
@@ -58,7 +57,6 @@ float initial_level=0.85f;
     parent = p;
 
     resamp = new Resampler( Rational.valueOf( (48000.0f/8000.0f) ) ); 
-    agc = new audio_agc();
 
     try {
       if(!initialized) {
@@ -295,48 +293,10 @@ float initial_level=0.85f;
 
           int nsamp = resamp.resample(buffer_in, buffer_out, 0, 1);
 
-          int[] buffer_out_agc = agc.update_gain_s16(buffer_out, buffer_out.length, 200.0f + (32000.0f*agc_gain) , 29.42f, 0.0075f);
-
-          //for(int i=0;i<buffer_out.length;i++) {
-           // System.out.println("i="+i+"  "+buffer_out[i]);
-          //}
-
-          //if(!sourceDataLine.isOpen()) sourceDataLine.open();
+          int[] buffer_out_agc = buffer_out; 
 
 
           Boolean isWindows = System.getProperty("os.name").startsWith("Windows");
-
-          /*
-          //may reduce java audio glitches
-            if(parent.audio_insert_zero.isSelected()) {
-              if(!sourceDataLine.isRunning()) {
-                byte[] zero = new byte[24000];
-                sourceDataLine.write(zero, 0, zero.length);
-                sourceDataLine.start();
-              }
-            }
-
-          if(isWindows || parent.is_mac_osx==1) {
-            //if(!sourceDataLine.isRunning()) sourceDataLine.start();
-            if( parent.audio_buffer_system.isSelected() ) {
-              if(!sourceDataLine.isRunning() ) sourceDataLine.start();
-            }
-            else {
-              if(!sourceDataLine.isRunning()) sourceDataLine.start();
-            }
-          }
-          else {
-
-
-            if( parent.audio_buffer_system.isSelected() ) {
-              if(!sourceDataLine.isRunning() && start_playing++>100) sourceDataLine.start();
-            }
-            else {
-              if(!sourceDataLine.isRunning()) sourceDataLine.start();
-            }
-
-          }
-          */
 
           byte[] outbytes = new byte[ buffer_out_agc.length * 2 *2]; 
 

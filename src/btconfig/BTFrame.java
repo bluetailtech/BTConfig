@@ -231,7 +231,6 @@ class updateTask extends java.util.TimerTask
             prefs.putInt("agc_gain", 50);
             prefs.putBoolean("did_new_agc1", true);
           }
-          agc_gain.setValue(prefs.getInt("agc_gain", 50));
           //agc_gain.setValue(65);
           do_agc_update=1;
         }
@@ -262,10 +261,6 @@ class updateTask extends java.util.TimerTask
         if(do_agc_update==1) {
           do_agc_update=0;
             //System.out.println(evt);
-            if(prefs!=null) prefs.putInt("agc_gain", agc_gain.getValue() );
-            if(aud!=null) aud.setAgcGain( ( 0.01f + (float) agc_gain.getValue()) / 100.0f );
-            //System.out.println("agc_gain: "+agc_gain.getValue());
-            agc_level_lb.setText("Val "+ agc_gain.getValue()+"%");
         }
 
         if(do_restore_roaming==1 && is_connected==1 && do_update_firmware==0 && do_read_talkgroups==0) {
@@ -1171,8 +1166,8 @@ long audio_tick_start=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202009292005");
-      release_date.setText("Release: 2020-09-29 2005");
+      fw_ver.setText("Latest Avail: FW Date: 202009292131");
+      release_date.setText("Release: 2020-09-29 2131");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2238,15 +2233,10 @@ long audio_tick_start=0;
         audiopanel = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         enable_mp3 = new javax.swing.JCheckBox();
-        jLabel3 = new javax.swing.JLabel();
-        agc_gain = new javax.swing.JSlider();
-        agc_level_lb = new javax.swing.JLabel();
         enable_audio = new javax.swing.JCheckBox();
-        jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         initial_audio_level = new javax.swing.JSlider();
         initial_audio_level_lb = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         freqdb_panel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
@@ -3113,19 +3103,6 @@ long audio_tick_start=0;
         });
         jPanel11.add(enable_mp3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, -1, -1));
 
-        jLabel3.setText("PC Audio AGC Target Level (volume)");
-        jPanel11.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 260, -1, -1));
-
-        agc_gain.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                agc_gainStateChanged(evt);
-            }
-        });
-        jPanel11.add(agc_gain, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 260, -1, -1));
-
-        agc_level_lb.setText("Default: 50%");
-        jPanel11.add(agc_level_lb, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 260, -1, -1));
-
         enable_audio.setSelected(true);
         enable_audio.setText("Enable PC Audio Output (PC Speakers)");
         enable_audio.addActionListener(new java.awt.event.ActionListener() {
@@ -3134,9 +3111,6 @@ long audio_tick_start=0;
             }
         });
         jPanel11.add(enable_audio, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 360, -1, -1));
-
-        jLabel11.setText("If you hear clipping, try setting this lower. (default 75)");
-        jPanel11.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 310, -1, -1));
 
         jLabel12.setText("Initial Master Volume Level");
         jPanel11.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 310, -1, -1));
@@ -3151,9 +3125,6 @@ long audio_tick_start=0;
 
         initial_audio_level_lb.setText("Val 85");
         jPanel11.add(initial_audio_level_lb, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 310, -1, -1));
-
-        jLabel13.setText("If you hear clipping, try setting this lower. (default 50)");
-        jPanel11.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 260, -1, -1));
 
         audiopanel.add(jPanel11, java.awt.BorderLayout.CENTER);
 
@@ -5313,10 +5284,6 @@ long audio_tick_start=0;
       }
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
-    private void agc_gainStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_agc_gainStateChanged
-      do_agc_update=1;
-    }//GEN-LAST:event_agc_gainStateChanged
-
     private void enable_mp3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enable_mp3ActionPerformed
       prefs.putBoolean("enable_mp3", enable_mp3.isSelected());
     }//GEN-LAST:event_enable_mp3ActionPerformed
@@ -5776,10 +5743,8 @@ private void resizeColumns2() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JSlider agc_gain;
     public javax.swing.JComboBox<String> agc_kp;
     private javax.swing.JLabel agc_kp_lb;
-    private javax.swing.JLabel agc_level_lb;
     public javax.swing.JCheckBox allow_unknown_tg_cb;
     public javax.swing.JButton append_cc;
     private javax.swing.JPanel audiopanel;
@@ -5882,9 +5847,7 @@ private void resizeColumns2() {
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -5901,7 +5864,6 @@ private void resizeColumns2() {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
