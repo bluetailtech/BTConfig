@@ -50,6 +50,7 @@ public class ConstPlotPanel extends JPanel {
    short[] audio_bytes;
 
    int paint_audio;
+   int audio_frame_count;
 
    ///////////////////////////////////////////////////////////////////////////////////////
    ///////////////////////////////////////////////////////////////////////////////////////
@@ -92,6 +93,7 @@ public class ConstPlotPanel extends JPanel {
          audio_bytes[i] /= 200;
        }
        paint_audio=15;
+       audio_frame_count++;
        repaint();
      } catch(Exception e) {
      }
@@ -309,13 +311,17 @@ public class ConstPlotPanel extends JPanel {
        g2d.drawRoundRect(i+128, (int) (yoff2 + 875 - ((2.5f*gains[j++])+320) ),1, 1, 1, 1);
      }
 
+
+     //int text_xoff = 300+256;
+     int text_xoff = 250+256;
+
      g2d.setColor( Color.white ); 
-     g2d.drawString(current_gain, 300+256,50);
-     g2d.drawString(current_rf_gain, 300+256,75);
+     g2d.drawString(current_gain, text_xoff,50);
+     g2d.drawString(current_rf_gain, text_xoff,75);
 
      try {
-       g2d.drawString(est_hz, 300+256,125);
-       g2d.drawString(err_hz, 300+256,150);
+       g2d.drawString(est_hz, text_xoff,125);
+       g2d.drawString(err_hz, text_xoff,150);
      } catch(Exception e) {
      }
 
@@ -334,7 +340,7 @@ public class ConstPlotPanel extends JPanel {
         }
 
         if( do_display_ref_est )  {
-          if(est_ref_tot>2048 && ref_freq_est!=null )  g2d.drawString(ref_freq_est, 300+256,175);
+          if(est_ref_tot>2048 && ref_freq_est!=null )  g2d.drawString(ref_freq_est, text_xoff,175);
         }
      } catch(Exception e) {
      }
@@ -343,13 +349,23 @@ public class ConstPlotPanel extends JPanel {
      //audio plot
      //////////////////////////////////
      if(paint_audio>0) {
+
+       g2d.setColor( Color.white ); 
+       g2d.drawString("afcnt "+audio_frame_count, 850, 125);
+
+
        g2d.setColor( Color.green ); 
        for(int i=0;i<160-1;i++) {
          //g2d.drawRoundRect(i+850, audio_bytes[i]+132, 1, 1, 1, 1);
          g2d.drawLine(i+850, audio_bytes[i]+132, 
            i+851, audio_bytes[i+1]+132 );
        }
+
+
        paint_audio--;
+       if(paint_audio==0) {
+         audio_frame_count=0;
+       }
      }
 
      int sync_off=5;
@@ -380,19 +396,19 @@ public class ConstPlotPanel extends JPanel {
 
        if(last_sync_state==1) {
          g2d.setColor( Color.green ); 
-         g2d.drawString(sync_state+" (Synced)", 300+256,100);
+         g2d.drawString(sync_state+" (Synced)", text_xoff,100);
        }
        else if(last_sync_state==0)  {
          g2d.setColor( Color.red ); 
-         g2d.drawString(sync_state+" (No Sync)", 300+256,100);
+         g2d.drawString(sync_state+" (No Sync)", text_xoff,100);
        }
        else if(last_sync_state==-2)  {
          g2d.setColor( Color.yellow ); 
-         g2d.drawString(sync_state+" (TDU)", 300+256,100);
+         g2d.drawString(sync_state+" (TDU)", text_xoff,100);
        }
        else {
          g2d.setColor( Color.black ); 
-         g2d.drawString(sync_state+" (No Signal)", 300+256,100);
+         g2d.drawString(sync_state+" (No Signal)", text_xoff,100);
        }
      }
 
