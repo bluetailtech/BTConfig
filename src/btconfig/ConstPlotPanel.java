@@ -340,10 +340,14 @@ public class ConstPlotPanel extends JPanel {
      }
 
      //////////////////////////////////
+     //audio plot
+     //////////////////////////////////
      if(paint_audio>0) {
        g2d.setColor( Color.green ); 
-       for(int i=0;i<160;i++) {
-           g2d.drawRoundRect(i+800, audio_bytes[i]+32, 1, 1, 1, 1);
+       for(int i=0;i<160-1;i++) {
+         //g2d.drawRoundRect(i+850, audio_bytes[i]+132, 1, 1, 1, 1);
+         g2d.drawLine(i+850, audio_bytes[i]+132, 
+           i+851, audio_bytes[i+1]+132 );
        }
        paint_audio--;
      }
