@@ -47,6 +47,10 @@ public class ConstPlotPanel extends JPanel {
 
    boolean do_display_ref_est=true;
 
+   short[] audio_bytes;
+
+   int paint_audio;
+
    ///////////////////////////////////////////////////////////////////////////////////////
    ///////////////////////////////////////////////////////////////////////////////////////
    public ConstPlotPanel(BTFrame parent) {
@@ -55,6 +59,10 @@ public class ConstPlotPanel extends JPanel {
      plot_data = new int[8192*2];
      scaled_data = new int[ 8192*2 ];
      DATA_SIZE = 256;
+
+     paint_audio=0;
+
+     audio_bytes = new short[160];
 
      for(int i=0;i<256*3;i++) {
        gains[i] = 1024.0f;
@@ -71,6 +79,22 @@ public class ConstPlotPanel extends JPanel {
      est_ref_array = new double[2048];
      est_ref_tot=0;
      ref_freq_error=0.0;
+   }
+
+   ///////////////////////////////////////////////////////////////////////////////////////
+   ///////////////////////////////////////////////////////////////////////////////////////
+   public void addAudio(byte[] pcm) {
+     try {
+       bb = ByteBuffer.wrap(pcm);
+       bb.order(ByteOrder.LITTLE_ENDIAN);
+       for(int i=0;i<160;i++) {
+         audio_bytes[i] = bb.getShort();
+         audio_bytes[i] /= 200;
+       }
+       paint_audio=15;
+       repaint();
+     } catch(Exception e) {
+     }
    }
    
    ///////////////////////////////////////////////////////////////////////////////////////
@@ -313,6 +337,15 @@ public class ConstPlotPanel extends JPanel {
           if(est_ref_tot>2048 && ref_freq_est!=null )  g2d.drawString(ref_freq_est, 300+256,175);
         }
      } catch(Exception e) {
+     }
+
+     //////////////////////////////////
+     if(paint_audio>0) {
+       g2d.setColor( Color.green ); 
+       for(int i=0;i<160;i++) {
+           g2d.drawRoundRect(i+800, audio_bytes[i]+32, 1, 1, 1, 1);
+       }
+       paint_audio--;
      }
 
      int sync_off=5;

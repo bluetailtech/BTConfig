@@ -696,6 +696,7 @@ class updateTask extends java.util.TimerTask
                       if(aud!=null ) {
                         //if(iztimer!=null) iztimer.cancel();
                         if(aud!=null) aud.playBuf(pcm_bytes);
+                        cpanel.addAudio(pcm_bytes);
                         do_audio_tick=0;
                         audio_tick_start = new java.util.Date().getTime();
                         //iztimer = new java.util.Timer();
@@ -718,6 +719,7 @@ class updateTask extends java.util.TimerTask
                       if(aud!=null ) {
                         //if(iztimer!=null) iztimer.cancel();
                         if(aud!=null) aud.playBuf(pcm_bytes);
+                        cpanel.addAudio(pcm_bytes);
                         do_audio_tick=0;
                         audio_tick_start = new java.util.Date().getTime();
                         //iztimer = new java.util.Timer();
@@ -1166,8 +1168,8 @@ long audio_tick_start=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202009300933");
-      release_date.setText("Release: 2020-09-30 0933");
+      fw_ver.setText("Latest Avail: FW Date: 202009301715");
+      release_date.setText("Release: 2020-09-30 1715");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
