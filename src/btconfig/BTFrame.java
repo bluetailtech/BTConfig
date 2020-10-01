@@ -1168,8 +1168,8 @@ long audio_tick_start=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202010010908");
-      release_date.setText("Release: 2020-10-01 0908");
+      fw_ver.setText("Latest Avail: FW Date: 202010011142");
+      release_date.setText("Release: 2020-10-01 1142");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4997,7 +4997,7 @@ long audio_tick_start=0;
 
         jPanel5.add(jPanel8);
 
-        jTabbedPane1.addTab("Constellation View", jPanel5);
+        jTabbedPane1.addTab("Signal Insights", jPanel5);
 
         getContentPane().add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 

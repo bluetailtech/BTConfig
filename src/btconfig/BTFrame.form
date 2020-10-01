@@ -5736,8 +5736,8 @@
         <Container class="javax.swing.JPanel" name="jPanel5">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Constellation View">
-                <Property name="tabTitle" type="java.lang.String" value="Constellation View"/>
+              <JTabbedPaneConstraints tabName="Signal Insights">
+                <Property name="tabTitle" type="java.lang.String" value="Signal Insights"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
