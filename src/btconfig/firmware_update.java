@@ -109,8 +109,8 @@ SerialPort serial_port;
               //System.exit(0);
               //return;
               Thread.sleep(100);
-              parent.is_connected=0;
-              parent.do_connect=1;
+              //parent.is_connected=0;
+              //parent.do_connect=1;
               return;
             }
 
