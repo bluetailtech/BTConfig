@@ -423,11 +423,12 @@ public class ConstPlotPanel extends JPanel {
      //////////////////////////////////
      //audio plot
      //////////////////////////////////
-     if(paint_audio>0) {
+     boolean b=true;
+     if(paint_audio>0 || b) {
 
        g2d.setColor( Color.white ); 
        g2d.drawString("Audio Frame Count "+audio_frame_count, 840, 125);
-       g2d.drawString("Audio FFT 0-8kHz", 860,350);
+       g2d.drawString("Audio FFT 0-8kHz", 860,375);
 
        int a_xoff = 830;
 
@@ -438,27 +439,47 @@ public class ConstPlotPanel extends JPanel {
        }
 
        a_xoff = 850;
+
+       //draw grid 
+       g2d.setColor( new Color(0.5f,0.5f,0.5f,0.3f ) ); 
+
+       g2d.drawLine(a_xoff, 355, a_xoff, 350-135);
+       g2d.drawLine(a_xoff+128, 355, a_xoff+128, 350-135);
+
+       double g_ystep = 140.0/10.0; 
+       double g_xstep = 128.0/10.0; 
+
+       for(int i=0;i<11;i++) {
+         g2d.drawLine(a_xoff, 215+(int)((double)i*g_ystep), a_xoff+128, 215+(int)((double)i*g_ystep));
+       }
+       for(int i=0;i<11;i++) {
+         g2d.drawLine(a_xoff+(int)((double)i*g_xstep), 355, a_xoff+(int)((double)i*g_xstep), 350-135);
+       }
+
+
+
+       //draw audio fft 0-8 kHz
        g2d.setColor( Color.yellow ); 
        j=0;
-       double prev_mag=1.0;
+       double prev_mag=350.0;
 
        if(paint_audio>12 && !did_draw_audio_fft) {
+
+
+
          for(int i=0;i<128-1;i++) {
            double ii = audio_out[j++];
            double qq = audio_out[j++];
            ii = ii*ii;
            qq = qq*qq;
-           double mag = 30.0 * java.lang.Math.log10( java.lang.Math.pow(ii+qq, 0.5) );
+           double mag = 50.0 * java.lang.Math.log10( java.lang.Math.pow(ii+qq, 0.5) );
 
            if(i>0 && mag > 0 && prev_mag > 0 && mag < 300 && prev_mag < 300) {
-             g2d.drawLine(a_xoff++, 250-(int)prev_mag, a_xoff, 250-(int)mag);
+             g2d.drawLine(a_xoff++, 340-(int)prev_mag, a_xoff, 340-(int)mag);
            }
-           else if(i>0) {
-             g2d.drawLine(a_xoff++, 250-(int)prev_mag, a_xoff, 250-(int)mag);
-           }
-
            prev_mag = mag;
          }
+
          did_draw_audio_fft=true;
        }
 
