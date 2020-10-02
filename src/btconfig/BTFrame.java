@@ -1168,8 +1168,8 @@ long audio_tick_start=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202010011142");
-      release_date.setText("Release: 2020-10-01 1142");
+      fw_ver.setText("Latest Avail: FW Date: 202010011933");
+      release_date.setText("Release: 2020-10-01 1933");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
