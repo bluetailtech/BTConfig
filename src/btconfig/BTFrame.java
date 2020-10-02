@@ -1168,8 +1168,8 @@ long audio_tick_start=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202010011933");
-      release_date.setText("Release: 2020-10-01 1933");
+      fw_ver.setText("Latest Avail: FW Date: 202010020723");
+      release_date.setText("Release: 2020-10-02 0723");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4891,7 +4891,7 @@ long audio_tick_start=0;
 
         jPanel24.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jLabel33.setText("Constellation Plot");
+        jLabel33.setText("Options:  ");
         jPanel24.add(jLabel33);
 
         buttonGroup5.add(off_const);
@@ -4915,6 +4915,7 @@ long audio_tick_start=0;
 
         buttonGroup5.add(log_const);
         log_const.setText("Log");
+        log_const.setEnabled(false);
         log_const.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 log_constActionPerformed(evt);

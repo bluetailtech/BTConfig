@@ -5780,7 +5780,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JLabel" name="jLabel33">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Constellation Plot"/>
+                        <Property name="text" type="java.lang.String" value="Options:  "/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="off_const">
@@ -5818,6 +5818,7 @@
                           <ComponentRef name="buttonGroup5"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Log"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="log_constActionPerformed"/>

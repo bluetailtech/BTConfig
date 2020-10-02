@@ -344,6 +344,9 @@ public class ConstPlotPanel extends JPanel {
        g2d.drawRoundRect(xoff+256+ii, 256+qq-yoff, 1, 1, 1, 1);
      }
 
+     /*
+     g2d.drawString("I/Q Symbol Time Domain", 850,470);
+     
      int iq_yoff = 420;
      int iq_xoff = 850;
 
@@ -384,6 +387,7 @@ public class ConstPlotPanel extends JPanel {
 
        g2d.drawLine(iq_xoff++, qq1+iq_yoff, iq_xoff, qq2+iq_yoff );
      }
+     */
 
      int yoff2=-80;
      int xoff2=70;
@@ -396,8 +400,9 @@ public class ConstPlotPanel extends JPanel {
        //j+=2;
        g2d.drawRoundRect(i+xoff2, (int) (yoff2 + 875 - ((2.5f*gains[j++])+320) ),1, 1, 1, 1);
      }
-     g2d.drawString("I/Q Symbol Time Domain", 850,470);
-
+     
+     
+     
 
      //int text_xoff = 300+256;
      int text_xoff = 250+256;
