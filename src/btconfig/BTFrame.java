@@ -247,9 +247,9 @@ class updateTask extends java.util.TimerTask
           nsymbols.setSelectedIndex( prefs.getInt("nsymbols", 0) );
 
           int constellation = prefs.getInt("const_select", 1);
-          if(constellation==0) off_const.setSelected(true);
-          else if(constellation==1) linear_const.setSelected(true);
-          else if(constellation==2) log_const.setSelected(true);
+          //if(constellation==0) off_const.setSelected(true);
+          //else if(constellation==1) linear_const.setSelected(true);
+          //else if(constellation==2) log_const.setSelected(true);
         }
 
         //keep this after prefs
@@ -1169,7 +1169,7 @@ long audio_tick_start=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202010020723");
-      release_date.setText("Release: 2020-10-02 0723");
+      release_date.setText("Release: 2020-10-02 0808");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2320,10 +2320,6 @@ long audio_tick_start=0;
         jPanel5 = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
-        jLabel33 = new javax.swing.JLabel();
-        off_const = new javax.swing.JRadioButton();
-        linear_const = new javax.swing.JRadioButton();
-        log_const = new javax.swing.JRadioButton();
         autoscale_const = new javax.swing.JCheckBox();
         nsymbols = new javax.swing.JComboBox<>();
         jPanel8 = new javax.swing.JPanel();
@@ -4891,38 +4887,6 @@ long audio_tick_start=0;
 
         jPanel24.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jLabel33.setText("Options:  ");
-        jPanel24.add(jLabel33);
-
-        buttonGroup5.add(off_const);
-        off_const.setText("Off");
-        off_const.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                off_constActionPerformed(evt);
-            }
-        });
-        jPanel24.add(off_const);
-
-        buttonGroup5.add(linear_const);
-        linear_const.setSelected(true);
-        linear_const.setText("Linear");
-        linear_const.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                linear_constActionPerformed(evt);
-            }
-        });
-        jPanel24.add(linear_const);
-
-        buttonGroup5.add(log_const);
-        log_const.setText("Log");
-        log_const.setEnabled(false);
-        log_const.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                log_constActionPerformed(evt);
-            }
-        });
-        jPanel24.add(log_const);
-
         autoscale_const.setSelected(true);
         autoscale_const.setText("Auto Scale");
         autoscale_const.addActionListener(new java.awt.event.ActionListener() {
@@ -5422,24 +5386,6 @@ long audio_tick_start=0;
       if(jTabbedPane1.getSelectedIndex()==5) jTextArea1.requestFocus();
     }//GEN-LAST:event_enable_commandsActionPerformed
 
-    private void log_constActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_log_constActionPerformed
-       if(off_const.isSelected()) prefs.putInt("const_select", 0);
-       if(linear_const.isSelected()) prefs.putInt("const_select", 1);
-       if(log_const.isSelected()) prefs.putInt("const_select", 2);
-    }//GEN-LAST:event_log_constActionPerformed
-
-    private void linear_constActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_linear_constActionPerformed
-       if(off_const.isSelected()) prefs.putInt("const_select", 0);
-       if(linear_const.isSelected()) prefs.putInt("const_select", 1);
-       if(log_const.isSelected()) prefs.putInt("const_select", 2);
-    }//GEN-LAST:event_linear_constActionPerformed
-
-    private void off_constActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_off_constActionPerformed
-       if(off_const.isSelected()) prefs.putInt("const_select", 0);
-       if(linear_const.isSelected()) prefs.putInt("const_select", 1);
-       if(log_const.isSelected()) prefs.putInt("const_select", 2);
-    }//GEN-LAST:event_off_constActionPerformed
-
     private void autoscale_constActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoscale_constActionPerformed
       prefs.putBoolean("autoscale_const", autoscale_const.isSelected());
     }//GEN-LAST:event_autoscale_constActionPerformed
@@ -5870,7 +5816,6 @@ private void resizeColumns2() {
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
@@ -5999,9 +5944,7 @@ private void resizeColumns2() {
     public javax.swing.JTextField lcn8_freq;
     public javax.swing.JTextField lcn9_freq;
     private javax.swing.JPanel level_panel;
-    public javax.swing.JRadioButton linear_const;
     public javax.swing.JSlider lineout_vol_slider;
-    public javax.swing.JRadioButton log_const;
     private javax.swing.JTextArea log_ta;
     private javax.swing.JPanel logo_panel;
     private javax.swing.JPanel logpanel;
@@ -6012,7 +5955,6 @@ private void resizeColumns2() {
     public javax.swing.JPanel no_voice_panel;
     public javax.swing.JTextField no_voice_secs;
     public javax.swing.JComboBox<String> nsymbols;
-    public javax.swing.JRadioButton off_const;
     public javax.swing.JComboBox<String> op_mode;
     private javax.swing.JPanel p25rxconfigpanel;
     private javax.swing.JProgressBar progbar;

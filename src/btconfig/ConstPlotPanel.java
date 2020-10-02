@@ -284,9 +284,10 @@ public class ConstPlotPanel extends JPanel {
 
 
      //System.out.println("avg "+avg_mag);
-     do_log = parent.log_const.isSelected();
+     //do_log = parent.log_const.isSelected();
+     do_log = false;
 
-     if( parent.off_const.isSelected() ) return;
+     //if( parent.off_const.isSelected() ) return;
 
      int j = 0;
      avg_mag = 0.0;
@@ -503,6 +504,9 @@ public class ConstPlotPanel extends JPanel {
        paint_audio--;
        if(paint_audio==0) {
          audio_frame_count=0;
+         for(int i=0;i<160;i++) {
+           audio_bytes[i] = 0; 
+         }
          did_draw_audio_fft=true;
        }
      }
