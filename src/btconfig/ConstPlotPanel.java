@@ -348,29 +348,41 @@ public class ConstPlotPanel extends JPanel {
      int iq_xoff = 850;
 
      //draw I
-     g2d.setColor( Color.red ); 
+     //g2d.setColor( Color.red ); 
+     g2d.setColor( new Color(1.0f, 0.0f, 0.0f, 0.7f) ); 
      j=0;
-     for(int i=0;i<DATA_SIZE/4;i++) {
+     int iq_skip=0;
+     int ii1 = 0; 
+     int qq1 = 0; 
+     int ii2 = 0;
+     int qq2 = 0;
+     for(int i=0;i<DATA_SIZE/2;i++) {
 
-       int ii1 = scaled_data[j++]/2;
-       int qq1 = scaled_data[j++]/2;
-       int ii2 = scaled_data[j++]/2;
-       int qq2 = scaled_data[j++]/2;
-
-       g2d.drawLine(iq_xoff++, ii1+iq_yoff, iq_xoff++, ii2+iq_yoff );
+       if(iq_skip++%2==0) { 
+         ii1 = scaled_data[j++]/2;
+         qq1 = scaled_data[j++]/2;
+         ii2 = scaled_data[j++]/2;
+         qq2 = scaled_data[j++]/2;
+       }
+       g2d.drawLine(iq_xoff++, ii1+iq_yoff, iq_xoff, ii2+iq_yoff );
      }
      //draw Q
-     g2d.setColor( Color.blue ); 
+     //g2d.setColor( Color.blue ); 
+     g2d.setColor( new Color(0.0f, 0.0f, 1.0f, 0.7f) ); 
      j=0;
+     iq_skip=0;
      iq_xoff = 850;
-     for(int i=0;i<DATA_SIZE/4;i++) {
 
-       int ii1 = scaled_data[j++]/2;
-       int qq1 = scaled_data[j++]/2;
-       int ii2 = scaled_data[j++]/2;
-       int qq2 = scaled_data[j++]/2;
+     for(int i=0;i<DATA_SIZE/2;i++) {
 
-       g2d.drawLine(iq_xoff++, qq1+iq_yoff, iq_xoff++, qq2+iq_yoff );
+       if(iq_skip++%2==0) { 
+         ii1 = scaled_data[j++]/2;
+         qq1 = scaled_data[j++]/2;
+         ii2 = scaled_data[j++]/2;
+         qq2 = scaled_data[j++]/2;
+       }
+
+       g2d.drawLine(iq_xoff++, qq1+iq_yoff, iq_xoff, qq2+iq_yoff );
      }
 
      int yoff2=-80;
