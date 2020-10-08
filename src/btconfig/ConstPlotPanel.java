@@ -446,7 +446,7 @@ public class ConstPlotPanel extends JPanel {
 
        g2d.setColor( Color.white ); 
        g2d.drawString("Audio Frame Count "+audio_frame_count, 840, 125);
-       g2d.drawString("Audio FFT 0-8kHz", 860,375);
+       g2d.drawString("Audio FFT 0-4kHz", 860,375);
 
        int a_xoff = 830;
 
