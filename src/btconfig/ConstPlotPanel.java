@@ -453,7 +453,7 @@ public class ConstPlotPanel extends JPanel {
        g2d.setColor( Color.green ); 
        for(int i=0;i<160-1;i++) {
          //g2d.drawRoundRect(i+850, audio_bytes[i]+132, 1, 1, 1, 1);
-         g2d.drawLine(a_xoff++, audio_bytes[i]+132, a_xoff, audio_bytes[i+1]+132 );
+         g2d.drawLine(a_xoff++, audio_bytes[i]/2+132, a_xoff, audio_bytes[i+1]/2+132 );
        }
 
        a_xoff = 850;
@@ -490,10 +490,10 @@ public class ConstPlotPanel extends JPanel {
            double qq = audio_out[j++];
            ii = ii*ii;
            qq = qq*qq;
-           double mag = 50.0 * java.lang.Math.log10( java.lang.Math.pow(ii+qq, 0.5) );
+           double mag = 40.0 * java.lang.Math.log10( java.lang.Math.pow(ii+qq, 0.5) );
 
            if(i>0 && mag > 0 && prev_mag > 0 && mag < 300 && prev_mag < 300) {
-             g2d.drawLine(a_xoff++, 340-(int)prev_mag, a_xoff, 340-(int)mag);
+             g2d.drawLine(a_xoff++, 350-(int)prev_mag, a_xoff, 350-(int)mag);
            }
            prev_mag = mag;
          }
