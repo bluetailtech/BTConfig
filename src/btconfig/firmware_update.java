@@ -36,6 +36,7 @@ String new_firmware_crc = "";
 java.util.Timer utimer;
 BTFrame parent;
 SerialPort serial_port;
+int did_save=0;
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
@@ -143,6 +144,7 @@ SerialPort serial_port;
                   parent.setProgress(0);
                   state=1;
                   app_crc_valid=0;
+                  did_save=0;
                   break;
                 }
               }
@@ -439,8 +441,12 @@ SerialPort serial_port;
           //are we in application mode with good crc?
           if(state==2 && is_bl==0) {
             //serial_port.closePort();
-            parent.setStatus("all done.  Firmware is up-to-date");
-            send_cmd("save\r\n", 1000); //flush new changes from global_post_read() to flash memory
+            parent.setStatus("Firmware is up-to-date.");
+
+            if(did_save==0) {
+              send_cmd("save\r\n", 1000); //flush new changes from global_post_read() to flash memory
+              did_save=1;
+            }
             Thread.sleep(1000);
 
             //parent.firmware_checked=1;
