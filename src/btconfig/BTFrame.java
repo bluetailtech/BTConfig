@@ -94,6 +94,13 @@ class updateTask extends java.util.TimerTask
           }
         }
 
+        if(command_input_timeout>0) {
+           command_input_timeout--;
+          if(command_input_timeout==0) {
+            command_input=0;
+          }
+        }
+
         if(p25_status_timeout>0) {
           p25_status_timeout--;
           if(p25_status_timeout==0 || do_write_config==1) {
@@ -1035,6 +1042,7 @@ boolean do_synced;
 boolean disable_tdma=false;
 double current_freq=0.0;
 long audio_tick_start=0;
+int command_input_timeout;
 
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
@@ -1168,8 +1176,8 @@ long audio_tick_start=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202010122252");
-      release_date.setText("Release: 2020-10-12 2252");
+      fw_ver.setText("Latest Avail: FW Date: 202010130843");
+      release_date.setText("Release: 2020-10-13 0843");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5098,6 +5106,7 @@ long audio_tick_start=0;
         } else {
           if(command_input==0) addTextConsole("\r\n$ ");
           command_input=1;
+          command_input_timeout=5000;
           keydata[keyindex++] = c;
           jTextArea1.append( new Character(c).toString() );
         }
