@@ -1042,7 +1042,7 @@ boolean do_synced;
 boolean disable_tdma=false;
 double current_freq=0.0;
 long audio_tick_start=0;
-int command_input_timeout;
+int command_input_timeout=0;
 
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
@@ -1176,8 +1176,8 @@ int command_input_timeout;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202010130843");
-      release_date.setText("Release: 2020-10-13 0843");
+      fw_ver.setText("Latest Avail: FW Date: 202010141113");
+      release_date.setText("Release: 2020-10-14 1113");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);

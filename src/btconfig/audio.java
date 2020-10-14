@@ -286,7 +286,7 @@ float initial_level=0.85f;
 
           int[] buffer_in = new int[ buffer.length/2 ];
           for(int i=0;i<buffer_in.length;i++) {
-            buffer_in[i] = (int) bg.getShort();
+            buffer_in[i] = (int) bg.getShort()/2;
           }
 
           int[] buffer_out = new int[ buffer_in.length * 6 ];
