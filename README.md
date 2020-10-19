@@ -6,7 +6,7 @@ Configuration Software for the Bluetail Technologies <a href="https://bluetailte
 https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2020-10-12_2252.exe 
   
 <BR><BR>User Manual
-https://github.com/bluetailtech/BTConfig/blob/master/Documentation/p25rx_user_manual.pdf  (updated 2020-10-12)
+https://github.com/bluetailtech/BTConfig/blob/master/Documentation/p25rx_user_manual.pdf  (updated 2020-10-19)
 
 
 <BR><BR>Acquiring and Building From Source
