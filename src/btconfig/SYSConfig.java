@@ -64,6 +64,7 @@ java.text.SimpleDateFormat formatter_date;
 
 int did_warning=0;
 int did_crc_reset=0;
+int prev_op_mode=-1;
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -351,6 +352,8 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
                           parent.op_mode.setSelectedIndex( op_mode-1 );
 
+                          prev_op_mode = op_mode-1;
+
                           int dmr_config = bb3.getInt(512);
 
                           if( (dmr_config & DMR_CC1) > 0 ) parent.dmr_cc_en1.setSelected(true);
@@ -552,6 +555,8 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           String cmd = ""; 
                           parent.setStatus("writing configuration to flash..."); 
 
+
+
                           /*
                           if( parent.roaming.isSelected() ) {
                             byte[] result=new byte[64];
@@ -570,8 +575,12 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(10);
 
+                          int reset_on_save=0;
 
                           int op_mode = parent.op_mode.getSelectedIndex();
+                          if( prev_op_mode != op_mode ) {
+                            reset_on_save=1;
+                          }
                           op_mode++;
 
                           result=new byte[64];
@@ -955,19 +964,31 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           Thread.sleep(10);
 
                           result=new byte[64];
-                          cmd = "save\r\n";
+                          if(reset_on_save==1) {
+                            cmd = "save 1\r\n";
+                          }
+                          else {
+                            cmd = "save\r\n";
+                          }
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(10);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(2000);
 
-                          parent.do_write_config=0;
-                          //parent.do_read_config=1;
-
                           parent.setStatus("sys_config update ok."); 
-                          parent.is_connected=0;
-                          parent.do_connect=1;
+
+
+                          parent.do_write_config=0;
+
+
+                          if(reset_on_save==1) {
+                            parent.is_connected=0;
+                            parent.do_connect=1;
+                          }
+                          else {
+                            parent.do_read_config=1;
+                          }
                         } catch(Exception e) {
                           e.printStackTrace();
                         }
