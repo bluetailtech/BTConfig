@@ -389,6 +389,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
                           if( (dmr_config & DMR_ISCC) > 0 ) parent.dmr_conplus.setSelected(true);
                             else parent.dmr_conventional.setSelected(true);
+                          parent.update_dmr_lcn1_label();
 
                           if( (dmr_config & DMR_SLOT1) > 0 ) parent.dmr_slot1.setSelected(true);
                             else parent.dmr_slot1.setSelected(false);

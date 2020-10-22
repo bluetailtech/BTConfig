@@ -46,10 +46,12 @@ FloatControl src_volume;
 BTFrame parent;
 float initial_level=0.85f;
 
-  byte[] dbuffer1 = new byte[7680 * 4];
-  byte[] dbuffer2 = new byte[7680 * 4];
+  byte[] dbuffer1;
+  byte[] dbuffer2;
   int dbuffer_mod=0;
   int dbuffer_tot=0;
+
+  int dbuffer_size;
 
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
@@ -60,6 +62,21 @@ float initial_level=0.85f;
 
     try {
       if(!initialized) {
+
+        if(parent.is_mac_osx==1) {
+          dbuffer_size = 7680*4;
+        }
+        else if(parent.is_linux==1) {
+          dbuffer_size = 7680*4; 
+        }
+        else {
+          dbuffer_size = 7680*4;
+        }
+
+        dbuffer1 = new byte[dbuffer_size];
+        dbuffer2 = new byte[dbuffer_size];
+
+
         initial_level = (float) ( ((float) parent.initial_audio_level.getValue()+0.01f) ) / 100.0f;
         try {
           Mixer.Info[] mixerInfo = AudioSystem.getMixerInfo();
@@ -129,7 +146,12 @@ float initial_level=0.85f;
                 sourceDataLine.open(af, 48000*4);
               }
                 */
+              if(parent.is_mac_osx==1) {
                 sourceDataLine.open(af, 48000*4*2);
+              }
+              else {
+                sourceDataLine.open(af, 48000*4*2);
+              }
 
 
               sourceDataLine.start();
@@ -322,15 +344,15 @@ float initial_level=0.85f;
             }
           }
 
-          if(dbuffer_tot==7680*4) {
+          if(dbuffer_tot==dbuffer_size) {
             dbuffer_mod ^= 0x01;
 
             if( dbuffer_mod==1 ) {
-              sourceDataLine.write(dbuffer1, 0, 7680*4);
+              sourceDataLine.write(dbuffer1, 0, dbuffer_size);
               //System.out.println("dbuffer 1");
             }
             else {
-              sourceDataLine.write(dbuffer2, 0, 7680*4);
+              sourceDataLine.write(dbuffer2, 0, dbuffer_size);
               if(!sourceDataLine.isRunning()) sourceDataLine.start();
               //System.out.println("dbuffer 2");
             }

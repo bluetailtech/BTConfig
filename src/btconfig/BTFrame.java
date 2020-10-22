@@ -836,7 +836,11 @@ class updateTask extends java.util.TimerTask
                     if(b[i]==(byte) 0x31) {
                       //audio flush
                       //System.out.println("\r\naudio flush");
-                      if(aud!=null) aud.playStop();
+
+                      if(aud!=null) {
+                        aud.playStop();
+                      }
+
                       rx_state=0;
                       skip_bytes=0;
                     }
@@ -1027,6 +1031,7 @@ int do_console_output=0;
 int do_write_roaming_flash_only=0;
 int did_read_talkgroups=0;
 int is_mac_osx=0;
+int is_linux=0;
 int is_dmr_mode=0;
 int tsbk_ps_i=0;
 int bluetooth_streaming_timer=0;
@@ -1109,14 +1114,27 @@ int command_input_timeout=0;
       write_config.setEnabled(false);
       disconnect.setEnabled(false);
 
+      isWindows=false;
 
-      isWindows = System.getProperty("os.name").startsWith("Windows");
+      if( System.getProperty("os.name").startsWith("Windows") ) {
+        isWindows=true;
+          System.out.println("\r\nenabling Windows option");
+          os_string.setText("OS: Windows");
+      }
 
       //Mac OSX
       if( System.getProperty("os.name").toLowerCase().contains("mac os x") ) {
           is_mac_osx=1;
           System.out.println("\r\nenabling MAC_OSX option");
+          os_string.setText("OS: Mac OSX");
       }
+
+      if( System.getProperty("os.name").toLowerCase().contains("linux") ) {
+          is_linux=1;
+          System.out.println("\r\nenabling Linux option");
+          os_string.setText("OS: Linux");
+      }
+
 
       read_config.setVisible(false);  //read config button
 
@@ -1176,8 +1194,8 @@ int command_input_timeout=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202010191333");
-      release_date.setText("Release: 2020-10-19 1333");
+      fw_ver.setText("Latest Avail: FW Date: 202010211106");
+      release_date.setText("Release: 2020-10-21 1549");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2129,12 +2147,13 @@ int command_input_timeout=0;
         ref_freq = new javax.swing.JTextField();
         controlchannel = new javax.swing.JRadioButton();
         conventionalchannel = new javax.swing.JRadioButton();
+        os_string = new javax.swing.JLabel();
         jPanel25 = new javax.swing.JPanel();
         jPanel26 = new javax.swing.JPanel();
         jPanel29 = new javax.swing.JPanel();
         dmr_cc_en1 = new javax.swing.JCheckBox();
         jSeparator4 = new javax.swing.JSeparator();
-        jLabel35 = new javax.swing.JLabel();
+        dmr_lcn1_label = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         lcn1_freq = new javax.swing.JTextField();
         jSeparator38 = new javax.swing.JSeparator();
@@ -2678,6 +2697,9 @@ int command_input_timeout=0;
         });
         p25rxconfigpanel.add(conventionalchannel, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, -1, -1));
 
+        os_string.setText("OS: ");
+        p25rxconfigpanel.add(os_string, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
         jTabbedPane1.addTab("P25RX Configuration", p25rxconfigpanel);
 
         jPanel25.setLayout(new java.awt.BorderLayout());
@@ -2693,8 +2715,8 @@ int command_input_timeout=0;
         jSeparator4.setPreferredSize(new java.awt.Dimension(150, 0));
         jPanel29.add(jSeparator4);
 
-        jLabel35.setText("LCN1 Frequency");
-        jPanel29.add(jLabel35);
+        dmr_lcn1_label.setText("LCN1 Frequency");
+        jPanel29.add(dmr_lcn1_label);
 
         jSeparator5.setMinimumSize(new java.awt.Dimension(50, 0));
         jSeparator5.setPreferredSize(new java.awt.Dimension(50, 0));
@@ -3036,6 +3058,11 @@ int command_input_timeout=0;
 
         buttonGroup6.add(dmr_conventional);
         dmr_conventional.setText("Conventional");
+        dmr_conventional.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dmr_conventionalActionPerformed(evt);
+            }
+        });
         jPanel46.add(dmr_conventional);
 
         jSeparator36.setPreferredSize(new java.awt.Dimension(100, 0));
@@ -5432,7 +5459,7 @@ int command_input_timeout=0;
     }//GEN-LAST:event_dmr_write_configActionPerformed
 
     private void dmr_conplusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dmr_conplusActionPerformed
-        // TODO add your handling code here:
+      update_dmr_lcn1_label();
     }//GEN-LAST:event_dmr_conplusActionPerformed
 
     private void dmr_clear_freqsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dmr_clear_freqsActionPerformed
@@ -5512,6 +5539,10 @@ int command_input_timeout=0;
       freq_label.setText("Conventional Channel Frequency");
     }//GEN-LAST:event_conventionalchannelActionPerformed
 
+    private void dmr_conventionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dmr_conventionalActionPerformed
+      update_dmr_lcn1_label();
+    }//GEN-LAST:event_dmr_conventionalActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5524,6 +5555,16 @@ int command_input_timeout=0;
       roaming.setEnabled(true);
     }
 
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+public void update_dmr_lcn1_label() {
+  if(dmr_conventional.isSelected()) {
+    dmr_lcn1_label.setText("DMR Conventional Frequency");
+  }
+  else {
+    dmr_lcn1_label.setText("LCN1 Frequency");
+  }
+}
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 public void do_meta() {
@@ -5757,6 +5798,7 @@ private void resizeColumns2() {
     private javax.swing.JButton dmr_clear_freqs;
     public javax.swing.JRadioButton dmr_conplus;
     public javax.swing.JRadioButton dmr_conventional;
+    public javax.swing.JLabel dmr_lcn1_label;
     private javax.swing.JButton dmr_restore;
     public javax.swing.JCheckBox dmr_slot1;
     public javax.swing.JCheckBox dmr_slot2;
@@ -5826,7 +5868,6 @@ private void resizeColumns2() {
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
@@ -5965,6 +6006,7 @@ private void resizeColumns2() {
     public javax.swing.JTextField no_voice_secs;
     public javax.swing.JComboBox<String> nsymbols;
     public javax.swing.JComboBox<String> op_mode;
+    private javax.swing.JLabel os_string;
     private javax.swing.JPanel p25rxconfigpanel;
     private javax.swing.JProgressBar progbar;
     private javax.swing.JLabel progress_label;
