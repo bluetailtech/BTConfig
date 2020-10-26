@@ -1064,7 +1064,7 @@ int command_input_timeout=0;
       //jPanel25.add(cpanel);
       //
 
-      jPanel5.remove(jPanel8);
+      signalinsightpanel.remove(jPanel8);
 
       if(zs==null) zs = new zipsearch(this);
 
@@ -1194,8 +1194,8 @@ int command_input_timeout=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202010211106");
-      release_date.setText("Release: 2020-10-21 1549");
+      fw_ver.setText("Latest Avail: FW Date: 202010260928");
+      release_date.setText("Release: 2020-10-26 0928");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2344,7 +2344,12 @@ int command_input_timeout=0;
         button_single_follow_tg = new javax.swing.JRadioButton();
         button_single_next_roaming = new javax.swing.JRadioButton();
         button_write_config = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
+        advancedpanel = new javax.swing.JPanel();
+        duid_enh = new javax.swing.JCheckBox();
+        freq_correct_on_voice = new javax.swing.JCheckBox();
+        add_tdu_silence = new javax.swing.JCheckBox();
+        adv_write_config = new javax.swing.JButton();
+        signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
         autoscale_const = new javax.swing.JCheckBox();
@@ -3635,7 +3640,7 @@ int command_input_timeout=0;
 
         freqdb_panel.add(jPanel19, java.awt.BorderLayout.SOUTH);
 
-        jTabbedPane1.addTab("Search DB For Control Channels", freqdb_panel);
+        jTabbedPane1.addTab("Search DB For CCh", freqdb_panel);
 
         talkgroup_panel.setLayout(new java.awt.BorderLayout());
 
@@ -4912,7 +4917,35 @@ int command_input_timeout=0;
 
         jTabbedPane1.addTab("Button CFG", buttong_config);
 
-        jPanel5.setLayout(new javax.swing.BoxLayout(jPanel5, javax.swing.BoxLayout.X_AXIS));
+        advancedpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        duid_enh.setSelected(true);
+        duid_enh.setText("DUID Enhancements (default on)  Recommended for VHF systems");
+        advancedpanel.add(duid_enh, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, -1, -1));
+
+        freq_correct_on_voice.setText("Correct Frequency On Trunked Voice Channels (default off)");
+        freq_correct_on_voice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                freq_correct_on_voiceActionPerformed(evt);
+            }
+        });
+        advancedpanel.add(freq_correct_on_voice, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, -1));
+
+        add_tdu_silence.setSelected(true);
+        add_tdu_silence.setText("Add Silent Period To Audio Buffer On TDU / TDULC (default on)");
+        advancedpanel.add(add_tdu_silence, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, -1, -1));
+
+        adv_write_config.setText("Write Config");
+        adv_write_config.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adv_write_configActionPerformed(evt);
+            }
+        });
+        advancedpanel.add(adv_write_config, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 470, -1, -1));
+
+        jTabbedPane1.addTab("Advanced", advancedpanel);
+
+        signalinsightpanel.setLayout(new javax.swing.BoxLayout(signalinsightpanel, javax.swing.BoxLayout.X_AXIS));
 
         const_panel.setBackground(new java.awt.Color(0, 0, 0));
         const_panel.setMaximumSize(new java.awt.Dimension(1512, 1512));
@@ -4941,7 +4974,7 @@ int command_input_timeout=0;
 
         const_panel.add(jPanel24, java.awt.BorderLayout.NORTH);
 
-        jPanel5.add(const_panel);
+        signalinsightpanel.add(const_panel);
 
         jPanel8.setMaximumSize(new java.awt.Dimension(1512, 2147483647));
         jPanel8.setPreferredSize(new java.awt.Dimension(512, 1065));
@@ -4995,9 +5028,9 @@ int command_input_timeout=0;
 
         jPanel8.add(jPanel7, java.awt.BorderLayout.CENTER);
 
-        jPanel5.add(jPanel8);
+        signalinsightpanel.add(jPanel8);
 
-        jTabbedPane1.addTab("Signal Insights", jPanel5);
+        jTabbedPane1.addTab("Signal Insights", signalinsightpanel);
 
         getContentPane().add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
@@ -5543,6 +5576,22 @@ int command_input_timeout=0;
       update_dmr_lcn1_label();
     }//GEN-LAST:event_dmr_conventionalActionPerformed
 
+    private void freq_correct_on_voiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_freq_correct_on_voiceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_freq_correct_on_voiceActionPerformed
+
+    private void adv_write_configActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adv_write_configActionPerformed
+      do_read_config=1;
+      do_write_config=1;
+      cpanel.reset_ref_est();
+
+      current_sys_id = 0;
+      current_wacn_id = 0; 
+      wacn.setText("");
+      sysid.setText("");
+      nac.setText("");
+    }//GEN-LAST:event_adv_write_configActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5742,6 +5791,9 @@ private void resizeColumns2() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JCheckBox add_tdu_silence;
+    private javax.swing.JButton adv_write_config;
+    private javax.swing.JPanel advancedpanel;
     public javax.swing.JComboBox<String> agc_kp;
     private javax.swing.JLabel agc_kp_lb;
     public javax.swing.JCheckBox allow_unknown_tg_cb;
@@ -5804,6 +5856,7 @@ private void resizeColumns2() {
     public javax.swing.JCheckBox dmr_slot2;
     public javax.swing.JTextField dmr_sys_id;
     private javax.swing.JButton dmr_write_config;
+    public javax.swing.JCheckBox duid_enh;
     public javax.swing.JCheckBox en_bluetooth_cb;
     public javax.swing.JCheckBox enable_audio;
     private javax.swing.JRadioButton enable_commands;
@@ -5814,6 +5867,7 @@ private void resizeColumns2() {
     private javax.swing.JRadioButton enable_voice_const;
     public javax.swing.JButton erase_roaming;
     public javax.swing.JLabel freq;
+    public javax.swing.JCheckBox freq_correct_on_voice;
     public javax.swing.JLabel freq_label;
     private javax.swing.JButton freq_search;
     private javax.swing.JButton freq_search2;
@@ -5927,7 +5981,6 @@ private void resizeColumns2() {
     private javax.swing.JPanel jPanel44;
     private javax.swing.JPanel jPanel46;
     private javax.swing.JPanel jPanel47;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
@@ -6022,6 +6075,7 @@ private void resizeColumns2() {
     public javax.swing.JCheckBox roaming;
     private javax.swing.JTextField search_radius;
     private javax.swing.JButton send_tg;
+    private javax.swing.JPanel signalinsightpanel;
     public javax.swing.JLabel siteid;
     private javax.swing.JToggleButton sq_indicator;
     private javax.swing.JLabel sq_lb;

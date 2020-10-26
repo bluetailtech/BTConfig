@@ -337,6 +337,20 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           parent.ref_freq.setText( String.format("%5.0f", reffreq) );
 
 
+                          int duid_enh = bb3.getInt(156);
+                          int freq_correct_on_voice = bb3.getInt(160);
+                          int add_tdu_silence = bb3.getInt(164);
+
+                          if(duid_enh==1) parent.duid_enh.setSelected(true);
+                            else parent.duid_enh.setSelected(false);
+
+                          if(freq_correct_on_voice==1) parent.freq_correct_on_voice.setSelected(true);
+                            else parent.freq_correct_on_voice.setSelected(false);
+
+                          if(add_tdu_silence==1) parent.add_tdu_silence.setSelected(true);
+                            else parent.add_tdu_silence.setSelected(false);
+
+
                           int iscontrol = bb3.getInt(36);
                           int is_analog = bb3.getInt(52);
 
@@ -712,6 +726,49 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           System.out.println("result: "+new String(result) );
 
                           result=new byte[64];
+
+
+
+                          //if(duid_enh==1) parent.duid_enh.setSelected(true);
+                          //  else parent.duid_enh.setSelected(false);
+
+                          //if(freq_correct_on_voice==1) parent.freq_correct_on_voice.setSelected(true);
+                           // else parent.freq_correct_on_voice.setSelected(false);
+
+                          //if(add_tdu_silence==1) parent.add_tdu_silence.setSelected(true);
+                           // else parent.add_tdu_silence.setSelected(false);
+
+                          int duid_enh=0;
+                          int freq_correct_on_voice=0;
+                          int add_tdu_silence=0;
+
+                          if( parent.duid_enh.isSelected() ) duid_enh=1;
+                          if( parent.freq_correct_on_voice.isSelected() ) freq_correct_on_voice=1;
+                          if( parent.add_tdu_silence.isSelected() ) add_tdu_silence=1;
+
+
+                          result=new byte[64];
+                          cmd = "duid_enh "+duid_enh+"\r\n";  
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          Thread.sleep(10);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
+                          result=new byte[64];
+                          cmd = "freq_corr_on_voice "+freq_correct_on_voice+"\r\n";  
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          Thread.sleep(10);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
+                          result=new byte[64];
+                          cmd = "add_tdu_silence "+add_tdu_silence+"\r\n";  
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          Thread.sleep(10);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
+
 
                           //cmd = "bt_reset "+parent.bluetooth_reset.getText()+"\r\n";
                           cmd = "bt_reset 0"+"\r\n";  //always disabled for now
