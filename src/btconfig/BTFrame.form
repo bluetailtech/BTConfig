@@ -5795,7 +5795,7 @@
             <Component class="javax.swing.JCheckBox" name="add_tdu_silence">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Add Silent Period To Audio Buffer On TDU / TDULC (default on)"/>
+                <Property name="text" type="java.lang.String" value="Add Silent Period To Audio Buffer On Phase 1 TDU / TDULC (default on)"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>

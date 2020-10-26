@@ -4932,7 +4932,7 @@ int command_input_timeout=0;
         advancedpanel.add(freq_correct_on_voice, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, -1));
 
         add_tdu_silence.setSelected(true);
-        add_tdu_silence.setText("Add Silent Period To Audio Buffer On TDU / TDULC (default on)");
+        add_tdu_silence.setText("Add Silent Period To Audio Buffer On Phase 1 TDU / TDULC (default on)");
         advancedpanel.add(add_tdu_silence, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, -1, -1));
 
         adv_write_config.setText("Write Config");
