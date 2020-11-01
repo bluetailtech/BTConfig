@@ -46,17 +46,21 @@ java.util.Hashtable tg_hash;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-public void addTDMA(BTFrame parent, String talkgroup, String sys_id) {
+public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String city, String wacn) {
   int first_empty_row=0;
 
-  if(talkgroup==null || sys_id==null) return;
+  if(talkgroup==null || sys_id==null || wacn==null) return;
 
   talkgroup = talkgroup.replace(",","");
   talkgroup = talkgroup.trim();
 
+  String wacn_hex = Integer.toString( new Integer(wacn).intValue(), 16);
+
   try {
     int tg = new Integer(talkgroup).intValue();
     if(tg==0) return;
+    int wacn_i = new Integer(wacn).intValue();
+    if(wacn_i==0) return;
   } catch(Exception e) {
   }
 
@@ -66,19 +70,21 @@ public void addTDMA(BTFrame parent, String talkgroup, String sys_id) {
   if(tg_hash==null) tg_hash = new java.util.Hashtable();
     else tg_hash.clear();
 
-  for(int i=0;i<1000;i++) {
+  for(int i=0;i<800;i++) {
     try {
       Object o1 = parent.getTableObject(i,1);
       Object o2 = parent.getTableObject(i,3);
-      if(o1!=null && o2!=null)  {
-        tg_hash.put(o1.toString().trim()+"_"+o2.toString().trim(),o1.toString().trim()+"_"+o2.toString().trim());
+      Object o3 = parent.getTableObject(i,6);
+      if(o1!=null && o2!=null && o3!=null)  {
+        tg_hash.put(o1.toString().trim()+"_"+o2.toString().trim()+"_"+o3.toString().trim(),  
+          o1.toString().trim()+"_"+o2.toString().trim()+"_"+o3.toString().trim());
       }
     } catch(Exception e) {
       e.printStackTrace();
     }
   }
 
-  if(tg_hash.get(sys_id+"_"+talkgroup)!=null) return;  //already found this one
+  if(tg_hash.get(sys_id+"_"+talkgroup+"_"+wacn_hex)!=null) return;  //already found this one
 
   try {
     int i = new Integer(talkgroup).intValue();
@@ -87,90 +93,12 @@ public void addTDMA(BTFrame parent, String talkgroup, String sys_id) {
     return;
   }
 
-  for(int i=0;i<1000;i++) {
+  for(int i=0;i<800;i++) {
     try {
       Object o1 = parent.getTableObject(i,1);
       Object o2 = parent.getTableObject(i,3);
-      if(o1!=null && o2!=null)  {
-        first_empty_row++;
-      }
-      else {
-        break;
-      }
-
-    } catch(Exception e) {
-      e.printStackTrace();
-    }
-  }
-
-  System.out.println("first empty row "+first_empty_row);
-
-  int idx = first_empty_row;
-
-    try {
-
-        parent.addTableObject( false, idx, 0);
-        parent.addTableObject( new Integer(sys_id), idx, 1);
-        parent.addTableObject( new Integer(1), idx, 2);
-        parent.addTableObject( new Integer(talkgroup), idx, 3);
-        parent.addTableObject( new String(talkgroup), idx, 4);
-        parent.addTableObject( "TDMA DISABLED", idx, 5);
-
-        if(parent.did_read_talkgroups==1 && parent.auto_flash_tg.isSelected()) parent.tg_update_pending=1;  //write them to flash
-
-     } catch(Exception e) {
-      e.printStackTrace();
-     }
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String city) {
-  int first_empty_row=0;
-
-  if(talkgroup==null || sys_id==null) return;
-
-  talkgroup = talkgroup.replace(",","");
-  talkgroup = talkgroup.trim();
-
-  try {
-    int tg = new Integer(talkgroup).intValue();
-    if(tg==0) return;
-  } catch(Exception e) {
-  }
-
-
-  sys_id = sys_id.trim();
-
-  if(tg_hash==null) tg_hash = new java.util.Hashtable();
-    else tg_hash.clear();
-
-  for(int i=0;i<1000;i++) {
-    try {
-      Object o1 = parent.getTableObject(i,1);
-      Object o2 = parent.getTableObject(i,3);
-      if(o1!=null && o2!=null)  {
-        tg_hash.put(o1.toString().trim()+"_"+o2.toString().trim(),o1.toString().trim()+"_"+o2.toString().trim());
-      }
-    } catch(Exception e) {
-      e.printStackTrace();
-    }
-  }
-
-  if(tg_hash.get(sys_id+"_"+talkgroup)!=null) return;  //already found this one
-
-  try {
-    int i = new Integer(talkgroup).intValue();
-  } catch(Exception e) {
-    e.printStackTrace();
-    return;
-  }
-
-  for(int i=0;i<1000;i++) {
-    try {
-      Object o1 = parent.getTableObject(i,1);
-      Object o2 = parent.getTableObject(i,3);
-      if(o1!=null && o2!=null)  {
+      Object o3 = parent.getTableObject(i,6);
+      if(o1!=null && o2!=null && o3!=null)  {
         first_empty_row++;
       }
       else {
@@ -197,6 +125,9 @@ public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String 
         //parent.addTableObject( new String(talkgroup+"_unknown"), idx, 5);
         parent.addTableObject( city, idx, 5);
 
+
+        parent.addTableObject( wacn_hex, idx, 6);
+
         if(parent.did_read_talkgroups==1 && parent.auto_flash_tg.isSelected()) parent.tg_update_pending=1;  //write them to flash
 
      } catch(Exception e) {
@@ -217,7 +148,7 @@ public void disable_enc_tg(BTFrame parent, String talkgroup, String sys_id) {
   int tg1 = new Integer(talkgroup).intValue();
   int sys1 = new Integer(sys_id).intValue();
 
-  for(int i=0;i<1000;i++) {
+  for(int i=0;i<800;i++) {
     try {
       Object o1 = parent.getTableObject(i,1);
       Object o2 = parent.getTableObject(i,3);
@@ -459,7 +390,7 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
             ByteBuffer bb_image = ByteBuffer.wrap(image_buffer);
             bb_image.order(ByteOrder.LITTLE_ENDIAN);
 
-            for(int i=0;i<1000;i++) {
+            for(int i=0;i<800;i++) {
               try {
                 Boolean enabled = (Boolean) parent.getTableObject(i, 0);
                 Integer sys_id = (Integer) parent.getTableObject(i, 1);
@@ -467,7 +398,7 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
                 Integer talkgroup = (Integer) parent.getTableObject(i, 3);
                 String desc = (String) parent.getTableObject(i,4);
                 String loc = (String) parent.getTableObject(i,5);
-
+                //String wacn = (String) parent.getTableObject(i,6);
 
                 /*
                 System.out.println("\r\n\r\n");
@@ -479,7 +410,7 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
                 System.out.println("loc: "+loc);
                 */
 
-                if(sys_id!=null && priority!=null && talkgroup!=null && desc!=null && loc!=null) {
+                if(sys_id!=null && priority!=null && talkgroup!=null && desc!=null && loc!=null ) {
                   //if(enabled==null) enabled = new Boolean(true);
                   nrecs++;
                 }
@@ -491,12 +422,15 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
               parent.setStatus("No records to write.");
               return;
             }
+            else {
+              parent.setStatus(nrecs+" records.");
+            }
 
             bb_image.putInt(nrecs); //number of records is 1st 4 bytes
             config_length=4;
 
             int nrecs_w = 0;
-            for(int i=0;i<1000;i++) {
+            for(int i=0;i<800;i++) {
               try {
                 Boolean enabled = (Boolean) parent.getTableObject(i, 0);
                 Integer sys_id = (Integer) parent.getTableObject(i, 1);
@@ -504,6 +438,7 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
                 Integer talkgroup = (Integer) parent.getTableObject(i, 3);
                 String desc = (String) parent.getTableObject(i,4);
                 String loc = (String) parent.getTableObject(i,5);
+                Integer wacn = (Integer) Integer.valueOf( (String) parent.getTableObject(i,6), 16 );
 
                 desc = desc.trim();
                 loc = loc.trim();
@@ -518,15 +453,17 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
                 System.out.println("loc: "+loc);
                 */
 
-                if(sys_id!=null && priority!=null && talkgroup!=null && desc!=null && loc!=null) {
+                if(sys_id!=null && priority!=null && talkgroup!=null && desc!=null && loc!=null && wacn!=null) {
 
 
                   int en = 0;
                   if(enabled==null || enabled==false) en=0; 
                     else en=1;
 
+                  int wacn_sys_id = sys_id.intValue() + ( wacn.intValue()*4096 );
+
                   bb_image.putInt(en);
-                  bb_image.putInt(sys_id);
+                  bb_image.putInt(wacn_sys_id);
                   bb_image.putInt(priority);
                   bb_image.putInt(talkgroup);
                   byte[] b = new byte[32];
@@ -920,7 +857,12 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                     for(int i=0;i<nrecs;i++) {
 
                       int enabled = bb3.getInt();
-                      int sys_id = bb3.getInt();
+                      int wacn = bb3.getInt();
+                      int sys_id = (wacn&0xfff);
+                      wacn = wacn>>>12; 
+
+                      System.out.println("wacn_str: "+Integer.toString(wacn,16));
+
                       int priority = bb3.getInt();
                       int talkgroup = bb3.getInt();
 
@@ -954,10 +896,12 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                       parent.addTableObject( new String(desc).trim(), i, 4);
                       parent.addTableObject( new String(loc).trim(), i, 5);
 
+                      parent.addTableObject( Integer.toString(wacn,16) , i, 6);
+
                     }
 
-                    if(nrecs<1000) {
-                      for(int i=nrecs;i<1000;i++) {
+                    if(nrecs<800) {
+                      for(int i=nrecs;i<800;i++) {
 
                         parent.addTableObject( null, i, 0);
                         parent.addTableObject( null, i, 1);
@@ -965,6 +909,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                         parent.addTableObject(  null,i, 3);
                         parent.addTableObject(  null,i, 4);
                         parent.addTableObject(  null,i, 5);
+                        parent.addTableObject(  null,i, 6);
 
                       }
                     }
