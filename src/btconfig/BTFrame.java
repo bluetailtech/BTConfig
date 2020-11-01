@@ -1189,8 +1189,8 @@ int command_input_timeout=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202010311554");
-      release_date.setText("Release: 2020-10-31 1554");
+      fw_ver.setText("Latest Avail: FW Date: 202011010907");
+      release_date.setText("Release: 2020-11-01 0907");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);

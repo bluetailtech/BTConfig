@@ -246,15 +246,15 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                   }
 
                   offset+=32;
-                  if(offset >= 556+32) { //finished?
+                  if(offset >= 552+32) { //finished?
 
                     ByteBuffer bb3 = ByteBuffer.wrap(image_buffer);
                     bb3.order(ByteOrder.LITTLE_ENDIAN);
-                    int crc = crc32.crc32_range(image_buffer, 552);
+                    int crc = crc32.crc32_range(image_buffer, 548);
                     parent.system_crc=crc;
                     System.out.println(String.format("config crc 0x%08x", crc));
 
-                    int config_crc = bb3.getInt(552);
+                    int config_crc = bb3.getInt(548);
 
                       if(crc==0) {
                         parent.do_update_firmware=1;
