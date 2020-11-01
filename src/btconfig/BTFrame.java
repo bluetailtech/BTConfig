@@ -4442,11 +4442,11 @@ int command_input_timeout=0;
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Enabled", "SYS_ID", "Priority", "TGRP", "AlphaTag", "Description", "WACN(HEX)"
+                "Enabled", "SYS_ID(HEX)", "Priority", "TGRP", "AlphaTag", "Description", "WACN(HEX)"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Boolean.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -5519,7 +5519,7 @@ void toggle_recording(Boolean isrec) {
 }
     
 //SUMS 1
-float[] columnWidthPercentage = {.075f, .075f, .075f, .075f, .25f, .35f, 0.1f };
+float[] columnWidthPercentage = {.075f, .10f, .075f, .075f, .25f, .325f, 0.1f };
 private void resizeColumns() {
   // Use TableColumnModel.getTotalColumnWidth() if your table is included in a JScrollPane
   //int tW = jTable1.getWidth();

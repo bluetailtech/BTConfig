@@ -3083,7 +3083,7 @@
                           <Data value="null"/>
                           <Data value="null"/>
                         </Column>
-                        <Column editable="true" title="SYS_ID" type="java.lang.Integer"/>
+                        <Column editable="true" title="SYS_ID(HEX)" type="java.lang.String"/>
                         <Column editable="true" title="Priority" type="java.lang.Integer"/>
                         <Column editable="true" title="TGRP" type="java.lang.Integer"/>
                         <Column editable="true" title="AlphaTag" type="java.lang.String">

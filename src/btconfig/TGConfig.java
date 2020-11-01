@@ -55,6 +55,7 @@ public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String 
   talkgroup = talkgroup.trim();
 
   String wacn_hex = "0x"+Integer.toString( new Integer(wacn).intValue(), 16);
+  String sys_id_hex = "0x"+Integer.toString( new Integer(sys_id).intValue(), 16);
 
   try {
     int tg = new Integer(talkgroup).intValue();
@@ -65,7 +66,7 @@ public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String 
   }
 
 
-  sys_id = sys_id.trim();
+  sys_id = sys_id_hex.trim();
 
   if(tg_hash==null) tg_hash = new java.util.Hashtable();
     else tg_hash.clear();
@@ -84,7 +85,7 @@ public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String 
     }
   }
 
-  if(tg_hash.get(sys_id+"_"+talkgroup+"_"+wacn_hex)!=null) return;  //already found this one
+  if(tg_hash.get(sys_id_hex+"_"+talkgroup+"_"+wacn_hex)!=null) return;  //already found this one
 
   try {
     int i = new Integer(talkgroup).intValue();
@@ -117,7 +118,7 @@ public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String 
     try {
 
         parent.addTableObject( true, idx, 0);
-        parent.addTableObject( new Integer(sys_id), idx, 1);
+        parent.addTableObject( new String(sys_id_hex), idx, 1);
         parent.addTableObject( new Integer(1), idx, 2);
         parent.addTableObject( new Integer(talkgroup), idx, 3);
         parent.addTableObject( new String(talkgroup+"_unknown"), idx, 4);
@@ -393,11 +394,12 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
             for(int i=0;i<800;i++) {
               try {
                 Boolean enabled = (Boolean) parent.getTableObject(i, 0);
-                Integer sys_id = (Integer) parent.getTableObject(i, 1);
+                String sys_id = (String) parent.getTableObject(i, 1);
                 Integer priority = (Integer) parent.getTableObject(i, 2);
                 Integer talkgroup = (Integer) parent.getTableObject(i, 3);
                 String desc = (String) parent.getTableObject(i,4);
                 String loc = (String) parent.getTableObject(i,5);
+                String wacn = (String) parent.getTableObject(i,6);
                 //String wacn = (String) parent.getTableObject(i,6);
 
                 /*
@@ -410,7 +412,7 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
                 System.out.println("loc: "+loc);
                 */
 
-                if(sys_id!=null && priority!=null && talkgroup!=null && desc!=null && loc!=null ) {
+                if(sys_id!=null && priority!=null && talkgroup!=null && desc!=null && loc!=null && wacn!=null) {
                   //if(enabled==null) enabled = new Boolean(true);
                   nrecs++;
                 }
@@ -433,18 +435,22 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
             for(int i=0;i<800;i++) {
               try {
                 Boolean enabled = (Boolean) parent.getTableObject(i, 0);
-                Integer sys_id = (Integer) parent.getTableObject(i, 1);
                 Integer priority = (Integer) parent.getTableObject(i, 2);
                 Integer talkgroup = (Integer) parent.getTableObject(i, 3);
                 String desc = (String) parent.getTableObject(i,4);
                 String loc = (String) parent.getTableObject(i,5);
 
 
+                String sys_id_str = (String) parent.getTableObject(i,1);
+                if( sys_id_str!=null && sys_id_str.startsWith("0x") ) sys_id_str = sys_id_str.substring(2,sys_id_str.length()); 
+                if( sys_id_str!=null && sys_id_str.startsWith("0X") ) sys_id_str = sys_id_str.substring(2,sys_id_str.length()); 
+
                 String wacn_str = (String) parent.getTableObject(i,6);
                 if( wacn_str!=null && wacn_str.startsWith("0x") ) wacn_str = wacn_str.substring(2,wacn_str.length()); 
                 if( wacn_str!=null && wacn_str.startsWith("0X") ) wacn_str = wacn_str.substring(2,wacn_str.length()); 
 
                 Integer wacn = (Integer) Integer.valueOf( wacn_str, 16 );
+                Integer sys_id = (Integer) Integer.valueOf( sys_id_str, 16 );
 
                 desc = desc.trim();
                 loc = loc.trim();
@@ -896,7 +902,9 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                       if(enabled==1) b=true;
                         else b=false;
                       parent.addTableObject( b, i, 0);
-                      parent.addTableObject( new Integer(sys_id), i, 1);
+
+                      parent.addTableObject( "0x"+Integer.toString(sys_id,16) , i, 1);
+
                       parent.addTableObject( new Integer(priority), i, 2);
                       parent.addTableObject( new Integer(talkgroup), i, 3);
                       parent.addTableObject( new String(desc).trim(), i, 4);
