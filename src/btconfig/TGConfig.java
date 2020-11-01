@@ -54,7 +54,7 @@ public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String 
   talkgroup = talkgroup.replace(",","");
   talkgroup = talkgroup.trim();
 
-  String wacn_hex = Integer.toString( new Integer(wacn).intValue(), 16);
+  String wacn_hex = "0x"+Integer.toString( new Integer(wacn).intValue(), 16);
 
   try {
     int tg = new Integer(talkgroup).intValue();
@@ -438,7 +438,13 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
                 Integer talkgroup = (Integer) parent.getTableObject(i, 3);
                 String desc = (String) parent.getTableObject(i,4);
                 String loc = (String) parent.getTableObject(i,5);
-                Integer wacn = (Integer) Integer.valueOf( (String) parent.getTableObject(i,6), 16 );
+
+
+                String wacn_str = (String) parent.getTableObject(i,6);
+                if( wacn_str!=null && wacn_str.startsWith("0x") ) wacn_str = wacn_str.substring(2,wacn_str.length()); 
+                if( wacn_str!=null && wacn_str.startsWith("0X") ) wacn_str = wacn_str.substring(2,wacn_str.length()); 
+
+                Integer wacn = (Integer) Integer.valueOf( wacn_str, 16 );
 
                 desc = desc.trim();
                 loc = loc.trim();
@@ -896,7 +902,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                       parent.addTableObject( new String(desc).trim(), i, 4);
                       parent.addTableObject( new String(loc).trim(), i, 5);
 
-                      parent.addTableObject( Integer.toString(wacn,16) , i, 6);
+                      parent.addTableObject( "0x"+Integer.toString(wacn,16) , i, 6);
 
                     }
 
