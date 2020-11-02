@@ -312,12 +312,56 @@ class updateTask extends java.util.TimerTask
           do_restore_roaming=0;
         }
 
+        //RESTORE talkgroup CSV file
+        if(do_restore_tg_csv==1 && is_connected==1 && do_update_firmware==0 && do_read_talkgroups==0) {
+
+          try {
+
+            JFileChooser chooser = new JFileChooser();
+
+            File cdir = new File(home_dir+"p25rx");
+            chooser.setCurrentDirectory(cdir);
+
+
+            FileNameExtensionFilter filter = new FileNameExtensionFilter( "p25rx_talkgroup backups", "csv");
+            chooser.setFileFilter(filter);
+            int returnVal = chooser.showDialog(parent, "Import CSV Talk Group Records");
+
+            LineNumberReader lnr=null;
+
+            if(returnVal == JFileChooser.APPROVE_OPTION) {
+              File file = chooser.getSelectedFile();
+              lnr = new LineNumberReader( new FileReader(file) );
+              System.out.println("importing talkgroups from: " + file.getAbsolutePath()); 
+            }
+
+            if(lnr!=null) {
+              String cmd= new String("en_voice_send 0\r\n");
+              serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+              cmd= new String("logging -999\r\n");
+              serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+
+              if(tg_config==null) tg_config = new TGConfig();
+              tg_config.import_talkgroups_csv(parent, lnr, serial_port);
+              do_read_talkgroups=1;
+
+              cmd= new String("logging 0\r\n");
+              serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+              cmd= new String("en_voice_send 1\r\n");
+              serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+            }
+            setProgress(-1);
+          } catch(Exception e) {
+            //e.printStackTrace();
+          }
+
+          do_restore_tg_csv=0;
+        }
+
+        //RESTORE TGP file
         if(do_restore_tg==1 && is_connected==1 && do_update_firmware==0 && do_read_talkgroups==0) {
 
           try {
-            //here image_buffer contains the talkgroup records
-            //String home = System.getProperty("user.home");
-            //String fs =  System.getProperty("file.separator");
 
             JFileChooser chooser = new JFileChooser();
 
@@ -972,6 +1016,7 @@ javax.swing.JLabel l1;
 javax.swing.JLabel l2;
 javax.swing.JLabel l3;
 int do_restore_tg=0;
+int do_restore_tg_csv=0;
 int did_tg_backup=1;  //don't do backup on startup
 int bluetooth_streaming=0;
 int bluetooth_error=0;
@@ -1190,7 +1235,7 @@ int command_input_timeout=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202011010907");
-      release_date.setText("Release: 2020-11-02 0659");
+      release_date.setText("Release: 2020-11-02 0841");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2310,9 +2355,9 @@ int command_input_timeout=0;
         disable_table_rows = new javax.swing.JButton();
         read_tg = new javax.swing.JButton();
         send_tg = new javax.swing.JButton();
-        restore_tg = new javax.swing.JButton();
         backup_tg = new javax.swing.JButton();
         jPanel23 = new javax.swing.JPanel();
+        restore_tg = new javax.swing.JButton();
         import_csv = new javax.swing.JButton();
         auto_flash_tg = new javax.swing.JCheckBox();
         disable_encrypted = new javax.swing.JCheckBox();
@@ -4504,14 +4549,6 @@ int command_input_timeout=0;
         });
         jPanel3.add(send_tg);
 
-        restore_tg.setText("Restore From Backup");
-        restore_tg.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                restore_tgActionPerformed(evt);
-            }
-        });
-        jPanel3.add(restore_tg);
-
         backup_tg.setText("Export TGP/CSV");
         backup_tg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -4525,8 +4562,15 @@ int command_input_timeout=0;
         jPanel23.setBackground(new java.awt.Color(0, 0, 0));
         jPanel23.setForeground(new java.awt.Color(255, 255, 255));
 
+        restore_tg.setText("Restore From TGP");
+        restore_tg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                restore_tgActionPerformed(evt);
+            }
+        });
+        jPanel23.add(restore_tg);
+
         import_csv.setText("Import CSV");
-        import_csv.setEnabled(false);
         import_csv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 import_csvActionPerformed(evt);
@@ -5397,7 +5441,8 @@ int command_input_timeout=0;
     }//GEN-LAST:event_adv_write_configActionPerformed
 
     private void import_csvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_import_csvActionPerformed
-        // TODO add your handling code here:
+      if(is_connected==0) do_connect();
+      do_restore_tg_csv=1;
     }//GEN-LAST:event_import_csvActionPerformed
 
     public void enable_voice() {

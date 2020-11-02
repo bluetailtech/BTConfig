@@ -175,6 +175,259 @@ public void disable_enc_tg(BTFrame parent, String talkgroup, String sys_id) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPort serial_port)
+{
+  this.serial_port = serial_port;
+
+  byte[] image_buffer = new byte[128 * 1024 * 6];
+
+
+
+  for( int i=0; i< 128 * 1024 *6; i++) {
+    image_buffer[i] = (byte) 0xff;
+  }
+    try {
+      javax.swing.SwingUtilities.invokeLater(new Runnable() {
+        public void run() { 
+          parent.jScrollPane2.getVerticalScrollBar().setValue(0);
+        }
+      });
+
+    } catch(Exception e) {
+    }
+
+  String header_line="";
+
+  try {
+
+    header_line = lnr.readLine();
+
+    //ENABLED,SYS_ID_HEX,PRIORITY,TGRP,ALPHATAG,DESCRIPTION,WACN_HEX
+
+    if( !header_line.toUpperCase().contains("ENABLED") &&
+        !header_line.toUpperCase().contains("SYS_ID_HEX") &&
+        !header_line.toUpperCase().contains("PRIORITY") &&
+        !header_line.toUpperCase().contains("TGRP") &&
+        !header_line.toUpperCase().contains("ALPHATAG") &&
+        !header_line.toUpperCase().contains("DESCRIPTION") &&
+        !header_line.toUpperCase().contains("WACN_HEX")
+    ) {
+      JOptionPane.showMessageDialog(parent, "invalid talk group csv file format.  Firt line must contain column headers");
+      return;
+    }
+
+    int config_length=0;
+    //int config_length = bis.read(image_buffer, 0, 128*1024*6);
+
+    int number_of_records=0;
+
+    ByteBuffer bb_csv = ByteBuffer.wrap(image_buffer);
+    bb_csv.order(ByteOrder.LITTLE_ENDIAN);
+
+    bb_csv.putInt(0);  //temporary length,  re-write at end when nrecords is known
+
+    String in_line="";
+
+    while(number_of_records<800) {
+      in_line = lnr.readLine();
+      if(in_line==null) break;
+
+      StringTokenizer st_csv = new StringTokenizer(in_line,",");
+
+
+      if(st_csv.countTokens()==7) {
+
+          String str1 = st_csv.nextToken().trim();
+          String str2 = st_csv.nextToken().trim();
+          String str3 = st_csv.nextToken().trim();
+          String str4 = st_csv.nextToken().trim();
+          String str5 = st_csv.nextToken().trim();
+          String str6 = st_csv.nextToken().trim();
+          String str7 = st_csv.nextToken().trim();
+
+          int en = 0;
+
+          if( str1.trim().equals("1") ) en=1;
+            else en=0;
+
+          if( str2!=null && str2.startsWith("0x") ) str2 = str2.substring(2,str2.length()); 
+          if( str2!=null && str2.startsWith("0X") ) str2 = str2.substring(2,str2.length()); 
+
+          if( str7!=null && str7.startsWith("0x") ) str7 = str7.substring(2,str7.length()); 
+          if( str7!=null && str7.startsWith("0X") ) str7 = str7.substring(2,str7.length()); 
+
+          Integer sys_id = Integer.valueOf(str2,16);
+          Integer wacn = Integer.valueOf(str7,16);
+
+          int wacn_sys_id = sys_id.intValue() + ( wacn.intValue()*4096 );
+
+          int priority = Integer.parseInt( str3 );
+          int talkgroup = Integer.parseInt( str4 );
+
+          byte[] dbytes = str5.getBytes();  //alpha
+          byte[] lbytes = str6.getBytes();  //description
+
+          bb_csv.putInt(en);
+          bb_csv.putInt(wacn_sys_id);
+          bb_csv.putInt(priority);
+          bb_csv.putInt(talkgroup);
+          byte[] b = new byte[32];
+
+          //alpha
+          for(int j=0;j<32;j++) {
+            if(j<dbytes.length) b[j] = dbytes[j];
+              else b[j]=0;
+            bb_csv.put(b[j]);
+          }
+          //desc
+          for(int j=0;j<32;j++) {
+            if(j<lbytes.length) b[j] = lbytes[j];
+              else b[j]=0;
+            bb_csv.put(b[j]);
+          }
+
+        number_of_records++;
+      }
+
+    }
+
+    config_length = (number_of_records*80)+4;
+
+    //update the number of records
+    bb_csv.putInt(0,number_of_records);
+    System.out.println("number of records imported: "+number_of_records);
+
+
+    int state = -1; 
+
+    while(true) {
+
+
+        if(state==-1) {
+          if(serial_port!=null && serial_port.isOpen()) {
+            state=0;
+          } 
+        }
+        else {
+          parent.setProgress(-1);
+          parent.setStatus("\r\ncouldn't find device");
+          return;
+        }
+
+
+        if(state==0) {
+
+            parent.setProgress(5);
+            parent.setStatus("Writing talkgroups to P25RX device..."); 
+
+            int offset = 0;
+
+            while(offset<config_length) {
+
+              byte[] out_buffer = new byte[16+32]; //size of bl_op
+              ByteBuffer bb = ByteBuffer.wrap(out_buffer);
+              bb.order(ByteOrder.LITTLE_ENDIAN);
+              //uint32_t magic;
+              //uint32_t op;
+              //uint32_t addr;
+              //uint32_t len;
+              //uint8_t  data[32]; 
+
+              bb.putInt( (int) Long.parseLong("d35467A6", 16) );  //magic
+              bb.putInt( (int) Long.parseLong("3", 10) ); //write flash cmd 
+              bb.putInt( (int) new Long((long) 0x08120000 + offset).longValue() );
+              bb.putInt( (int) Long.parseLong("32", 10) );  //data len
+
+              for(int i=0;i<32;i++) {
+                bb.put( image_buffer[i+offset] ); 
+              }
+
+
+
+              byte[] input_buffer = new byte[48];
+              int rlen = 0;
+              int ack_timeout=0;
+
+              while(rlen!=48) {
+
+                serial_port.writeBytes( out_buffer, 16+32, 0);
+
+                if(offset==0) {
+                  Thread.sleep(500);
+                }
+
+                  try {
+                    int count=0;
+                    while(serial_port.bytesAvailable()<48) {
+                      Thread.sleep(1);
+                      if(count++>500) break;
+                    }
+                  } catch(Exception e) {
+                    e.printStackTrace();
+                  }
+
+
+                rlen=serial_port.readBytes( input_buffer, 48);
+
+                  ByteBuffer bb_verify = ByteBuffer.wrap(input_buffer);
+                  bb_verify.order(ByteOrder.LITTLE_ENDIAN);
+                  if( bb_verify.getInt()== 0xd35467A6) {//magic
+                    int op = bb_verify.getInt();  //op
+                    //System.out.println("op "+op);
+                    if( op==4 && bb_verify.getInt()==0x8120000+offset) { //address
+                      break;
+                    }
+                    else {
+                      rlen=0;  //need this to keep loop going
+                      byte[] b = new byte[ serial_port.bytesAvailable()+1 ];
+                      if(b.length>0)serial_port.readBytes( b, b.length-1 );  //flush buffer
+                    }
+                  }
+                  else {
+                    //System.out.println( String.format( "0x%08x", bb_verify.getInt(0) ) );
+                    //System.out.println( String.format( "op 0x%08x", bb_verify.getInt(4) ) );
+                    //System.out.println( String.format( "addr 0x%08x", bb_verify.getInt(8) ) );
+                      byte[] b = new byte[ serial_port.bytesAvailable()+1 ];
+                      if(b.length>0)serial_port.readBytes( b, b.length-1 );  //flush buffer
+                  }
+
+                if(rlen==48) break;
+              }
+
+              /*
+              if(input_buffer[4]==5) {
+                state=-1;
+                parent.setStatus("NACK");
+                break;
+              }
+              */
+
+              offset+=32;
+
+              int pcomplete = (int)  (((float) offset/(float) config_length)*80.0);
+              parent.setProgress((int) pcomplete);
+            }
+
+
+            //TODO: need to check for ack
+            try {
+              Thread.sleep(100);
+            } catch(Exception e) {
+            }
+
+            parent.setStatus("\r\nCompleted importing talkgroups.");
+            parent.setProgress(100);
+            return;
+
+        }
+
+    } //while(true) 
+  } catch (Exception e) {
+    e.printStackTrace();
+  }
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 public void restore_talkgroups(BTFrame parent, BufferedInputStream bis, SerialPort serial_port)
 {
   this.serial_port = serial_port;
@@ -888,7 +1141,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                       int sys_id = (wacn&0xfff);
                       wacn = wacn>>>12; 
 
-                      System.out.println("wacn_str: "+Integer.toString(wacn,16));
+                      //System.out.println("wacn_str: "+Integer.toString(wacn,16));
 
                       int priority = bb3.getInt();
                       int talkgroup = bb3.getInt();

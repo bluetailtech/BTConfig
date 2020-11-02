@@ -4760,14 +4760,6 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="send_tgActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="restore_tg">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Restore From Backup"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="restore_tgActionPerformed"/>
-                      </Events>
-                    </Component>
                     <Component class="javax.swing.JButton" name="backup_tg">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Export TGP/CSV"/>
@@ -4790,10 +4782,17 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
                   <SubComponents>
+                    <Component class="javax.swing.JButton" name="restore_tg">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Restore From TGP"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="restore_tgActionPerformed"/>
+                      </Events>
+                    </Component>
                     <Component class="javax.swing.JButton" name="import_csv">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Import CSV"/>
-                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="import_csvActionPerformed"/>
