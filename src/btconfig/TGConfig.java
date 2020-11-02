@@ -212,7 +212,7 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
         !header_line.toUpperCase().contains("DESCRIPTION") &&
         !header_line.toUpperCase().contains("WACN_HEX")
     ) {
-      JOptionPane.showMessageDialog(parent, "invalid talk group csv file format.  Firt line must contain column headers");
+      JOptionPane.showMessageDialog(parent, "No valid records found. invalid talk group csv file format.  First line must contain column headers");
       return;
     }
 
@@ -290,6 +290,12 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
       }
 
     }
+
+    if(number_of_records==0) {
+      JOptionPane.showMessageDialog(parent, "invalid talk group csv file format.  First line must contain column headers.  Values cannot be null");
+      return;
+    }
+
 
     config_length = (number_of_records*80)+4;
 
