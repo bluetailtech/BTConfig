@@ -4526,6 +4526,7 @@ int command_input_timeout=0;
         jPanel23.setForeground(new java.awt.Color(255, 255, 255));
 
         import_csv.setText("Import CSV");
+        import_csv.setEnabled(false);
         import_csv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 import_csvActionPerformed(evt);
