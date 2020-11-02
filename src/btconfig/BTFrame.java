@@ -2313,6 +2313,8 @@ int command_input_timeout=0;
         restore_tg = new javax.swing.JButton();
         backup_tg = new javax.swing.JButton();
         jPanel23 = new javax.swing.JPanel();
+        export_csv = new javax.swing.JButton();
+        import_csv = new javax.swing.JButton();
         auto_flash_tg = new javax.swing.JCheckBox();
         disable_encrypted = new javax.swing.JCheckBox();
         jLabel26 = new javax.swing.JLabel();
@@ -4524,6 +4526,22 @@ int command_input_timeout=0;
         jPanel23.setBackground(new java.awt.Color(0, 0, 0));
         jPanel23.setForeground(new java.awt.Color(255, 255, 255));
 
+        export_csv.setText("Export CSV");
+        export_csv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                export_csvActionPerformed(evt);
+            }
+        });
+        jPanel23.add(export_csv);
+
+        import_csv.setText("Import CSV");
+        import_csv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                import_csvActionPerformed(evt);
+            }
+        });
+        jPanel23.add(import_csv);
+
         auto_flash_tg.setForeground(new java.awt.Color(255, 255, 255));
         auto_flash_tg.setSelected(true);
         auto_flash_tg.setText("AUTO FLASH");
@@ -5386,6 +5404,14 @@ int command_input_timeout=0;
       nac.setText("");
     }//GEN-LAST:event_adv_write_configActionPerformed
 
+    private void import_csvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_import_csvActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_import_csvActionPerformed
+
+    private void export_csvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_export_csvActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_export_csvActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5660,6 +5686,7 @@ private void resizeColumns2() {
     private javax.swing.JButton enable_table_rows;
     private javax.swing.JRadioButton enable_voice_const;
     public javax.swing.JButton erase_roaming;
+    private javax.swing.JButton export_csv;
     public javax.swing.JLabel freq;
     public javax.swing.JCheckBox freq_correct_on_voice;
     public javax.swing.JLabel freq_label;
@@ -5670,6 +5697,7 @@ private void resizeColumns2() {
     public javax.swing.JTextField frequency_tf1;
     public javax.swing.JLabel fw_installed;
     public javax.swing.JLabel fw_ver;
+    private javax.swing.JButton import_csv;
     public javax.swing.JCheckBox inc_400mhz;
     public javax.swing.JCheckBox inc_700mhz;
     public javax.swing.JCheckBox inc_800mhz;
