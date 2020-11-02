@@ -5084,7 +5084,7 @@ int command_input_timeout=0;
       int[] rows = jTable1.getSelectedRows();
       if(rows.length>0) {
         for(int i=0;i<rows.length;i++) {
-          jTable1.getModel().setValueAt(false,rows[i],0);
+          jTable1.getModel().setValueAt(false,jTable1.convertRowIndexToModel(rows[i]),0);
           System.out.println("row "+i);
         } 
       }
@@ -5094,7 +5094,7 @@ int command_input_timeout=0;
       int[] rows = jTable1.getSelectedRows();
       if(rows.length>0) {
         for(int i=0;i<rows.length;i++) {
-          jTable1.getModel().setValueAt(true,rows[i],0);
+          jTable1.getModel().setValueAt(true,jTable1.convertRowIndexToModel(rows[i]),0);
           System.out.println("row "+i);
         } 
       }
