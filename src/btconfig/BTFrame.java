@@ -281,7 +281,7 @@ class updateTask extends java.util.TimerTask
 
             FileNameExtensionFilter filter = new FileNameExtensionFilter( "p25rx_roaming backups", "rom");
             chooser.setFileFilter(filter);
-            int returnVal = chooser.showOpenDialog(parent);
+            int returnVal = chooser.showDialog(parent, "Restore Roaming Records");
 
             BufferedInputStream bis=null;
 
@@ -327,7 +327,7 @@ class updateTask extends java.util.TimerTask
 
             FileNameExtensionFilter filter = new FileNameExtensionFilter( "p25rx_talkgroup backups", "tgp");
             chooser.setFileFilter(filter);
-            int returnVal = chooser.showOpenDialog(parent);
+            int returnVal = chooser.showDialog(parent, "Restore Talk Group Records");
 
             BufferedInputStream bis=null;
 

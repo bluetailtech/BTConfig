@@ -1167,7 +1167,7 @@ public void backup_roaming(BTFrame parent, SerialPort serial_port) {
 
                     FileNameExtensionFilter filter = new FileNameExtensionFilter( "p25rx_roaming backups", "rom");
                     chooser.setFileFilter(filter);
-                    int returnVal = chooser.showOpenDialog(parent);
+                    int returnVal = chooser.showDialog(parent, "Backup Roaming Records");
 
 
                     if(returnVal == JFileChooser.APPROVE_OPTION) {

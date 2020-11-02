@@ -990,7 +990,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
 
                           FileNameExtensionFilter filter = new FileNameExtensionFilter( "p25rx_talkgroup backups", "tgp");
                           chooser.setFileFilter(filter);
-                          int returnVal = chooser.showOpenDialog(parent);
+                          int returnVal = chooser.showDialog(parent,"Backup Talkgroups");
 
 
                           if(returnVal == JFileChooser.APPROVE_OPTION) {
@@ -1011,6 +1011,58 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
 
                             fos.write(blen,0,4);  //write Int num records
                             fos.write(image_buffer,0,nrecs*80);
+                            fos.flush();
+                            fos.close();
+
+                            //write the CSV file
+                            file_path = file.getAbsolutePath();
+                            if(file_path!=null && file_path.contains(".")) {
+                              StringTokenizer st = new StringTokenizer(file_path,".");
+                              file_path = st.nextToken();
+                            }
+
+
+                            file = new File(file_path+".csv");
+                            fos = new FileOutputStream(file);
+
+                            String header_line = "ENABLED,SYS_ID,PRIORITY,TGRP,ALPHATAG,DESCRIPTION,WACN\r\n";
+                            fos.write( header_line.getBytes() );
+
+                            bb = ByteBuffer.wrap(image_buffer);
+                            bb.order(ByteOrder.LITTLE_ENDIAN);
+
+                            for(int i=0;i<nrecs;i++) {
+
+                              desc = new byte[32];
+                              loc = new byte[32];
+
+                              int enabled = bb.getInt();
+                              int wacn = bb.getInt();
+                              int sys_id = (wacn&0xfff);
+                              wacn = wacn>>>12; 
+
+                              int priority = bb.getInt();
+                              int talkgroup = bb.getInt();
+
+                              for(int j=0;j<32;j++) {
+                                desc[j] = bb.get();
+                              }
+                              for(int j=0;j<32;j++) {
+                                loc[j] = bb.get();
+                              }
+
+                              String alpha_str = new String(desc).trim();
+                              String desc_str = new String(loc).trim();
+                              alpha_str = alpha_str.replace(',',' ');
+                              desc_str = desc_str.replace(',',' ');
+
+                              String record_out = enabled+","+"0x"+Integer.toString(sys_id,16)+","+priority+","+talkgroup+","+
+                                                  alpha_str+","+
+                                                  desc_str+","+
+                                                  "0x"+Integer.toString(wacn,16)+"\r\n";
+                              fos.write( record_out.getBytes() );
+                            }
+
                             fos.flush();
                             fos.close();
                           }
