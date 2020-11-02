@@ -1235,7 +1235,7 @@ int command_input_timeout=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202011021225");
-      release_date.setText("Release: 2020-11-02 1225");
+      release_date.setText("Release: 2020-11-02 1515");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1394,6 +1394,10 @@ int command_input_timeout=0;
                 } 
               }
             //}
+
+            jTable1.getRowSorter().toggleSortOrder(0);
+            jTable1.getRowSorter().toggleSortOrder(0);
+
             do_update_talkgroups=1;
             do_read_talkgroups=1;
             jTable1.setRowSelectionInterval(0,0);
