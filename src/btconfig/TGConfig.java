@@ -1025,7 +1025,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                             file = new File(file_path+".csv");
                             fos = new FileOutputStream(file);
 
-                            String header_line = "ENABLED,SYS_ID,PRIORITY,TGRP,ALPHATAG,DESCRIPTION,WACN\r\n";
+                            String header_line = "ENABLED,SYS_ID_HEX,PRIORITY,TGRP,ALPHATAG,DESCRIPTION,WACN_HEX\r\n";
                             fos.write( header_line.getBytes() );
 
                             bb = ByteBuffer.wrap(image_buffer);

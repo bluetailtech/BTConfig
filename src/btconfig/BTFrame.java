@@ -1338,13 +1338,13 @@ int command_input_timeout=0;
               int[] rows = jTable1.getSelectedRows();
               if(rows.length>0) {
                 for(int i=0;i<rows.length;i++) {
-                  jTable1.getModel().setValueAt(null,rows[i],0);
-                  jTable1.getModel().setValueAt(null,rows[i],1);
-                  jTable1.getModel().setValueAt(null,rows[i],2);
-                  jTable1.getModel().setValueAt(null,rows[i],3);
-                  jTable1.getModel().setValueAt(null,rows[i],4);
-                  jTable1.getModel().setValueAt(null,rows[i],5);
-                  jTable1.getModel().setValueAt(null,rows[i],6);
+                  jTable1.getModel().setValueAt(null,jTable1.convertRowIndexToModel(rows[i]),0);
+                  jTable1.getModel().setValueAt(null,jTable1.convertRowIndexToModel(rows[i]),1);
+                  jTable1.getModel().setValueAt(null,jTable1.convertRowIndexToModel(rows[i]),2);
+                  jTable1.getModel().setValueAt(null,jTable1.convertRowIndexToModel(rows[i]),3);
+                  jTable1.getModel().setValueAt(null,jTable1.convertRowIndexToModel(rows[i]),4);
+                  jTable1.getModel().setValueAt(null,jTable1.convertRowIndexToModel(rows[i]),5);
+                  jTable1.getModel().setValueAt(null,jTable1.convertRowIndexToModel(rows[i]),6);
                   //System.out.println("row "+i);
                 } 
               }
@@ -1377,17 +1377,17 @@ int command_input_timeout=0;
 
               if(rows.length>0) {
                 for(int i=0;i<rows.length;i++) {
-                  freq_table.getModel().setValueAt(null,rows[i],0);
-                  freq_table.getModel().setValueAt(null,rows[i],1);
-                  freq_table.getModel().setValueAt(null,rows[i],2);
-                  freq_table.getModel().setValueAt(null,rows[i],3);
-                  freq_table.getModel().setValueAt(null,rows[i],4);
-                  freq_table.getModel().setValueAt(null,rows[i],5);
-                  freq_table.getModel().setValueAt(null,rows[i],6);
-                  freq_table.getModel().setValueAt(null,rows[i],7);
-                  freq_table.getModel().setValueAt(null,rows[i],8);
-                  freq_table.getModel().setValueAt(null,rows[i],9);
-                  freq_table.getModel().setValueAt(null,rows[i],10);
+                  freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),0);
+                  freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),1);
+                  freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),2);
+                  freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),3);
+                  freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),4);
+                  freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),5);
+                  freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),6);
+                  freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),7);
+                  freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),8);
+                  freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),9);
+                  freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),10);
                 } 
               }
               if(flash_recs>0) do_write_roaming_flash_only=1;
@@ -2313,7 +2313,6 @@ int command_input_timeout=0;
         restore_tg = new javax.swing.JButton();
         backup_tg = new javax.swing.JButton();
         jPanel23 = new javax.swing.JPanel();
-        export_csv = new javax.swing.JButton();
         import_csv = new javax.swing.JButton();
         auto_flash_tg = new javax.swing.JCheckBox();
         disable_encrypted = new javax.swing.JCheckBox();
@@ -4513,7 +4512,7 @@ int command_input_timeout=0;
         });
         jPanel3.add(restore_tg);
 
-        backup_tg.setText("Make Backup");
+        backup_tg.setText("Export TGP/CSV");
         backup_tg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backup_tgActionPerformed(evt);
@@ -4525,14 +4524,6 @@ int command_input_timeout=0;
 
         jPanel23.setBackground(new java.awt.Color(0, 0, 0));
         jPanel23.setForeground(new java.awt.Color(255, 255, 255));
-
-        export_csv.setText("Export CSV");
-        export_csv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                export_csvActionPerformed(evt);
-            }
-        });
-        jPanel23.add(export_csv);
 
         import_csv.setText("Import CSV");
         import_csv.addActionListener(new java.awt.event.ActionListener() {
@@ -5408,10 +5399,6 @@ int command_input_timeout=0;
         // TODO add your handling code here:
     }//GEN-LAST:event_import_csvActionPerformed
 
-    private void export_csvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_export_csvActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_export_csvActionPerformed
-
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5686,7 +5673,6 @@ private void resizeColumns2() {
     private javax.swing.JButton enable_table_rows;
     private javax.swing.JRadioButton enable_voice_const;
     public javax.swing.JButton erase_roaming;
-    private javax.swing.JButton export_csv;
     public javax.swing.JLabel freq;
     public javax.swing.JCheckBox freq_correct_on_voice;
     public javax.swing.JLabel freq_label;

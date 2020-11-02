@@ -4770,7 +4770,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="backup_tg">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Make Backup"/>
+                        <Property name="text" type="java.lang.String" value="Export TGP/CSV"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backup_tgActionPerformed"/>
@@ -4790,14 +4790,6 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JButton" name="export_csv">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Export CSV"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="export_csvActionPerformed"/>
-                      </Events>
-                    </Component>
                     <Component class="javax.swing.JButton" name="import_csv">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Import CSV"/>
