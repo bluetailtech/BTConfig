@@ -420,6 +420,21 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
               }
             }
 
+            if(nrecs==0) {
+              int i=0;
+              parent.addTableObject( true, i, 0);
+
+              parent.addTableObject( "0x123", i, 1);
+
+              parent.addTableObject( new Integer(1), i, 2);
+              parent.addTableObject( new Integer(1), i, 3);
+              parent.addTableObject( new String("alpha").trim(), i, 4);
+              parent.addTableObject( new String("desc").trim(), i, 5);
+
+              parent.addTableObject( "0x456", i, 6);
+              nrecs++;
+            }
+
             if(nrecs<=0) {
               parent.setStatus("No records to write.");
               return;
