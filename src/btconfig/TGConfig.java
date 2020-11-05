@@ -249,7 +249,7 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
 
           int en = 0;
 
-          if( str1.trim().equals("1") ) en=1;
+          if( str1.trim().equals("1") || str1.toUpperCase().equals("TRUE") ) en=1;
             else en=0;
 
           if( str2!=null && str2.startsWith("0x") ) str2 = str2.substring(2,str2.length()); 
@@ -260,6 +260,8 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
 
           Integer sys_id = Integer.valueOf(str2,16);
           Integer wacn = Integer.valueOf(str7,16);
+
+          if(wacn.intValue()==0) wacn = 0xbee00; //assume this
 
           int wacn_sys_id = sys_id.intValue() + ( wacn.intValue()*4096 );
 
