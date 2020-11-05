@@ -44,6 +44,8 @@ java.text.SimpleDateFormat formatter_date;
 int did_write_tg=0;
 java.util.Hashtable tg_hash;
 
+int NRECS=2000;
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String city, String wacn) {
@@ -71,7 +73,7 @@ public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String 
   if(tg_hash==null) tg_hash = new java.util.Hashtable();
     else tg_hash.clear();
 
-  for(int i=0;i<800;i++) {
+  for(int i=0;i<NRECS;i++) {
     try {
       Object o1 = parent.getTableObject(i,1);
       Object o2 = parent.getTableObject(i,3);
@@ -94,7 +96,7 @@ public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String 
     return;
   }
 
-  for(int i=0;i<800;i++) {
+  for(int i=0;i<NRECS;i++) {
     try {
       Object o1 = parent.getTableObject(i,1);
       Object o2 = parent.getTableObject(i,3);
@@ -149,7 +151,7 @@ public void disable_enc_tg(BTFrame parent, String talkgroup, String sys_id) {
   int tg1 = new Integer(talkgroup).intValue();
   int sys1 = new Integer(sys_id).intValue();
 
-  for(int i=0;i<800;i++) {
+  for(int i=0;i<NRECS;i++) {
     try {
       Object o1 = parent.getTableObject(i,1);
       Object o2 = parent.getTableObject(i,3);
@@ -228,7 +230,7 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
 
     String in_line="";
 
-    while(number_of_records<800) {
+    while(number_of_records<NRECS) {
       in_line = lnr.readLine();
       if(in_line==null) break;
 
@@ -650,7 +652,7 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
             ByteBuffer bb_image = ByteBuffer.wrap(image_buffer);
             bb_image.order(ByteOrder.LITTLE_ENDIAN);
 
-            for(int i=0;i<800;i++) {
+            for(int i=0;i<NRECS;i++) {
               try {
                 Boolean enabled = (Boolean) parent.getTableObject(i, 0);
                 String sys_id = (String) parent.getTableObject(i, 1);
@@ -706,7 +708,7 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
             config_length=4;
 
             int nrecs_w = 0;
-            for(int i=0;i<800;i++) {
+            for(int i=0;i<NRECS;i++) {
               try {
                 Boolean enabled = (Boolean) parent.getTableObject(i, 0);
                 Integer priority = (Integer) parent.getTableObject(i, 2);
@@ -1188,8 +1190,8 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
 
                     }
 
-                    if(nrecs<800) {
-                      for(int i=nrecs;i<800;i++) {
+                    if(nrecs<NRECS) {
+                      for(int i=nrecs;i<NRECS;i++) {
 
                         parent.addTableObject( null, i, 0);
                         parent.addTableObject( null, i, 1);
