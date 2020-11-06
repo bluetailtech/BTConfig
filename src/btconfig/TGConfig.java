@@ -44,7 +44,7 @@ java.text.SimpleDateFormat formatter_date;
 int did_write_tg=0;
 java.util.Hashtable tg_hash;
 
-int NRECS=2000;
+int NRECS=4915; //3 banks of 128k flash with record size of 80 bytes
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -345,7 +345,7 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
 
               bb.putInt( (int) Long.parseLong("d35467A6", 16) );  //magic
               bb.putInt( (int) Long.parseLong("3", 10) ); //write flash cmd 
-              bb.putInt( (int) new Long((long) 0x08120000 + offset).longValue() );
+              bb.putInt( (int) new Long((long) 0x08180000 + offset).longValue() );
               bb.putInt( (int) Long.parseLong("32", 10) );  //data len
 
               for(int i=0;i<32;i++) {
@@ -384,7 +384,7 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
                   if( bb_verify.getInt()== 0xd35467A6) {//magic
                     int op = bb_verify.getInt();  //op
                     //System.out.println("op "+op);
-                    if( op==4 && bb_verify.getInt()==0x8120000+offset) { //address
+                    if( op==4 && bb_verify.getInt()==0x8180000+offset) { //address
                       break;
                     }
                     else {
@@ -512,7 +512,7 @@ public void restore_talkgroups(BTFrame parent, BufferedInputStream bis, SerialPo
 
               bb.putInt( (int) Long.parseLong("d35467A6", 16) );  //magic
               bb.putInt( (int) Long.parseLong("3", 10) ); //write flash cmd 
-              bb.putInt( (int) new Long((long) 0x08120000 + offset).longValue() );
+              bb.putInt( (int) new Long((long) 0x08180000 + offset).longValue() );
               bb.putInt( (int) Long.parseLong("32", 10) );  //data len
 
               for(int i=0;i<32;i++) {
@@ -551,7 +551,7 @@ public void restore_talkgroups(BTFrame parent, BufferedInputStream bis, SerialPo
                   if( bb_verify.getInt()== 0xd35467A6) {//magic
                     int op = bb_verify.getInt();  //op
                     //System.out.println("op "+op);
-                    if( op==4 && bb_verify.getInt()==0x8120000+offset) { //address
+                    if( op==4 && bb_verify.getInt()==0x8180000+offset) { //address
                       break;
                     }
                     else {
@@ -800,7 +800,7 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
 
               bb.putInt( (int) Long.parseLong("d35467A6", 16) );  //magic
               bb.putInt( (int) Long.parseLong("3", 10) ); //write flash cmd 
-              bb.putInt( (int) new Long((long) 0x08120000 + offset).longValue() );
+              bb.putInt( (int) new Long((long) 0x08180000 + offset).longValue() );
               bb.putInt( (int) Long.parseLong("32", 10) );  //data len
 
               for(int i=0;i<32;i++) {
@@ -839,7 +839,7 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
                   if( bb_verify.getInt()== 0xd35467A6) {//magic
                     int op = bb_verify.getInt();  //op
                     //System.out.println("op "+op);
-                    if( op==4 && bb_verify.getInt()==0x8120000+offset) { //address
+                    if( op==4 && bb_verify.getInt()==0x8180000+offset) { //address
                       break;
                     }
                     else {
@@ -963,7 +963,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
           //while(offset<config_length) {
 
 
-          int nrecs=0;
+          int nrecs=-1;
           int timeout=0;
           while(true) {
 
@@ -975,7 +975,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
 
               bb.putInt( (int) Long.parseLong("d35467A6", 16) );  //magic
               bb.putInt( (int) Long.parseLong("6", 10) ); //read cfg flash
-              bb.putInt( (int) new Long((long) 0x08120000 + offset).longValue() );  //address to return
+              bb.putInt( (int) new Long((long) 0x08180000 + offset).longValue() );  //address to return
               bb.putInt( (int) Long.parseLong("32", 10) );  //data len  to return
 
 
@@ -1006,10 +1006,12 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                   if( bb_verify.getInt()== (int) 0xd35467A6L) {//magic
 
                     bb_verify.getInt();  //op
-                    if( bb_verify.getInt()==0x8120000+offset) { //address
+                    if( bb_verify.getInt()==0x8180000+offset) { //address
                       bb_verify.getInt();  //len
+
                       nrecs = bb_verify.getInt();
-                      if(nrecs>2048) nrecs=2048;
+                      if(nrecs>NRECS || nrecs < 0) nrecs=0;
+
                     }
                     else {
                       rlen=0;  //need this to keep loop going
@@ -1030,13 +1032,13 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                   if(b.length>0)serial_port.readBytes( b, b.length-1 );  //flush buffer
                 }
 
-                if(nrecs>0) break;
+                if(nrecs>=0) break;
               }
 
-            if(nrecs>0) break;
+            if(nrecs>=0) break;
           }
 
-          if(nrecs>0) {
+          if(nrecs>=0) {
             parent.setStatus("\r\nCompleted reading talkgroups. nrecs: "+nrecs);
           }
           else {
@@ -1055,7 +1057,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
 
               bb.putInt( (int) Long.parseLong("d35467A6", 16) );  //magic
               bb.putInt( (int) Long.parseLong("6", 10) ); //read cfg flash
-              bb.putInt( (int) new Long((long) 0x08120000 + offset).longValue() );  //address to return
+              bb.putInt( (int) new Long((long) 0x08180000 + offset).longValue() );  //address to return
               bb.putInt( (int) Long.parseLong("32", 10) );  //data len  to return
 
 
@@ -1085,7 +1087,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                   bb_verify.order(ByteOrder.LITTLE_ENDIAN);
                   if( bb_verify.getInt()== 0xd35467A6) {//magic
                     bb_verify.getInt();  //op
-                    if( bb_verify.getInt()==0x8120000+offset) { //address
+                    if( bb_verify.getInt()==0x8180000+offset) { //address
                       break;
                     }
                     else {
@@ -1114,7 +1116,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
 
               if( bb2.getInt()== 0xd35467A6) {//magic
                 bb2.getInt();  //op
-                int raddress = (bb2.getInt()-0x08120000-4) ;  //address
+                int raddress = (bb2.getInt()-0x08180000-4) ;  //address
                 bb2.getInt();  //len
 
                 if(raddress>=0) {

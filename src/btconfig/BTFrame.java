@@ -1234,8 +1234,8 @@ int command_input_timeout=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202011041613");
-      release_date.setText("Release: 2020-11-04 1613");
+      fw_ver.setText("Latest Avail: FW Date: 202011052244");
+      release_date.setText("Release: 2020-11-05 2244");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3688,8 +3688,10 @@ int command_input_timeout=0;
 
         talkgroup_panel.setLayout(new java.awt.BorderLayout());
 
+        //TODO: 
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object[2000][7],
+            new Object[4916][7],
             new String [] {
                 "Enabled", "SYS_ID(HEX)", "Priority", "TGRP", "AlphaTag", "Description", "WACN(HEX)"
             }
@@ -3702,6 +3704,8 @@ int command_input_timeout=0;
                 return types [columnIndex];
             }
         });
+
+
         jTable1.setDoubleBuffered(true);
         jTable1.setEditingColumn(1);
         jTable1.setEditingRow(1);
