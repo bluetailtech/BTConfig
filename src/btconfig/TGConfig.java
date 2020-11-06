@@ -1268,9 +1268,9 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                           File cdir = new File(file.getAbsolutePath()+fs+"p25rx");
                           chooser.setCurrentDirectory(cdir);
 
-                          FileNameExtensionFilter filter = new FileNameExtensionFilter( "p25rx_talkgroup backups", "tgp");
+                          FileNameExtensionFilter filter = new FileNameExtensionFilter( "TGP and CSV export files", "tgp", "csv");
                           chooser.setFileFilter(filter);
-                          int returnVal = chooser.showDialog(parent,"Backup Talkgroups");
+                          int returnVal = chooser.showDialog(parent,"Export Talk Group CSV and TGP Files");
 
 
                           if(returnVal == JFileChooser.APPROVE_OPTION) {

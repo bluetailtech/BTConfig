@@ -1234,8 +1234,8 @@ int command_input_timeout=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202011052244");
-      release_date.setText("Release: 2020-11-05 2244");
+      fw_ver.setText("Latest Avail: FW Date: 202011060430");
+      release_date.setText("Release: 2020-11-06 0430");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4683,6 +4683,7 @@ public void do_meta() {
     if(l3.getText().contains("CONTROL CHANNEL BLKS")) return; 
     if(l3.getText().contains("DMR BLKS_PER_SEC")) return; 
     if(l3.getText().contains("NO SIG")) return; 
+    if(l3.getText().contains("TG 0")) return; 
 
     if( is_dmr_mode==1 ) freq_str = freq.getText();
 
