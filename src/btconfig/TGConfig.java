@@ -51,7 +51,14 @@ int NRECS=4915; //3 banks of 128k flash with record size of 80 bytes
 public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String city, String wacn) {
   int first_empty_row=0;
 
-  if(talkgroup==null || sys_id==null || wacn==null) return;
+  if(talkgroup==null || sys_id==null ) return;
+
+  if(parent.is_dmr_mode==0 && wacn==null) {
+    return; //p25
+  }
+  else if(parent.is_dmr_mode==1) {
+    wacn = "0"; //dmr
+  }
 
   talkgroup = talkgroup.replace(",","");
   talkgroup = talkgroup.trim();
@@ -63,7 +70,7 @@ public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String 
     int tg = new Integer(talkgroup).intValue();
     if(tg==0) return;
     int wacn_i = new Integer(wacn).intValue();
-    if(wacn_i==0) return;
+    if(wacn_i==0 && parent.is_dmr_mode==0) return;
   } catch(Exception e) {
   }
 
