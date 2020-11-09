@@ -1634,6 +1634,21 @@ long tg_blink_time=0;
         sq_indicator.setBackground( java.awt.Color.black );
       }
 
+      if(console_line.contains("following talkgroup") ) {
+        StringTokenizer st = new StringTokenizer(console_line," \r\n");
+        if(st.countTokens()>=3) {
+          st.nextToken();
+          st.nextToken();
+            try {
+              tg_follow_blink = new Integer( st.nextToken() ).intValue();
+            } catch(Exception e) {
+            }
+        }
+        if(console_line.contains("un-following talkgroup")) {
+          tg_follow_blink = 0; 
+        }
+      } 
+
       if(console_line.contains("\r\ngrant 0x02") && (console_line.contains("tgroup") && console_line.contains("TDMA")) ) {
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
