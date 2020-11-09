@@ -941,6 +941,29 @@ class updateTask extends java.util.TimerTask
 
         tick_mod++;
 
+        long ctime = new java.util.Date().getTime();
+
+        if( tg_follow_blink>0 && ctime-tg_blink_time>2000) {
+
+          tg_blink_time=ctime;
+
+          tg_indicator.setEnabled(true);
+          tg_blink^=0x01;
+          if(tg_blink==1) {
+            tg_indicator.setBackground(java.awt.Color.yellow);
+            tg_indicator.setForeground(java.awt.Color.yellow);
+          }
+          else {
+            tg_indicator.setBackground(java.awt.Color.black);
+            tg_indicator.setForeground(java.awt.Color.black);
+          }
+        }
+        else if(tg_follow_blink==0) {
+          //tg_blink=0x01;
+          //tg_indicator.setBackground(java.awt.Color.black);
+          //tg_indicator.setForeground(java.awt.Color.black);
+        }
+
         if(bluetooth_error==0 && bluetooth_streaming==1 && tick_mod%500==0) {
           bt_indicator.setEnabled(true);
 
@@ -978,8 +1001,10 @@ class updateTask extends java.util.TimerTask
         else stop_time=500; 
       if(time-start_time>stop_time) {
         //if(aud!=null) aud.playStop();
-        tg_indicator.setBackground(java.awt.Color.black);
-        tg_indicator.setForeground(java.awt.Color.black);
+        if(tg_follow_blink==0) {
+          tg_indicator.setBackground(java.awt.Color.black);
+          tg_indicator.setForeground(java.awt.Color.black);
+        }
       }
 
 
@@ -1021,6 +1046,8 @@ int did_tg_backup=1;  //don't do backup on startup
 int bluetooth_streaming=0;
 int bluetooth_error=0;
 int bluetooth_blink;
+int tg_follow_blink=0;
+int tg_blink=0;
 int tick_mod;
 int rx_state=0;
 int skip_bytes=0;
@@ -1092,6 +1119,7 @@ boolean do_synced;
 double current_freq=0.0;
 long audio_tick_start=0;
 int command_input_timeout=0;
+long tg_blink_time=0;
 
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
@@ -1234,8 +1262,8 @@ int command_input_timeout=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202011081210");
-      release_date.setText("Release: 2020-11-09 0628");
+      fw_ver.setText("Latest Avail: FW Date: 202011090814");
+      release_date.setText("Release: 2020-11-09 0814");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1622,9 +1650,36 @@ int command_input_timeout=0;
             }
           }
         }
+
+        st = new StringTokenizer(console_line," \r\n");
+        st1 = ""; 
+        while(st.hasMoreTokens()) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.contains("follow") && st.hasMoreTokens()) {
+            try {
+              tg_follow_blink = new Integer( st.nextToken() ).intValue();
+              break;
+            } catch(Exception e) {
+              break;
+            }
+          }
+        }
       }
 
       if(console_line.contains("\r\n") && (console_line.contains("tgroup") && console_line.contains("rf_channel")) ) {
+        StringTokenizer st = new StringTokenizer(console_line," \r\n");
+        String st1 = ""; 
+        while(st.hasMoreTokens()) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.contains("follow") && st.hasMoreTokens()) {
+            try {
+              tg_follow_blink = new Integer( st.nextToken() ).intValue();
+              break;
+            } catch(Exception e) {
+              break;
+            }
+          }
+        }
       }
       if(console_line.contains("\r\n") && (console_line.contains("supergroup") && console_line.contains("rf_channel")) ) {
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
