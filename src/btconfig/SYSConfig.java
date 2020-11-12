@@ -351,6 +351,13 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                             else parent.add_tdu_silence.setSelected(false);
 
 
+                          int is_wacn_en=0;
+                          is_wacn_en = bb3.getInt(184);
+
+                          if(is_wacn_en==1) parent.wacn_en.setSelected(true);
+                              else parent.wacn_en.setSelected(false);
+
+
                           int iscontrol = bb3.getInt(36);
                           int is_analog = bb3.getInt(52);
 
@@ -790,6 +797,19 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           System.out.println("result: "+new String(result) );
 
 
+
+                          result=new byte[64];
+
+                          b = parent.wacn_en.isSelected();
+                          if(b) cmd = "wacn_en 1\r\n";
+                            else cmd = "wacn_en 0\r\n"; 
+
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          Thread.sleep(50);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
+
                           result=new byte[64];
 
                           b = parent.en_bluetooth_cb.isSelected();
@@ -854,6 +874,8 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                             dmr_sys_id = new Integer( parent.dmr_sys_id.getText() ).intValue();
                           } catch(Exception e) {
                           }
+                          if(dmr_sys_id<=0) dmr_sys_id=1;
+
                           cmd = "dmr_sys_id "+dmr_sys_id+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(20);

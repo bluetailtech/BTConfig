@@ -713,6 +713,10 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
               parent.setStatus(nrecs+" records.");
             }
 
+            if(nrecs>NRECS) {
+              nrecs=NRECS;
+            }
+
             bb_image.putInt(nrecs); //number of records is 1st 4 bytes
             config_length=4;
 
@@ -780,7 +784,7 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
 
                   config_length+=80;  //length of record
                   nrecs_w++;
-                  if(nrecs_w==nrecs) break;
+                  if(nrecs_w>=nrecs) break;
                 }
               } catch(Exception e) {
               }

@@ -240,24 +240,28 @@ class updateTask extends java.util.TimerTask
           }
           //agc_gain.setValue(65);
           do_agc_update=1;
+
+          if(prefs!=null) {
+            int i = prefs.getInt("audio_buffer_system",1);
+
+            enable_mp3.setSelected( prefs.getBoolean("enable_mp3", true) ); 
+            enable_audio.setSelected( prefs.getBoolean("enable_audio", true) ); 
+            initial_audio_level.setValue( prefs.getInt("initial_audio_level", 75) );
+            auto_flash_tg.setSelected( prefs.getBoolean("tg_auto_flash", false) );
+            disable_encrypted.setSelected( prefs.getBoolean("enc_auto_flash", false) );
+            autoscale_const.setSelected( prefs.getBoolean("autoscale_const", true) );
+            mp3_separate_files.setSelected( prefs.getBoolean("mp3_separate_files", false) );
+            nsymbols.setSelectedIndex( prefs.getInt("nsymbols", 0) );
+
+            int constellation = prefs.getInt("const_select", 1);
+            //if(constellation==0) off_const.setSelected(true);
+            //else if(constellation==1) linear_const.setSelected(true);
+            //else if(constellation==2) log_const.setSelected(true);
+          }
+
+          mp3_separate_files.setSelected( false ); 
         }
 
-        if(prefs!=null) {
-          int i = prefs.getInt("audio_buffer_system",1);
-
-          enable_mp3.setSelected( prefs.getBoolean("enable_mp3", true) ); 
-          enable_audio.setSelected( prefs.getBoolean("enable_audio", true) ); 
-          initial_audio_level.setValue( prefs.getInt("initial_audio_level", 75) );
-          auto_flash_tg.setSelected( prefs.getBoolean("tg_auto_flash", false) );
-          disable_encrypted.setSelected( prefs.getBoolean("enc_auto_flash", false) );
-          autoscale_const.setSelected( prefs.getBoolean("autoscale_const", true) );
-          nsymbols.setSelectedIndex( prefs.getInt("nsymbols", 0) );
-
-          int constellation = prefs.getInt("const_select", 1);
-          //if(constellation==0) off_const.setSelected(true);
-          //else if(constellation==1) linear_const.setSelected(true);
-          //else if(constellation==2) log_const.setSelected(true);
-        }
 
         //keep this after prefs
         if(aud==null && parent!=null) {
@@ -787,17 +791,23 @@ class updateTask extends java.util.TimerTask
                     if(mp3_bytes!=null) {
 
                       String date = formatter_date.format(new java.util.Date() );
-                      if( current_date==null || !current_date.equals(date) ) {
+                      if( current_date==null || !current_date.equals(date) || mp3_separate_files.isSelected()) {
                         current_date=new String(date);  //date changed
 
+                        boolean is_ms=mp3_separate_files.isSelected();
+
                         try {
-                          if(fos_mp3!=null) fos_mp3.close();
-                          if(fos_meta!=null) fos_meta.close();
-                          if(encoder!=null) encoder.close();
-                          fos_mp3 = null;
-                          fos_meta = null;
-                          encoder=null;
-                          skip_header=1;
+
+                          if(!is_ms) {
+                            if(fos_mp3!=null) fos_mp3.close();
+                            if(fos_meta!=null) fos_meta.close();
+                            if(encoder!=null) encoder.close();
+
+                            fos_mp3 = null;
+                            fos_meta = null;
+                            skip_header=1;
+                            encoder=null;
+                          }
                         } catch(Exception e) {
                           //e.printStackTrace();
                         }
@@ -806,7 +816,29 @@ class updateTask extends java.util.TimerTask
                           Path path = Paths.get(home_dir+"p25rx");
                           Files.createDirectories(path);
 
-                          mp3_file = new File(home_dir+"p25rx/p25rx_recording_"+current_date+".mp3");
+                          String mp3_tg = "";
+                          if(is_ms && mp3_separate_files.isSelected()) {
+                            current_talkgroup = current_talkgroup.replace(',','_');
+
+
+                            if(reset_session==1 || mp3_time.length()==0) {
+                              mp3_time = time_format.format(new java.util.Date() );
+
+                            }
+
+                            mp3_tg = "_"+mp3_time+"_TG_"+current_talkgroup;
+
+                            if(reset_session==1) {
+                              if(fos_mp3!=null) fos_mp3.close();
+                              if(encoder!=null) encoder.close();
+                              encoder=null;
+                              skip_header=1;
+                            }
+
+                            reset_session=0;
+                          }
+
+                          mp3_file = new File(home_dir+"p25rx/p25rx_recording_"+current_date+mp3_tg+".mp3");
                           meta_file = new File(home_dir+"p25rx/p25rx_recmeta_"+current_date+".txt");
                           //conlog_file = new File(home_dir+"p25rx/p25rx_conlog_"+current_date+".txt");
                           String exe_path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath().toString();
@@ -816,10 +848,15 @@ class updateTask extends java.util.TimerTask
 
                           //tdma_file = new File(exe_path+"p25rx_TDMA_PACKED_DIBITS_"+current_date+".bin");
 
-                          fos_mp3 = new FileOutputStream( mp3_file, true ); 
-                          fos_meta = new FileOutputStream( meta_file, true ); 
-                          fos_conlog = new FileOutputStream( conlog_file, true ); 
-                          //fos_tdma = new FileOutputStream( tdma_file, true ); 
+                          if(is_ms) {
+                            fos_mp3 = new FileOutputStream( mp3_file, true ); 
+                          }
+                          else {
+                            fos_mp3 = new FileOutputStream( mp3_file, true ); 
+                            fos_meta = new FileOutputStream( meta_file, true ); 
+                            fos_conlog = new FileOutputStream( conlog_file, true ); 
+                            //fos_tdma = new FileOutputStream( tdma_file, true ); 
+                          }
                         } catch(Exception e) {
                           //e.printStackTrace();
                         }
@@ -833,6 +870,12 @@ class updateTask extends java.util.TimerTask
                         skip_header=0;
                       }
                       else {
+                        fos_mp3.write(mp3_bytes,0,mp3_bytes.length);  //write Int num records
+                        fos_mp3.flush();
+                      }
+
+                      boolean is_ms=mp3_separate_files.isSelected();
+                      if(is_ms) {
                         fos_mp3.write(mp3_bytes,0,mp3_bytes.length);  //write Int num records
                         fos_mp3.flush();
                       }
@@ -1120,10 +1163,15 @@ double current_freq=0.0;
 long audio_tick_start=0;
 int command_input_timeout=0;
 long tg_blink_time=0;
+String current_talkgroup="";
+int reset_session=0;
+java.text.SimpleDateFormat mp3_time_format = new java.text.SimpleDateFormat( "HH:mm:ss" );
+String mp3_time ="";
 
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
       initComponents();
+
 
       supergroup_hash = new Hashtable();
 
@@ -1262,8 +1310,8 @@ long tg_blink_time=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202011090814");
-      release_date.setText("Release: 2020-11-09 0814");
+      fw_ver.setText("Latest Avail: FW Date: 202011121253");
+      release_date.setText("Release: 2020-11-12 1315");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1757,6 +1805,8 @@ long tg_blink_time=0;
               int has_comma=0;
 
               if(tg_id!=null) {
+                current_talkgroup = tg_id;
+
                 talkgroup = ", TG "+tg_id;
 
                 if(tg_id.contains(",")) has_comma=1;
@@ -1986,6 +2036,7 @@ long tg_blink_time=0;
                 }
                 else {
                   l3.setText("  DMR BLKS_PER_SEC "+tsbk_ps);
+                  reset_session=1;
                 }
               }
               else {
@@ -1994,6 +2045,7 @@ long tg_blink_time=0;
                 }
                 else {
                   l3.setText("  P25 CONTROL CHANNEL BLKS_PER_SEC "+tsbk_ps);
+                  reset_session=1;
                 }
               }
               p25_status_timeout=5000;
@@ -2379,6 +2431,7 @@ long tg_blink_time=0;
         jLabel12 = new javax.swing.JLabel();
         initial_audio_level = new javax.swing.JSlider();
         initial_audio_level_lb = new javax.swing.JLabel();
+        mp3_separate_files = new javax.swing.JCheckBox();
         jPanel13 = new javax.swing.JPanel();
         freqdb_panel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
@@ -2463,6 +2516,7 @@ long tg_blink_time=0;
         freq_correct_on_voice = new javax.swing.JCheckBox();
         add_tdu_silence = new javax.swing.JCheckBox();
         adv_write_config = new javax.swing.JButton();
+        wacn_en = new javax.swing.JCheckBox();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
@@ -3278,6 +3332,15 @@ long tg_blink_time=0;
         initial_audio_level_lb.setText("Val 85");
         jPanel11.add(initial_audio_level_lb, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 310, -1, -1));
 
+        mp3_separate_files.setText("Generate separate files per session  ( Warning:  this will generate large numbers of files! )");
+        mp3_separate_files.setEnabled(false);
+        mp3_separate_files.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mp3_separate_filesActionPerformed(evt);
+            }
+        });
+        jPanel11.add(mp3_separate_files, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 240, -1, -1));
+
         audiopanel.add(jPanel11, java.awt.BorderLayout.CENTER);
 
         jPanel13.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
@@ -3758,10 +3821,8 @@ long tg_blink_time=0;
 
         talkgroup_panel.setLayout(new java.awt.BorderLayout());
 
-        //TODO: 
-
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object[4916][7],
+            new Object[4915][7],
             new String [] {
                 "Enabled", "SYS_ID(HEX)", "Priority", "TGRP", "AlphaTag", "Description", "WACN(HEX)"
             }
@@ -3774,8 +3835,6 @@ long tg_blink_time=0;
                 return types [columnIndex];
             }
         });
-
-
         jTable1.setDoubleBuffered(true);
         jTable1.setEditingColumn(1);
         jTable1.setEditingRow(1);
@@ -4067,6 +4126,14 @@ long tg_blink_time=0;
             }
         });
         advancedpanel.add(adv_write_config, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 470, -1, -1));
+
+        wacn_en.setText("Include The WACN field in talk group lookup");
+        wacn_en.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wacn_enActionPerformed(evt);
+            }
+        });
+        advancedpanel.add(wacn_en, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, -1, -1));
 
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
@@ -4722,6 +4789,14 @@ long tg_blink_time=0;
       do_restore_tg_csv=1;
     }//GEN-LAST:event_import_csvActionPerformed
 
+    private void wacn_enActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wacn_enActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_wacn_enActionPerformed
+
+    private void mp3_separate_filesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mp3_separate_filesActionPerformed
+     prefs.putBoolean("mp3_separate_files", mp3_separate_files.isSelected());
+    }//GEN-LAST:event_mp3_separate_filesActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5186,6 +5261,7 @@ private void resizeColumns2() {
     public javax.swing.JLabel macid;
     private javax.swing.JPanel meter_panel;
     private javax.swing.JToggleButton minimize;
+    public javax.swing.JCheckBox mp3_separate_files;
     private javax.swing.JLabel nac;
     public javax.swing.JPanel no_voice_panel;
     public javax.swing.JTextField no_voice_secs;
@@ -5224,6 +5300,7 @@ private void resizeColumns2() {
     public javax.swing.JLabel volume_label;
     public javax.swing.JComboBox<String> vtimeout;
     private javax.swing.JLabel wacn;
+    public javax.swing.JCheckBox wacn_en;
     public javax.swing.JButton write_cc;
     private javax.swing.JButton write_config;
     private javax.swing.JTextField zipcode;
