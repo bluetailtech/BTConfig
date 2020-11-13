@@ -94,7 +94,7 @@ public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String 
     }
   }
 
-  if(tg_hash.get(sys_id_hex+"_"+talkgroup+"_"+wacn_hex)!=null) return;  //already found this one
+  if(tg_hash.get(sys_id_hex.trim()+"_"+talkgroup.trim()+"_"+wacn_hex.trim())!=null) return;  //already found this one
 
   try {
     int i = new Integer(talkgroup).intValue();
@@ -131,12 +131,8 @@ public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String 
         parent.addTableObject( new Integer(1), idx, 2);
         parent.addTableObject( new Integer(talkgroup), idx, 3);
         parent.addTableObject( new String(talkgroup+"_unknown"), idx, 4);
-
-        //parent.addTableObject( new String(talkgroup+"_unknown"), idx, 5);
         parent.addTableObject( city, idx, 5);
-
-
-        parent.addTableObject( wacn_hex, idx, 6);
+        parent.addTableObject( new String(wacn_hex), idx, 6);
 
         if(parent.did_read_talkgroups==1 && parent.auto_flash_tg.isSelected()) parent.tg_update_pending=1;  //write them to flash
 
