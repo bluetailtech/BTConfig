@@ -1310,8 +1310,8 @@ String mp3_time ="";
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202011121253");
-      release_date.setText("Release: 2020-11-12 1315");
+      fw_ver.setText("Latest Avail: FW Date: 202011131052");
+      release_date.setText("Release: 2020-11-13 1052");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
