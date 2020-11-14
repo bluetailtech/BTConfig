@@ -1167,6 +1167,7 @@ String current_talkgroup="";
 int reset_session=0;
 java.text.SimpleDateFormat mp3_time_format = new java.text.SimpleDateFormat( "HH:mm:ss" );
 String mp3_time ="";
+int tg_pri=0;
 
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
@@ -1310,8 +1311,8 @@ String mp3_time ="";
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202011131817");
-      release_date.setText("Release: 2020-11-13 1817");
+      fw_ver.setText("Latest Avail: FW Date: 202011141212");
+      release_date.setText("Release: 2020-11-14 1212");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1670,6 +1671,17 @@ String mp3_time ="";
 
       if(console_line.contains("$TDMA")) {
         p25_status_timeout=5000;
+      }
+
+      if(console_line.contains("TG PRI")) {
+        StringTokenizer st = new StringTokenizer(console_line,"\r\n");
+        while(st.hasMoreTokens()) { 
+          String l = st.nextToken();
+          if(l.startsWith("TG PRI")) {
+            tg_pri=1;
+            setStatus(l);
+          }
+        }
       }
 
       if(console_line.contains("sig 1")) {
@@ -2233,7 +2245,7 @@ String mp3_time ="";
       }
       status.setVisible(true);
       status.setText("Status: "+str);
-      status_timeout=600;
+      status_timeout=1600;
     }
 
     /**
@@ -4841,6 +4853,10 @@ public void do_meta() {
       metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+"0"+", cc_freq "+freq_str+" mhz,";
     }
 
+    if(tg_pri>0) {
+      metadata = metadata.concat(" (TG PRI)");
+    }
+
     if(freq_str==null || freq_str.trim().length()==0) freq_str = frequency_tf1.getText();
     if(freq_str.length()==0) metadata=null;
 
@@ -4869,6 +4885,10 @@ public void do_meta() {
         if(st.hasMoreTokens()) st.nextToken(); //mp3 file len
         if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
 
+        if(tg_pri>0) {
+          str1 = str1.concat(" (TG PRI)");
+        }
+
         log_ta.setText(text.concat( new String(str1.getBytes()) ));
 
         if( log_ta.getText().length() > 128000 ) {
@@ -4885,6 +4905,7 @@ public void do_meta() {
       }
     }
     did_metadata=1;
+    tg_pri=0;
   }
 }
 
