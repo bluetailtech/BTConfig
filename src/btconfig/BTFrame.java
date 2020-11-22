@@ -233,34 +233,39 @@ class updateTask extends java.util.TimerTask
 
         if(prefs==null) {
           prefs = Preferences.userRoot().node(this.getClass().getName());
-
-          if( !prefs.getBoolean("did_new_agc1", false) ) {
-            prefs.putInt("agc_gain", 50);
-            prefs.putBoolean("did_new_agc1", true);
-          }
-          //agc_gain.setValue(65);
-          do_agc_update=1;
-
-          if(prefs!=null) {
-            int i = prefs.getInt("audio_buffer_system",1);
-
-            enable_mp3.setSelected( prefs.getBoolean("enable_mp3", true) ); 
-            enable_audio.setSelected( prefs.getBoolean("enable_audio", true) ); 
-            initial_audio_level.setValue( prefs.getInt("initial_audio_level", 75) );
-            auto_flash_tg.setSelected( prefs.getBoolean("tg_auto_flash", false) );
-            disable_encrypted.setSelected( prefs.getBoolean("enc_auto_flash", false) );
-            autoscale_const.setSelected( prefs.getBoolean("autoscale_const", true) );
-            mp3_separate_files.setSelected( prefs.getBoolean("mp3_separate_files", false) );
-            nsymbols.setSelectedIndex( prefs.getInt("nsymbols", 0) );
-
-            int constellation = prefs.getInt("const_select", 1);
-            //if(constellation==0) off_const.setSelected(true);
-            //else if(constellation==1) linear_const.setSelected(true);
-            //else if(constellation==2) log_const.setSelected(true);
-          }
-
-          mp3_separate_files.setSelected( false ); 
         }
+
+        if( !prefs.getBoolean("did_new_agc1", false) ) {
+          prefs.putInt("agc_gain", 50);
+          prefs.putBoolean("did_new_agc1", true);
+        }
+        //agc_gain.setValue(65);
+        do_agc_update=1;
+
+        if(prefs!=null) {
+          int i = prefs.getInt("audio_buffer_system",1);
+
+          enable_mp3.setSelected( prefs.getBoolean("enable_mp3", true) ); 
+          enable_audio.setSelected( prefs.getBoolean("enable_audio", true) ); 
+          initial_audio_level.setValue( prefs.getInt("initial_audio_level", 75) );
+          auto_flash_tg.setSelected( prefs.getBoolean("tg_auto_flash", false) );
+          disable_encrypted.setSelected( prefs.getBoolean("enc_auto_flash", false) );
+          autoscale_const.setSelected( prefs.getBoolean("autoscale_const", true) );
+          mp3_separate_files.setSelected( prefs.getBoolean("mp3_separate_files", false) );
+          nsymbols.setSelectedIndex( prefs.getInt("nsymbols", 0) );
+
+          duid_enh.setSelected( prefs.getBoolean("duid_enh", true) );
+          freq_correct_on_voice.setSelected( prefs.getBoolean("freq_correct_on_voice", false) );
+          add_tdu_silence.setSelected( prefs.getBoolean("add_tdu_silence", true) );
+          wacn_en.setSelected( prefs.getBoolean("wacn_en", false) );
+
+          int constellation = prefs.getInt("const_select", 1);
+          //if(constellation==0) off_const.setSelected(true);
+          //else if(constellation==1) linear_const.setSelected(true);
+          //else if(constellation==2) log_const.setSelected(true);
+        }
+
+        mp3_separate_files.setSelected( false ); 
 
 
         //keep this after prefs
@@ -1168,6 +1173,7 @@ int reset_session=0;
 java.text.SimpleDateFormat mp3_time_format = new java.text.SimpleDateFormat( "HH:mm:ss" );
 String mp3_time ="";
 int tg_pri=0;
+int do_select_home_dir=0;
 
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
@@ -1278,7 +1284,15 @@ int tg_pri=0;
       JFileChooser chooser = new JFileChooser();
       File file = chooser.getCurrentDirectory();  //better for windows to do it this way
       String fs =  System.getProperty("file.separator");
-      home_dir = file.getAbsolutePath()+fs;
+      String home_dir_str = file.getAbsolutePath()+fs;
+
+      if(prefs==null) {
+        prefs = Preferences.userRoot().node(this.getClass().getName());
+      }
+
+      home_dir = prefs.get("p25rx_home_dir", home_dir_str);
+
+
 
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
@@ -2460,6 +2474,9 @@ int tg_pri=0;
         jScrollPane3 = new javax.swing.JScrollPane();
         audio_dev_list = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
+        select_home = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        home_dir_label = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         freqdb_panel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
@@ -3335,7 +3352,7 @@ int tg_pri=0;
                 enable_mp3ActionPerformed(evt);
             }
         });
-        jPanel11.add(enable_mp3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
+        jPanel11.add(enable_mp3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
 
         enable_audio.setSelected(true);
         enable_audio.setText("Enable PC Audio Output (PC Speakers)");
@@ -3367,7 +3384,7 @@ int tg_pri=0;
                 mp3_separate_filesActionPerformed(evt);
             }
         });
-        jPanel11.add(mp3_separate_files, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, -1, -1));
+        jPanel11.add(mp3_separate_files, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, -1));
 
         jScrollPane3.setAutoscrolls(true);
 
@@ -3388,6 +3405,20 @@ int tg_pri=0;
 
         jLabel3.setText("PC Output Audio Device Selection");
         jPanel11.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, -1, -1));
+
+        select_home.setText("Select");
+        select_home.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                select_homeActionPerformed(evt);
+            }
+        });
+        jPanel11.add(select_home, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
+
+        jLabel10.setText("Audio Output Dir:");
+        jPanel11.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, -1));
+
+        home_dir_label.setText("/home/p25rx");
+        jPanel11.add(home_dir_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
 
         audiopanel.add(jPanel11, java.awt.BorderLayout.CENTER);
 
@@ -4153,6 +4184,11 @@ int tg_pri=0;
 
         duid_enh.setSelected(true);
         duid_enh.setText("DUID Enhancements (default on)  Recommended for VHF systems");
+        duid_enh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                duid_enhActionPerformed(evt);
+            }
+        });
         advancedpanel.add(duid_enh, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, -1, -1));
 
         freq_correct_on_voice.setText("Correct Frequency On Trunked Voice Channels (default off)");
@@ -4165,6 +4201,11 @@ int tg_pri=0;
 
         add_tdu_silence.setSelected(true);
         add_tdu_silence.setText("Add Silent Period To Audio Buffer On Phase 1 TDU / TDULC (default on)");
+        add_tdu_silence.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                add_tdu_silenceActionPerformed(evt);
+            }
+        });
         advancedpanel.add(add_tdu_silence, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, -1, -1));
 
         adv_write_config.setText("Write Config");
@@ -4817,7 +4858,7 @@ int tg_pri=0;
     }//GEN-LAST:event_dmr_conventionalActionPerformed
 
     private void freq_correct_on_voiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_freq_correct_on_voiceActionPerformed
-        // TODO add your handling code here:
+      prefs.putBoolean("freq_correct_on_voice", freq_correct_on_voice.isSelected() );
     }//GEN-LAST:event_freq_correct_on_voiceActionPerformed
 
     private void adv_write_configActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adv_write_configActionPerformed
@@ -4838,7 +4879,7 @@ int tg_pri=0;
     }//GEN-LAST:event_import_csvActionPerformed
 
     private void wacn_enActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wacn_enActionPerformed
-        // TODO add your handling code here:
+      prefs.putBoolean("wacn_en", wacn_en.isSelected() );
     }//GEN-LAST:event_wacn_enActionPerformed
 
     private void mp3_separate_filesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mp3_separate_filesActionPerformed
@@ -4856,6 +4897,18 @@ int tg_pri=0;
         e.printStackTrace();
       }
     }//GEN-LAST:event_audio_dev_listValueChanged
+
+    private void select_homeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_select_homeActionPerformed
+      do_select_home_dir=1;
+    }//GEN-LAST:event_select_homeActionPerformed
+
+    private void add_tdu_silenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_tdu_silenceActionPerformed
+      prefs.putBoolean("duid_enh", duid_enh.isSelected() );
+    }//GEN-LAST:event_add_tdu_silenceActionPerformed
+
+    private void duid_enhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_duid_enhActionPerformed
+      prefs.putBoolean("add_tdu_silence", add_tdu_silence.isSelected() );
+    }//GEN-LAST:event_duid_enhActionPerformed
 
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
@@ -5152,6 +5205,7 @@ private void resizeColumns2() {
     public javax.swing.JTextField frequency_tf1;
     public javax.swing.JLabel fw_installed;
     public javax.swing.JLabel fw_ver;
+    public javax.swing.JLabel home_dir_label;
     private javax.swing.JButton import_csv;
     public javax.swing.JCheckBox inc_400mhz;
     public javax.swing.JCheckBox inc_700mhz;
@@ -5178,6 +5232,7 @@ private void resizeColumns2() {
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -5354,6 +5409,7 @@ private void resizeColumns2() {
     public javax.swing.JComboBox<String> rfmaxgain;
     public javax.swing.JCheckBox roaming;
     private javax.swing.JTextField search_radius;
+    private javax.swing.JButton select_home;
     private javax.swing.JButton send_tg;
     private javax.swing.JPanel signalinsightpanel;
     public javax.swing.JLabel siteid;
