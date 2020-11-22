@@ -23,6 +23,7 @@
 package btconfig;
 
 import java.nio.*;
+import java.util.*;
 import javax.sound.sampled.*;
 import java.io.ByteArrayInputStream;
 
@@ -52,16 +53,23 @@ float initial_level=0.85f;
   int dbuffer_tot=0;
 
   int dbuffer_size;
+  Vector mixer_v;
+  int dev_changed=0;
+
 
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
-  public audio(BTFrame p) {
-    parent = p;
+  public void dev_changed() {
+    dev_changed=1;
+  }
 
-    resamp = new Resampler( Rational.valueOf( (48000.0f/8000.0f) ) ); 
+  /////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////
+  public void init() {
 
     try {
-      if(!initialized) {
+
+        closeAll();
 
         if(parent.is_mac_osx==1) {
           dbuffer_size = 7680*4;
@@ -78,19 +86,53 @@ float initial_level=0.85f;
 
 
         initial_level = (float) ( ((float) parent.initial_audio_level.getValue()+0.01f) ) / 100.0f;
-        try {
-          Mixer.Info[] mixerInfo = AudioSystem.getMixerInfo();
-          int count = 0;
-          for (Mixer.Info i : mixerInfo) {
-            System.out.println("["+(count++)+"]" + i.getName() + " - " + i.getDescription()+" - "+i.getVendor());
-          }
-          //default
-          mixer = AudioSystem.getMixer(mixerInfo[0]);
 
-          System.out.println("mixer "+mixer);
-        } catch(Exception e) {
-          e.printStackTrace();
-        }
+
+        //if(!initialized) {
+          try {
+            Mixer.Info[] mixerInfo = AudioSystem.getMixerInfo();
+            int count = 0;
+            mixer_v = new Vector();
+
+            int sel_i=0;
+            String dev_str = parent.prefs.get("audio_output_device", "default");
+
+            for (Mixer.Info i : mixerInfo) {
+              String mixer_str = "["+count+"]" + i.getName() + " - " + i.getDescription()+" - "+i.getVendor();
+              System.out.println(mixer_str);
+
+              if(parent.prefs!=null && dev_str!=null) {
+                if( dev_str.equals(mixer_str) ) {
+                  sel_i = count; 
+                }
+              }
+              mixer_v.addElement( mixer_str );
+              count++;
+            }
+
+            if(dev_changed==0) {
+              parent.audio_dev_list.setListData(mixer_v);
+              parent.audio_dev_list.setSelectedIndex( sel_i );
+            }
+
+
+            //default
+            //mixer = AudioSystem.getMixer(mixerInfo[0]);
+            //mobile-pre
+            //Mixer.Info mixer_info = mixerInfo[0];
+            Mixer.Info mixer_info = mixerInfo[ sel_i ];
+            mixer = AudioSystem.getMixer( mixer_info );
+
+            System.out.println("\r\nusing "+ mixer_info.getName() + " - " + mixer_info.getDescription()+" - "+mixer_info.getVendor());
+          } catch(Exception e) {
+            e.printStackTrace();
+          }
+
+          initialized=true;
+
+        //}
+
+
         try {
           if(mixer!=null) {
             if(mixer_gainControl==null) mixer_gainControl = (FloatControl) mixer.getControl(FloatControl.Type.MASTER_GAIN);
@@ -107,11 +149,9 @@ float initial_level=0.85f;
         } catch(Exception e) {
           //e.printStackTrace();
         }
-        initialized=true;
-      }
 
         //try one channel
-      if(af==null) {
+      //if(af==null) {
 
         /*
               if(parent.audio_slow_rate.isSelected()) {
@@ -136,7 +176,8 @@ float initial_level=0.85f;
 
             try {
               DataLine.Info dataLineInfo = new DataLine.Info( SourceDataLine.class, af);
-              sourceDataLine = (SourceDataLine)AudioSystem.getLine( dataLineInfo);
+              //sourceDataLine = (SourceDataLine)AudioSystem.getLine( dataLineInfo);
+              sourceDataLine = (SourceDataLine)mixer.getLine( dataLineInfo);
 
                 /*
               if(parent.audio_buffer_system.isSelected()) {
@@ -191,10 +232,25 @@ float initial_level=0.85f;
           };
 
           sourceDataLine.addLineListener(listener);
-      }
+      //}
+
+
+    dev_changed=0;
+
     } catch(Exception e) {
      e.printStackTrace();
     }
+  }
+
+  /////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////
+  public audio(BTFrame p) {
+    parent = p;
+
+    resamp = new Resampler( Rational.valueOf( (48000.0f/8000.0f) ) ); 
+
+    init();
+
   }
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
@@ -255,6 +311,13 @@ float initial_level=0.85f;
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
   public void audio_tick() {
+
+    if(dev_changed==1) {
+      init();
+      return;
+    }
+
+
     if(sourceDataLine==null) return;
 
     if(sourceDataLine.isOpen() && sourceDataLine.isRunning() && dbuffer_tot > 0) { 
@@ -295,6 +358,8 @@ float initial_level=0.85f;
 
     try {
       //System.out.println("buffer len: "+buffer.length);
+
+      if(dev_changed==1) return;
 
       if(!parent.enable_audio.isSelected()) return;
 

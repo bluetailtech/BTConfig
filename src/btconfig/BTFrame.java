@@ -1528,15 +1528,28 @@ int tg_pri=0;
   public SerialPort find_serial_port()
   {
 
+    int n=0;
+
     SerialPort[] ports = SerialPort.getCommPorts();
+
+    for(int i=0; i<ports.length; i++) {
+        System.out.println("\r\nfound device on : "+
+          ports[i].getSystemPortName()+"  "+
+          ports[i].getDescriptivePortName()+"  "+
+          ports[i].getPortDescription());
+    }
+
+
     for(int i=0; i<ports.length; i++) {
       //setStatus("\r\nport: "+ports[i]+" on " + ports[i].getSystemPortName());
 
-      if( ports[i].toString().startsWith("BlueTail-P1") ) { //we are looking for this string in the serial port description
+      if( i>1 && ports[i].toString().startsWith("BlueTail-P1") ) { //we are looking for this string in the serial port description
+      //if( i>1 && ports[i].toString().startsWith("BlueTail-P1") ) { //we are looking for this string in the serial port description
         //setStatus("FOUND device");
-        System.out.println("\r\nfound device on : "+ports[i].getSystemPortName());
+        //System.out.println("\r\nfound device on : "+ports[i].getSystemPortName()+"  "+ports[i].getDescriptivePortName()+"  "+ports[i].getPortDescription());
 
         if( ports[i].isOpen() ) {
+
           Boolean isWindows = System.getProperty("os.name").startsWith("Windows");
           //setStatus("Device is currently open by another application.  Please close the application.");
           if(isWindows || is_mac_osx==1) {
@@ -2444,6 +2457,9 @@ int tg_pri=0;
         initial_audio_level = new javax.swing.JSlider();
         initial_audio_level_lb = new javax.swing.JLabel();
         mp3_separate_files = new javax.swing.JCheckBox();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        audio_dev_list = new javax.swing.JList<>();
+        jLabel3 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         freqdb_panel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
@@ -3319,7 +3335,7 @@ int tg_pri=0;
                 enable_mp3ActionPerformed(evt);
             }
         });
-        jPanel11.add(enable_mp3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, -1, -1));
+        jPanel11.add(enable_mp3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
 
         enable_audio.setSelected(true);
         enable_audio.setText("Enable PC Audio Output (PC Speakers)");
@@ -3328,10 +3344,10 @@ int tg_pri=0;
                 enable_audioActionPerformed(evt);
             }
         });
-        jPanel11.add(enable_audio, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 360, -1, -1));
+        jPanel11.add(enable_audio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, -1, -1));
 
         jLabel12.setText("Initial Master Volume Level");
-        jPanel11.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 310, -1, -1));
+        jPanel11.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
 
         initial_audio_level.setValue(85);
         initial_audio_level.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -3339,19 +3355,39 @@ int tg_pri=0;
                 initial_audio_levelStateChanged(evt);
             }
         });
-        jPanel11.add(initial_audio_level, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 310, -1, -1));
+        jPanel11.add(initial_audio_level, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 300, -1, -1));
 
         initial_audio_level_lb.setText("Val 85");
-        jPanel11.add(initial_audio_level_lb, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 310, -1, -1));
+        jPanel11.add(initial_audio_level_lb, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 300, -1, -1));
 
-        mp3_separate_files.setText("Generate separate files per session  ( Warning:  this will generate large numbers of files! )");
+        mp3_separate_files.setText("Generate separate files per session  ");
         mp3_separate_files.setEnabled(false);
         mp3_separate_files.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mp3_separate_filesActionPerformed(evt);
             }
         });
-        jPanel11.add(mp3_separate_files, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 240, -1, -1));
+        jPanel11.add(mp3_separate_files, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, -1, -1));
+
+        jScrollPane3.setAutoscrolls(true);
+
+        audio_dev_list.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Default" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        audio_dev_list.setSelectedIndex(0);
+        audio_dev_list.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                audio_dev_listValueChanged(evt);
+            }
+        });
+        jScrollPane3.setViewportView(audio_dev_list);
+
+        jPanel11.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 40, 510, 430));
+
+        jLabel3.setText("PC Output Audio Device Selection");
+        jPanel11.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, -1, -1));
 
         audiopanel.add(jPanel11, java.awt.BorderLayout.CENTER);
 
@@ -4809,6 +4845,18 @@ int tg_pri=0;
      prefs.putBoolean("mp3_separate_files", mp3_separate_files.isSelected());
     }//GEN-LAST:event_mp3_separate_filesActionPerformed
 
+    private void audio_dev_listValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_audio_dev_listValueChanged
+      try {
+        String str = (String) audio_dev_list.getSelectedValue();
+        if(str!=null) {
+          prefs.put("audio_output_device", str); 
+          if(aud!=null) aud.dev_changed();
+        }
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+    }//GEN-LAST:event_audio_dev_listValueChanged
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5025,6 +5073,7 @@ private void resizeColumns2() {
     private javax.swing.JLabel agc_kp_lb;
     public javax.swing.JCheckBox allow_unknown_tg_cb;
     public javax.swing.JButton append_cc;
+    public javax.swing.JList<String> audio_dev_list;
     private javax.swing.JPanel audiopanel;
     public javax.swing.JCheckBox auto_flash_tg;
     public javax.swing.JCheckBox autoscale_const;
@@ -5146,6 +5195,7 @@ private void resizeColumns2() {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
@@ -5215,6 +5265,7 @@ private void resizeColumns2() {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane7;
     public javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JSeparator jSeparator1;
