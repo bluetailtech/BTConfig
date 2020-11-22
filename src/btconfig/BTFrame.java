@@ -1290,7 +1290,10 @@ int do_select_home_dir=0;
         prefs = Preferences.userRoot().node(this.getClass().getName());
       }
 
+      //TODO:  need to append serial number of device
       home_dir = prefs.get("p25rx_home_dir", home_dir_str);
+      home_dir_label.setText(home_dir);
+      System.out.println("home_dir: "+home_dir);
 
 
 
