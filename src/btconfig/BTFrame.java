@@ -625,7 +625,8 @@ class updateTask extends java.util.TimerTask
 
             serial_port = find_serial_port();
 
-
+            macid.setVisible(false);
+            macid.setText("");
 
             if(serial_port==null) {
               setStatus("\r\ndiscovering device.  Please wait...");
