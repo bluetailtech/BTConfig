@@ -258,16 +258,21 @@ float initial_level=0.85f;
             int sel_i=0;
             String dev_str = parent.prefs.get("audio_output_device", "default");
 
+            Boolean isWindows = System.getProperty("os.name").startsWith("Windows");
+
             for (Mixer.Info i : mixerInfo) {
               String mixer_str = "["+count+"]" + i.getName() + " - " + i.getDescription()+" - "+i.getVendor();
 
-              if(parent.prefs!=null && dev_str!=null) {
-                if( dev_str.equals(mixer_str) ) {
-                  sel_i = count; 
+              if( (isWindows && mixer_str.contains("Playback")) || !isWindows ) {
+
+                if(parent.prefs!=null && dev_str!=null) {
+                  if( dev_str.equals(mixer_str) ) {
+                    sel_i = count; 
+                  }
                 }
+                mixer_v.addElement( mixer_str );
+                count++;
               }
-              mixer_v.addElement( mixer_str );
-              count++;
             }
 
             //if(prev_selection!=sel_i) {
