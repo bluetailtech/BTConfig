@@ -231,40 +231,6 @@ class updateTask extends java.util.TimerTask
           }
         }
 
-        if(prefs==null) {
-          prefs = Preferences.userRoot().node(this.getClass().getName());
-        }
-
-        if( !prefs.getBoolean("did_new_agc1", false) ) {
-          prefs.putInt("agc_gain", 50);
-          prefs.putBoolean("did_new_agc1", true);
-        }
-        //agc_gain.setValue(65);
-        do_agc_update=1;
-
-        if(prefs!=null) {
-          int i = prefs.getInt("audio_buffer_system",1);
-
-          enable_mp3.setSelected( prefs.getBoolean("enable_mp3", true) ); 
-          enable_audio.setSelected( prefs.getBoolean("enable_audio", true) ); 
-          initial_audio_level.setValue( prefs.getInt("initial_audio_level", 75) );
-          auto_flash_tg.setSelected( prefs.getBoolean("tg_auto_flash", false) );
-          disable_encrypted.setSelected( prefs.getBoolean("enc_auto_flash", false) );
-          autoscale_const.setSelected( prefs.getBoolean("autoscale_const", true) );
-          mp3_separate_files.setSelected( prefs.getBoolean("mp3_separate_files", false) );
-          nsymbols.setSelectedIndex( prefs.getInt("nsymbols", 0) );
-
-          duid_enh.setSelected( prefs.getBoolean("duid_enh", true) );
-          freq_correct_on_voice.setSelected( prefs.getBoolean("freq_correct_on_voice", false) );
-          add_tdu_silence.setSelected( prefs.getBoolean("add_tdu_silence", true) );
-          wacn_en.setSelected( prefs.getBoolean("wacn_en", false) );
-
-          int constellation = prefs.getInt("const_select", 1);
-          //if(constellation==0) off_const.setSelected(true);
-          //else if(constellation==1) linear_const.setSelected(true);
-          //else if(constellation==2) log_const.setSelected(true);
-        }
-
         mp3_separate_files.setSelected( false ); 
 
 
@@ -687,11 +653,12 @@ class updateTask extends java.util.TimerTask
                             System.out.println("mac_id:"+mid +":");
                             parent.sys_mac_id = mid;
 
+                            update_prefs();
+
                             open_audio_output_files();
                             macid.setVisible(true);
                             macid.setText("MAC: "+sys_mac_id);
 
-                            update_prefs();
                           }
                           else {
                             System.out.println("mac_id_not_good:"+macid +":");
@@ -870,7 +837,7 @@ class updateTask extends java.util.TimerTask
                           }
 
 
-                          open_audio_output_files();
+                          //open_audio_output_files();
 
                         } catch(Exception e) {
                           //e.printStackTrace();
@@ -1292,19 +1259,6 @@ String sys_mac_id="";
 
       record_to_mp3.setSelected(true);
 
-      JFileChooser chooser = new JFileChooser();
-      File file = chooser.getCurrentDirectory();  //better for windows to do it this way
-      String fs =  System.getProperty("file.separator");
-      String home_dir_str = file.getAbsolutePath()+fs;
-
-      if(prefs==null) {
-        //TODO:  need to append serial number of device.  prefs configuration should be per-device serial number
-        prefs = Preferences.userRoot().node(this.getClass().getName());
-      }
-
-      home_dir = prefs.get("p25rx_home_dir", home_dir_str);
-      home_dir_label.setText(home_dir);
-      System.out.println("home_dir: "+home_dir);
 
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
@@ -4892,7 +4846,7 @@ String sys_mac_id="";
       try {
         String str = (String) audio_dev_list.getSelectedValue();
         if(str!=null) {
-          prefs.put("audio_output_device_"+sys_mac_id, str); 
+          prefs.put("audio_output_device", str); 
           if(aud!=null) aud.dev_changed();
         }
       } catch(Exception e) {
@@ -5053,7 +5007,8 @@ public void open_audio_output_files() {
 //////////////////////////////////////////////////////////////////////////////
 public void update_prefs() {
 
-    prefs = Preferences.userRoot().node(this.getClass().getName()+"_"+sys_mac_id);
+    //if(prefs==null) prefs = Preferences.userRoot().node(this.getClass().getName()+"_"+sys_mac_id);
+    if(prefs==null) prefs = Preferences.userRoot().node("p25rx_"+sys_mac_id);
 
     if( !prefs.getBoolean("did_new_agc1", false) ) {
       prefs.putInt("agc_gain", 50);
@@ -5081,6 +5036,16 @@ public void update_prefs() {
 
       int constellation = prefs.getInt("const_select", 1);
     }
+
+      JFileChooser chooser = new JFileChooser();
+      File file = chooser.getCurrentDirectory();  //better for windows to do it this way
+      String fs =  System.getProperty("file.separator");
+      String home_dir_str = file.getAbsolutePath()+fs;
+
+
+      home_dir = prefs.get("p25rx_home_dir", home_dir_str);
+      home_dir_label.setText(home_dir);
+      System.out.println("home_dir: "+home_dir);
 }
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
