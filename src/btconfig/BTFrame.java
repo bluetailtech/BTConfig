@@ -1525,22 +1525,28 @@ String sys_mac_id="";
     SerialPort[] ports = SerialPort.getCommPorts();
 
     for(int i=0; i<ports.length; i++) {
-        System.out.println("\r\nfound device on : "+
+        String isopen="";
+        if( ports[i].isOpen() ) isopen=" open";
+          else isopen="  closed";
+
+
+        System.out.println("\r\n["+i+"]  found device on : "+
           ports[i].getSystemPortName()+"  "+
           ports[i].getDescriptivePortName()+"  "+
           ports[i].getPortDescription()+"  "+
-          ports[i].toString());
+          ports[i].toString()+isopen);
     }
 
 
     for(int i=0; i<ports.length; i++) {
       //setStatus("\r\nport: "+ports[i]+" on " + ports[i].getSystemPortName());
 
-      if( i>=0 && ports[i].toString().startsWith("BlueTail-P1") ) { //we are looking for this string in the serial port description
+      if( ports[i].toString().startsWith("BlueTail-P1") ) { //we are looking for this string in the serial port description
       //if( i>1 && ports[i].toString().startsWith("BlueTail-P1") ) { //we are looking for this string in the serial port description
         //setStatus("FOUND device");
         //System.out.println("\r\nfound device on : "+ports[i].getSystemPortName()+"  "+ports[i].getDescriptivePortName()+"  "+ports[i].getPortDescription());
 
+        /*
         if( ports[i].isOpen() ) {
 
           Boolean isWindows = System.getProperty("os.name").startsWith("Windows");
@@ -1554,7 +1560,14 @@ String sys_mac_id="";
             return ports[i];
           }
         }
-        return ports[i];
+        */
+        if(!ports[i].isOpen()) {
+          if( ports[i].openPort(200) ) {
+            ports[i].closePort();
+            System.out.println("using ["+i+"]  "+ports[i]);
+            return ports[i];
+          }
+        }
       }
     }
 
