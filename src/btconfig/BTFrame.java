@@ -690,9 +690,13 @@ class updateTask extends java.util.TimerTask
                             open_audio_output_files();
                             macid.setVisible(true);
                             macid.setText("MAC: "+sys_mac_id);
+
+                            update_prefs();
                           }
                           else {
                             System.out.println("mac_id_not_good:"+macid +":");
+                            JOptionPane.showConfirmDialog(parent, "Couldn't find device serial number.  Closing application.", "ok", JOptionPane.OK_OPTION);
+                            System.exit(0);
                           }
 
 
@@ -5045,6 +5049,39 @@ public void open_audio_output_files() {
   }
 }
 
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+public void update_prefs() {
+
+    prefs = Preferences.userRoot().node(this.getClass().getName()+"_"+sys_mac_id);
+
+    if( !prefs.getBoolean("did_new_agc1", false) ) {
+      prefs.putInt("agc_gain", 50);
+      prefs.putBoolean("did_new_agc1", true);
+    }
+    //agc_gain.setValue(65);
+    do_agc_update=1;
+
+    if(prefs!=null) {
+      int i = prefs.getInt("audio_buffer_system",1);
+
+      enable_mp3.setSelected( prefs.getBoolean("enable_mp3", true) ); 
+      enable_audio.setSelected( prefs.getBoolean("enable_audio", true) ); 
+      initial_audio_level.setValue( prefs.getInt("initial_audio_level", 75) );
+      auto_flash_tg.setSelected( prefs.getBoolean("tg_auto_flash", false) );
+      disable_encrypted.setSelected( prefs.getBoolean("enc_auto_flash", false) );
+      autoscale_const.setSelected( prefs.getBoolean("autoscale_const", true) );
+      mp3_separate_files.setSelected( prefs.getBoolean("mp3_separate_files", false) );
+      nsymbols.setSelectedIndex( prefs.getInt("nsymbols", 0) );
+
+      duid_enh.setSelected( prefs.getBoolean("duid_enh", true) );
+      freq_correct_on_voice.setSelected( prefs.getBoolean("freq_correct_on_voice", false) );
+      add_tdu_silence.setSelected( prefs.getBoolean("add_tdu_silence", true) );
+      wacn_en.setSelected( prefs.getBoolean("wacn_en", false) );
+
+      int constellation = prefs.getInt("const_select", 1);
+    }
+}
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 void toggle_recording(Boolean isrec) {
