@@ -308,6 +308,8 @@ class updateTask extends java.util.TimerTask
 
               if(roaming_tests!=null) roaming_tests.restore_roaming(parent, bis, serial_port);
 
+
+
               cmd= new String("logging 0\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
               cmd= new String("en_voice_send 1\r\n");
@@ -628,23 +630,13 @@ class updateTask extends java.util.TimerTask
         else if(is_connected==0 && do_connect==1) {
 
             serial_port = find_serial_port();
+
+
+
             if(serial_port==null) {
               setStatus("\r\ndiscovering device.  Please wait...");
               Thread.sleep(600);
-              //JOptionPane.showMessageDialog(parent, "Please re-start the BTConfig Software.  Pressing ok will exit the software.");
-              //System.exit(0);
             }
-
-          /*
-            while(true) {
-              if(serial_port!=null && serial_port.openPort(100)==true) break;
-              if(serial_port==null) break;
-              if(serial_port!=null) serial_port.closePort();
-              Thread.sleep(50);
-            }
-          */
-
-
 
             if(serial_port!=null && serial_port.openPort(200)==false) {
               setStatus("\r\nserial port busy. please wait. retrying....");
@@ -654,29 +646,60 @@ class updateTask extends java.util.TimerTask
 
               serial_port_name = serial_port.getSystemPortName();
               serial_port.setBaudRate( 4000000 ); //this probably doesn't really matter
-              serial_port.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 100, 0);
+              serial_port.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 500, 0);
 
               is_connected=1;
               Thread.sleep(600);
 
               check_firmware.setEnabled(true);
 
-              //if(firmware_checked==0) {
-               // do_update_firmware=1;
-              //}
-              //else {
                 do_read_talkgroups=1;
                 do_read_roaming=1;
                 do_read_config=1;
-              //}
 
               discover.setEnabled(false);
               int baudrate = serial_port.getBaudRate();
 
+              byte[] result=new byte[1024];
               String cmd= new String("en_voice_send 0\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+              Thread.sleep(100);
+              int rlen=serial_port.readBytes( result, 1024);
+              //System.out.println("result: "+new String(result) );
+              result=new byte[1024];
+              cmd= new String("en_voice_send 0\r\n");
+              serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+              Thread.sleep(100);
+              rlen=serial_port.readBytes( result, 1024);
+
+
+              result=new byte[64];
               cmd= new String("logging -999\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+              Thread.sleep(100);
+              rlen=serial_port.readBytes( result, 64);
+              //System.out.println("result: "+new String(result) );
+
+
+                          result=new byte[64];
+                          String mcmd = "mac_id\r\n";  
+                          serial_port.writeBytes( mcmd.getBytes(), mcmd.length(), 0);
+                          Thread.sleep(100);
+                          rlen=serial_port.readBytes( result, 64);
+
+                          String macid = new String(result,0,16).trim();
+                          if(macid.startsWith("0x")) {
+                            System.out.println("mac_id:"+macid +":");
+                            parent.sys_mac_id = macid;
+                            open_audio_output_files();
+                          }
+                          else {
+                            System.out.println("mac_id_not_good:"+macid +":");
+                          }
+
+
+
+
 
             }
         }
@@ -685,6 +708,7 @@ class updateTask extends java.util.TimerTask
 
           String cmd= new String("logging 0\r\n");
           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+
 
           toggle_recording( !record_to_mp3.isSelected() );
 
@@ -818,8 +842,8 @@ class updateTask extends java.util.TimerTask
                         }
 
                         try {
-                          Path path = Paths.get(home_dir+"p25rx");
-                          Files.createDirectories(path);
+
+
 
                           String mp3_tg = "";
                           if(is_ms && mp3_separate_files.isSelected()) {
@@ -843,25 +867,9 @@ class updateTask extends java.util.TimerTask
                             reset_session=0;
                           }
 
-                          mp3_file = new File(home_dir+"p25rx/p25rx_recording_"+current_date+mp3_tg+".mp3");
-                          meta_file = new File(home_dir+"p25rx/p25rx_recmeta_"+current_date+".txt");
-                          //conlog_file = new File(home_dir+"p25rx/p25rx_conlog_"+current_date+".txt");
-                          String exe_path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath().toString();
-                          exe_path = exe_path.replace("BTConfig.exe", "");
-                          conlog_file = new File(exe_path+"p25rx_conlog_"+current_date+".txt");
-                          System.out.println("log file path: "+exe_path+"p25rx_conlog_"+current_date+".txt");
 
-                          //tdma_file = new File(exe_path+"p25rx_TDMA_PACKED_DIBITS_"+current_date+".bin");
+                          open_audio_output_files();
 
-                          if(is_ms) {
-                            fos_mp3 = new FileOutputStream( mp3_file, true ); 
-                          }
-                          else {
-                            fos_mp3 = new FileOutputStream( mp3_file, true ); 
-                            fos_meta = new FileOutputStream( meta_file, true ); 
-                            fos_conlog = new FileOutputStream( conlog_file, true ); 
-                            //fos_tdma = new FileOutputStream( tdma_file, true ); 
-                          }
                         } catch(Exception e) {
                           //e.printStackTrace();
                         }
@@ -1174,6 +1182,7 @@ java.text.SimpleDateFormat mp3_time_format = new java.text.SimpleDateFormat( "HH
 String mp3_time ="";
 int tg_pri=0;
 int do_select_home_dir=0;
+String sys_mac_id="";
 
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
@@ -1295,36 +1304,8 @@ int do_select_home_dir=0;
       home_dir_label.setText(home_dir);
       System.out.println("home_dir: "+home_dir);
 
-
-
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
-
-
-      try {
-        Path path = Paths.get(home_dir+"p25rx");
-        Files.createDirectories(path);
-
-        String date = formatter_date.format(new java.util.Date() );
-        current_date=new String(date);  //date changed
-
-        mp3_file = new File(home_dir+"p25rx/p25rx_recording_"+current_date+".mp3");
-        meta_file = new File(home_dir+"p25rx/p25rx_recmeta_"+current_date+".txt");
-        //conlog_file = new File(home_dir+"p25rx_conlog_"+current_date+".txt");
-        String exe_path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath().toString();
-        exe_path = exe_path.replace("BTConfig.exe", "");
-        conlog_file = new File(exe_path+"p25rx_conlog_"+current_date+".txt");
-        System.out.println("log file path: "+exe_path+"p25rx_conlog_"+current_date+".txt");
-        //tdma_file = new File(exe_path+"p25rx_TDMA_PACKED_DIBITS_"+current_date+".bin");
-
-        fos_mp3 = new FileOutputStream( mp3_file, true ); 
-        fos_meta = new FileOutputStream( meta_file, true ); 
-        fos_conlog = new FileOutputStream( conlog_file, true ); 
-        //fos_tdma = new FileOutputStream( tdma_file, true ); 
-      } catch(Exception e) {
-        //e.printStackTrace();
-      }
-
 
 
 
@@ -1553,7 +1534,8 @@ int do_select_home_dir=0;
         System.out.println("\r\nfound device on : "+
           ports[i].getSystemPortName()+"  "+
           ports[i].getDescriptivePortName()+"  "+
-          ports[i].getPortDescription());
+          ports[i].getPortDescription()+"  "+
+          ports[i].toString());
     }
 
 
@@ -2313,6 +2295,7 @@ int do_select_home_dir=0;
         bt_lb = new javax.swing.JLabel();
         bt_indicator = new javax.swing.JToggleButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
+
         p25rxconfigpanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
@@ -2524,20 +2507,6 @@ int do_select_home_dir=0;
         talkgroup_panel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object[4915][7],
-            new String [] {
-                "Enabled", "SYS_ID(HEX)", "Priority", "TGRP", "AlphaTag", "Description", "WACN(HEX)"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
         jPanel22 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         enable_table_rows = new javax.swing.JButton();
@@ -3424,6 +3393,7 @@ int do_select_home_dir=0;
         jPanel11.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, -1, -1));
 
         select_home.setText("Select");
+        select_home.setEnabled(false);
         select_home.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 select_homeActionPerformed(evt);
@@ -3920,6 +3890,20 @@ int do_select_home_dir=0;
         jTable1.setDoubleBuffered(true);
         jTable1.setEditingColumn(1);
         jTable1.setEditingRow(1);
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object[4915][7],
+            new String [] {
+                "Enabled", "SYS_ID(HEX)", "Priority", "TGRP", "AlphaTag", "Description", "WACN(HEX)"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Boolean.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTable1KeyTyped(evt);
@@ -5010,6 +4994,36 @@ public void do_meta() {
     }
     did_metadata=1;
     tg_pri=0;
+  }
+}
+
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+public void open_audio_output_files() {
+  try {
+    Path path = Paths.get(home_dir+"p25rx"+"/"+sys_mac_id);
+    Files.createDirectories(path);
+
+    home_dir_label.setText(home_dir+"p25rx/"+sys_mac_id+"/");
+
+    String date = formatter_date.format(new java.util.Date() );
+    current_date=new String(date);  //date changed
+
+    mp3_file = new File(home_dir+"p25rx/"+sys_mac_id+"/p25rx_recording_"+current_date+".mp3");
+    meta_file = new File(home_dir+"p25rx/"+sys_mac_id+"/p25rx_recmeta_"+current_date+".txt");
+    //conlog_file = new File(home_dir+"p25rx_conlog_"+current_date+".txt");
+    String exe_path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath().toString();
+    exe_path = exe_path.replace("BTConfig.exe", "");
+    conlog_file = new File(exe_path+"p25rx_conlog_"+current_date+".txt");
+    System.out.println("log file path: "+exe_path+"p25rx_conlog_"+current_date+".txt");
+    //tdma_file = new File(exe_path+"p25rx_TDMA_PACKED_DIBITS_"+current_date+".bin");
+
+    fos_mp3 = new FileOutputStream( mp3_file, true ); 
+    fos_meta = new FileOutputStream( meta_file, true ); 
+    fos_conlog = new FileOutputStream( conlog_file, true ); 
+    //fos_tdma = new FileOutputStream( tdma_file, true ); 
+  } catch(Exception e) {
+    //e.printStackTrace();
   }
 }
 

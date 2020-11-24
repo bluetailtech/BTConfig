@@ -449,6 +449,7 @@ int did_save=0;
             }
             Thread.sleep(1000);
 
+
             //parent.firmware_checked=1;
             parent.do_read_config=1;
             //parent.do_read_talkgroups=1;

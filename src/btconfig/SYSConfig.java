@@ -566,6 +566,22 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
                           parent.update_op_mode(op_mode-1);
 
+
+
+                          /*
+                          byte[] result=new byte[64];
+                          String cmd = "mac_id\r\n";  
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          Thread.sleep(100);
+                          rlen=serial_port.readBytes( result, 64);
+
+                          String macid = new String(result,0,16).trim();
+                          if(macid.startsWith("0x")) {
+                            System.out.println("mac_id:"+macid +":");
+                            parent.sys_mac_id = macid;
+                          }
+                          */
+
                         } catch(Exception e) {
                           e.printStackTrace();
                         }
