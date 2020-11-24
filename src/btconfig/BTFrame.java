@@ -1287,10 +1287,10 @@ int do_select_home_dir=0;
       String home_dir_str = file.getAbsolutePath()+fs;
 
       if(prefs==null) {
+        //TODO:  need to append serial number of device.  prefs configuration should be per-device serial number
         prefs = Preferences.userRoot().node(this.getClass().getName());
       }
 
-      //TODO:  need to append serial number of device
       home_dir = prefs.get("p25rx_home_dir", home_dir_str);
       home_dir_label.setText(home_dir);
       System.out.println("home_dir: "+home_dir);
@@ -1560,7 +1560,7 @@ int do_select_home_dir=0;
     for(int i=0; i<ports.length; i++) {
       //setStatus("\r\nport: "+ports[i]+" on " + ports[i].getSystemPortName());
 
-      if( i>1 && ports[i].toString().startsWith("BlueTail-P1") ) { //we are looking for this string in the serial port description
+      if( i>=0 && ports[i].toString().startsWith("BlueTail-P1") ) { //we are looking for this string in the serial port description
       //if( i>1 && ports[i].toString().startsWith("BlueTail-P1") ) { //we are looking for this string in the serial port description
         //setStatus("FOUND device");
         //System.out.println("\r\nfound device on : "+ports[i].getSystemPortName()+"  "+ports[i].getDescriptivePortName()+"  "+ports[i].getPortDescription());
