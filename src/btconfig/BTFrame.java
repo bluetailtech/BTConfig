@@ -662,7 +662,7 @@ class updateTask extends java.util.TimerTask
                           }
                           else {
                             System.out.println("mac_id_not_good:"+macid +":");
-                            JOptionPane.showConfirmDialog(parent, "Couldn't find device serial number.  Closing application.", "ok", JOptionPane.OK_OPTION);
+                            JOptionPane.showMessageDialog(parent, "Couldn't find device serial number.  Closing application.", "ok", JOptionPane.OK_OPTION);
                             System.exit(0);
                           }
 
