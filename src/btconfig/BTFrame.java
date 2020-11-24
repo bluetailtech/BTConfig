@@ -3319,9 +3319,11 @@ String sys_mac_id="";
         jPanel11.add(enable_audio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, -1, -1));
 
         jLabel12.setText("Initial Master Volume Level");
+        jLabel12.setEnabled(false);
         jPanel11.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
 
         initial_audio_level.setValue(85);
+        initial_audio_level.setEnabled(false);
         initial_audio_level.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 initial_audio_levelStateChanged(evt);
@@ -3330,6 +3332,7 @@ String sys_mac_id="";
         jPanel11.add(initial_audio_level, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 300, -1, -1));
 
         initial_audio_level_lb.setText("Val 85");
+        initial_audio_level_lb.setEnabled(false);
         jPanel11.add(initial_audio_level_lb, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 300, -1, -1));
 
         mp3_separate_files.setText("Generate separate files per session  ");

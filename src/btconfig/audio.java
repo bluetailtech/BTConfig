@@ -116,16 +116,16 @@ float initial_level=0.85f;
 
         try {
           if(mixer!=null) {
-            if(mixer_gainControl==null) mixer_gainControl = (FloatControl) mixer.getControl(FloatControl.Type.MASTER_GAIN);
-            if(mixer_gainControl!=null) mixer_gainControl.setValue( 0.01f + (mixer_gainControl.getMaximum() * initial_level) );
+            //if(mixer_gainControl==null) mixer_gainControl = (FloatControl) mixer.getControl(FloatControl.Type.MASTER_GAIN);
+            //if(mixer_gainControl!=null) mixer_gainControl.setValue( 0.01f + (mixer_gainControl.getMaximum() * initial_level) );
           }
         } catch(Exception e) {
           //e.printStackTrace();
         }
         try {
           if(mixer!=null) {
-            if(mixer_volume==null) mixer_volume = (FloatControl) mixer.getControl(FloatControl.Type.VOLUME);
-            if(mixer_volume!=null) mixer_volume.setValue( 0.01f + (mixer_volume.getMaximum() * initial_level) );
+            //if(mixer_volume==null) mixer_volume = (FloatControl) mixer.getControl(FloatControl.Type.VOLUME);
+            //if(mixer_volume!=null) mixer_volume.setValue( 0.01f + (mixer_volume.getMaximum() * initial_level) );
           }
         } catch(Exception e) {
           //e.printStackTrace();
@@ -174,13 +174,13 @@ float initial_level=0.85f;
 
               try {
                 if(src_gainControl==null) src_gainControl = (FloatControl) sourceDataLine.getControl(FloatControl.Type.MASTER_GAIN);
-                src_gainControl.setValue( 0.01f + (src_gainControl.getMaximum() * initial_level) );
+                //src_gainControl.setValue( 0.01f + (src_gainControl.getMaximum() * initial_level) );
               } catch(Exception e) {
                 //e.printStackTrace();
               }
               try {
                 if(src_volume==null) src_volume = (FloatControl) sourceDataLine.getControl(FloatControl.Type.VOLUME);
-                src_volume.setValue( 0.01f + (src_volume.getMaximum() * initial_level) );
+                //src_volume.setValue( 0.01f + (src_volume.getMaximum() * initial_level) );
               } catch(Exception e) {
                 //e.printStackTrace();
               }
