@@ -165,7 +165,7 @@ class updateTask extends java.util.TimerTask
                   String str2 = (String) parent.freq_table.getModel().getValueAt(rows[0],9);
                   String str3 = (String) parent.freq_table.getModel().getValueAt(rows[0],1);
                   if(str1!=null && str1.length()>0 && str2!=null && str2.length()>0 && str3!=null && str3.length()>0) {
-                    parent.prefs.put("city_state_"+freq_to_use.trim(), str1+","+str2+"_"+str3 );
+                    if(prefs!=null) parent.prefs.put("city_state_"+freq_to_use.trim(), str1+","+str2+"_"+str3 );
                   }
                 }
               } catch(Exception e) {
@@ -789,7 +789,7 @@ class updateTask extends java.util.TimerTask
                     if(mp3_bytes!=null) {
 
                       String date = formatter_date.format(new java.util.Date() );
-                      if( current_date==null || !current_date.equals(date) || mp3_separate_files.isSelected()) {
+                      if( current_date==null || !current_date.equals(date) || mp3_separate_files.isSelected() && sys_mac_id!=null && sys_mac_id.length()>0) {
                         current_date=new String(date);  //date changed
 
                         boolean is_ms=mp3_separate_files.isSelected();
@@ -837,7 +837,7 @@ class updateTask extends java.util.TimerTask
                           }
 
 
-                          //open_audio_output_files();
+                          open_audio_output_files();
 
                         } catch(Exception e) {
                           //e.printStackTrace();
@@ -1383,10 +1383,6 @@ String sys_mac_id="";
       tg_indicator.setBackground(java.awt.Color.black);
       tg_indicator.setForeground(java.awt.Color.black);
 
-      //do this last
-      utimer = new java.util.Timer();
-      utimer.schedule( new updateTask(), 1, 1);
-      setSize(1054,750);
 
       //parentSize = Toolkit.getDefaultToolkit().getScreenSize();
       //setSize(new Dimension((int) (parentSize.width * 0.75), (int) (parentSize.height * 0.8)));
@@ -1475,6 +1471,11 @@ String sys_mac_id="";
         });
 
       do_connect();
+
+      //do this last
+      utimer = new java.util.Timer();
+      utimer.schedule( new updateTask(), 100, 1);
+      setSize(1054,750);
     }
 
   //////////////////////////////////////////////////////////////////////////////////////
@@ -1827,7 +1828,7 @@ String sys_mac_id="";
                     ff = String.format("%3.8f", d);
                   } catch(Exception e) {
                   }
-                  city = prefs.get("city_state_"+ff, "unknown");
+                  if(prefs!=null) city = prefs.get("city_state_"+ff, "unknown");
                   if(city==null) city="";
 
 
@@ -2053,7 +2054,7 @@ String sys_mac_id="";
                 } catch(Exception e) {
                 }
 
-                city = prefs.get("city_state_"+ff, "unknown");
+                if(prefs!=null) city = prefs.get("city_state_"+ff, "unknown");
                 if(city!=null && city.length()>0 && status_timeout==0) {
                   status.setVisible(true);
                   if(city.equals("unknown")) city="";
@@ -4561,15 +4562,15 @@ String sys_mac_id="";
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     private void enable_mp3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enable_mp3ActionPerformed
-      prefs.putBoolean("enable_mp3", enable_mp3.isSelected());
+      if(prefs!=null) prefs.putBoolean("enable_mp3", enable_mp3.isSelected());
     }//GEN-LAST:event_enable_mp3ActionPerformed
 
     private void enable_audioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enable_audioActionPerformed
-      prefs.putBoolean("enable_audio", enable_audio.isSelected());
+      if(prefs!=null) prefs.putBoolean("enable_audio", enable_audio.isSelected());
     }//GEN-LAST:event_enable_audioActionPerformed
 
     private void initial_audio_levelStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_initial_audio_levelStateChanged
-        prefs.putInt("initial_audio_level", initial_audio_level.getValue() );
+        if(prefs!=null) prefs.putInt("initial_audio_level", initial_audio_level.getValue() );
         initial_audio_level_lb.setText( "Val "+initial_audio_level.getValue()+"%");
         //if(aud!=null) aud.closeAll();
         //aud = new audio(parent);
@@ -4696,11 +4697,11 @@ String sys_mac_id="";
     }//GEN-LAST:event_enable_commandsActionPerformed
 
     private void autoscale_constActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoscale_constActionPerformed
-      prefs.putBoolean("autoscale_const", autoscale_const.isSelected());
+      if(prefs!=null) prefs.putBoolean("autoscale_const", autoscale_const.isSelected());
     }//GEN-LAST:event_autoscale_constActionPerformed
 
     private void nsymbolsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nsymbolsActionPerformed
-       prefs.putInt("nsymbols", nsymbols.getSelectedIndex());
+       if(prefs!=null) prefs.putInt("nsymbols", nsymbols.getSelectedIndex());
     }//GEN-LAST:event_nsymbolsActionPerformed
 
     private void enable_conlogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enable_conlogActionPerformed
@@ -4817,7 +4818,6 @@ String sys_mac_id="";
     }//GEN-LAST:event_dmr_conventionalActionPerformed
 
     private void freq_correct_on_voiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_freq_correct_on_voiceActionPerformed
-      prefs.putBoolean("freq_correct_on_voice", freq_correct_on_voice.isSelected() );
     }//GEN-LAST:event_freq_correct_on_voiceActionPerformed
 
     private void adv_write_configActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adv_write_configActionPerformed
@@ -4838,18 +4838,17 @@ String sys_mac_id="";
     }//GEN-LAST:event_import_csvActionPerformed
 
     private void wacn_enActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wacn_enActionPerformed
-      prefs.putBoolean("wacn_en", wacn_en.isSelected() );
     }//GEN-LAST:event_wacn_enActionPerformed
 
     private void mp3_separate_filesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mp3_separate_filesActionPerformed
-     prefs.putBoolean("mp3_separate_files", mp3_separate_files.isSelected());
+     if(prefs!=null) prefs.putBoolean("mp3_separate_files", mp3_separate_files.isSelected());
     }//GEN-LAST:event_mp3_separate_filesActionPerformed
 
     private void audio_dev_listValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_audio_dev_listValueChanged
       try {
         String str = (String) audio_dev_list.getSelectedValue();
         if(str!=null) {
-          prefs.put("audio_output_device", str); 
+          if(prefs!=null) prefs.put("audio_output_device", str); 
           if(aud!=null) aud.dev_changed();
         }
       } catch(Exception e) {
@@ -4862,11 +4861,9 @@ String sys_mac_id="";
     }//GEN-LAST:event_select_homeActionPerformed
 
     private void add_tdu_silenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_tdu_silenceActionPerformed
-      prefs.putBoolean("duid_enh", duid_enh.isSelected() );
     }//GEN-LAST:event_add_tdu_silenceActionPerformed
 
     private void duid_enhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_duid_enhActionPerformed
-      prefs.putBoolean("add_tdu_silence", add_tdu_silence.isSelected() );
     }//GEN-LAST:event_duid_enhActionPerformed
 
     public void enable_voice() {
@@ -5010,8 +5007,9 @@ public void open_audio_output_files() {
 //////////////////////////////////////////////////////////////////////////////
 public void update_prefs() {
 
+  try {
     //if(prefs==null) prefs = Preferences.userRoot().node(this.getClass().getName()+"_"+sys_mac_id);
-    if(prefs==null) prefs = Preferences.userRoot().node("p25rx_"+sys_mac_id);
+    if(prefs==null) prefs = Preferences.userRoot().node(sys_mac_id);
 
     if( !prefs.getBoolean("did_new_agc1", false) ) {
       prefs.putInt("agc_gain", 50);
@@ -5032,11 +5030,6 @@ public void update_prefs() {
       mp3_separate_files.setSelected( prefs.getBoolean("mp3_separate_files", false) );
       nsymbols.setSelectedIndex( prefs.getInt("nsymbols", 0) );
 
-      duid_enh.setSelected( prefs.getBoolean("duid_enh", true) );
-      freq_correct_on_voice.setSelected( prefs.getBoolean("freq_correct_on_voice", false) );
-      add_tdu_silence.setSelected( prefs.getBoolean("add_tdu_silence", true) );
-      wacn_en.setSelected( prefs.getBoolean("wacn_en", false) );
-
       int constellation = prefs.getInt("const_select", 1);
     }
 
@@ -5049,6 +5042,9 @@ public void update_prefs() {
       home_dir = prefs.get("p25rx_home_dir", home_dir_str);
       home_dir_label.setText(home_dir);
       System.out.println("home_dir: "+home_dir);
+  } catch(Exception e) {
+    e.printStackTrace();
+  }
 }
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
