@@ -681,11 +681,14 @@ class updateTask extends java.util.TimerTask
                           Thread.sleep(100);
                           rlen=serial_port.readBytes( result, 64);
 
-                          String macid = new String(result,0,16).trim();
-                          if(macid.startsWith("0x")) {
-                            System.out.println("mac_id:"+macid +":");
-                            parent.sys_mac_id = macid;
+                          String mid = new String(result,0,16).trim();
+                          if(mid.startsWith("0x")) {
+                            System.out.println("mac_id:"+mid +":");
+                            parent.sys_mac_id = mid;
+
                             open_audio_output_files();
+                            macid.setVisible(true);
+                            macid.setText("MAC: "+sys_mac_id);
                           }
                           else {
                             System.out.println("mac_id_not_good:"+macid +":");
