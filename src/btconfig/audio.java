@@ -87,7 +87,7 @@ float initial_level=0.85f;
             int count = 0;
 
             sel_i=0;
-            String dev_str = parent.prefs.get("audio_output_device", "default");
+            String dev_str = parent.prefs.get("audio_output_device_"+parent.sys_mac_id, "default");
 
             for (Mixer.Info i : mixerInfo) {
               String mixer_str = "["+count+"]" + i.getName() + " - " + i.getDescription()+" - "+i.getVendor();
@@ -256,7 +256,7 @@ float initial_level=0.85f;
             mixer_v = new Vector();
 
             int sel_i=0;
-            String dev_str = parent.prefs.get("audio_output_device", "default");
+            String dev_str = parent.prefs.get("audio_output_device_"+parent.sys_mac_id, "default");
 
             Boolean isWindows = System.getProperty("os.name").startsWith("Windows");
 

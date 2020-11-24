@@ -268,12 +268,6 @@ class updateTask extends java.util.TimerTask
         mp3_separate_files.setSelected( false ); 
 
 
-        //keep this after prefs
-        if(aud==null && parent!=null) {
-          aud = new audio(parent);
-          if(aud!=null) aud.updateLevels();
-        }
-
         if(do_agc_update==1) {
           do_agc_update=0;
             //System.out.println(evt);
@@ -4877,7 +4871,7 @@ String sys_mac_id="";
       try {
         String str = (String) audio_dev_list.getSelectedValue();
         if(str!=null) {
-          prefs.put("audio_output_device", str); 
+          prefs.put("audio_output_device_"+sys_mac_id, str); 
           if(aud!=null) aud.dev_changed();
         }
       } catch(Exception e) {
@@ -5021,7 +5015,12 @@ public void open_audio_output_files() {
     fos_mp3 = new FileOutputStream( mp3_file, true ); 
     fos_meta = new FileOutputStream( meta_file, true ); 
     fos_conlog = new FileOutputStream( conlog_file, true ); 
-    //fos_tdma = new FileOutputStream( tdma_file, true ); 
+
+    if(aud==null && parent!=null) {
+      aud = new audio(parent);
+      if(aud!=null) aud.updateLevels();
+    }
+
   } catch(Exception e) {
     //e.printStackTrace();
   }
