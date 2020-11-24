@@ -5021,6 +5021,8 @@ public void open_audio_output_files() {
       if(aud!=null) aud.updateLevels();
     }
 
+    if(aud!=null) aud.dev_changed();
+    if(aud!=null) aud.audio_tick();
   } catch(Exception e) {
     //e.printStackTrace();
   }
