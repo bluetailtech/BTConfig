@@ -234,13 +234,16 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
     String in_line="";
 
     while(number_of_records<NRECS) {
+
       in_line = lnr.readLine();
       if(in_line==null) break;
+
+      in_line = in_line.trim();
 
       StringTokenizer st_csv = new StringTokenizer(in_line,",");
 
 
-      if(st_csv.countTokens()==7) {
+      if(st_csv.countTokens()>=7) {
 
           String str1 = st_csv.nextToken().trim();
           String str2 = st_csv.nextToken().trim();
@@ -249,6 +252,10 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
           String str5 = st_csv.nextToken().trim();
           String str6 = st_csv.nextToken().trim();
           String str7 = st_csv.nextToken().trim();
+
+          if(str7!=null && str7.length()>0 && str7.length()>7) {
+            str7 = str7.substring(0,7);
+          }
 
           int en = 0;
 
