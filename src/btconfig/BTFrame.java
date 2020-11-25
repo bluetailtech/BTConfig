@@ -105,7 +105,7 @@ class updateTask extends java.util.TimerTask
           p25_status_timeout--;
           if(p25_status_timeout==0 || do_write_config==1) {
             p25_status_timeout=1000;
-            status.setText("");
+            //status.setText("");
             l3.setText("");
             tg_indicator.setBackground(java.awt.Color.black);
             tg_indicator.setForeground(java.awt.Color.black);
@@ -2040,6 +2040,10 @@ String sys_mac_id="";
                 else {
                   l3.setText("  P25 CONTROL CHANNEL BLKS_PER_SEC "+tsbk_ps);
                   reset_session=1;
+                  if(system_alias.getText()!=null && system_alias.getText().length()>0 ) {
+                    status.setText(system_alias.getText());
+                    status.setVisible(true);
+                  }
                 }
               }
               p25_status_timeout=5000;
@@ -2060,7 +2064,7 @@ String sys_mac_id="";
                   if(city.equals("unknown")) city="";
                   if(city.contains("null")) city="";
                   if(city.contains("NULL")) city="";
-                  status.setText("    System: "+city+"  "+sys_id_str);
+                  //status.setText("    System: "+city+"  "+sys_id_str);
                   p25_status_timeout=5000;
                 }
               } catch(Exception e) {
@@ -2222,7 +2226,7 @@ String sys_mac_id="";
     void setStatus(String str) {
       if(str==null) return;
       if(str.length()==0) {
-        status.setVisible(false);
+        //status.setVisible(false);
         return;
       }
       status.setVisible(true);
@@ -2308,6 +2312,8 @@ String sys_mac_id="";
         controlchannel = new javax.swing.JRadioButton();
         conventionalchannel = new javax.swing.JRadioButton();
         os_string = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        system_alias = new javax.swing.JTextField();
         jPanel25 = new javax.swing.JPanel();
         jPanel26 = new javax.swing.JPanel();
         jPanel29 = new javax.swing.JPanel();
@@ -2873,6 +2879,10 @@ String sys_mac_id="";
 
         os_string.setText("OS: ");
         p25rxconfigpanel.add(os_string, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        jLabel11.setText("System Alias");
+        p25rxconfigpanel.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, -1, -1));
+        p25rxconfigpanel.add(system_alias, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 199, 350, 30));
 
         jTabbedPane1.addTab("P25RX Configuration", p25rxconfigpanel);
 
@@ -4506,6 +4516,8 @@ String sys_mac_id="";
       wacn.setText("");
       sysid.setText("");
       nac.setText("");
+
+      if(prefs!=null) prefs.put( "system_alias", system_alias.getText() );
     }//GEN-LAST:event_write_configActionPerformed
 
     private void backup_tgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backup_tgActionPerformed
@@ -5030,6 +5042,8 @@ public void update_prefs() {
       mp3_separate_files.setSelected( prefs.getBoolean("mp3_separate_files", false) );
       nsymbols.setSelectedIndex( prefs.getInt("nsymbols", 0) );
 
+      system_alias.setText( prefs.get("system_alias", "") );
+
       int constellation = prefs.getInt("const_select", 1);
     }
 
@@ -5269,6 +5283,7 @@ private void resizeColumns2() {
     private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -5455,6 +5470,7 @@ private void resizeColumns2() {
     private javax.swing.JLabel status;
     private javax.swing.JPanel status_panel;
     private javax.swing.JLabel sysid;
+    public javax.swing.JTextField system_alias;
     private javax.swing.JPanel talkgroup_panel;
     public javax.swing.JButton testfreqs;
     private javax.swing.JToggleButton tg_indicator;
