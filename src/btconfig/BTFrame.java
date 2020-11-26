@@ -1528,6 +1528,7 @@ String sys_mac_id="";
           if( ports[i].openPort(200) ) {
             ports[i].closePort();
             System.out.println("using ["+i+"]  "+ports[i]);
+            ser_dev.setText("PORT: "+ports[i].getSystemPortName());
             return ports[i];
           }
           else {
@@ -2563,6 +2564,7 @@ String sys_mac_id="";
         minimize = new javax.swing.JToggleButton();
         record_to_mp3 = new javax.swing.JToggleButton();
         release_date = new javax.swing.JLabel();
+        ser_dev = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -4371,6 +4373,10 @@ String sys_mac_id="";
 
         logo_panel.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 0, 360, -1));
 
+        ser_dev.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        ser_dev.setText("PORT:");
+        logo_panel.add(ser_dev, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
+
         jPanel10.add(logo_panel);
 
         getContentPane().add(jPanel10, java.awt.BorderLayout.NORTH);
@@ -5525,6 +5531,7 @@ private void resizeColumns2() {
     private javax.swing.JTextField search_radius;
     private javax.swing.JButton select_home;
     private javax.swing.JButton send_tg;
+    private javax.swing.JLabel ser_dev;
     private javax.swing.JPanel signalinsightpanel;
     public javax.swing.JLabel siteid;
     private javax.swing.JToggleButton sq_indicator;
