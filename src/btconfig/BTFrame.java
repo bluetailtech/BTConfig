@@ -5113,9 +5113,9 @@ public void restore_position() {
     Rectangle r = new Rectangle(x,y,width,height);
     setBounds(r);
 
-    if(y==200) b = true;
-    if(y==185) b = true;
-    if(y==750) b = false;
+    if(height==200) b = true;
+    if(height==185) b = true;
+    if(height==750) b = false;
 
     minimize.setSelected(b);
 
