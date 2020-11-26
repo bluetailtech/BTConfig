@@ -2565,6 +2565,9 @@ String sys_mac_id="";
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 formComponentResized(evt);
             }
+            public void componentMoved(java.awt.event.ComponentEvent evt) {
+                formComponentMoved(evt);
+            }
         });
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -4496,6 +4499,8 @@ String sys_mac_id="";
         serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
       }
 
+      save_position();
+
     }//GEN-LAST:event_formWindowClosing
 
     private void en_bluetooth_cbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_en_bluetooth_cbActionPerformed
@@ -4878,6 +4883,10 @@ String sys_mac_id="";
     private void duid_enhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_duid_enhActionPerformed
     }//GEN-LAST:event_duid_enhActionPerformed
 
+    private void formComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentMoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formComponentMoved
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5056,10 +5065,48 @@ public void update_prefs() {
       home_dir = prefs.get("p25rx_home_dir", home_dir_str);
       home_dir_label.setText(home_dir);
       System.out.println("home_dir: "+home_dir);
+
+      restore_position();
+
   } catch(Exception e) {
     e.printStackTrace();
   }
 }
+
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+public void save_position() {
+  try {
+    if(prefs==null) return;
+
+    Rectangle r = getBounds();
+
+    prefs.putInt("form_x", r.x);
+    prefs.putInt("form_y", r.y);
+    prefs.putInt("form_width", r.width);
+    prefs.putInt("form_height", r.height);
+
+  } catch(Exception e) {
+  }
+}
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+public void restore_position() {
+  try {
+    if(prefs==null) return;
+
+    int x = prefs.getInt("form_x",50);
+    int y = prefs.getInt("form_y",50);
+    int width = prefs.getInt("form_width", 1054);
+    int height = prefs.getInt("form_height",750);
+      //setSize(1054,750);
+    Rectangle r = new Rectangle(x,y,width,height);
+    setBounds(r);
+
+  } catch(Exception e) {
+  }
+}
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 void toggle_recording(Boolean isrec) {
