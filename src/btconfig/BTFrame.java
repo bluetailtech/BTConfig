@@ -1530,6 +1530,10 @@ String sys_mac_id="";
             System.out.println("using ["+i+"]  "+ports[i]);
             return ports[i];
           }
+          else {
+              System.out.println("attempting to close locked port "+ports[i]);
+              ports[i].closePort();
+          }
         }
       }
     }
@@ -5086,6 +5090,9 @@ public void save_position() {
     prefs.putInt("form_width", r.width);
     prefs.putInt("form_height", r.height);
 
+    Boolean b = minimize.isSelected();
+    prefs.putBoolean("form_min", b);
+
   } catch(Exception e) {
   }
 }
@@ -5095,6 +5102,9 @@ public void restore_position() {
   try {
     if(prefs==null) return;
 
+    Boolean b = prefs.getBoolean("form_min", false);
+
+
     int x = prefs.getInt("form_x",50);
     int y = prefs.getInt("form_y",50);
     int width = prefs.getInt("form_width", 1054);
@@ -5102,6 +5112,12 @@ public void restore_position() {
       //setSize(1054,750);
     Rectangle r = new Rectangle(x,y,width,height);
     setBounds(r);
+
+    if(y==200) b = true;
+    if(y==185) b = true;
+    if(y==750) b = false;
+
+    minimize.setSelected(b);
 
   } catch(Exception e) {
   }
