@@ -263,7 +263,7 @@ float initial_level=0.85f;
             for (Mixer.Info i : mixerInfo) {
               String mixer_str = "["+count+"]" + i.getName() + " - " + i.getDescription()+" - "+i.getVendor();
 
-              if( (isWindows && mixer_str.contains("Playback")) || !isWindows ) {
+              //if( (isWindows && mixer_str.contains("Playback")) || !isWindows ) {
 
                 if(parent.prefs!=null && dev_str!=null) {
                   if( dev_str.equals(mixer_str) ) {
@@ -272,7 +272,7 @@ float initial_level=0.85f;
                 }
                 mixer_v.addElement( mixer_str );
                 count++;
-              }
+              //}
             }
 
             //if(prev_selection!=sel_i) {

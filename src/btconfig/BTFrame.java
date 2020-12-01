@@ -586,6 +586,9 @@ class updateTask extends java.util.TimerTask
             do_update_firmware2=0;
             do_update_firmware=1;
           }
+
+          status.setText(system_alias.getText());
+          status.setVisible(true);
         }
         else if(is_connected==0 && do_connect==1) {
 
@@ -1266,7 +1269,7 @@ String sys_mac_id="";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202011290307");
-      release_date.setText("Release: 2020-11-29 0307");
+      release_date.setText("Release: 2020-11-30 2013");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
