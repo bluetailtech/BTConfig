@@ -26,6 +26,8 @@ import java.nio.*;
 import java.util.*;
 import javax.sound.sampled.*;
 import java.io.ByteArrayInputStream;
+import java.io.*;
+import javax.swing.*;
 
 import pcmsampledsp.*;
 
@@ -45,7 +47,6 @@ FloatControl src_gainControl;
 FloatControl src_volume;
 
 BTFrame parent;
-float initial_level=0.85f;
 
   byte[] dbuffer1;
   byte[] dbuffer2;
@@ -88,6 +89,10 @@ float initial_level=0.85f;
 
             sel_i=0;
             String dev_str = parent.prefs.get("audio_output_device", "default");
+            if(dev_str==null) {
+              dev_str="default";
+              parent.prefs.put("audio_output_device", "default");
+            }
 
             for (Mixer.Info i : mixerInfo) {
               String mixer_str = "["+count+"]" + i.getName() + " - " + i.getDescription()+" - "+i.getVendor();
@@ -105,7 +110,10 @@ float initial_level=0.85f;
             mixer_info = mixerInfo[ sel_i ];
             mixer = AudioSystem.getMixer( mixer_info );
 
-            if(mixer==null) System.out.println("mixer is null!!!");
+            if(mixer==null) {
+              System.out.println("mixer is null!!!");
+              JOptionPane.showMessageDialog(parent, "AudioSystem.getMixerInfo() returns null", "ok", JOptionPane.OK_OPTION);
+            }
 
             System.out.println("\r\nusing "+ mixer_info.getName() + " - " + mixer_info.getDescription()+" - "+mixer_info.getVendor());
           } catch(Exception e) {
@@ -232,38 +240,52 @@ float initial_level=0.85f;
     resamp = new Resampler( Rational.valueOf( (48000.0f/8000.0f) ) ); 
 
 
-        if(parent.is_mac_osx==1) {
-          dbuffer_size = 7680*4;
+    if(parent.is_mac_osx==1) {
+      dbuffer_size = 7680*4;
+    }
+    else if(parent.is_linux==1) {
+      dbuffer_size = 7680*4; 
+    }
+    else if(parent.is_windows==1) {
+      dbuffer_size = 7680*4; 
+    }
+    else {
+      dbuffer_size = 7680*4;
+    }
+
+    dbuffer1 = new byte[dbuffer_size];
+    dbuffer2 = new byte[dbuffer_size];
+
+
+
+    //if(!initialized) {
+      try {
+        mixerInfo = AudioSystem.getMixerInfo();
+        int count = 0;
+        mixer_v = new Vector();
+
+        int sel_i=0;
+        String dev_str = parent.prefs.get("audio_output_device", "default");
+        if(dev_str==null || mixerInfo==null) {
+          dev_str="default";
+          parent.prefs.put("audio_output_device", "default");
+
+          if(mixerInfo==null) {
+            mixer_v.addElement( new String("default (no audio devices found)") );
+          }
+          else {
+            mixer_v.addElement( new String("default") );
+          }
         }
-        else if(parent.is_linux==1) {
-          dbuffer_size = 7680*4; 
-        }
-        else {
-          dbuffer_size = 7680*4;
-        }
 
-        dbuffer1 = new byte[dbuffer_size];
-        dbuffer2 = new byte[dbuffer_size];
-
-
-        initial_level = (float) ( ((float) parent.initial_audio_level.getValue()+0.01f) ) / 100.0f;
-
-
-        //if(!initialized) {
-          try {
-            mixerInfo = AudioSystem.getMixerInfo();
-            int count = 0;
-            mixer_v = new Vector();
-
-            int sel_i=0;
-            String dev_str = parent.prefs.get("audio_output_device", "default");
-
-            Boolean isWindows = System.getProperty("os.name").startsWith("Windows");
-
+        try {
+          if(mixerInfo!=null) {
             for (Mixer.Info i : mixerInfo) {
               String mixer_str = "["+count+"]" + i.getName() + " - " + i.getDescription()+" - "+i.getVendor();
 
-              //if( (isWindows && mixer_str.contains("Playback")) || !isWindows ) {
+              //if( (parent.audio_dev_play.isSelected() && parent.is_windows==1 && mixer_str.contains("Playback")) 
+              //  || !parent.audio_dev_play.isSelected() ||
+              //     parent.is_windows==0 ) {
 
                 if(parent.prefs!=null && dev_str!=null) {
                   if( dev_str.equals(mixer_str) ) {
@@ -274,45 +296,29 @@ float initial_level=0.85f;
                 count++;
               //}
             }
+          }
+          else {
+            JOptionPane.showMessageDialog(parent, "AudioSystem.getMixerInfo() returns null", "ok", JOptionPane.OK_OPTION);
+          }
+        } catch(Exception e) {
+          e.printStackTrace();
+          StringWriter sw = new StringWriter();
+          e.printStackTrace(new PrintWriter(sw));
+          JOptionPane.showMessageDialog(parent, sw.toString(), "ok", JOptionPane.OK_OPTION);
+        }
 
-            //if(prev_selection!=sel_i) {
-              parent.audio_dev_list.setListData(mixer_v);
-              parent.audio_dev_list.setSelectedIndex( sel_i );
-              prev_selection = sel_i;
-            //}
-         } catch(Exception e) {
-            e.printStackTrace();
-         }
+     } catch(Exception e) {
+        StringWriter sw = new StringWriter();
+        e.printStackTrace(new PrintWriter(sw));
+        JOptionPane.showMessageDialog(parent, sw.toString(), "ok", JOptionPane.OK_OPTION);
+     }
+
+    parent.audio_dev_list.setListData(mixer_v);
+    parent.audio_dev_list.setSelectedIndex( sel_i );
+    prev_selection = sel_i;
 
     init();
 
-  }
-  /////////////////////////////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////////////////////////////
-  void updateLevels() {
-    try {
-      initial_level = (float) ( ((float) parent.initial_audio_level.getValue()+0.01f) ) / 100.0f;
-      if(initialized) {
-        try {
-          src_volume.setValue( 0.01f + (src_volume.getMaximum() * initial_level) );
-        } catch(Exception e) {
-        }
-        try {
-          src_gainControl.setValue( 0.01f + (src_gainControl.getMaximum() * initial_level) );
-        } catch(Exception e) {
-        }
-        try {
-          mixer_gainControl.setValue( 0.01f + (mixer_gainControl.getMaximum() * initial_level) );
-        } catch(Exception e) {
-        }
-        try {
-          mixer_volume.setValue( 0.01f + (mixer_volume.getMaximum() * initial_level) );
-        } catch(Exception e) {
-        }
-      }
-    } catch(Exception e) {
-     //e.printStackTrace();
-    }
   }
 
   /////////////////////////////////////////////////////////////////////////////////

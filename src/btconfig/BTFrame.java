@@ -1132,6 +1132,7 @@ int do_write_roaming_flash_only=0;
 int did_read_talkgroups=0;
 int is_mac_osx=0;
 int is_linux=0;
+int is_windows=0;
 int is_dmr_mode=0;
 int tsbk_ps_i=0;
 int bluetooth_streaming_timer=0;
@@ -1224,6 +1225,7 @@ String sys_mac_id="";
         isWindows=true;
           System.out.println("\r\nenabling Windows option");
           os_string.setText("OS: Windows");
+        is_windows=1;
       }
 
       //Mac OSX
@@ -1269,7 +1271,7 @@ String sys_mac_id="";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202011290307");
-      release_date.setText("Release: 2020-11-30 2013");
+      release_date.setText("Release: 2020-12-01 0820");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2262,6 +2264,7 @@ String sys_mac_id="";
         buttonGroup5 = new javax.swing.ButtonGroup();
         buttonGroup6 = new javax.swing.ButtonGroup();
         buttonGroup7 = new javax.swing.ButtonGroup();
+        buttonGroup8 = new javax.swing.ButtonGroup();
         bottom_panel = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         status_panel = new javax.swing.JPanel();
@@ -2441,9 +2444,6 @@ String sys_mac_id="";
         jPanel11 = new javax.swing.JPanel();
         enable_mp3 = new javax.swing.JCheckBox();
         enable_audio = new javax.swing.JCheckBox();
-        jLabel12 = new javax.swing.JLabel();
-        initial_audio_level = new javax.swing.JSlider();
-        initial_audio_level_lb = new javax.swing.JLabel();
         mp3_separate_files = new javax.swing.JCheckBox();
         jScrollPane3 = new javax.swing.JScrollPane();
         audio_dev_list = new javax.swing.JList<>();
@@ -2451,6 +2451,8 @@ String sys_mac_id="";
         select_home = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         home_dir_label = new javax.swing.JLabel();
+        audio_dev_play = new javax.swing.JRadioButton();
+        audio_dev_all = new javax.swing.JRadioButton();
         jPanel13 = new javax.swing.JPanel();
         freqdb_panel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
@@ -3324,6 +3326,7 @@ String sys_mac_id="";
 
         audiopanel.setLayout(new java.awt.BorderLayout());
 
+        jPanel11.setEnabled(false);
         jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         enable_mp3.setSelected(true);
@@ -3344,23 +3347,6 @@ String sys_mac_id="";
             }
         });
         jPanel11.add(enable_audio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, -1, -1));
-
-        jLabel12.setText("Initial Master Volume Level");
-        jLabel12.setEnabled(false);
-        jPanel11.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
-
-        initial_audio_level.setValue(85);
-        initial_audio_level.setEnabled(false);
-        initial_audio_level.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                initial_audio_levelStateChanged(evt);
-            }
-        });
-        jPanel11.add(initial_audio_level, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 300, -1, -1));
-
-        initial_audio_level_lb.setText("Val 85");
-        initial_audio_level_lb.setEnabled(false);
-        jPanel11.add(initial_audio_level_lb, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 300, -1, -1));
 
         mp3_separate_files.setText("Generate separate files per session  ");
         mp3_separate_files.setEnabled(false);
@@ -3405,6 +3391,27 @@ String sys_mac_id="";
 
         home_dir_label.setText("/home/p25rx");
         jPanel11.add(home_dir_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
+
+        buttonGroup8.add(audio_dev_play);
+        audio_dev_play.setText("Show Play Devices Only");
+        audio_dev_play.setEnabled(false);
+        audio_dev_play.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                audio_dev_playActionPerformed(evt);
+            }
+        });
+        jPanel11.add(audio_dev_play, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 480, -1, -1));
+
+        buttonGroup8.add(audio_dev_all);
+        audio_dev_all.setSelected(true);
+        audio_dev_all.setText("Show All Devices");
+        audio_dev_all.setEnabled(false);
+        audio_dev_all.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                audio_dev_allActionPerformed(evt);
+            }
+        });
+        jPanel11.add(audio_dev_all, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 480, -1, -1));
 
         audiopanel.add(jPanel11, java.awt.BorderLayout.CENTER);
 
@@ -4603,14 +4610,6 @@ String sys_mac_id="";
       if(prefs!=null) prefs.putBoolean("enable_audio", enable_audio.isSelected());
     }//GEN-LAST:event_enable_audioActionPerformed
 
-    private void initial_audio_levelStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_initial_audio_levelStateChanged
-        if(prefs!=null) prefs.putInt("initial_audio_level", initial_audio_level.getValue() );
-        initial_audio_level_lb.setText( "Val "+initial_audio_level.getValue()+"%");
-        //if(aud!=null) aud.closeAll();
-        //aud = new audio(parent);
-        if(aud!=null) aud.updateLevels();
-    }//GEN-LAST:event_initial_audio_levelStateChanged
-
     private void freq_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_freq_searchActionPerformed
       do_zipsearch=1;
     }//GEN-LAST:event_freq_searchActionPerformed
@@ -4904,6 +4903,14 @@ String sys_mac_id="";
         // TODO add your handling code here:
     }//GEN-LAST:event_formComponentMoved
 
+    private void audio_dev_playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_audio_dev_playActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_audio_dev_playActionPerformed
+
+    private void audio_dev_allActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_audio_dev_allActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_audio_dev_allActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5008,36 +5015,50 @@ public void do_meta() {
 //////////////////////////////////////////////////////////////////////////////
 public void open_audio_output_files() {
   try {
-    Path path = Paths.get(home_dir+"p25rx"+"/"+sys_mac_id);
+    String fs =  System.getProperty("file.separator");
+
+    Path path = Paths.get(home_dir+"p25rx"+fs+sys_mac_id);
     Files.createDirectories(path);
 
-    home_dir_label.setText(home_dir+"p25rx/"+sys_mac_id+"/");
+    home_dir_label.setText(home_dir+"p25rx"+fs+sys_mac_id+fs);
 
     String date = formatter_date.format(new java.util.Date() );
     current_date=new String(date);  //date changed
 
-    mp3_file = new File(home_dir+"p25rx/"+sys_mac_id+"/p25rx_recording_"+current_date+".mp3");
-    meta_file = new File(home_dir+"p25rx/"+sys_mac_id+"/p25rx_recmeta_"+current_date+".txt");
+    mp3_file = new File(home_dir+"p25rx"+fs+sys_mac_id+fs+"p25rx_recording_"+current_date+".mp3");
+    meta_file = new File(home_dir+"p25rx"+fs+sys_mac_id+fs+"p25rx_recmeta_"+current_date+".txt");
     //conlog_file = new File(home_dir+"p25rx_conlog_"+current_date+".txt");
     String exe_path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath().toString();
     exe_path = exe_path.replace("BTConfig.exe", "");
-    conlog_file = new File(exe_path+"p25rx_conlog_"+current_date+".txt");
     System.out.println("log file path: "+exe_path+"p25rx_conlog_"+current_date+".txt");
     //tdma_file = new File(exe_path+"p25rx_TDMA_PACKED_DIBITS_"+current_date+".bin");
 
     fos_mp3 = new FileOutputStream( mp3_file, true ); 
     fos_meta = new FileOutputStream( meta_file, true ); 
-    fos_conlog = new FileOutputStream( conlog_file, true ); 
-
-    if(aud==null && parent!=null) {
-      aud = new audio(parent);
-      if(aud!=null) aud.updateLevels();
+    try {
+      conlog_file = new File(exe_path+"p25rx_conlog_"+current_date+".txt");
+      fos_conlog = new FileOutputStream( conlog_file, true ); 
+    } catch(Exception e) {
+      e.printStackTrace();
     }
 
+  } catch(Exception e) {
+    StringWriter sw = new StringWriter();
+    e.printStackTrace(new PrintWriter(sw));
+    JOptionPane.showMessageDialog(this, sw.toString(), "ok", JOptionPane.OK_OPTION);
+  }
+
+
+  try {
+    if(aud==null && parent!=null) {
+      aud = new audio(parent);
+    }
     if(aud!=null) aud.dev_changed();
     if(aud!=null) aud.audio_tick();
   } catch(Exception e) {
-    //e.printStackTrace();
+    StringWriter sw = new StringWriter();
+    e.printStackTrace(new PrintWriter(sw));
+    JOptionPane.showMessageDialog(this, sw.toString(), "ok", JOptionPane.OK_OPTION);
   }
 }
 
@@ -5061,7 +5082,6 @@ public void update_prefs() {
 
       enable_mp3.setSelected( prefs.getBoolean("enable_mp3", true) ); 
       enable_audio.setSelected( prefs.getBoolean("enable_audio", true) ); 
-      initial_audio_level.setValue( prefs.getInt("initial_audio_level", 75) );
       auto_flash_tg.setSelected( prefs.getBoolean("tg_auto_flash", false) );
       disable_encrypted.setSelected( prefs.getBoolean("enc_auto_flash", false) );
       autoscale_const.setSelected( prefs.getBoolean("autoscale_const", true) );
@@ -5252,7 +5272,9 @@ private void resizeColumns2() {
     private javax.swing.JLabel agc_kp_lb;
     public javax.swing.JCheckBox allow_unknown_tg_cb;
     public javax.swing.JButton append_cc;
+    public javax.swing.JRadioButton audio_dev_all;
     public javax.swing.JList<String> audio_dev_list;
+    public javax.swing.JRadioButton audio_dev_play;
     private javax.swing.JPanel audiopanel;
     public javax.swing.JCheckBox auto_flash_tg;
     public javax.swing.JCheckBox autoscale_const;
@@ -5271,6 +5293,7 @@ private void resizeColumns2() {
     private javax.swing.ButtonGroup buttonGroup5;
     private javax.swing.ButtonGroup buttonGroup6;
     private javax.swing.ButtonGroup buttonGroup7;
+    private javax.swing.ButtonGroup buttonGroup8;
     public javax.swing.JRadioButton button_single_follow_tg;
     public javax.swing.JRadioButton button_single_next_roaming;
     private javax.swing.JButton button_write_config;
@@ -5344,8 +5367,6 @@ private void resizeColumns2() {
     public javax.swing.JCheckBox inc_p25;
     public javax.swing.JCheckBox inc_trunked_only;
     public javax.swing.JCheckBox inc_vhf;
-    public javax.swing.JSlider initial_audio_level;
-    private javax.swing.JLabel initial_audio_level_lb;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -5360,7 +5381,6 @@ private void resizeColumns2() {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
