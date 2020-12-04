@@ -240,18 +240,17 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
 
       in_line = in_line.trim();
 
-      StringTokenizer st_csv = new StringTokenizer(in_line,",");
+      String[] strs = in_line.split(",");
 
+      String str1 = strs[0];  
+      String str2 = strs[1]; 
+      String str3 = strs[2]; 
+      String str4 = strs[3]; 
+      String str5 = strs[4]; 
+      String str6 = strs[5]; 
+      String str7 = strs[6]; 
 
-      if(st_csv.countTokens()>=7) {
-
-          String str1 = st_csv.nextToken().trim();
-          String str2 = st_csv.nextToken().trim();
-          String str3 = st_csv.nextToken().trim();
-          String str4 = st_csv.nextToken().trim();
-          String str5 = st_csv.nextToken().trim();
-          String str6 = st_csv.nextToken().trim();
-          String str7 = st_csv.nextToken().trim();
+          System.out.println(":"+str1+":"+str2+":"+str3+":"+str4+":"+str5+":"+str6+":"+str7+":");
 
           if(str7!=null && str7.length()>0 && str7.length()>7) {
             str7 = str7.substring(0,7);
@@ -301,7 +300,6 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
           }
 
         number_of_records++;
-      }
 
     }
 
