@@ -242,13 +242,23 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
 
       String[] strs = in_line.split(",");
 
-      String str1 = strs[0];  
-      String str2 = strs[1]; 
-      String str3 = strs[2]; 
-      String str4 = strs[3]; 
-      String str5 = strs[4]; 
-      String str6 = strs[5]; 
-      String str7 = strs[6]; 
+      if(strs==null) continue;
+
+      String str1="";
+      String str2="";
+      String str3="";
+      String str4="";
+      String str5="";
+      String str6="";
+      String str7="";
+
+      if(strs[0]!=null) str1 = strs[0];  
+      if(strs[1]!=null) str2 = strs[1]; 
+      if(strs[2]!=null) str3 = strs[2]; 
+      if(strs[3]!=null) str4 = strs[3]; 
+      if(strs[4]!=null) str5 = strs[4]; 
+      if(strs[5]!=null) str6 = strs[5]; 
+      if(strs[6]!=null) str7 = strs[6]; 
 
           System.out.println(":"+str1+":"+str2+":"+str3+":"+str4+":"+str5+":"+str6+":"+str7+":");
 
