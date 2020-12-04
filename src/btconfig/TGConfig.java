@@ -72,6 +72,7 @@ public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String 
     int wacn_i = new Integer(wacn).intValue();
     if(wacn_i==0 && parent.is_dmr_mode==0) return;
   } catch(Exception e) {
+    return;
   }
 
 
@@ -240,25 +241,28 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
 
       in_line = in_line.trim();
 
-      String[] strs = in_line.split(",");
+      //String[] strs = in_line.split(",");
+      String[] strs = null;
+      
+      if(in_line!=null && in_line.length()>10) strs = in_line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 
-      if(strs==null) continue;
+      if(strs!=null) { 
 
-      String str1="";
-      String str2="";
-      String str3="";
-      String str4="";
-      String str5="";
-      String str6="";
-      String str7="";
+          String str1="";
+          String str2="";
+          String str3="";
+          String str4="";
+          String str5="";
+          String str6="";
+          String str7="";
 
-      if(strs[0]!=null) str1 = strs[0];  
-      if(strs[1]!=null) str2 = strs[1]; 
-      if(strs[2]!=null) str3 = strs[2]; 
-      if(strs[3]!=null) str4 = strs[3]; 
-      if(strs[4]!=null) str5 = strs[4]; 
-      if(strs[5]!=null) str6 = strs[5]; 
-      if(strs[6]!=null) str7 = strs[6]; 
+          if(strs[0]!=null) str1 = strs[0];  
+          if(strs[1]!=null) str2 = strs[1]; 
+          if(strs[2]!=null) str3 = strs[2]; 
+          if(strs[3]!=null) str4 = strs[3]; 
+          if(strs[4]!=null) str5 = strs[4]; 
+          if(strs[5]!=null) str6 = strs[5]; 
+          if(strs[6]!=null) str7 = strs[6]; 
 
           System.out.println(":"+str1+":"+str2+":"+str3+":"+str4+":"+str5+":"+str6+":"+str7+":");
 
@@ -310,6 +314,7 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
           }
 
         number_of_records++;
+      }
 
     }
 
