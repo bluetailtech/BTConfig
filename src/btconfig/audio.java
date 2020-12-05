@@ -264,7 +264,7 @@ BTFrame parent;
         int count = 0;
         mixer_v = new Vector();
 
-        int sel_i=0;
+        sel_i=0;
         String dev_str = parent.prefs.get("audio_output_device", "default");
         if(dev_str==null || mixerInfo==null) {
           dev_str="default";
