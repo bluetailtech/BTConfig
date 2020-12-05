@@ -645,29 +645,41 @@ class updateTask extends java.util.TimerTask
               //System.out.println("result: "+new String(result) );
 
 
-                          result=new byte[64];
-                          String mcmd = "mac_id\r\n";  
-                          serial_port.writeBytes( mcmd.getBytes(), mcmd.length(), 0);
-                          Thread.sleep(100);
-                          rlen=serial_port.readBytes( result, 64);
+              for(int i=0;i<15;i++) {
 
-                          String mid = new String(result,0,16).trim();
-                          if(mid.startsWith("0x")) {
-                            System.out.println("mac_id:"+mid +":");
-                            parent.sys_mac_id = mid;
+                  result=new byte[64];
+                  String mcmd = "mac_id\r\n";  
+                  serial_port.writeBytes( mcmd.getBytes(), mcmd.length(), 0);
+                  Thread.sleep(100);
+                  rlen=serial_port.readBytes( result, 64);
 
-                            update_prefs();
+                  String mid = new String(result,0,16).trim();
+                  if(mid.startsWith("0x")) {
+                    System.out.println("mac_id:"+mid +":");
+                    parent.sys_mac_id = mid;
 
-                            open_audio_output_files();
-                            macid.setVisible(true);
-                            macid.setText("MAC: "+sys_mac_id);
+                    update_prefs();
 
-                          }
-                          else {
-                            System.out.println("mac_id_not_good:"+mid +":");
-                            JOptionPane.showMessageDialog(parent, "Couldn't find device serial number.  Closing application.", "ok", JOptionPane.OK_OPTION);
-                            System.exit(0);
-                          }
+                    open_audio_output_files();
+                    macid.setVisible(true);
+                    macid.setText("MAC: "+sys_mac_id);
+
+                    break;
+                  }
+
+                  if(i==4) {
+                    System.out.println("mac_id_not_good:"+mid +":");
+                    JOptionPane.showMessageDialog(parent, "Couldn't find device serial number.  Closing application.", "ok", JOptionPane.OK_OPTION);
+                    System.exit(0);
+                  }
+
+                  System.out.println("error reading serial number.  Retry "+i);
+                    result=new byte[1024];
+                    cmd= new String("en_voice_send 0\r\n");
+                    serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                    Thread.sleep(100);
+                    rlen=serial_port.readBytes( result, 1024);
+              }
 
 
 
@@ -1271,7 +1283,7 @@ String sys_mac_id="";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202011290307");
-      release_date.setText("Release: 2020-12-04 1727");
+      release_date.setText("Release: 2020-12-04 2222");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
