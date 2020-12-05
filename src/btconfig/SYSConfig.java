@@ -369,6 +369,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
                           int op_mode = bb3.getInt(516);
 
+                          parent.is_dmr_mode=0;
                           if(op_mode==2) parent.is_dmr_mode=1;
 
                           if(op_mode==3) parent.freq_label.setText("FM NB Frequency");
