@@ -679,6 +679,8 @@ class updateTask extends java.util.TimerTask
                     serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                     Thread.sleep(500);
                     rlen=serial_port.readBytes( result, 4096);
+                    Thread.sleep(500);
+                    rlen=serial_port.readBytes( result, 4096);
               }
 
 
@@ -1283,7 +1285,7 @@ String sys_mac_id="";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202011290307");
-      release_date.setText("Release: 2020-12-05 0659");
+      release_date.setText("Release: 2020-12-05 1050");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
