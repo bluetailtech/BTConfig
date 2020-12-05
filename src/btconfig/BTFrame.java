@@ -1271,7 +1271,7 @@ String sys_mac_id="";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202011290307");
-      release_date.setText("Release: 2020-12-04 1657");
+      release_date.setText("Release: 2020-12-04 1727");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);

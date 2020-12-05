@@ -115,6 +115,9 @@ public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String 
       Object o1 = parent.getTableObject(i,1);
       Object o2 = parent.getTableObject(i,3);
       Object o3 = parent.getTableObject(i,6);
+
+      if(parent.is_dmr_mode==1) o3 = new String("0"); //don't pay attention to WACN for DMR
+
       if(o1!=null && o2!=null && o3!=null)  {
         first_empty_row++;
       }
