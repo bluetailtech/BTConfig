@@ -67,6 +67,29 @@ int did_crc_reset=0;
 int prev_op_mode=-1;
 
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+void do_usb_watchdog(SerialPort sp) {
+
+  try {
+    byte[] out_buffer = new byte[16+32]; //size of bl_op
+    ByteBuffer bb = ByteBuffer.wrap(out_buffer);
+    bb.order(ByteOrder.LITTLE_ENDIAN);
+
+    bb.putInt( (int) Long.parseLong("d35467A6", 16) );  //magic
+    bb.putInt( (int) Long.parseLong("9", 10) ); //usb watchdog reset
+    bb.putInt( (int) new Long((long) 0x00000000 ).longValue() );  //address to return
+    bb.putInt( (int) Long.parseLong("0", 10) );  //data len  to return
+
+    if(sp!=null) sp.writeBytes( out_buffer, 48); //16 + data len=0
+
+  } catch(Exception e) {
+    e.printStackTrace();
+  }
+}
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Boolean is_valid_freq(double freq) {
@@ -356,6 +379,10 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
                           if(is_wacn_en==1) parent.wacn_en.setSelected(true);
                               else parent.wacn_en.setSelected(false);
+
+                          int en_usb_wdog = bb3.getInt(208);
+                          if( en_usb_wdog==0 ) parent.en_usb_wdog.setSelected(false);
+                            else parent.en_usb_wdog.setSelected(true);
 
 
                           int iscontrol = bb3.getInt(36);
@@ -827,6 +854,19 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           Thread.sleep(50);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
+
+
+                          result=new byte[64];
+
+                          b = parent.en_usb_wdog.isSelected();
+                          if(b) cmd = "en_usb_wdog 1\r\n";
+                            else cmd = "en_usb_wdog 0\r\n"; 
+
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          Thread.sleep(50);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
 
 
                           result=new byte[64];

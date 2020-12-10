@@ -87,6 +87,13 @@ class updateTask extends java.util.TimerTask
         }
 
 
+        long usb_ctime = new java.util.Date().getTime();
+        if(wdog_time==0 || usb_ctime - wdog_time > 5000) {
+          wdog_time = usb_ctime;
+          if(sys_config!=null) sys_config.do_usb_watchdog(serial_port);
+          //System.out.println("\r\nusb watchdog");
+        }
+
         if(bluetooth_streaming_timer>0) {
           bluetooth_streaming_timer--;
           if(bluetooth_streaming_timer==0) {
@@ -1094,6 +1101,7 @@ int bluetooth_error=0;
 int bluetooth_blink;
 int tg_follow_blink=0;
 int tg_blink=0;
+int wd_count=0;
 int tick_mod;
 int rx_state=0;
 int skip_bytes=0;
@@ -1174,7 +1182,7 @@ String mp3_time ="";
 int tg_pri=0;
 int do_select_home_dir=0;
 String sys_mac_id="";
-
+long wdog_time=0;
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
       initComponents();
@@ -1288,8 +1296,8 @@ String sys_mac_id="";
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202012100748");
-      release_date.setText("Release: 2020-12-10 0748");
+      fw_ver.setText("Latest Avail: FW Date: 202012100940");
+      release_date.setText("Release: 2020-12-10 0940");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2556,6 +2564,7 @@ String sys_mac_id="";
         add_tdu_silence = new javax.swing.JCheckBox();
         adv_write_config = new javax.swing.JButton();
         wacn_en = new javax.swing.JCheckBox();
+        en_usb_wdog = new javax.swing.JCheckBox();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
@@ -4235,6 +4244,10 @@ String sys_mac_id="";
         });
         advancedpanel.add(wacn_en, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, -1, -1));
 
+        en_usb_wdog.setSelected(true);
+        en_usb_wdog.setText("Enable USB Watchdog");
+        advancedpanel.add(en_usb_wdog, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, -1, -1));
+
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
         signalinsightpanel.setLayout(new javax.swing.BoxLayout(signalinsightpanel, javax.swing.BoxLayout.X_AXIS));
@@ -5354,6 +5367,7 @@ private void resizeColumns2() {
     private javax.swing.JButton dmr_write_config;
     public javax.swing.JCheckBox duid_enh;
     public javax.swing.JCheckBox en_bluetooth_cb;
+    public javax.swing.JCheckBox en_usb_wdog;
     public javax.swing.JCheckBox enable_audio;
     private javax.swing.JRadioButton enable_commands;
     private javax.swing.JCheckBox enable_conlog;
