@@ -669,8 +669,12 @@ class updateTask extends java.util.TimerTask
 
                   if(i==4) {
                     System.out.println("mac_id_not_good:"+mid +":");
-                    JOptionPane.showMessageDialog(parent, "Couldn't find device serial number.  Closing application.", "ok", JOptionPane.OK_OPTION);
-                    System.exit(0);
+                    //JOptionPane.showMessageDialog(parent, "Couldn't find device serial number.  Closing application.", "ok", JOptionPane.OK_OPTION);
+                    //System.exit(0);
+                    serial_port=null;
+                    do_connect=1;
+                    is_connected=0;
+                    return;
                   }
 
                   System.out.println("error reading serial number.  Retry "+i);
@@ -1284,8 +1288,8 @@ String sys_mac_id="";
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202011290307");
-      release_date.setText("Release: 2020-12-05 1050");
+      fw_ver.setText("Latest Avail: FW Date: 202012100748");
+      release_date.setText("Release: 2020-12-10 0748");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
