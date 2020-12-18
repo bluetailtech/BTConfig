@@ -1296,8 +1296,8 @@ long wdog_time=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202012100940");
-      release_date.setText("Release: 2020-12-10 0940");
+      fw_ver.setText("Latest Avail: FW Date: 202012172051");
+      release_date.setText("Release: 2020-12-17 2051");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2845,12 +2845,12 @@ long wdog_time=0;
         no_voice_secs.setText("180");
         no_voice_panel.add(no_voice_secs);
 
-        jLabel24.setText("Seconds Of Silence ( 0 to disable)");
+        jLabel24.setText("Seconds Of Silence ( 0=Use CC IDLE)");
         no_voice_panel.add(jLabel24);
 
         p25rxconfigpanel.add(no_voice_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 360, 550, 40));
 
-        roaming.setText("Enable Roaming On Loss Of Signal");
+        roaming.setText("Enable Roaming");
         roaming.setToolTipText("This option is intended for mobile operation.  Disable if you itend to listen to a single local control channel.");
         roaming.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

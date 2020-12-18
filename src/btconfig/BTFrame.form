@@ -577,14 +577,14 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel24">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Seconds Of Silence ( 0 to disable)"/>
+                    <Property name="text" type="java.lang.String" value="Seconds Of Silence ( 0=Use CC IDLE)"/>
                   </Properties>
                 </Component>
               </SubComponents>
             </Container>
             <Component class="javax.swing.JCheckBox" name="roaming">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Enable Roaming On Loss Of Signal"/>
+                <Property name="text" type="java.lang.String" value="Enable Roaming"/>
                 <Property name="toolTipText" type="java.lang.String" value="This option is intended for mobile operation.  Disable if you itend to listen to a single local control channel."/>
               </Properties>
               <Events>
