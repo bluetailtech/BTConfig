@@ -1297,7 +1297,7 @@ long wdog_time=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202012190620");
-      release_date.setText("Release: 2020-12-19 0642");
+      release_date.setText("Release: 2020-12-19 0700");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2838,14 +2838,14 @@ long wdog_time=0;
         jLabel2.setText("<primary>");
         p25rxconfigpanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 50, -1, -1));
 
-        jLabel25.setText("Shuffle Control Channels After");
+        jLabel25.setText("Switch Control Channel After");
         no_voice_panel.add(jLabel25);
 
         no_voice_secs.setColumns(5);
         no_voice_secs.setText("180");
         no_voice_panel.add(no_voice_secs);
 
-        jLabel24.setText("Seconds Of Silence ( 0=Use CC IDLE)");
+        jLabel24.setText("Secs Of Inactivity ( 0=Use CC IDLE)");
         no_voice_panel.add(jLabel24);
 
         p25rxconfigpanel.add(no_voice_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 360, 550, 40));

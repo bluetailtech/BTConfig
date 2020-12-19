@@ -563,7 +563,7 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="jLabel25">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Shuffle Control Channels After"/>
+                    <Property name="text" type="java.lang.String" value="Switch Control Channel After"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="no_voice_secs">
@@ -577,7 +577,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel24">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Seconds Of Silence ( 0=Use CC IDLE)"/>
+                    <Property name="text" type="java.lang.String" value="Secs Of Inactivity ( 0=Use CC IDLE)"/>
                   </Properties>
                 </Component>
               </SubComponents>
