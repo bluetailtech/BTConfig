@@ -2969,7 +2969,7 @@
             <Component class="javax.swing.JCheckBox" name="en_usb_wdog">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Enable USB Watchdog"/>
+                <Property name="text" type="java.lang.String" value="Enable USB Watchdog (disable this when monitoring in stand-alone mode)"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>

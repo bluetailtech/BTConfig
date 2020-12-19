@@ -1296,8 +1296,8 @@ long wdog_time=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202012190620");
-      release_date.setText("Release: 2020-12-19 0700");
+      fw_ver.setText("Latest Avail: FW Date: 202012191116");
+      release_date.setText("Release: 2020-12-19 1116");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4245,7 +4245,7 @@ long wdog_time=0;
         advancedpanel.add(wacn_en, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, -1, -1));
 
         en_usb_wdog.setSelected(true);
-        en_usb_wdog.setText("Enable USB Watchdog");
+        en_usb_wdog.setText("Enable USB Watchdog (disable this when monitoring in stand-alone mode)");
         advancedpanel.add(en_usb_wdog, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, -1, -1));
 
         jTabbedPane1.addTab("Advanced", advancedpanel);
