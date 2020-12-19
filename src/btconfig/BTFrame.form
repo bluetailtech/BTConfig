@@ -2037,7 +2037,7 @@
                         <Column editable="true" title="LICENSE" type="java.lang.String"/>
                         <Column editable="true" title="GRANTEE" type="java.lang.String"/>
                         <Column editable="true" title="ENTITY(GOV,BUS)" type="java.lang.String"/>
-                        <Column editable="true" title="FREQ" type="java.lang.String"/>
+                        <Column editable="true" title="CC FREQ" type="java.lang.String"/>
                         <Column editable="true" title="TEST" type="java.lang.Object"/>
                         <Column editable="true" title="RESULTS" type="java.lang.String"/>
                         <Column editable="true" title="INFLASH" type="java.lang.Object"/>

@@ -1296,8 +1296,8 @@ long wdog_time=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202012172051");
-      release_date.setText("Release: 2020-12-17 2051");
+      fw_ver.setText("Latest Avail: FW Date: 202012190620");
+      release_date.setText("Release: 2020-12-19 0642");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3703,7 +3703,7 @@ long wdog_time=0;
                 {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "LICENSE", "GRANTEE", "ENTITY(GOV,BUS)", "FREQ", "TEST", "RESULTS", "INFLASH", "SRV_CLASS", "CITY", "STATE", "EMISSION"
+                "LICENSE", "GRANTEE", "ENTITY(GOV,BUS)", "CC FREQ", "TEST", "RESULTS", "INFLASH", "SRV_CLASS", "CITY", "STATE", "EMISSION"
             }
         ) {
             Class[] types = new Class [] {
