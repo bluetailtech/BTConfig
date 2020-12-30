@@ -905,13 +905,13 @@ class updateTask extends java.util.TimerTask
                   if(rx_state==0 && b[i]==(byte) 0xb2) {
                     rx_state=1;
                   }
-                  else if( (rx_state==1 && b[i]==(byte) 0x5f) || (rx_state==1 && b[i]==(byte) 0x5b) || (rx_state==1 && b[i]==(byte) 0x59) || (rx_state==1 && b[i]==(byte) 0x98)) {
+                  else if( (rx_state==1 && b[i]==(byte) 0x5f) || (rx_state==1 && b[i]==(byte) 0x5b) || (rx_state==1 && b[i]==(byte) 0x59) || (rx_state==1 && b[i]==(byte) 0x98) || (rx_state==1 && b[i]==(byte) 0x51) ) {
                     rx_state=2;
                   }
-                  else if( (rx_state==2 && b[i]==(byte) 0x9c) || (rx_state==2 && b[i]==(byte) 0x12) || (rx_state==2 && b[i]==(byte) 0xef) || (rx_state==2 && b[i]==(byte) 0x72)) {
+                  else if( (rx_state==2 && b[i]==(byte) 0x9c) || (rx_state==2 && b[i]==(byte) 0x12) || (rx_state==2 && b[i]==(byte) 0xef) || (rx_state==2 && b[i]==(byte) 0x72) || (rx_state==2 && b[i]==(byte) 0x70) ) {
                     rx_state=3;
                   }
-                  else if( (rx_state==3 && b[i]==(byte) 0x71) || (rx_state==3 && b[i]==(byte) 0xe4) || (rx_state==3 && b[i]==(byte) 0x72) || (rx_state==3 && b[i]==(byte) 0x31)) {
+                  else if( (rx_state==3 && b[i]==(byte) 0x71) || (rx_state==3 && b[i]==(byte) 0xe4) || (rx_state==3 && b[i]==(byte) 0x72) || (rx_state==3 && b[i]==(byte) 0x31) || (rx_state==3 && b[i]==(byte) 0x15) ) {
                     //addTextConsole("\r\nfound voice header");
 
                     if(b[i]==(byte) 0x71) {
@@ -927,6 +927,11 @@ class updateTask extends java.util.TimerTask
                     if(b[i]==(byte) 0x72) {
                       skip_bytes=256+1;
                       rx_state=6;
+                      //System.out.println("do tdma");
+                    }
+                    if(b[i]==(byte) 0x15) {
+                      skip_bytes=104+1;
+                      rx_state=0;
                       //System.out.println("do tdma");
                     }
 
@@ -1296,8 +1301,8 @@ long wdog_time=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202012191116");
-      release_date.setText("Release: 2020-12-19 1116");
+      fw_ver.setText("Latest Avail: FW Date: 202012301032");
+      release_date.setText("Release: 2020-12-30 1032");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
