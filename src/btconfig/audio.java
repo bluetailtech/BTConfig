@@ -46,6 +46,8 @@ FloatControl mixer_volume;
 FloatControl src_gainControl;
 FloatControl src_volume;
 
+audio_agc agc; 
+
 BTFrame parent;
 
   byte[] dbuffer1;
@@ -79,6 +81,8 @@ BTFrame parent;
   public void init() {
 
     try {
+
+        agc = new audio_agc();
 
         closeAll();
         dbuffer_mod=0;
@@ -417,6 +421,11 @@ BTFrame parent;
           int[] buffer_in = new int[ buffer.length/2 ];
           for(int i=0;i<buffer_in.length;i++) {
             buffer_in[i] = (int) bg.getShort()/2;
+          }
+
+          int[] bin = agc.update_gain_s16(buffer_in, buffer_in.length, 8000.0f, 29.0f, 0.05f);
+          for(int i=0;i<buffer_in.length;i++) {
+            buffer_in[i] = bin[i]; 
           }
 
           int[] buffer_out = new int[ buffer_in.length * 6 ];
