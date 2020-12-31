@@ -930,7 +930,7 @@ class updateTask extends java.util.TimerTask
                       //System.out.println("do tdma");
                     }
                     if(b[i]==(byte) 0x15) {
-                      skip_bytes=112+1;
+                      skip_bytes=116+1;
                       rx_state=0;
                       //System.out.println("do tdma");
                     }
@@ -1301,8 +1301,8 @@ long wdog_time=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202012301739");
-      release_date.setText("Release: 2020-12-30 1739");
+      fw_ver.setText("Latest Avail: FW Date: 202012302017");
+      release_date.setText("Release: 2020-12-30 2017");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
