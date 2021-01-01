@@ -930,7 +930,7 @@ class updateTask extends java.util.TimerTask
                       //System.out.println("do tdma");
                     }
                     if(b[i]==(byte) 0x15) {
-                      skip_bytes=116+1;
+                      skip_bytes=124+1;
                       rx_state=0;
                       //System.out.println("do tdma");
                     }
@@ -1301,8 +1301,8 @@ long wdog_time=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202101011020");
-      release_date.setText("Release: 2021-01-01 1020");
+      fw_ver.setText("Latest Avail: FW Date: 202101011503");
+      release_date.setText("Release: 2021-01-01 1508");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1318,7 +1318,7 @@ long wdog_time=0;
       jTextArea1.getCaret().setVisible(true);
       jTextArea1.getCaret().setBlinkRate(250);
       setIconImage(new javax.swing.ImageIcon(getClass().getResource("/btconfig/images/iconsmall.gif")).getImage()); // NOI18N
-      setTitle("BlueTail Technologies P25RX Configuration Software (c) 2020");
+      setTitle("BlueTail Technologies P25RX Configuration Software (c) 2020-21");
 
       rssim1 = new rssimeter();
       rssim2 = new rssimeter();
