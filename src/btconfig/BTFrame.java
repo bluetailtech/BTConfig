@@ -1301,8 +1301,8 @@ long wdog_time=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202101011503");
-      release_date.setText("Release: 2021-01-01 1508");
+      fw_ver.setText("Latest Avail: FW Date: 202101020516");
+      release_date.setText("Release: 2021-01-02 0516");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
