@@ -90,7 +90,7 @@ class updateTask extends java.util.TimerTask
         long usb_ctime = new java.util.Date().getTime();
         if(wdog_time==0 || usb_ctime - wdog_time > 5000) {
           wdog_time = usb_ctime;
-          if(sys_config!=null) sys_config.do_usb_watchdog(serial_port);
+          if(sys_config!=null && is_mac_osx==0) sys_config.do_usb_watchdog(serial_port);
           //System.out.println("\r\nusb watchdog");
         }
 
@@ -1301,8 +1301,8 @@ long wdog_time=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202101020516");
-      release_date.setText("Release: 2021-01-02 0516");
+      fw_ver.setText("Latest Avail: FW Date: 202101020904");
+      release_date.setText("Release: 2021-01-02 0904");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);

@@ -859,7 +859,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           result=new byte[64];
 
                           b = parent.en_usb_wdog.isSelected();
-                          if(b) cmd = "en_usb_wdog 1\r\n";
+                          if(b && parent.is_mac_osx==0) cmd = "en_usb_wdog 1\r\n";
                             else cmd = "en_usb_wdog 0\r\n"; 
 
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
