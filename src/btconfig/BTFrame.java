@@ -411,7 +411,7 @@ class updateTask extends java.util.TimerTask
           if(sig_meter_timeout<=0) {
             rssim1.setValue(-130,false);
             rssim2.setValue(-130,false);
-            p25_status_timeout=1;
+            p25_status_timeout=10;
             sig_meter_timeout=1000;
             //l3.setText("Desc:                          ");
             //l3.setText("");
@@ -1302,8 +1302,8 @@ long wdog_time=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202101040030");
-      release_date.setText("Release: 2021-01-04 0841");
+      fw_ver.setText("Latest Avail: FW Date: 202101040914");
+      release_date.setText("Release: 2021-01-04 0914");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1698,7 +1698,7 @@ long wdog_time=0;
       }
 
       if(console_line.contains("$TDMA")) {
-        p25_status_timeout=5000;
+        p25_status_timeout=6000;
       }
 
       if(console_line.contains("TG PRI")) {
@@ -1715,7 +1715,7 @@ long wdog_time=0;
       if(console_line.contains("sig 1")) {
         sq_indicator.setForeground( java.awt.Color.green );
         sq_indicator.setBackground( java.awt.Color.green );
-        p25_status_timeout=5000;
+        p25_status_timeout=6000;
       }
       if(console_line.contains("sig 0")) {
         sq_indicator.setForeground( java.awt.Color.black );
@@ -1807,7 +1807,7 @@ long wdog_time=0;
         try {
 
             if(console_line.contains("VOICE") || console_line.contains("rssi:") ) {
-              p25_status_timeout=5000;
+              p25_status_timeout=6000;
             }
 
             if(console_line.contains("ue 0")) {
@@ -1976,7 +1976,7 @@ long wdog_time=0;
 
             if(st1.equals("DMR")) {
               is_dmr_mode=1;
-              p25_status_timeout=5000;
+              p25_status_timeout=6000;
             }
 
             if(st1.equals("sys_id")) {
@@ -2092,7 +2092,7 @@ long wdog_time=0;
                   }
                 }
               }
-              p25_status_timeout=5000;
+              p25_status_timeout=6000;
               String city="";
               try {
 
@@ -2111,7 +2111,7 @@ long wdog_time=0;
                   if(city.contains("null")) city="";
                   if(city.contains("NULL")) city="";
                   //status.setText("    System: "+city+"  "+sys_id_str);
-                  p25_status_timeout=5000;
+                  p25_status_timeout=6000;
                 }
               } catch(Exception e) {
               }
@@ -2176,7 +2176,7 @@ long wdog_time=0;
                   if(l3_line!=null && l3_line.length()>46) l3_line = l3_line.substring(0,45);
 
                   l3.setText(l3_line);
-                  p25_status_timeout=5000;
+                  p25_status_timeout=6000;
                   break;
                 }
               }
