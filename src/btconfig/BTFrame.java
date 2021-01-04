@@ -1302,8 +1302,8 @@ long wdog_time=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202101031446");
-      release_date.setText("Release: 2021-01-03 1446");
+      fw_ver.setText("Latest Avail: FW Date: 202101040030");
+      release_date.setText("Release: 2021-01-04 0841");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4529,11 +4529,11 @@ long wdog_time=0;
 
     private void minimizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimizeActionPerformed
       if(minimize.isSelected()) {
-        if(isWindows || is_mac_osx==1) {
+        if(isWindows ) {
           setSize(1020,200);
         }
         else  {
-          setSize(1020,185);
+          setSize(1020,185);  //linux and Mac
         }
       }
       else {
