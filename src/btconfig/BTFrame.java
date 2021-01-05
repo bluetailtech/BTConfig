@@ -661,8 +661,14 @@ class updateTask extends java.util.TimerTask
                   Thread.sleep(100);
                   rlen=serial_port.readBytes( result, 64);
 
-                  String mid = new String(result,0,16).trim();
-                  if(mid.startsWith("0x")) {
+                  String mid = ""; 
+                  try {
+                    mid = mid.replace(" ","_");
+                    mid = new String(result,0,16).trim();
+                  } catch(Exception e) {
+                    mid="";
+                  }
+                  if(mid.startsWith("0x") && mid.length()==14) {
                     System.out.println("mac_id:"+mid +":");
                     parent.sys_mac_id = mid;
 
@@ -675,7 +681,7 @@ class updateTask extends java.util.TimerTask
                     break;
                   }
 
-                  if(i==4) {
+                  if(i==9) {
                     System.out.println("mac_id_not_good:"+mid +":");
                     //JOptionPane.showMessageDialog(parent, "Couldn't find device serial number.  Closing application.", "ok", JOptionPane.OK_OPTION);
                     //System.exit(0);
@@ -1302,8 +1308,8 @@ long wdog_time=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202101041531");
-      release_date.setText("Release: 2021-01-04 1531");
+      fw_ver.setText("Latest Avail: FW Date: 202101051304");
+      release_date.setText("Release: 2021-01-05 1304");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
