@@ -3922,7 +3922,7 @@ long wdog_time=0;
 
         freqdb_panel.add(jPanel19, java.awt.BorderLayout.SOUTH);
 
-        jTabbedPane1.addTab("Search DB For CCh", freqdb_panel);
+        jTabbedPane1.addTab("Search DB For CC", freqdb_panel);
 
         talkgroup_panel.setLayout(new java.awt.BorderLayout());
 

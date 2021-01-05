@@ -2009,8 +2009,8 @@
         <Container class="javax.swing.JPanel" name="freqdb_panel">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Search DB For CCh">
-                <Property name="tabTitle" type="java.lang.String" value="Search DB For CCh"/>
+              <JTabbedPaneConstraints tabName="Search DB For CC">
+                <Property name="tabTitle" type="java.lang.String" value="Search DB For CC"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
