@@ -1308,8 +1308,8 @@ long wdog_time=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202101061550");
-      release_date.setText("Release: 2021-01-06 1550");
+      fw_ver.setText("Latest Avail: FW Date: 202101070719");
+      release_date.setText("Release: 2021-01-07 0719");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2857,7 +2857,7 @@ long wdog_time=0;
         no_voice_secs.setText("180");
         no_voice_panel.add(no_voice_secs);
 
-        jLabel24.setText("Secs Of Inactivity ( 0=Use CC IDLE)");
+        jLabel24.setText("Secs Of Inactivity ( 0=On No SIG)");
         no_voice_panel.add(jLabel24);
 
         p25rxconfigpanel.add(no_voice_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 360, 550, 40));

@@ -577,7 +577,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel24">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Secs Of Inactivity ( 0=Use CC IDLE)"/>
+                    <Property name="text" type="java.lang.String" value="Secs Of Inactivity ( 0=On No SIG)"/>
                   </Properties>
                 </Component>
               </SubComponents>
