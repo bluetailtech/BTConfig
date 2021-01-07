@@ -1308,8 +1308,8 @@ long wdog_time=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202101051304");
-      release_date.setText("Release: 2021-01-05 1304");
+      fw_ver.setText("Latest Avail: FW Date: 202101061550");
+      release_date.setText("Release: 2021-01-06 1550");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4873,11 +4873,11 @@ long wdog_time=0;
       }
       if( mode == 2) {
         freq_label.setText("NXDN Frequency");
-        jTabbedPane1.setEnabledAt(3, false);
+        //jTabbedPane1.setEnabledAt(3, false);
       }
       if( mode == 3) {
         freq_label.setText("FM NB Frequency");
-        jTabbedPane1.setEnabledAt(3, false);
+        //jTabbedPane1.setEnabledAt(3, false);
       }
     }
 
