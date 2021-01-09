@@ -1195,6 +1195,7 @@ int tg_pri=0;
 int do_select_home_dir=0;
 String sys_mac_id="";
 long wdog_time=0;
+int did_freq_tests=0;
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
       initComponents();
@@ -1309,7 +1310,7 @@ long wdog_time=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202101090711");
-      release_date.setText("Release: 2021-01-09 1042");
+      release_date.setText("Release: 2021-01-09 1250");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1486,6 +1487,8 @@ long wdog_time=0;
           {
               int[] rows = freq_table.getSelectedRows();
               int flash_recs=0;
+
+              if(did_freq_tests==1) return;
 
               for(int i=0;i<250;i++) {
                 String str1 = (String) freq_table.getModel().getValueAt(i, 6);

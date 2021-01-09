@@ -97,6 +97,7 @@ public void test_selected_freqs(BTFrame parent, SerialPort serial_port) {
       return;
     }
 
+    parent.did_freq_tests=1;
 
     int[] rows = parent.freq_table.getSelectedRows();
     if(rows==null) return;
@@ -254,6 +255,7 @@ public void restore_roaming(BTFrame parent, BufferedInputStream bis, SerialPort 
 
   byte[] image_buffer = new byte[128 * 1024 * 6];
 
+  parent.did_freq_tests=0;
 
   for( int i=0; i< 128 * 1024 *6; i++) {
     image_buffer[i] = (byte) 0xff;
@@ -437,6 +439,7 @@ public void erase_roaming(BTFrame parent, SerialPort serial_port)
 
   byte[] image_buffer = new byte[128 * 1024 * 6];
 
+  parent.did_freq_tests=0;
 
   for( int i=0; i< 128 * 1024 *6; i++) {
     image_buffer[i] = (byte) 0xff;
@@ -602,6 +605,8 @@ public void write_roaming_flash(BTFrame parent, SerialPort serial_port)
   this.parent = parent;
   write_flash_only=1;
 
+  parent.did_freq_tests=0;
+
   System.out.println("write roaming flash_only");
   try {
     send_roaming(parent, serial_port, 0);
@@ -622,6 +627,7 @@ public void append_roaming(BTFrame parent, SerialPort serial_port)
 
   int config_length = 0;
   append_mode=1;
+  parent.did_freq_tests=0;
 
   try {
     get_offset_only=1;
@@ -654,6 +660,7 @@ public void send_roaming(BTFrame parent, SerialPort serial_port, int start_offse
 
   byte[] image_buffer = new byte[128 * 1024 * 6];
 
+  parent.did_freq_tests=0;
 
   for( int i=0; i< 128 * 1024 *6; i++) {
     image_buffer[i] = (byte) 0xff;
@@ -985,6 +992,8 @@ public void backup_roaming(BTFrame parent, SerialPort serial_port) {
     }
   byte[] image_buffer = new byte[128 * 1024 * 6];
 
+  parent.did_freq_tests=0;
+
   for( int i=0; i< 128 * 1024 *6; i++) {
     image_buffer[i] = (byte) 0xff;
   }
@@ -1216,6 +1225,8 @@ public void read_roaming(BTFrame parent, SerialPort serial_port)
   this.parent = parent;
 
   byte[] image_buffer = new byte[128 * 1024 * 6];
+
+  parent.did_freq_tests=0;
 
   for( int i=0; i< 128 * 1024 *6; i++) {
     image_buffer[i] = (byte) 0xff;
