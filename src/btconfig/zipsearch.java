@@ -440,7 +440,7 @@ public class zipsearch
      }
 
      if(nresults>0) {
-      parent.testfreqs.setEnabled(true);
+      if(parent.op_mode.getSelectedIndex()==0) parent.testfreqs.setEnabled(true);
       parent.use_freq_primary.setEnabled(true);
      }
 
