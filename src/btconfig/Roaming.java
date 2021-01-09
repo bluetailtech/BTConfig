@@ -956,7 +956,7 @@ public void send_roaming(BTFrame parent, SerialPort serial_port, int start_offse
           }
 
             parent.freq_table.setRowSelectionInterval(0,0);
-            set_freq_binary( parent.frequency_tf1.getText() );
+            //set_freq_binary( parent.frequency_tf1.getText() );
             return;
         }
 
@@ -1554,6 +1554,8 @@ public void set_freq_binary(String freq_d) {
     byte[] input_buffer = new byte[48];
     int rlen=0;
     while(rlen!=48) {
+      //send new freq
+      System.out.println("send new freq");
       serial_port.writeBytes( out_buffer, 48, 0); //16 + data len=0
 
         try {
@@ -1561,7 +1563,7 @@ public void set_freq_binary(String freq_d) {
           while(serial_port.bytesAvailable()<48) {
             Thread.sleep(1);
             if(count++>2000) {
-              System.out.println("freq test timeout");
+              System.out.println("test freq timeout");
               break;
             }
           }

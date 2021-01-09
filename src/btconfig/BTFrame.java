@@ -1308,8 +1308,8 @@ long wdog_time=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202101080927");
-      release_date.setText("Release: 2021-01-08 0927");
+      fw_ver.setText("Latest Avail: FW Date: 202101081654");
+      release_date.setText("Release: 2021-01-08 1654");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4869,7 +4869,7 @@ long wdog_time=0;
       }
       if( mode == 1) {
         freq_label.setText("Frequency");
-        jTabbedPane1.setEnabledAt(3, false);
+        //jTabbedPane1.setEnabledAt(3, false);
       }
       if( mode == 2) {
         freq_label.setText("NXDN Frequency");
