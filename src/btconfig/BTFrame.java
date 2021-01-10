@@ -1309,8 +1309,8 @@ int did_freq_tests=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202101091801");
-      release_date.setText("Release: 2021-01-09 1801");
+      fw_ver.setText("Latest Avail: FW Date: 202101100617");
+      release_date.setText("Release: 2021-01-10 0617");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1811,6 +1811,22 @@ int did_freq_tests=0;
         }
       }
 
+      if( console_line.contains("$SYS_INFO") && console_line.contains("nac 0x") ) {
+        StringTokenizer st = new StringTokenizer(console_line," \r\n");
+        String st1 = ""; 
+        while(st.hasMoreTokens()) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.equals("wacn")) {
+            String w = st.nextToken().trim();
+            current_wacn_id = Integer.parseInt(w.substring(2,w.length()),16);
+          }
+          if(st1!=null && st1.equals("sys_id")) {
+            String s = st.nextToken().trim();
+            current_sys_id = Integer.parseInt(s.substring(2,s.length()),16);
+          }
+        }
+      }
+
       if( (console_line.contains("DMR")) || (console_line.contains("rssi:") || console_line.contains("\r\n  ->(VOICE)")) && console_line.contains("$") ) {
 
         try {
@@ -1992,8 +2008,7 @@ int did_freq_tests=0;
               String sys_id_str = st.nextToken();
               try {
                 int sys_id = Integer.parseInt(sys_id_str.substring(2,sys_id_str.length()),16);
-                current_sys_id = sys_id;
-                if(current_sys_id!=0) {
+                if(sys_id!=0) {
                   sysid.setText("SYS_ID: "+String.format("0x%03x", current_sys_id));
                 }
                 else {
@@ -2007,8 +2022,8 @@ int did_freq_tests=0;
             if(st1.equals("wacn_id")) {
               String wacn_id = st.nextToken();
               try {
-                current_wacn_id = Integer.parseInt(wacn_id.substring(2,wacn_id.length()),16);
-                if(current_wacn_id!=0) {
+                int t_current_wacn_id = Integer.parseInt(wacn_id.substring(2,wacn_id.length()),16);
+                if(t_current_wacn_id!=0) {
                   wacn.setText("WACN: "+wacn_id); 
                 }
                 else {
