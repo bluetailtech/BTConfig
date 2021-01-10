@@ -963,7 +963,10 @@ public void send_roaming(BTFrame parent, SerialPort serial_port, int start_offse
           }
 
             parent.freq_table.setRowSelectionInterval(0,0);
-            //set_freq_binary( parent.frequency_tf1.getText() );
+            
+            if(parent.op_mode.getSelectedIndex()==0) { 
+              set_freq_binary( parent.frequency_tf1.getText() );
+            }
             return;
         }
 

@@ -1110,7 +1110,12 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                             cmd = "save\r\n";
                           }
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-                          Thread.sleep(2000);
+                          if(parent.op_mode.getSelectedIndex()==2) {
+                            Thread.sleep(2000);
+                          }
+                          else {
+                            Thread.sleep(10);
+                          }
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
                           Thread.sleep(2000);
