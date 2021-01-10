@@ -2009,7 +2009,7 @@ int did_freq_tests=0;
               try {
                 int sys_id = Integer.parseInt(sys_id_str.substring(2,sys_id_str.length()),16);
                 if(sys_id!=0) {
-                  sysid.setText("SYS_ID: "+String.format("0x%03x", current_sys_id));
+                  sysid.setText("SYS_ID: "+String.format("0x%03x", sys_id));
                 }
                 else {
                   sysid.setText("");
