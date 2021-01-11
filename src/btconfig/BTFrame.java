@@ -1196,6 +1196,8 @@ int do_select_home_dir=0;
 String sys_mac_id="";
 long wdog_time=0;
 int did_freq_tests=0;
+int sys_info_count=0;
+
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
       initComponents();
@@ -1310,7 +1312,7 @@ int did_freq_tests=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202101101043");
-      release_date.setText("Release: 2021-01-10 1043");
+      release_date.setText("Release: 2021-01-11 0712");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1663,6 +1665,7 @@ int did_freq_tests=0;
       if(command_input==1) return;
 
 
+
       if(str!=null && do_console_output==1) System.out.println(str.trim());
 
       if( enable_conlog.isSelected() ) {
@@ -1684,6 +1687,27 @@ int did_freq_tests=0;
 
       if(console_line==null) console_line = new String("");
       console_line = console_line.concat(str);
+
+      if( console_line.contains("$SYS_INFO") && !console_line.contains("nac 0x") ) {
+        if(sys_info_count++<1) return;
+        sys_info_count=0; 
+      }
+
+      if( console_line.contains("$SYS_INFO") && console_line.contains("nac 0x") ) {
+        StringTokenizer st = new StringTokenizer(console_line," \r\n");
+        String st1 = ""; 
+        while(st.hasMoreTokens()) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.equals("wacn")) {
+            String w = st.nextToken().trim();
+            current_wacn_id = Integer.parseInt(w.substring(2,w.length()),16);
+          }
+          if(st1!=null && st1.equals("sys_id")) {
+            String s = st.nextToken().trim();
+            current_sys_id = Integer.parseInt(s.substring(2,s.length()),16);
+          }
+        }
+      }
 
       int do_add=1;
 
@@ -1811,21 +1835,6 @@ int did_freq_tests=0;
         }
       }
 
-      if( console_line.contains("$SYS_INFO") && console_line.contains("nac 0x") ) {
-        StringTokenizer st = new StringTokenizer(console_line," \r\n");
-        String st1 = ""; 
-        while(st.hasMoreTokens()) {
-          st1 = st.nextToken();
-          if(st1!=null && st1.equals("wacn")) {
-            String w = st.nextToken().trim();
-            current_wacn_id = Integer.parseInt(w.substring(2,w.length()),16);
-          }
-          if(st1!=null && st1.equals("sys_id")) {
-            String s = st.nextToken().trim();
-            current_sys_id = Integer.parseInt(s.substring(2,s.length()),16);
-          }
-        }
-      }
 
       if( (console_line.contains("DMR")) || (console_line.contains("rssi:") || console_line.contains("\r\n  ->(VOICE)")) && console_line.contains("$") ) {
 
