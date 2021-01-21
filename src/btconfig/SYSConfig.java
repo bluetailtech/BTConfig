@@ -910,6 +910,12 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
 
+                          result=new byte[64];
+                          cmd = "sys_name "+parent.system_alias.getText()+"\r\n"; 
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          Thread.sleep(10);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
 
 
                           //int maxgain = parent.rfmaxgain.getSelectedIndex()+4;
