@@ -112,7 +112,7 @@ class updateTask extends java.util.TimerTask
         if(p25_status_timeout>0) {
           p25_status_timeout--;
           if(p25_status_timeout==0 || do_write_config==1) {
-            p25_status_timeout=1000;
+            p25_status_timeout=3000;
             //status.setText("");
             l3.setText("");
             tg_indicator.setBackground(java.awt.Color.black);
@@ -411,7 +411,7 @@ class updateTask extends java.util.TimerTask
           if(sig_meter_timeout<=0) {
             rssim1.setValue(-130,false);
             rssim2.setValue(-130,false);
-            p25_status_timeout=10;
+            p25_status_timeout=3000;
             sig_meter_timeout=1000;
             //l3.setText("Desc:                          ");
             //l3.setText("");
@@ -937,7 +937,7 @@ class updateTask extends java.util.TimerTask
                       //System.out.println("do tdma");
                     }
                     if(b[i]==(byte) 0x15) {
-                      skip_bytes=128+1;
+                      skip_bytes=140+1;
                       rx_state=0;
                       //System.out.println("do tdma");
                     }
@@ -1311,8 +1311,8 @@ int sys_info_count=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202101101043");
-      release_date.setText("Release: 2021-01-11 0712");
+      fw_ver.setText("Latest Avail: FW Date: 202101201726");
+      release_date.setText("Release: 2021-01-20 1726");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);

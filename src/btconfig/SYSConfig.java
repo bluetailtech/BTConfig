@@ -647,7 +647,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
                           int op_mode = parent.op_mode.getSelectedIndex();
                           if( prev_op_mode != op_mode || (op_mode!=0) ) {
-                            reset_on_save=1;
+                            //reset_on_save=1;
                           }
                           op_mode++;
 
