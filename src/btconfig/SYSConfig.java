@@ -148,6 +148,17 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
           parent.setProgress(5);
           parent.setStatus("Reading sys_config from P25RX device..."); 
 
+
+          byte[] bresult=new byte[64];
+          //stop following
+          String cmd = "f 0"+"\r\n";
+          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+          Thread.sleep(20);
+          int rlen=serial_port.readBytes( bresult, 64);
+          System.out.println("bresult: "+new String(bresult) );
+          Thread.sleep(10);
+
+
           int offset = 0;
           //while(offset<config_length) {
 
@@ -170,7 +181,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
 
               byte[] input_buffer = new byte[48];
-              int rlen=0;
+              rlen=0;
               while(rlen!=48) {
                 serial_port.writeBytes( out_buffer, 48, 0); //16 + data len=0
 
@@ -236,7 +247,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
 
               byte[] input_buffer = new byte[48];
-              int rlen=0;
+              rlen=0;
               while(rlen!=48) {
                 serial_port.writeBytes( out_buffer, 48, 0); //16 + data len=0
 
@@ -620,7 +631,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                       else {
                         try {
 
-                          String cmd = ""; 
+                          cmd = ""; 
                           parent.setStatus("writing configuration to flash..."); 
 
 
@@ -637,6 +648,14 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           byte[] result=new byte[64];
 
                           cmd = "logging -999"+"\r\n";
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          Thread.sleep(20);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+                          Thread.sleep(10);
+
+                          //stop following
+                          cmd = "f 0"+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           Thread.sleep(20);
                           rlen=serial_port.readBytes( result, 64);
@@ -1158,7 +1177,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                       //  did_crc_reset=1;
 
                         parent.setStatus("\r\nresetting device");
-                        String cmd = "system_reset\r\n";
+                        cmd = "system_reset\r\n";
                         serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
 
                         try {
