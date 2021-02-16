@@ -1312,8 +1312,8 @@ int src_uid=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202102161312");
-      release_date.setText("Release: 2021-02-16 1312");
+      fw_ver.setText("Latest Avail: FW Date: 202102161417");
+      release_date.setText("Release: 2021-02-16 1417");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1712,7 +1712,7 @@ int src_uid=0;
         }
       }
 
-      if( console_line.contains("P25_PII: SRC_UID: ") ) {
+      if( console_line.contains("P25_PII: SRC_UID: ") && console_line.contains("$") ) {
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
         while(st.hasMoreTokens()) {
