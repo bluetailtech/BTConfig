@@ -71,7 +71,8 @@ https://github.com/szechyjs/mbelib<BR>
 https://github.com/uwarc/dsd-dmr<BR>
 <BR>
 (Our port of P2 TDMA in OP25 to the C language for use in the P25RX can be found on our github page in the decoders/p25_phase_2 directory)
+<BR>
 https://github.com/osmocom/op25  
 <BR>
-https://github.com/boatbod/op25  (tone support taken from boatbod port)  
+https://github.com/boatbod/op25  (P2 tone support is from the boatbod fork)  
   
