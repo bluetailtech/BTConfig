@@ -473,6 +473,10 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                               else b=false;
                           parent.en_bluetooth_cb.setSelected(b); 
 
+                          b = false;
+                          if(bb3.getInt(236)==1) b=true;  //en_encout
+                              else b=false;
+                          parent.en_encout.setSelected(b); 
 
 
                           int bt_reset = bb3.getInt(260)/60;
@@ -908,6 +912,18 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           Thread.sleep(10);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
+
+
+                          b = parent.en_encout.isSelected();
+                          if(b) cmd = "en_encout 1\r\n";
+                            else cmd = "en_encout 0\r\n"; 
+
+                          result=new byte[64];
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          Thread.sleep(10);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
 
                           b = parent.roaming.isSelected();
                           if(b) cmd = "roaming 1\r\n";
