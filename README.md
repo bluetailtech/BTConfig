@@ -69,4 +69,9 @@ https://github.com/jgaeddert/liquid-dsp<BR>
 https://github.com/szechyjs/dsd<BR>
 https://github.com/szechyjs/mbelib<BR>
 https://github.com/uwarc/dsd-dmr<BR>
-https://github.com/osmocom/op25  (Our partial port of TDMA to C can be found on our github page in the decoders/p25_phase_2 directory)
+<BR>
+(Our port of P2 TDMA in OP25 to the C language for use in the P25RX can be found on our github page in the decoders/p25_phase_2 directory)
+https://github.com/osmocom/op25  
+<BR>
+https://github.com/boatbod/op25  (tone support taken from boatbod port)  
+  
