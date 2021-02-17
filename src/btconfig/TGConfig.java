@@ -163,13 +163,14 @@ public void disable_enc_tg(BTFrame parent, String talkgroup, String sys_id) {
 
   int tg1 = new Integer(talkgroup).intValue();
   int sys1 = new Integer(sys_id).intValue();
+  String sys_id_hex = "0x"+Integer.toString( new Integer(sys_id).intValue(), 16);
 
   for(int i=0;i<NRECS;i++) {
     try {
       Object o1 = parent.getTableObject(i,1);
       Object o2 = parent.getTableObject(i,3);
       if(o1!=null && o2!=null)  {
-        if( tg1 == ( (Integer) o2 ).intValue() && sys1 ==( (Integer) o1 ).intValue() ) {
+        if( tg1 == ( (Integer) o2 ).intValue() && sys_id_hex.contains( (String) o1) ) {
 
           if( ((String) parent.getTableObject(i,4)).contains("unknown") ) {
             if(parent.did_read_talkgroups==1 && parent.disable_encrypted.isSelected()) {

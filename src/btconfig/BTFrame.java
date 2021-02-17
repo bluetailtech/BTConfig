@@ -1198,6 +1198,7 @@ long wdog_time=0;
 int did_freq_tests=0;
 int sys_info_count=0;
 int src_uid=0;
+int is_enc=0;
 
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
@@ -1312,8 +1313,8 @@ int src_uid=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202102161417");
-      release_date.setText("Release: 2021-02-16 1417");
+      fw_ver.setText("Latest Avail: FW Date: 202102162049");
+      release_date.setText("Release: 2021-02-16 2141");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1693,10 +1694,12 @@ int src_uid=0;
         if(sys_info_count++<1) return;
         sys_info_count=0; 
         src_uid=0;
+        is_enc=0;
       }
 
       if( console_line.contains("$SYS_INFO") && console_line.contains("nac 0x") ) {
         src_uid=0;
+        is_enc=0;
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
         while(st.hasMoreTokens()) {
@@ -1942,6 +1945,7 @@ int src_uid=0;
             if(console_line.contains("Disabling talkgroup") && st1.equals("talkgroup") ) {
               String tg_id = st.nextToken();
               tg_config.disable_enc_tg(parent, tg_id, new Integer(current_sys_id).toString() );
+              is_enc=1;
             }
 
             if(st1.equals("freq") && !console_line.contains("grant") ) {
@@ -5038,15 +5042,19 @@ public void do_meta() {
 
 
     String src_uid_str = "";
+    String is_enc_str = "";
 
     if(src_uid!=0) src_uid_str = "UID "+new Integer(src_uid).toString()+",";
+
+    if(is_enc!=0) is_enc_str = "(ENC),";
+
     //meta String
     String metadata =""; 
     if(enable_mp3.isSelected()) {
-      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+mp3_file.length()+", cc_freq "+freq_str+" mhz,"+src_uid_str;
+      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+mp3_file.length()+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str;
     }
     else {
-      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+"0"+", cc_freq "+freq_str+" mhz,"+src_uid_str;
+      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+"0"+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str;
     }
 
     if(tg_pri>0) {
@@ -5082,6 +5090,8 @@ public void do_meta() {
         if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
 
         //src uid
+        if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
+        //(ENC)
         if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
 
         if(tg_pri>0) {
