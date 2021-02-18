@@ -302,7 +302,7 @@ class updateTask extends java.util.TimerTask
             chooser.setCurrentDirectory(cdir);
 
 
-            FileNameExtensionFilter filter = new FileNameExtensionFilter( "p25rx_talkgroup backups", "csv");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter( "p25rx_talkgroup backups", "csv","dsd");
             chooser.setFileFilter(filter);
             int returnVal = chooser.showDialog(parent, "Import CSV Talk Group Records");
 
