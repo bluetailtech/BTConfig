@@ -1,2 +1,3 @@
 build/
 dist
+exe/*conlog*.txt
