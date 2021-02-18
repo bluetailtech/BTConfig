@@ -154,7 +154,7 @@ public void test_selected_freqs(BTFrame parent, SerialPort serial_port) {
             try {
               int count=0;
               while(serial_port.bytesAvailable()<48) {
-                Thread.sleep(1);
+                SLEEP(1);
                 if(count++>2000) {
                   System.out.println("freq test timeout");
                   break;
@@ -343,13 +343,13 @@ public void restore_roaming(BTFrame parent, BufferedInputStream bis, SerialPort 
                 serial_port.writeBytes( out_buffer, 16+32, 0);
 
                 if(offset==0) {
-                  Thread.sleep(500);
+                  SLEEP(500);
                 }
 
                   try {
                     int count=0;
                     while(serial_port.bytesAvailable()<48) {
-                      Thread.sleep(1);
+                      SLEEP(1);
                       if(count++>500) break;
                     }
                   } catch(Exception e) {
@@ -401,7 +401,7 @@ public void restore_roaming(BTFrame parent, BufferedInputStream bis, SerialPort 
 
             //TODO: need to check for ack
             try {
-              Thread.sleep(100);
+              SLEEP(100);
             } catch(Exception e) {
             }
 
@@ -518,13 +518,13 @@ public void erase_roaming(BTFrame parent, SerialPort serial_port)
                 serial_port.writeBytes( out_buffer, 16+32, 0);
 
                 if(offset==0) {
-                  Thread.sleep(500);
+                  SLEEP(500);
                 }
 
                   try {
                     int count=0;
                     while(serial_port.bytesAvailable()<48) {
-                      Thread.sleep(1);
+                      SLEEP(1);
                       if(count++>500) break;
                     }
                   } catch(Exception e) {
@@ -568,7 +568,7 @@ public void erase_roaming(BTFrame parent, SerialPort serial_port)
 
             //TODO: need to check for ack
             try {
-              Thread.sleep(100);
+              SLEEP(100);
             } catch(Exception e) {
             }
 
@@ -877,13 +877,13 @@ public void send_roaming(BTFrame parent, SerialPort serial_port, int start_offse
                 serial_port.writeBytes( out_buffer, 16+32, 0);
 
                 if(offset==0) {
-                  Thread.sleep(500);
+                  SLEEP(500);
                 }
 
                   try {
                     int count=0;
                     while(serial_port.bytesAvailable()<48) {
-                      Thread.sleep(1);
+                      SLEEP(1);
                       if(count++>500) break;
                     }
                   } catch(Exception e) {
@@ -928,7 +928,7 @@ public void send_roaming(BTFrame parent, SerialPort serial_port, int start_offse
 
             //TODO: need to check for ack
             try {
-              Thread.sleep(100);
+              SLEEP(100);
             } catch(Exception e) {
             }
 
@@ -1079,13 +1079,13 @@ public void backup_roaming(BTFrame parent, SerialPort serial_port) {
               while(rlen!=48) {
                 serial_port.writeBytes( out_buffer, 48, 0); //16 + data len=0
                 if(offset==0) {
-                  Thread.sleep(500);
+                  SLEEP(500);
                 }
 
                   try {
                     int count=0;
                     while(serial_port.bytesAvailable()<48) {
-                      Thread.sleep(1);
+                      SLEEP(1);
                       if(count++>500) break;
                     }
                   } catch(Exception e) {
@@ -1314,13 +1314,13 @@ public void read_roaming(BTFrame parent, SerialPort serial_port)
               while(rlen!=48) {
                 serial_port.writeBytes( out_buffer, 48, 0); //16 + data len=0
                 if(offset==0) {
-                  Thread.sleep(500);
+                  SLEEP(500);
                 }
 
                   try {
                     int count=0;
                     while(serial_port.bytesAvailable()<48) {
-                      Thread.sleep(1);
+                      SLEEP(1);
                       if(count++>500) break;
                     }
                   } catch(Exception e) {
@@ -1575,7 +1575,7 @@ public void set_freq_binary(String freq_d) {
         try {
           int count=0;
           while(serial_port.bytesAvailable()<48) {
-            Thread.sleep(1);
+            SLEEP(1);
             if(count++>2000) {
               System.out.println("test freq timeout");
               break;
@@ -1612,4 +1612,12 @@ public void set_freq_binary(String freq_d) {
    }
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+private void SLEEP(long val) {
+  try {
+    Thread.sleep(val);
+  } catch(Exception e) {
+  }
+}
 }

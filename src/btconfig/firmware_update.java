@@ -95,9 +95,9 @@ int did_save=0;
             String cmd= new String("en_voice_send 0\r\n");
             serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
             cmd= new String("logging -999\r\n");
-            Thread.sleep(100);
+            SLEEP(100);
             serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-            Thread.sleep(100);
+            SLEEP(100);
             /////////////
 
 
@@ -109,7 +109,7 @@ int did_save=0;
               parent.setStatus("\r\nSearching for device.");
               //System.exit(0);
               //return;
-              Thread.sleep(100);
+              SLEEP(100);
               //parent.is_connected=0;
               //parent.do_connect=1;
               return;
@@ -168,7 +168,7 @@ int did_save=0;
               if(app_crc_valid==0) state=3;
             }
             else {
-              Thread.sleep(100);
+              SLEEP(100);
             }
 
           } //state==1
@@ -176,7 +176,7 @@ int did_save=0;
           //state switch to bootloader mode
           if(state==3 && is_bl==0) {
 
-              Thread.sleep(500);
+              SLEEP(500);
 
               parent.setStatus("\r\nsetting boot cmd to bootloader state");
 
@@ -201,7 +201,7 @@ int did_save=0;
 
               //TODO: need to check for ack
               try {
-                Thread.sleep(500);
+                SLEEP(500);
               } catch(Exception e) {
               }
 
@@ -209,7 +209,7 @@ int did_save=0;
               send_cmd("system_reset\r\n", 100);
 
               try {
-                Thread.sleep(5000);
+                SLEEP(5000);
               } catch(Exception e) {
               }
               //serial_port.closePort();
@@ -251,7 +251,7 @@ int did_save=0;
                   try {
                     int count=0;
                     while(serial_port.bytesAvailable()<48) {
-                      Thread.sleep(1);
+                      SLEEP(1);
                       if(count++>50) break;
                     }
                   } catch(Exception e) {
@@ -278,7 +278,7 @@ int did_save=0;
           if(state==2 && is_bl==1) {
 
               try {
-                Thread.sleep(500);
+                SLEEP(500);
               } catch(Exception e) {
               }
 
@@ -306,7 +306,7 @@ int did_save=0;
 
               //TODO: need to check for ack
               try {
-                Thread.sleep(500);
+                SLEEP(500);
               } catch(Exception e) {
               }
 
@@ -315,7 +315,7 @@ int did_save=0;
               send_cmd("system_reset\r\n", 10);
 
               try {
-                Thread.sleep(7000);
+                SLEEP(7000);
               } catch(Exception e) {
               }
               //serial_port.closePort();
@@ -368,7 +368,7 @@ int did_save=0;
                   try {
                     int count=0;
                     while(serial_port.bytesAvailable()<48) {
-                      Thread.sleep(1);
+                      SLEEP(1);
                       if(count++>5000) break;
                     }
                   } catch(Exception e) {
@@ -409,7 +409,7 @@ int did_save=0;
 
               //TODO: need to check for ack
               try {
-                Thread.sleep(100);
+                SLEEP(100);
               } catch(Exception e) {
               }
 
@@ -425,7 +425,7 @@ int did_save=0;
               }
 
               try {
-                Thread.sleep(5000);
+                SLEEP(5000);
               } catch(Exception e) {
               }
               //serial_port.closePort();
@@ -447,7 +447,7 @@ int did_save=0;
               send_cmd("save\r\n", 1000); //flush new changes from global_post_read() to flash memory
               did_save=1;
             }
-            Thread.sleep(1000);
+            SLEEP(1000);
 
 
             //parent.firmware_checked=1;
@@ -478,7 +478,7 @@ int did_save=0;
     int i=0;
 
       try {
-        Thread.sleep(timeout);
+        SLEEP(timeout);
       } catch(Exception e) {
         e.printStackTrace();
       }
@@ -502,7 +502,7 @@ int did_save=0;
     int i=0;
 
       try {
-        Thread.sleep(5);
+        SLEEP(5);
       } catch(Exception e) {
         e.printStackTrace();
       }
@@ -520,7 +520,7 @@ int did_save=0;
       }
 
       try {
-        Thread.sleep(5);
+        SLEEP(5);
       } catch(Exception e) {
         e.printStackTrace();
       }
@@ -530,4 +530,12 @@ int did_save=0;
     return 0;
   }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+private void SLEEP(long val) {
+  try {
+    Thread.sleep(val);
+  } catch(Exception e) {
+  }
+}
 }

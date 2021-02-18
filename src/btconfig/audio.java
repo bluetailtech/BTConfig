@@ -330,7 +330,7 @@ BTFrame parent;
     if(sourceDataLine!=null) sourceDataLine.close();
     //if(sourceDataLine!=null) sourceDataLine.removeLineListener(listener);
     try {
-      Thread.sleep(1);
+      SLEEP(1);
     } catch(Exception e) {
     }
     sourceDataLine=null;
@@ -500,4 +500,12 @@ BTFrame parent;
 
 
   }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+private void SLEEP(long val) {
+  try {
+    Thread.sleep(val);
+  } catch(Exception e) {
+  }
+}
 }

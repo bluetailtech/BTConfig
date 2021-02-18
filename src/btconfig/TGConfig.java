@@ -396,13 +396,19 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
                 serial_port.writeBytes( out_buffer, 16+32, 0);
 
                 if(offset==0) {
-                  Thread.sleep(500);
+                  try {
+                    SLEEP(500);
+                  } catch(Exception e) {
+                  }
                 }
 
                   try {
                     int count=0;
                     while(serial_port.bytesAvailable()<48) {
-                      Thread.sleep(1);
+                      try {
+                        SLEEP(1);
+                      } catch(Exception e) {
+                      }
                       if(count++>500) break;
                     }
                   } catch(Exception e) {
@@ -454,7 +460,7 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
 
             //TODO: need to check for ack
             try {
-              Thread.sleep(100);
+              SLEEP(100);
             } catch(Exception e) {
             }
 
@@ -563,13 +569,19 @@ public void restore_talkgroups(BTFrame parent, BufferedInputStream bis, SerialPo
                 serial_port.writeBytes( out_buffer, 16+32, 0);
 
                 if(offset==0) {
-                  Thread.sleep(500);
+                  try {
+                    SLEEP(500);
+                  } catch(Exception e) {
+                  }
                 }
 
                   try {
                     int count=0;
                     while(serial_port.bytesAvailable()<48) {
-                      Thread.sleep(1);
+                      try {
+                        SLEEP(1);
+                      } catch(Exception e) {
+                      }
                       if(count++>500) break;
                     }
                   } catch(Exception e) {
@@ -621,7 +633,7 @@ public void restore_talkgroups(BTFrame parent, BufferedInputStream bis, SerialPo
 
             //TODO: need to check for ack
             try {
-              Thread.sleep(100);
+              SLEEP(100);
             } catch(Exception e) {
             }
 
@@ -855,13 +867,19 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
                 serial_port.writeBytes( out_buffer, 16+32, 0);
 
                 if(offset==0) {
-                  Thread.sleep(500);
+                  try {
+                    SLEEP(500);
+                  } catch(Exception e) {
+                  }
                 }
 
                   try {
                     int count=0;
                     while(serial_port.bytesAvailable()<48) {
-                      Thread.sleep(1);
+                      try {
+                        SLEEP(1);
+                      } catch(Exception e) {
+                      }
                       if(count++>500) break;
                     }
                   } catch(Exception e) {
@@ -913,7 +931,7 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
 
             //TODO: need to check for ack
             try {
-              Thread.sleep(100);
+              SLEEP(100);
             } catch(Exception e) {
             }
 
@@ -1026,7 +1044,10 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                   try {
                     int count=0;
                     while(serial_port.bytesAvailable()<48) {
-                      Thread.sleep(1);
+                      try {
+                        SLEEP(1);
+                      } catch(Exception e) {
+                      }
                       if(count++>500) break;
                     }
                   } catch(Exception e) {
@@ -1103,13 +1124,19 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
               while(rlen!=48) {
                 serial_port.writeBytes( out_buffer, 48, 0); //16 + data len=0
                 if(offset==0) {
-                  Thread.sleep(500);
+                  try {
+                    SLEEP(500);
+                  } catch(Exception e) {
+                  }
                 }
 
                   try {
                     int count=0;
                     while(serial_port.bytesAvailable()<48) {
-                      Thread.sleep(1);
+                      try {
+                        SLEEP(1);
+                      } catch(Exception e) {
+                      }
                       if(count++>500) break;
                     }
                   } catch(Exception e) {
@@ -1414,5 +1441,13 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
   }
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+private void SLEEP(long val) {
+  try {
+    Thread.sleep(val);
+  } catch(Exception e) {
+  }
+}
 
 }

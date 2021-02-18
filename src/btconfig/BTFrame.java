@@ -187,7 +187,7 @@ class updateTask extends java.util.TimerTask
           is_connected=0;
           try {
             setStatus("device reset detected");
-            Thread.sleep(100);
+            SLEEP(100);
           } catch(Exception e) {
           }
           do_connect=1;
@@ -607,7 +607,7 @@ class updateTask extends java.util.TimerTask
 
             if(serial_port==null) {
               setStatus("\r\ndiscovering device.  Please wait...");
-              Thread.sleep(600);
+              SLEEP(600);
             }
 
             if(serial_port!=null && serial_port.openPort(200)==false) {
@@ -621,7 +621,7 @@ class updateTask extends java.util.TimerTask
               serial_port.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 500, 0);
 
               is_connected=1;
-              Thread.sleep(600);
+              SLEEP(600);
 
               check_firmware.setEnabled(true);
 
@@ -635,20 +635,20 @@ class updateTask extends java.util.TimerTask
               byte[] result=new byte[1024];
               String cmd= new String("en_voice_send 0\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-              Thread.sleep(100);
+              SLEEP(100);
               int rlen=serial_port.readBytes( result, 1024);
               //System.out.println("result: "+new String(result) );
               result=new byte[1024];
               cmd= new String("en_voice_send 0\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-              Thread.sleep(100);
+              SLEEP(100);
               rlen=serial_port.readBytes( result, 1024);
 
 
               result=new byte[64];
               cmd= new String("logging -999\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-              Thread.sleep(100);
+              SLEEP(100);
               rlen=serial_port.readBytes( result, 64);
               //System.out.println("result: "+new String(result) );
 
@@ -658,7 +658,7 @@ class updateTask extends java.util.TimerTask
                   result=new byte[64];
                   String mcmd = "mac_id\r\n";  
                   serial_port.writeBytes( mcmd.getBytes(), mcmd.length(), 0);
-                  Thread.sleep(100);
+                  SLEEP(100);
                   rlen=serial_port.readBytes( result, 64);
 
                   String mid = ""; 
@@ -695,9 +695,9 @@ class updateTask extends java.util.TimerTask
                     result=new byte[4096];
                     cmd= new String("en_voice_send 0\r\n");
                     serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-                    Thread.sleep(500);
+                    SLEEP(500);
                     rlen=serial_port.readBytes( result, 4096);
-                    Thread.sleep(500);
+                    SLEEP(500);
                     rlen=serial_port.readBytes( result, 4096);
               }
 
@@ -1313,8 +1313,8 @@ int is_enc=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202102171118");
-      release_date.setText("Release: 2021-02-17 1118");
+      fw_ver.setText("Latest Avail: FW Date: 202102180805");
+      release_date.setText("Release: 2021-02-18 0805");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5281,7 +5281,7 @@ void toggle_recording(Boolean isrec) {
   for(int i=0;i<99;i++) {
     serial_port.writeBytes( new String("en_voice_send "+recnow+"\r\n").getBytes(), 17, 0);
     try {
-      Thread.sleep(50);
+      SLEEP(50);
       if(serial_port.bytesAvailable()>29) break;
     } catch(Exception e) {
       //e.printStackTrace();
@@ -5336,6 +5336,14 @@ private void resizeColumns2() {
     column = jTableColumnModel.getColumn(i);
     int pWidth = Math.round(columnWidthPercentage2[i] * tW);
     column.setPreferredWidth(pWidth);
+  }
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+private void SLEEP(long val) {
+  try {
+    Thread.sleep(val);
+  } catch(Exception e) {
   }
 }
 
