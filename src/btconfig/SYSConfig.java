@@ -477,6 +477,9 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           parent.lineout_vol_slider.setValue( (int) vol );
                           parent.volume_label.setText( String.format("%3.2f", vol/100.0f) );
 
+                          float p25_tone_vol = bb3.getFloat(244);
+                          parent.p25_tone_vol.setText( String.format("%3.2f", p25_tone_vol) );
+
                           Boolean b = true;
                           if(bb3.getInt(88)==1) b=true;
                               else b=false;
@@ -745,6 +748,19 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           SLEEP(10);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
+
+
+                          try {
+                            result=new byte[64];
+                            cmd = "p25_tone_vol "+(float) Float.valueOf( parent.p25_tone_vol.getText() )+"\r\n";
+                            serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                            SLEEP(10);
+                            rlen=serial_port.readBytes( result, 64);
+                            System.out.println("result: "+new String(result) );
+                          } catch(Exception e) {
+                            e.printStackTrace();
+                          }
+
 
                           int agckp = parent.agc_kp.getSelectedIndex();
                           float kp = 0.0005f;

@@ -1314,8 +1314,8 @@ int is_enc=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202102190957");
-      release_date.setText("Release: 2021-02-19 0957");
+      fw_ver.setText("Latest Avail: FW Date: 202102191018");
+      release_date.setText("Release: 2021-02-19 1018");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2658,6 +2658,9 @@ int is_enc=0;
         en_encout = new javax.swing.JCheckBox();
         en_p2_tones = new javax.swing.JCheckBox();
         p25_reinit = new javax.swing.JCheckBox();
+        p25_tone_vol = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
@@ -4327,7 +4330,7 @@ int is_enc=0;
                 adv_write_configActionPerformed(evt);
             }
         });
-        advancedpanel.add(adv_write_config, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 340, -1, -1));
+        advancedpanel.add(adv_write_config, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 370, -1, -1));
 
         wacn_en.setText("Include The WACN field in talk group lookup");
         wacn_en.addActionListener(new java.awt.event.ActionListener() {
@@ -4350,7 +4353,17 @@ int is_enc=0;
 
         p25_reinit.setSelected(true);
         p25_reinit.setText("P25 Mode: Re-init P25RX after 3 minutes of not receiving a P25 sync word");
-        advancedpanel.add(p25_reinit, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, -1, -1));
+        advancedpanel.add(p25_reinit, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 330, -1, -1));
+
+        p25_tone_vol.setColumns(5);
+        p25_tone_vol.setText("0.25");
+        advancedpanel.add(p25_tone_vol, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 300, -1, -1));
+
+        jLabel12.setText("P25 Phase II Tone Volume");
+        advancedpanel.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 300, -1, -1));
+
+        jLabel13.setText("Range (0.01 to 1.0), Default 0.25");
+        advancedpanel.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 300, -1, -1));
 
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
@@ -5542,6 +5555,8 @@ private void SLEEP(long val) {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -5704,6 +5719,7 @@ private void SLEEP(long val) {
     public javax.swing.JComboBox<String> op_mode;
     private javax.swing.JLabel os_string;
     public javax.swing.JCheckBox p25_reinit;
+    public javax.swing.JTextField p25_tone_vol;
     private javax.swing.JPanel p25rxconfigpanel;
     private javax.swing.JProgressBar progbar;
     private javax.swing.JLabel progress_label;
