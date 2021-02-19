@@ -1141,6 +1141,7 @@ int current_sys_id = 0;
 int current_wacn_id = 0; 
 int do_toggle_record=1;
 int did_metadata=0;
+int meta_count=0;
 int skip_header=1;
 private Dimension parentSize;
 int do_read_config=1;
@@ -1313,8 +1314,8 @@ int is_enc=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202102180805");
-      release_date.setText("Release: 2021-02-18 0805");
+      fw_ver.setText("Latest Avail: FW Date: 202102181713");
+      release_date.setText("Release: 2021-02-18 1713");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1723,7 +1724,32 @@ int is_enc=0;
           if(st1!=null && st1.equals("SRC_UID:")) {
             if( st.hasMoreTokens() ) {
               try {
-                src_uid = Integer.parseInt(st.nextToken());
+                int src_uid_d = Integer.parseInt(st.nextToken());
+                if(did_metadata==1 && src_uid_d!=0 && src_uid_d != src_uid) {
+                  did_metadata=0;
+                }
+                src_uid = src_uid_d;
+              } catch(Exception e) {
+                src_uid = 0;
+              }
+            }
+          }
+        }
+      }
+
+      if( console_line.contains("P25_P1: SRC_UID: ") && console_line.contains("$") ) {
+        StringTokenizer st = new StringTokenizer(console_line," \r\n");
+        String st1 = ""; 
+        while(st.hasMoreTokens()) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.equals("SRC_UID:")) {
+            if( st.hasMoreTokens() ) {
+              try {
+                int src_uid_d = Integer.parseInt(st.nextToken());
+                if(did_metadata==1 && src_uid_d!=0 && src_uid_d != src_uid) {
+                  did_metadata=0;
+                }
+                src_uid = src_uid_d;
               } catch(Exception e) {
                 src_uid = 0;
               }
@@ -2108,6 +2134,7 @@ int is_enc=0;
 
             if(st1.equals("tsbk_ps")) {
               did_metadata=0;
+              meta_count=0;
               tsbk_ps = st.nextToken();
               tsbk_ps = tsbk_ps.replace(","," ").trim();
               String sys_id_str="";
@@ -5035,7 +5062,9 @@ public void update_dmr_lcn1_label() {
 //////////////////////////////////////////////////////////////////////////////
 public void do_meta() {
 
-  if(l3!=null & did_metadata==0 && l3.getText().trim().length()>0) {
+  if( did_metadata==0 ) meta_count++;
+
+  if(l3!=null & did_metadata==0 && meta_count>9 && l3.getText().trim().length()>0) {
 
     if(l3.getText().contains("CONTROL CHANNEL BLKS")) return; 
     if(l3.getText().contains("DMR BLKS_PER_SEC")) return; 
