@@ -1314,8 +1314,8 @@ int is_enc=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202102190806");
-      release_date.setText("Release: 2021-02-19 0806");
+      fw_ver.setText("Latest Avail: FW Date: 202102190855");
+      release_date.setText("Release: 2021-02-19 0855");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2656,6 +2656,7 @@ int is_enc=0;
         wacn_en = new javax.swing.JCheckBox();
         en_usb_wdog = new javax.swing.JCheckBox();
         en_encout = new javax.swing.JCheckBox();
+        en_p2_tones = new javax.swing.JCheckBox();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
@@ -4342,6 +4343,10 @@ int is_enc=0;
         en_encout.setText("Enable Encrypted Audio Output");
         advancedpanel.add(en_encout, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, -1, -1));
 
+        en_p2_tones.setSelected(true);
+        en_p2_tones.setText("Enable Phase II Tone Output");
+        advancedpanel.add(en_p2_tones, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, -1, -1));
+
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
         signalinsightpanel.setLayout(new javax.swing.BoxLayout(signalinsightpanel, javax.swing.BoxLayout.X_AXIS));
@@ -5485,6 +5490,7 @@ private void SLEEP(long val) {
     public javax.swing.JCheckBox duid_enh;
     public javax.swing.JCheckBox en_bluetooth_cb;
     public javax.swing.JCheckBox en_encout;
+    public javax.swing.JCheckBox en_p2_tones;
     public javax.swing.JCheckBox en_usb_wdog;
     public javax.swing.JCheckBox enable_audio;
     private javax.swing.JRadioButton enable_commands;
