@@ -493,6 +493,11 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                               else b=false;
                           parent.en_p2_tones.setSelected(b); 
 
+                          b = false;
+                          if(bb3.getInt(240)==1) b=true;  //p25_reinit
+                              else b=false;
+                          parent.p25_reinit.setSelected(b); 
+
 
                           int bt_reset = bb3.getInt(260)/60;
                           if(bt_reset>0 && bt_reset<5) bt_reset=10;
@@ -943,6 +948,17 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           b = parent.en_p2_tones.isSelected();
                           if(b) cmd = "en_p2_tones 1\r\n";
                             else cmd = "en_p2_tones 0\r\n"; 
+
+                          result=new byte[64];
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          SLEEP(10);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
+
+                          b = parent.p25_reinit.isSelected();
+                          if(b) cmd = "p25_reinit 1\r\n";
+                            else cmd = "p25_reinit 0\r\n"; 
 
                           result=new byte[64];
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);

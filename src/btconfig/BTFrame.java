@@ -1314,8 +1314,8 @@ int is_enc=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202102190932");
-      release_date.setText("Release: 2021-02-19 0932");
+      fw_ver.setText("Latest Avail: FW Date: 202102190957");
+      release_date.setText("Release: 2021-02-19 0957");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2657,6 +2657,7 @@ int is_enc=0;
         en_usb_wdog = new javax.swing.JCheckBox();
         en_encout = new javax.swing.JCheckBox();
         en_p2_tones = new javax.swing.JCheckBox();
+        p25_reinit = new javax.swing.JCheckBox();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
@@ -4347,6 +4348,10 @@ int is_enc=0;
         en_p2_tones.setText("Enable Phase II Tone Output");
         advancedpanel.add(en_p2_tones, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, -1, -1));
 
+        p25_reinit.setSelected(true);
+        p25_reinit.setText("P25 Mode: Re-init P25RX after 3 minutes of not receiving a P25 sync word");
+        advancedpanel.add(p25_reinit, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, -1, -1));
+
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
         signalinsightpanel.setLayout(new javax.swing.BoxLayout(signalinsightpanel, javax.swing.BoxLayout.X_AXIS));
@@ -5698,6 +5703,7 @@ private void SLEEP(long val) {
     public javax.swing.JComboBox<String> nsymbols;
     public javax.swing.JComboBox<String> op_mode;
     private javax.swing.JLabel os_string;
+    public javax.swing.JCheckBox p25_reinit;
     private javax.swing.JPanel p25rxconfigpanel;
     private javax.swing.JProgressBar progbar;
     private javax.swing.JLabel progress_label;
