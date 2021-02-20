@@ -2723,7 +2723,6 @@ String current_alias;
         jScrollPane5 = new javax.swing.JScrollPane();
         alias_table = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
-        save_alias = new javax.swing.JButton();
         export_alias = new javax.swing.JButton();
         import_alias = new javax.swing.JButton();
         advancedpanel = new javax.swing.JPanel();
@@ -4402,14 +4401,6 @@ String current_alias;
 
         alias_panel.add(jScrollPane5, java.awt.BorderLayout.CENTER);
 
-        save_alias.setText("Save Alias Config");
-        save_alias.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                save_aliasActionPerformed(evt);
-            }
-        });
-        jPanel5.add(save_alias);
-
         export_alias.setText("Export CSV");
         export_alias.setEnabled(false);
         export_alias.addActionListener(new java.awt.event.ActionListener() {
@@ -5196,10 +5187,6 @@ String current_alias;
         // TODO add your handling code here:
     }//GEN-LAST:event_audio_dev_allActionPerformed
 
-    private void save_aliasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_save_aliasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_save_aliasActionPerformed
-
     private void export_aliasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_export_aliasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_export_aliasActionPerformed
@@ -5907,7 +5894,6 @@ private void SLEEP(long val) {
     public javax.swing.JLabel rfid;
     public javax.swing.JComboBox<String> rfmaxgain;
     public javax.swing.JCheckBox roaming;
-    private javax.swing.JButton save_alias;
     private javax.swing.JTextField search_radius;
     private javax.swing.JButton select_home;
     private javax.swing.JButton send_tg;

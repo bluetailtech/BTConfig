@@ -120,6 +120,8 @@ public void addRID(BTFrame parent, String rid) {
         e.printStackTrace();
       }
     }
+    save_alias();
+
     return;  //already found this one
   }
 
@@ -153,14 +155,16 @@ public void addRID(BTFrame parent, String rid) {
   int idx = first_empty_row;
 
     try {
-
         parent.addAliasObject( rid, idx, 0);
-
-
      } catch(Exception e) {
       e.printStackTrace();
      }
 
+  save_alias();
+
+}
+
+private void save_alias() {
   try {
     if(prefs!=null) {
       for(int i=0;i<NRECS;i++) {
@@ -189,9 +193,6 @@ public void addRID(BTFrame parent, String rid) {
   } catch(Exception e) {
     e.printStackTrace();
   }
-
-
-
 }
 
 }

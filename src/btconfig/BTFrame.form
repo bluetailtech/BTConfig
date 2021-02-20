@@ -2918,14 +2918,6 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="save_alias">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Save Alias Config"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="save_aliasActionPerformed"/>
-                  </Events>
-                </Component>
                 <Component class="javax.swing.JButton" name="export_alias">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Export CSV"/>
