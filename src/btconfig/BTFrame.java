@@ -1207,6 +1207,7 @@ String current_alias;
     public BTFrame(String[] args) {
       initComponents();
 
+      alias = new Alias(this);
 
       supergroup_hash = new Hashtable();
 
@@ -1747,7 +1748,6 @@ String current_alias;
 
                 try {
                   String src_rid_str = new Integer(src_uid).toString();
-                  if(alias==null) alias = new Alias();
                   alias.addRID(this, src_rid_str);
                 } catch(Exception e) {
                   e.printStackTrace();
@@ -1794,7 +1794,6 @@ String current_alias;
                 src_uid = src_uid_d;
                 try {
                   String src_rid_str = new Integer(src_uid).toString();
-                  if(alias==null) alias = new Alias();
                   alias.addRID(this, src_rid_str);
                 } catch(Exception e) {
                   e.printStackTrace();

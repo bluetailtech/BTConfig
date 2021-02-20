@@ -32,6 +32,7 @@ import java.nio.file.Paths;
 import com.fazecast.jSerialComm.*;
 import javax.swing.filechooser.*;
 import javax.swing.*;
+import java.util.prefs.Preferences;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -40,6 +41,41 @@ class Alias
 
 java.util.Hashtable alias_hash;
 private int NRECS=8000;
+private BTFrame parent; 
+Preferences prefs;
+
+
+public Alias(BTFrame parent) {
+  this.parent = parent;
+
+  try {
+    if(alias_hash==null) alias_hash = new java.util.Hashtable();
+
+    if(prefs==null) prefs = Preferences.userRoot().node("p25rx_aliasdefs");
+
+    if(prefs!=null) {
+      for(int i=0;i<NRECS;i++) {
+        String idx_rid = i+"_rid";
+        String idx_alias = i+"_alias";
+        String rid_str = prefs.get( idx_rid, null );
+        String alias_str = prefs.get( idx_alias, null );
+
+        try {
+          if( rid_str!=null ) parent.addAliasObject(rid_str, i,0);
+        } catch(Exception e) {
+          e.printStackTrace();
+        }
+        try {
+          if( alias_str!=null ) parent.addAliasObject(alias_str, i,1);
+        } catch(Exception e) {
+          e.printStackTrace();
+        }
+      }
+    }
+  } catch(Exception e) {
+    e.printStackTrace();
+  }
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 public void addRID(BTFrame parent, String rid) {
@@ -124,6 +160,37 @@ public void addRID(BTFrame parent, String rid) {
      } catch(Exception e) {
       e.printStackTrace();
      }
+
+  try {
+    if(prefs!=null) {
+      for(int i=0;i<NRECS;i++) {
+
+        String rid_str="";
+        String alias_str="";
+
+        try {
+          rid_str = (String) parent.getAliasObject(i,0);
+        } catch(Exception e) {
+          e.printStackTrace();
+        }
+        try {
+          alias_str = (String) parent.getAliasObject(i,1);
+        } catch(Exception e) {
+          e.printStackTrace();
+        }
+
+        String idx_rid = i+"_rid";
+        String idx_alias = i+"_alias";
+        if(rid_str!=null && rid_str.length()>0) prefs.put( idx_rid, rid_str );
+        if(alias_str!=null && alias_str.length()>0) prefs.put( idx_alias, alias_str );
+
+      }
+    }
+  } catch(Exception e) {
+    e.printStackTrace();
+  }
+
+
 
 }
 
