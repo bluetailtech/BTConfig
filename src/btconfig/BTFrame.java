@@ -1752,6 +1752,25 @@ String current_alias;
                 } catch(Exception e) {
                   e.printStackTrace();
                 }
+
+                    String src_uid_str="";
+                    try {
+                      if(src_uid!=0) src_uid_str = new Integer(src_uid).toString();
+                    } catch(Exception e) {
+                      e.printStackTrace();
+                    }
+
+                    if(src_uid_str!=null && src_uid_str.length()>0 && current_alias!=null) {
+                      status.setText(system_alias.getText()+", RID: "+src_uid_str+", "+current_alias);
+                    }
+                    else if(src_uid_str!=null && src_uid_str.length()>0 ) {
+                      status.setText(system_alias.getText()+", RID: "+src_uid_str);
+                    }
+                    else {
+                      status.setText(system_alias.getText());
+                    }
+
+
               } catch(Exception e) {
                 src_uid = 0;
               }
@@ -1780,6 +1799,25 @@ String current_alias;
                 } catch(Exception e) {
                   e.printStackTrace();
                 }
+
+                    String src_uid_str="";
+                    try {
+                      if(src_uid!=0) src_uid_str = new Integer(src_uid).toString();
+                    } catch(Exception e) {
+                      e.printStackTrace();
+                    }
+
+                    if(src_uid_str!=null && src_uid_str.length()>0 && current_alias!=null) {
+                      status.setText(system_alias.getText()+", RID: "+src_uid_str+", "+current_alias);
+                    }
+                    else if(src_uid_str!=null && src_uid_str.length()>0 ) {
+                      status.setText(system_alias.getText()+", RID: "+src_uid_str);
+                    }
+                    else {
+                      status.setText(system_alias.getText());
+                    }
+
+
               } catch(Exception e) {
                 src_uid = 0;
               }
@@ -2201,13 +2239,7 @@ String current_alias;
                   l3.setText("  P25 CONTROL CHANNEL BLKS_PER_SEC "+tsbk_ps);
                   reset_session=1;
                   if(system_alias.getText()!=null && system_alias.getText().length()>0 ) {
-                    String src_uid_str="";
-                    try {
-                      if(src_uid!=0) src_uid_str = new Integer(src_uid).toString();
-                    } catch(Exception e) {
-                      e.printStackTrace();
-                    }
-                    status.setText(system_alias.getText()+", RID: "+src_uid+", "+current_alias);
+
                     status.setVisible(true);
                   }
                 }
