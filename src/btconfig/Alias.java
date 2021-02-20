@@ -71,7 +71,20 @@ public void addRID(BTFrame parent, String rid) {
     }
   }
 
-  if(alias_hash.get(rid.trim())!=null) return;  //already found this one
+  if(alias_hash.get(rid.trim())!=null) {
+    for(int i=0;i<NRECS;i++) {
+      try {
+        Object o1 = parent.getAliasObject(i,1);
+
+        if(o1!=null && ((String) o1).equals(rid.trim()) )  {
+          parent.setAlias( (String) o1 ); 
+        }
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+    }
+    return;  //already found this one
+  }
 
   //check for NAN
   try {

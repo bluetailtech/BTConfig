@@ -1201,6 +1201,8 @@ int sys_info_count=0;
 int src_uid=0;
 int is_enc=0;
 Alias alias;
+String current_alias;
+
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
       initComponents();
@@ -2362,7 +2364,11 @@ Alias alias;
         }
       }
     }
-
+    //////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////
+    void setAlias(String alias) {
+      current_alias=alias;
+    }
     //////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////
     void setProgress(int pcomplete) {
@@ -5205,6 +5211,9 @@ public void do_meta() {
 
     String src_uid_str = "";
     String is_enc_str = "";
+    String alias_str = "";
+
+    if(current_alias!=null && current_alias.length()>0) alias_str = current_alias+",";
 
     if(src_uid!=0) src_uid_str = "UID "+new Integer(src_uid).toString()+",";
 
@@ -5213,10 +5222,10 @@ public void do_meta() {
     //meta String
     String metadata =""; 
     if(enable_mp3.isSelected()) {
-      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+mp3_file.length()+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str;
+      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+mp3_file.length()+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str + alias_str;
     }
     else {
-      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+"0"+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str;
+      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+"0"+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str + alias_str;
     }
 
     if(tg_pri>0) {
@@ -5254,6 +5263,8 @@ public void do_meta() {
         //src uid
         if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
         //(ENC)
+        if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
+        //current alias
         if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
 
         if(tg_pri>0) {
