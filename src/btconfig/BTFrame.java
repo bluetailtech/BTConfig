@@ -1317,8 +1317,8 @@ String current_alias;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202102200137");
-      release_date.setText("Release: 2021-02-20 0137");
+      fw_ver.setText("Latest Avail: FW Date: 202102201409");
+      release_date.setText("Release: 2021-02-20 1409");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);

@@ -47,7 +47,10 @@ Preferences prefs;
 
 public Alias(BTFrame parent) {
   this.parent = parent;
+  read_alias();
+}
 
+private void read_alias() {
   try {
     if(alias_hash==null) alias_hash = new java.util.Hashtable();
 
@@ -84,6 +87,8 @@ public void addRID(BTFrame parent, String rid) {
   //System.out.println("Alias.addRID()");
 
   if(rid==null ) return;
+
+  read_alias();
 
   try {
     int zcheck = new Integer(rid).intValue();
