@@ -1314,8 +1314,8 @@ int is_enc=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202102191329");
-      release_date.setText("Release: 2021-02-19 1329");
+      fw_ver.setText("Latest Avail: FW Date: 202102200137");
+      release_date.setText("Release: 2021-02-20 0137");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1325,6 +1325,9 @@ int is_enc=0;
 
       freq_table.setShowHorizontalLines(true);
       freq_table.setShowVerticalLines(true);
+
+      alias_table.setShowHorizontalLines(true);
+      alias_table.setShowVerticalLines(true);
 
       keydata = new char[4096];
       keyindex=0;
@@ -2648,6 +2651,13 @@ int is_enc=0;
         button_single_follow_tg = new javax.swing.JRadioButton();
         button_single_next_roaming = new javax.swing.JRadioButton();
         button_write_config = new javax.swing.JButton();
+        alias_panel = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        alias_table = new javax.swing.JTable();
+        jPanel5 = new javax.swing.JPanel();
+        save_alias = new javax.swing.JButton();
+        export_alias = new javax.swing.JButton();
+        import_alias = new javax.swing.JButton();
         advancedpanel = new javax.swing.JPanel();
         duid_enh = new javax.swing.JCheckBox();
         freq_correct_on_voice = new javax.swing.JCheckBox();
@@ -4296,6 +4306,64 @@ int is_enc=0;
 
         jTabbedPane1.addTab("Button CFG", buttong_config);
 
+        alias_panel.setLayout(new java.awt.BorderLayout());
+
+        alias_table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        alias_table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object[8000][2],
+            new String [] {
+                "Radio ID", "Alias"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane5.setViewportView(alias_table);
+
+        alias_panel.add(jScrollPane5, java.awt.BorderLayout.CENTER);
+
+        save_alias.setText("Save Alias Config");
+        save_alias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                save_aliasActionPerformed(evt);
+            }
+        });
+        jPanel5.add(save_alias);
+
+        export_alias.setText("Export CSV");
+        export_alias.setEnabled(false);
+        export_alias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                export_aliasActionPerformed(evt);
+            }
+        });
+        jPanel5.add(export_alias);
+
+        import_alias.setText("Import CSV");
+        import_alias.setEnabled(false);
+        import_alias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                import_aliasActionPerformed(evt);
+            }
+        });
+        jPanel5.add(import_alias);
+
+        alias_panel.add(jPanel5, java.awt.BorderLayout.SOUTH);
+
+        jTabbedPane1.addTab("Alias", alias_panel);
+
         advancedpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         duid_enh.setSelected(true);
@@ -4622,6 +4690,7 @@ int is_enc=0;
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
       resizeColumns();
       resizeColumns2();
+      resizeColumns3();
       //if(minimize.isSelected()) {
        // setSize(1054,192);
       //}
@@ -5059,6 +5128,18 @@ int is_enc=0;
         // TODO add your handling code here:
     }//GEN-LAST:event_audio_dev_allActionPerformed
 
+    private void save_aliasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_save_aliasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_save_aliasActionPerformed
+
+    private void export_aliasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_export_aliasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_export_aliasActionPerformed
+
+    private void import_aliasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_import_aliasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_import_aliasActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5390,6 +5471,20 @@ private void resizeColumns2() {
     column.setPreferredWidth(pWidth);
   }
 }
+
+//SUMS 1
+float[] columnWidthPercentage3 = {0.1f, 0.9f};
+private void resizeColumns3() {
+  int tW = freq_table.getColumnModel().getTotalColumnWidth();
+  TableColumn column;
+  TableColumnModel jTableColumnModel = alias_table.getColumnModel();
+  int cantCols = jTableColumnModel.getColumnCount();
+  for (int i = 0; i < cantCols; i++) {
+    column = jTableColumnModel.getColumn(i);
+    int pWidth = Math.round(columnWidthPercentage3[i] * tW);
+    column.setPreferredWidth(pWidth);
+  }
+}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 private void SLEEP(long val) {
@@ -5441,6 +5536,8 @@ private void SLEEP(long val) {
     private javax.swing.JPanel advancedpanel;
     public javax.swing.JComboBox<String> agc_kp;
     private javax.swing.JLabel agc_kp_lb;
+    private javax.swing.JPanel alias_panel;
+    private javax.swing.JTable alias_table;
     public javax.swing.JCheckBox allow_unknown_tg_cb;
     public javax.swing.JButton append_cc;
     public javax.swing.JRadioButton audio_dev_all;
@@ -5518,6 +5615,7 @@ private void SLEEP(long val) {
     private javax.swing.JButton enable_table_rows;
     private javax.swing.JRadioButton enable_voice_const;
     public javax.swing.JButton erase_roaming;
+    private javax.swing.JButton export_alias;
     public javax.swing.JLabel freq;
     public javax.swing.JCheckBox freq_correct_on_voice;
     public javax.swing.JLabel freq_label;
@@ -5529,6 +5627,7 @@ private void SLEEP(long val) {
     public javax.swing.JLabel fw_installed;
     public javax.swing.JLabel fw_ver;
     public javax.swing.JLabel home_dir_label;
+    private javax.swing.JButton import_alias;
     private javax.swing.JButton import_csv;
     public javax.swing.JCheckBox inc_400mhz;
     public javax.swing.JCheckBox inc_700mhz;
@@ -5637,6 +5736,7 @@ private void SLEEP(long val) {
     private javax.swing.JPanel jPanel44;
     private javax.swing.JPanel jPanel46;
     private javax.swing.JPanel jPanel47;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
@@ -5644,6 +5744,7 @@ private void SLEEP(long val) {
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane7;
     public javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JSeparator jSeparator1;
@@ -5733,6 +5834,7 @@ private void SLEEP(long val) {
     public javax.swing.JLabel rfid;
     public javax.swing.JComboBox<String> rfmaxgain;
     public javax.swing.JCheckBox roaming;
+    private javax.swing.JButton save_alias;
     private javax.swing.JTextField search_radius;
     private javax.swing.JButton select_home;
     private javax.swing.JButton send_tg;
