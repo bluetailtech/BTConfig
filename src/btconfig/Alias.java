@@ -74,10 +74,11 @@ public void addRID(BTFrame parent, String rid) {
   if(alias_hash.get(rid.trim())!=null) {
     for(int i=0;i<NRECS;i++) {
       try {
-        Object o1 = parent.getAliasObject(i,1);
+        Object o1 = parent.getAliasObject(i,0);
+        Object o2 = parent.getAliasObject(i,1);
 
         if(o1!=null && ((String) o1).equals(rid.trim()) )  {
-          parent.setAlias( (String) o1 ); 
+          parent.setAlias( (String) o2 ); 
         }
       } catch(Exception e) {
         e.printStackTrace();

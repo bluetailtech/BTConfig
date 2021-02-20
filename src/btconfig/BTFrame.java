@@ -2201,7 +2201,13 @@ String current_alias;
                   l3.setText("  P25 CONTROL CHANNEL BLKS_PER_SEC "+tsbk_ps);
                   reset_session=1;
                   if(system_alias.getText()!=null && system_alias.getText().length()>0 ) {
-                    status.setText(system_alias.getText());
+                    String src_uid_str="";
+                    try {
+                      if(src_uid!=0) src_uid_str = new Integer(src_uid).toString();
+                    } catch(Exception e) {
+                      e.printStackTrace();
+                    }
+                    status.setText(system_alias.getText()+", RID: "+src_uid+", "+current_alias);
                     status.setVisible(true);
                   }
                 }
