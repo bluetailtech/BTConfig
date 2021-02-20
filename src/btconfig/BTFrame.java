@@ -1200,7 +1200,7 @@ int did_freq_tests=0;
 int sys_info_count=0;
 int src_uid=0;
 int is_enc=0;
-
+Alias alias;
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
       initComponents();
@@ -1662,6 +1662,16 @@ int is_enc=0;
     Object getTableObject(int row, int col) {
       return jTable1.getModel().getValueAt(row,col);
     }
+    //////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////
+    void addAliasObject(Object obj, int row, int col) {
+      alias_table.getModel().setValueAt(obj,row,col);
+    }
+    //////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////
+    Object getAliasObject(int row, int col) {
+      return alias_table.getModel().getValueAt(row,col);
+    }
 
 
     //////////////////////////////////////////////////////////////////////
@@ -1732,6 +1742,14 @@ int is_enc=0;
                   did_metadata=0;
                 }
                 src_uid = src_uid_d;
+
+                try {
+                  String src_rid_str = new Integer(src_uid).toString();
+                  if(alias==null) alias = new Alias();
+                  alias.addRID(this, src_rid_str);
+                } catch(Exception e) {
+                  e.printStackTrace();
+                }
               } catch(Exception e) {
                 src_uid = 0;
               }
@@ -1753,6 +1771,13 @@ int is_enc=0;
                   did_metadata=0;
                 }
                 src_uid = src_uid_d;
+                try {
+                  String src_rid_str = new Integer(src_uid).toString();
+                  if(alias==null) alias = new Alias();
+                  alias.addRID(this, src_rid_str);
+                } catch(Exception e) {
+                  e.printStackTrace();
+                }
               } catch(Exception e) {
                 src_uid = 0;
               }
