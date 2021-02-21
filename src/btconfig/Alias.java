@@ -45,11 +45,13 @@ private BTFrame parent;
 Preferences prefs;
 
 
-public Alias(BTFrame parent) {
+public Alias(BTFrame parent, String sys_mac) {
   this.parent = parent;
   alias_hash = new java.util.Hashtable();
-  prefs = Preferences.userRoot().node("p25rx_aliasdef");
-  System.out.println( "prefs:" + prefs.toString() );
+  //prefs = Preferences.userRoot().node("p25rx_aliasdef");
+  //prefs = Preferences.userRoot().node("0x123456789");
+  //System.out.println( "prefs:" + prefs.toString() );
+  prefs = Preferences.userRoot().node(sys_mac);
   read_alias();
 }
 
@@ -88,7 +90,6 @@ public void addRID(BTFrame parent, String rid) {
 
   if(rid==null ) return;
 
-  read_alias();
 
   try {
     int zcheck = new Integer(rid).intValue();
@@ -172,6 +173,7 @@ public void addRID(BTFrame parent, String rid) {
 private void save_alias() {
   try {
     if(prefs!=null) {
+
       for(int i=0;i<NRECS;i++) {
 
         String rid_str="";
@@ -195,6 +197,8 @@ private void save_alias() {
 
       }
     }
+
+    prefs.flush();
   } catch(Exception e) {
     e.printStackTrace();
   }

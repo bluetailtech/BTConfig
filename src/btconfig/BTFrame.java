@@ -1207,7 +1207,6 @@ String current_alias;
     public BTFrame(String[] args) {
       initComponents();
 
-      alias = new Alias(this);
 
       supergroup_hash = new Hashtable();
 
@@ -1318,7 +1317,7 @@ String current_alias;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202102201814");
-      release_date.setText("Release: 2021-02-20 1814");
+      release_date.setText("Release: 2021-02-20 1916");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5383,7 +5382,7 @@ public void update_prefs() {
     //if(prefs==null) prefs = Preferences.userRoot().node(this.getClass().getName()+"_"+sys_mac_id);
     System.out.println("sys_mac_id: "+sys_mac_id);
     if(prefs==null) prefs = Preferences.userRoot().node(sys_mac_id);
-    System.out.println("prefs:"+ prefs.toString());
+    alias = new Alias(this, sys_mac_id);
 
     if( !prefs.getBoolean("did_new_agc1", false) ) {
       prefs.putInt("agc_gain", 50);
