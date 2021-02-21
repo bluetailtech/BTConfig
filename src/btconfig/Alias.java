@@ -47,14 +47,13 @@ Preferences prefs;
 
 public Alias(BTFrame parent) {
   this.parent = parent;
+  alias_hash = new java.util.Hashtable();
+  prefs = Preferences.userRoot().node("p25rx_aliasdef");
   read_alias();
 }
 
 private void read_alias() {
   try {
-    if(alias_hash==null) alias_hash = new java.util.Hashtable();
-
-    if(prefs==null) prefs = Preferences.userRoot().node("p25rx_aliasdefs");
 
     if(prefs!=null) {
       for(int i=0;i<NRECS;i++) {

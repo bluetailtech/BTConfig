@@ -1317,8 +1317,8 @@ String current_alias;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202102201409");
-      release_date.setText("Release: 2021-02-20 1409");
+      fw_ver.setText("Latest Avail: FW Date: 202102201737");
+      release_date.setText("Release: 2021-02-20 1737");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1732,12 +1732,12 @@ String current_alias;
         }
       }
 
-      if( console_line.contains("P25_PII: SRC_UID: ") && console_line.contains("$") ) {
+      if( console_line.contains("P25_PII: SRC_RID: ") && console_line.contains("$") ) {
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
         while(st.hasMoreTokens()) {
           st1 = st.nextToken();
-          if(st1!=null && st1.equals("SRC_UID:")) {
+          if(st1!=null && st1.equals("SRC_RID:")) {
             if( st.hasMoreTokens() ) {
               try {
                 int src_uid_d = Integer.parseInt(st.nextToken());
@@ -1779,12 +1779,12 @@ String current_alias;
         }
       }
 
-      if( console_line.contains("P25_P1: SRC_UID: ") && console_line.contains("$") ) {
+      if( console_line.contains("P25_P1: SRC_RID: ") && console_line.contains("$") ) {
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
         while(st.hasMoreTokens()) {
           st1 = st.nextToken();
-          if(st1!=null && st1.equals("SRC_UID:")) {
+          if(st1!=null && st1.equals("SRC_RID:")) {
             if( st.hasMoreTokens() ) {
               try {
                 int src_uid_d = Integer.parseInt(st.nextToken());
@@ -4386,7 +4386,7 @@ String current_alias;
         alias_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object[8000][2],
             new String [] {
-                "Radio ID", "Alias"
+                "Radio ID", "Alias_And_Comments"
             }
         ) {
             Class[] types = new Class [] {
@@ -5239,7 +5239,7 @@ public void do_meta() {
 
     if(current_alias!=null && current_alias.length()>0) alias_str = current_alias+",";
 
-    if(src_uid!=0) src_uid_str = "UID "+new Integer(src_uid).toString()+",";
+    if(src_uid!=0) src_uid_str = "RID "+new Integer(src_uid).toString()+",";
 
     if(is_enc!=0) is_enc_str = "(ENC),";
 
