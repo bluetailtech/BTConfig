@@ -2905,6 +2905,7 @@
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="        alias_table.setModel(new javax.swing.table.DefaultTableModel(&#xa;            new Object[8000][2],&#xa;            new String [] {&#xa;                &quot;Radio ID&quot;, &quot;Alias_And_Comments&quot;&#xa;            }&#xa;        ) {&#xa;            Class[] types = new Class [] {&#xa;                java.lang.String.class, java.lang.String.class&#xa;            };&#xa;&#xa;            public Class getColumnClass(int columnIndex) {&#xa;                return types [columnIndex];&#xa;            }&#xa;        });"/>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
               </SubComponents>

@@ -43,6 +43,9 @@ java.util.Hashtable alias_hash;
 private int NRECS=8000;
 private BTFrame parent; 
 Preferences prefs;
+int[] recent_rows;
+int recent_idx=0;
+int previous_rid;
 
 
 public Alias(BTFrame parent, String sys_mac) {
@@ -53,6 +56,17 @@ public Alias(BTFrame parent, String sys_mac) {
   //System.out.println( "prefs:" + prefs.toString() );
   prefs = Preferences.userRoot().node(sys_mac);
   read_alias();
+  recent_rows = new int[8];
+  recent_rows[0]=-1;
+  recent_rows[1]=-1;
+  recent_rows[2]=-1;
+  recent_rows[3]=-1;
+  recent_rows[4]=-1;
+  recent_rows[5]=-1;
+  recent_rows[6]=-1;
+  recent_rows[7]=-1;
+  parent.alias_table.setRowSelectionAllowed(true);
+  parent.alias_table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 }
 
 private void read_alias() {
@@ -114,19 +128,38 @@ public void addRID(BTFrame parent, String rid) {
   }
 
   if(alias_hash.get(rid.trim())!=null) {
-    for(int i=0;i<NRECS;i++) {
+    int i=0;
+    for(i=0;i<NRECS;i++) {
       try {
         Object o1 = parent.getAliasObject(i,0);
         Object o2 = parent.getAliasObject(i,1);
 
         if(o1!=null && ((String) o1).equals(rid.trim()) )  {
           parent.setAlias( (String) o2 ); 
+          break;
         }
       } catch(Exception e) {
         e.printStackTrace();
       }
     }
     save_alias();
+    
+    recent_rows[recent_idx++]=i;
+    recent_idx = (recent_idx&0x7);
+
+    //parent.alias_table.scrollRectToVisible(new java.awt.Rectangle(parent.alias_table.getCellRect(i, 0, true)));
+
+    if(i!=previous_rid) {
+      for(int n=0;n<8;n++) {
+        if(n==i) {
+          if(recent_rows[n]>=0) parent.alias_table.setRowSelectionInterval(recent_rows[n],recent_rows[n]);
+        }
+        else {
+          if(recent_rows[n]>=0) parent.alias_table.addRowSelectionInterval(recent_rows[n],recent_rows[n]);
+        }
+      }
+    }
+    previous_rid=i;
 
     return;  //already found this one
   }
@@ -165,6 +198,22 @@ public void addRID(BTFrame parent, String rid) {
      } catch(Exception e) {
       e.printStackTrace();
      }
+
+    recent_rows[recent_idx++]=first_empty_row;
+    recent_idx = (recent_idx&0x3);
+    //parent.alias_table.scrollRectToVisible(new java.awt.Rectangle(parent.alias_table.getCellRect(first_empty_row, 0, true)));
+
+  if(first_empty_row!=previous_rid) {
+    for(int n=0;n<8;n++) {
+      if(n==first_empty_row) {
+        if(recent_rows[n]>=0) parent.alias_table.setRowSelectionInterval(recent_rows[n],recent_rows[n]);
+      }
+      else {
+        if(recent_rows[n]>=0) parent.alias_table.addRowSelectionInterval(recent_rows[n],recent_rows[n]);
+      }
+    }
+  }
+  previous_rid = first_empty_row;
 
   save_alias();
 

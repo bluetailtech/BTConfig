@@ -1317,7 +1317,7 @@ String current_alias;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202102201814");
-      release_date.setText("Release: 2021-02-20 1916");
+      release_date.setText("Release: 2021-02-21 1144");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5607,7 +5607,7 @@ private void SLEEP(long val) {
     public javax.swing.JComboBox<String> agc_kp;
     private javax.swing.JLabel agc_kp_lb;
     private javax.swing.JPanel alias_panel;
-    private javax.swing.JTable alias_table;
+    public javax.swing.JTable alias_table;
     public javax.swing.JCheckBox allow_unknown_tg_cb;
     public javax.swing.JButton append_cc;
     public javax.swing.JRadioButton audio_dev_all;
