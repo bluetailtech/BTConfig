@@ -49,6 +49,7 @@ public Alias(BTFrame parent) {
   this.parent = parent;
   alias_hash = new java.util.Hashtable();
   prefs = Preferences.userRoot().node("p25rx_aliasdef");
+  System.out.println( "prefs:" + prefs.toString() );
   read_alias();
 }
 

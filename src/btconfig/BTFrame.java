@@ -1317,8 +1317,8 @@ String current_alias;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202102201737");
-      release_date.setText("Release: 2021-02-20 1737");
+      fw_ver.setText("Latest Avail: FW Date: 202102201814");
+      release_date.setText("Release: 2021-02-20 1814");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4483,13 +4483,18 @@ String current_alias;
         advancedpanel.add(p25_reinit, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 330, -1, -1));
 
         p25_tone_vol.setColumns(5);
-        p25_tone_vol.setText("0.25");
+        p25_tone_vol.setText("1.0");
+        p25_tone_vol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                p25_tone_volActionPerformed(evt);
+            }
+        });
         advancedpanel.add(p25_tone_vol, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 300, -1, -1));
 
         jLabel12.setText("P25 Phase II Tone Volume");
         advancedpanel.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 300, -1, -1));
 
-        jLabel13.setText("Range (0.01 to 1.0), Default 0.25");
+        jLabel13.setText("Range (0.01 to 1.0), Default 1.0");
         advancedpanel.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 300, -1, -1));
 
         jTabbedPane1.addTab("Advanced", advancedpanel);
@@ -5195,6 +5200,10 @@ String current_alias;
         // TODO add your handling code here:
     }//GEN-LAST:event_import_aliasActionPerformed
 
+    private void p25_tone_volActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p25_tone_volActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_p25_tone_volActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5372,7 +5381,9 @@ public void update_prefs() {
 
   try {
     //if(prefs==null) prefs = Preferences.userRoot().node(this.getClass().getName()+"_"+sys_mac_id);
+    System.out.println("sys_mac_id: "+sys_mac_id);
     if(prefs==null) prefs = Preferences.userRoot().node(sys_mac_id);
+    System.out.println("prefs:"+ prefs.toString());
 
     if( !prefs.getBoolean("did_new_agc1", false) ) {
       prefs.putInt("agc_gain", 50);
