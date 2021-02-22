@@ -105,8 +105,13 @@ public void addRID(BTFrame parent, String rid) {
   if(rid==null ) return;
 
 
+
   try {
     int zcheck = new Integer(rid).intValue();
+
+    if(zcheck!=previous_rid) return;
+    previous_rid=zcheck;
+
     if(zcheck==0) return;
   } catch(Exception e) {
     return;

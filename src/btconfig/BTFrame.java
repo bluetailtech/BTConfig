@@ -1317,7 +1317,7 @@ String current_alias;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202102201814");
-      release_date.setText("Release: 2021-02-21 2108");
+      release_date.setText("Release: 2021-02-22 0428");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5305,8 +5305,8 @@ public void do_meta() {
 
         log_ta.setText(text.concat( new String(str1.getBytes()) ));
 
-        if( log_ta.getText().length() > 128000 ) {
-          String new_text = text.substring(64000,text.length()-1);
+        if( log_ta.getText().length() > 16000 ) {
+          String new_text = text.substring(8000,text.length()-1);
           log_ta.setText(new_text);
         }
 
