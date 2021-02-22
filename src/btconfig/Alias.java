@@ -142,7 +142,6 @@ public void addRID(BTFrame parent, String rid) {
         e.printStackTrace();
       }
     }
-    save_alias();
     
     recent_rows[recent_idx++]=i;
     recent_idx = (recent_idx&0x7);
@@ -158,6 +157,7 @@ public void addRID(BTFrame parent, String rid) {
           if(recent_rows[n]>=0) parent.alias_table.addRowSelectionInterval(recent_rows[n],recent_rows[n]);
         }
       }
+      save_alias();
     }
     previous_rid=i;
 
@@ -212,10 +212,10 @@ public void addRID(BTFrame parent, String rid) {
         if(recent_rows[n]>=0) parent.alias_table.addRowSelectionInterval(recent_rows[n],recent_rows[n]);
       }
     }
+    save_alias();
   }
   previous_rid = first_empty_row;
 
-  save_alias();
 
 }
 
