@@ -247,7 +247,7 @@ private void save_alias() {
       }
     }
 
-    prefs.flush();
+    //prefs.flush();
   } catch(Exception e) {
     e.printStackTrace();
   }
