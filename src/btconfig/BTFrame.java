@@ -1366,7 +1366,7 @@ int do_alias_export=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202102221237");
-      release_date.setText("Release: 2021-02-23 1204");
+      release_date.setText("Release: 2021-02-23 1415");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1422,6 +1422,19 @@ int do_alias_export=0;
       rssim2.setValue(-130,false);
       p25_status_timeout=1;
       l3.setText("");
+
+      alias_table.setAutoCreateRowSorter(true);
+      alias_table.getRowSorter().addRowSorterListener(new RowSorterListener() {
+       public void sorterChanged(RowSorterEvent rse) {
+        if (rse.getType() == RowSorterEvent.Type.SORT_ORDER_CHANGED) {
+            java.util.List<? extends RowSorter.SortKey> sortKeys = alias_table.getRowSorter().getSortKeys();
+            if(sortKeys.get(0).getSortOrder() == SortOrder.ASCENDING) {
+              alias_table.getRowSorter().toggleSortOrder(0);
+            }
+          }
+        }
+      });
+
 
       /*
       freq_table.setAutoCreateRowSorter(true);
@@ -1716,12 +1729,12 @@ int do_alias_export=0;
     //////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////
     void addAliasObject(Object obj, int row, int col) {
-      alias_table.setValueAt(obj,row,col);
+      alias_table.getModel().setValueAt(obj,row,col);
     }
     //////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////
     Object getAliasObject(int row, int col) {
-      return alias_table.getValueAt(row,col);
+      return alias_table.getModel().getValueAt(row,col);
     }
 
 
