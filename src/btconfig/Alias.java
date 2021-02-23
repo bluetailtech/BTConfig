@@ -368,9 +368,10 @@ private void save_alias() {
         if(rid_str==null || rid_str.equals("null")) rid_str="";
         if(alias_str==null || alias_str.equals("null")) alias_str="";
 
-        String out_line = rid_str+","+alias_str+"\r\n";
-
-        fos.write(out_line.getBytes()); 
+        if(rid_str!=null && rid_str.length()>0) {
+          String out_line = rid_str+","+alias_str+"\r\n";
+          fos.write(out_line.getBytes()); 
+        }
 
       }
 
