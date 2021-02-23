@@ -291,6 +291,51 @@ class updateTask extends java.util.TimerTask
           do_restore_roaming=0;
         }
 
+        //Import alias CSV file
+        if(do_alias_import==1 && is_connected==1 && do_update_firmware==0 && do_read_talkgroups==0) {
+
+          try {
+
+            JFileChooser chooser = new JFileChooser();
+
+            File cdir = new File(home_dir+"p25rx");
+            chooser.setCurrentDirectory(cdir);
+
+
+            FileNameExtensionFilter filter = new FileNameExtensionFilter( "p25rx_alias_import", "csv");
+            chooser.setFileFilter(filter);
+            int returnVal = chooser.showDialog(parent, "Import CSV Alias Records");
+
+            LineNumberReader lnr=null;
+
+            if(returnVal == JFileChooser.APPROVE_OPTION) {
+              File file = chooser.getSelectedFile();
+              lnr = new LineNumberReader( new FileReader(file) );
+              System.out.println("importing aliases from: " + file.getAbsolutePath()); 
+            }
+
+            if(lnr!=null) {
+              String cmd= new String("en_voice_send 0\r\n");
+              serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+              cmd= new String("logging -999\r\n");
+              serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+
+              if(tg_config==null) tg_config = new TGConfig();
+              alias.import_alias_csv(parent, lnr);
+
+              cmd= new String("logging 0\r\n");
+              serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+              cmd= new String("en_voice_send 1\r\n");
+              serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+            }
+            setProgress(-1);
+          } catch(Exception e) {
+            //e.printStackTrace();
+          }
+
+          do_alias_import=0;
+        }
+
         //RESTORE talkgroup CSV file
         if(do_restore_tg_csv==1 && is_connected==1 && do_update_firmware==0 && do_read_talkgroups==0) {
 
@@ -1202,6 +1247,8 @@ int src_uid=0;
 int is_enc=0;
 Alias alias;
 String current_alias;
+int do_alias_import=0;
+int do_alias_export=0;
 
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
@@ -1316,8 +1363,8 @@ String current_alias;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202102201814");
-      release_date.setText("Release: 2021-02-22 0444");
+      fw_ver.setText("Latest Avail: FW Date: 202102221237");
+      release_date.setText("Release: 2021-02-23 1043");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2722,8 +2769,8 @@ String current_alias;
         jScrollPane5 = new javax.swing.JScrollPane();
         alias_table = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
-        export_alias = new javax.swing.JButton();
         import_alias = new javax.swing.JButton();
+        export_alias = new javax.swing.JButton();
         advancedpanel = new javax.swing.JPanel();
         duid_enh = new javax.swing.JCheckBox();
         freq_correct_on_voice = new javax.swing.JCheckBox();
@@ -4400,23 +4447,21 @@ String current_alias;
 
         alias_panel.add(jScrollPane5, java.awt.BorderLayout.CENTER);
 
-        export_alias.setText("Export CSV");
-        export_alias.setEnabled(false);
-        export_alias.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                export_aliasActionPerformed(evt);
-            }
-        });
-        jPanel5.add(export_alias);
-
         import_alias.setText("Import CSV");
-        import_alias.setEnabled(false);
         import_alias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 import_aliasActionPerformed(evt);
             }
         });
         jPanel5.add(import_alias);
+
+        export_alias.setText("Export CSV");
+        export_alias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                export_aliasActionPerformed(evt);
+            }
+        });
+        jPanel5.add(export_alias);
 
         alias_panel.add(jPanel5, java.awt.BorderLayout.SOUTH);
 
@@ -5192,11 +5237,11 @@ String current_alias;
     }//GEN-LAST:event_audio_dev_allActionPerformed
 
     private void export_aliasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_export_aliasActionPerformed
-        // TODO add your handling code here:
+      do_alias_export=1;
     }//GEN-LAST:event_export_aliasActionPerformed
 
     private void import_aliasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_import_aliasActionPerformed
-        // TODO add your handling code here:
+      do_alias_import=1;
     }//GEN-LAST:event_import_aliasActionPerformed
 
     private void p25_tone_volActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p25_tone_volActionPerformed
@@ -5382,7 +5427,6 @@ public void update_prefs() {
     //if(prefs==null) prefs = Preferences.userRoot().node(this.getClass().getName()+"_"+sys_mac_id);
     System.out.println("sys_mac_id: "+sys_mac_id);
     if(prefs==null) prefs = Preferences.userRoot().node(sys_mac_id);
-    alias = new Alias(this, sys_mac_id);
 
     if( !prefs.getBoolean("did_new_agc1", false) ) {
       prefs.putInt("agc_gain", 50);
@@ -5418,6 +5462,8 @@ public void update_prefs() {
       System.out.println("home_dir: "+home_dir);
 
       restore_position();
+
+      if(alias==null) alias = new Alias(this, sys_mac_id, home_dir);
 
   } catch(Exception e) {
     e.printStackTrace();

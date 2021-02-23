@@ -48,14 +48,14 @@ int recent_idx=0;
 int previous_rid;
 
 
-public Alias(BTFrame parent, String sys_mac) {
+public Alias(BTFrame parent, String sys_mac, String home_dir) {
   this.parent = parent;
   alias_hash = new java.util.Hashtable();
   //prefs = Preferences.userRoot().node("p25rx_aliasdef");
   //prefs = Preferences.userRoot().node("0x123456789");
   //System.out.println( "prefs:" + prefs.toString() );
   prefs = Preferences.userRoot().node(sys_mac);
-  read_alias();
+  read_alias(home_dir);
   recent_rows = new int[8];
   recent_rows[0]=-1;
   recent_rows[1]=-1;
@@ -69,9 +69,10 @@ public Alias(BTFrame parent, String sys_mac) {
   parent.alias_table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 }
 
-private void read_alias() {
+private void read_alias(String home_dir) {
   try {
 
+    /*
     if(prefs!=null) {
       for(int i=0;i<NRECS;i++) {
         String idx_rid = i+"_rid";
@@ -91,11 +92,80 @@ private void read_alias() {
         }
       }
     }
+    */
+
+    String fs =  System.getProperty("file.separator");
+    File cdir = new File(home_dir+"p25rx"+fs+"p25rx_aliases.csv");
+    LineNumberReader lnr = new LineNumberReader( new FileReader(cdir) );
+    import_alias_csv(parent, lnr);
+
   } catch(Exception e) {
     e.printStackTrace();
   }
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public void import_alias_csv(BTFrame parent, LineNumberReader lnr)
+{
+
+  try {
+
+    int config_length=0;
+    //int config_length = bis.read(image_buffer, 0, 128*1024*6);
+
+    int number_of_records=0;
+
+    String in_line="";
+    String[] strs = null;
+
+    while(number_of_records<NRECS) {
+
+      in_line = lnr.readLine();
+      
+      if(in_line!=null && in_line.length()>10) {
+        in_line = in_line.trim();
+
+        strs = in_line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+
+        if(strs!=null && strs.length>=2) { 
+
+            String str1="";
+            String str2="";
+
+            if(strs[0]!=null) str1 = strs[0];  
+            if(strs[1]!=null) str2 = strs[1]; 
+
+            //if( str1!=null && str1.startsWith("0x") ) str1 = str1.substring(2,str1.length()); 
+            //Integer rid_hex = Integer.valueOf(str1,16);
+            System.out.println(":"+str1+":"+str2+":");
+
+            try {
+              if( str1!=null ) parent.addAliasObject(str1, number_of_records,0);
+            } catch(Exception e) {
+              e.printStackTrace();
+            }
+            try {
+              if( str2!=null ) parent.addAliasObject(str2, number_of_records,1);
+            } catch(Exception e) {
+              e.printStackTrace();
+            }
+
+
+        }
+      }
+      else {
+        parent.addAliasObject(null, number_of_records,0);
+        parent.addAliasObject(null, number_of_records,1);
+      }
+
+      number_of_records++;
+    }
+
+  } catch (Exception e) {
+    e.printStackTrace();
+  }
+}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 public void addRID(BTFrame parent, String rid) {
   int first_empty_row=0;
@@ -107,7 +177,7 @@ public void addRID(BTFrame parent, String rid) {
 
 
   try {
-    int zcheck = new Integer(rid).intValue();
+    int zcheck = Integer.valueOf(rid);
 
     if(zcheck==previous_rid) return;
     previous_rid=zcheck;
@@ -171,7 +241,7 @@ public void addRID(BTFrame parent, String rid) {
 
   //check for NAN
   try {
-    int i = new Integer(rid).intValue();
+    int i = Integer.valueOf(rid);
   } catch(Exception e) {
     e.printStackTrace();
     return;
