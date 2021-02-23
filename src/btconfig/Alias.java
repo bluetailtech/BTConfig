@@ -55,9 +55,6 @@ public Alias(BTFrame parent, String sys_mac_id, String home_dir) {
   this.sys_mac_id = sys_mac_id;
 
   alias_hash = new java.util.Hashtable();
-  //prefs = Preferences.userRoot().node("p25rx_aliasdef");
-  //prefs = Preferences.userRoot().node("0x123456789");
-  //System.out.println( "prefs:" + prefs.toString() );
   prefs = Preferences.userRoot().node(sys_mac_id);
   read_alias();
   recent_rows = new int[8];
@@ -75,28 +72,6 @@ public Alias(BTFrame parent, String sys_mac_id, String home_dir) {
 
 private void read_alias() {
   try {
-
-    /*
-    if(prefs!=null) {
-      for(int i=0;i<NRECS;i++) {
-        String idx_rid = i+"_rid";
-        String idx_alias = i+"_alias";
-        String rid_str = prefs.get( idx_rid, null );
-        String alias_str = prefs.get( idx_alias, null );
-
-        try {
-          if( rid_str!=null ) parent.addAliasObject(rid_str, i,0);
-        } catch(Exception e) {
-          e.printStackTrace();
-        }
-        try {
-          if( alias_str!=null ) parent.addAliasObject(alias_str, i,1);
-        } catch(Exception e) {
-          e.printStackTrace();
-        }
-      }
-    }
-    */
 
     String fs =  System.getProperty("file.separator");
     File cdir = new File(home_dir+"p25rx"+fs+sys_mac_id+fs+"p25rx_aliases.csv");
@@ -124,34 +99,33 @@ public void import_alias_csv(BTFrame parent, LineNumberReader lnr)
 
   try {
 
-    int config_length=0;
-    //int config_length = bis.read(image_buffer, 0, 128*1024*6);
-
     int number_of_records=0;
 
     String in_line="";
     String[] strs = null;
 
+    System.out.println("import aliases");
+
     while(number_of_records<NRECS) {
 
       in_line = lnr.readLine();
       
-      if(in_line!=null && in_line.length()>10) {
+      if(in_line!=null && in_line.length()>1) {
         in_line = in_line.trim();
 
         strs = in_line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 
-        if(strs!=null && strs.length>=2) { 
+        if(strs!=null && strs.length>=1) { 
 
             String str1="";
-            String str2="";
+            String str2=null;
 
             if(strs[0]!=null) str1 = strs[0];  
-            if(strs[1]!=null) str2 = strs[1]; 
+            if(strs.length>1 && strs[1]!=null) str2 = strs[1]; 
 
             //if( str1!=null && str1.startsWith("0x") ) str1 = str1.substring(2,str1.length()); 
             //Integer rid_hex = Integer.valueOf(str1,16);
-            System.out.println(":"+str1+":"+str2+":");
+            //System.out.println(":"+str1+":"+str2+":");
 
             try {
               if( str1!=null ) parent.addAliasObject(str1, number_of_records,0);
@@ -160,6 +134,7 @@ public void import_alias_csv(BTFrame parent, LineNumberReader lnr)
             }
             try {
               if( str2!=null ) parent.addAliasObject(str2, number_of_records,1);
+                else parent.addAliasObject(null, number_of_records,1);
             } catch(Exception e) {
               e.printStackTrace();
             }
@@ -174,6 +149,8 @@ public void import_alias_csv(BTFrame parent, LineNumberReader lnr)
 
       number_of_records++;
     }
+
+    System.out.println(number_of_records+" records");
 
     lnr.close();
 
@@ -239,6 +216,7 @@ public void addRID(BTFrame parent, String rid) {
     //parent.alias_table.scrollRectToVisible(new java.awt.Rectangle(parent.alias_table.getCellRect(i, 0, true)));
 
     if(i!=previous_rid) {
+      /*
       for(int n=0;n<8;n++) {
         if(n==i) {
           if(recent_rows[n]>=0) parent.alias_table.setRowSelectionInterval(recent_rows[n],recent_rows[n]);
@@ -247,6 +225,7 @@ public void addRID(BTFrame parent, String rid) {
           if(recent_rows[n]>=0) parent.alias_table.addRowSelectionInterval(recent_rows[n],recent_rows[n]);
         }
       }
+      */
       save_alias();
     }
     previous_rid=i;
@@ -295,12 +274,14 @@ public void addRID(BTFrame parent, String rid) {
 
   if(first_empty_row!=previous_rid) {
     for(int n=0;n<8;n++) {
+      /*
       if(n==first_empty_row) {
         if(recent_rows[n]>=0) parent.alias_table.setRowSelectionInterval(recent_rows[n],recent_rows[n]);
       }
       else {
         if(recent_rows[n]>=0) parent.alias_table.addRowSelectionInterval(recent_rows[n],recent_rows[n]);
       }
+      */
     }
     save_alias();
   }
@@ -312,6 +293,8 @@ public void addRID(BTFrame parent, String rid) {
 private void do_import_from_prefs() {
 
     int rec_n=0;
+
+    System.out.println("\r\ndo import from prefs");
 
     if(prefs!=null) {
       for(int i=0;i<NRECS;i++) {
