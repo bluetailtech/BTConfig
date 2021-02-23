@@ -2770,7 +2770,6 @@ int do_alias_export=0;
         alias_table = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         import_alias = new javax.swing.JButton();
-        export_alias = new javax.swing.JButton();
         advancedpanel = new javax.swing.JPanel();
         duid_enh = new javax.swing.JCheckBox();
         freq_correct_on_voice = new javax.swing.JCheckBox();
@@ -4455,14 +4454,6 @@ int do_alias_export=0;
         });
         jPanel5.add(import_alias);
 
-        export_alias.setText("Export CSV");
-        export_alias.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                export_aliasActionPerformed(evt);
-            }
-        });
-        jPanel5.add(export_alias);
-
         alias_panel.add(jPanel5, java.awt.BorderLayout.SOUTH);
 
         jTabbedPane1.addTab("Alias", alias_panel);
@@ -5236,10 +5227,6 @@ int do_alias_export=0;
         // TODO add your handling code here:
     }//GEN-LAST:event_audio_dev_allActionPerformed
 
-    private void export_aliasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_export_aliasActionPerformed
-      do_alias_export=1;
-    }//GEN-LAST:event_export_aliasActionPerformed
-
     private void import_aliasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_import_aliasActionPerformed
       do_alias_import=1;
     }//GEN-LAST:event_import_aliasActionPerformed
@@ -5731,7 +5718,6 @@ private void SLEEP(long val) {
     private javax.swing.JButton enable_table_rows;
     private javax.swing.JRadioButton enable_voice_const;
     public javax.swing.JButton erase_roaming;
-    private javax.swing.JButton export_alias;
     public javax.swing.JLabel freq;
     public javax.swing.JCheckBox freq_correct_on_voice;
     public javax.swing.JLabel freq_label;

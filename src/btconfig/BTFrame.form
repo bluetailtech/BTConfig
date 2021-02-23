@@ -2927,14 +2927,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="import_aliasActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="export_alias">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Export CSV"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="export_aliasActionPerformed"/>
-                  </Events>
-                </Component>
               </SubComponents>
             </Container>
           </SubComponents>

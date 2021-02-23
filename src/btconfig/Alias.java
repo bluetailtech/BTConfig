@@ -46,16 +46,20 @@ Preferences prefs;
 int[] recent_rows;
 int recent_idx=0;
 int previous_rid;
-
+String home_dir;
+String sys_mac_id;
 
 public Alias(BTFrame parent, String sys_mac, String home_dir) {
   this.parent = parent;
+  this.home_dir = home_dir;
+  this.sys_mac_id = sys_mac_id;
+
   alias_hash = new java.util.Hashtable();
   //prefs = Preferences.userRoot().node("p25rx_aliasdef");
   //prefs = Preferences.userRoot().node("0x123456789");
   //System.out.println( "prefs:" + prefs.toString() );
   prefs = Preferences.userRoot().node(sys_mac);
-  read_alias(home_dir);
+  read_alias();
   recent_rows = new int[8];
   recent_rows[0]=-1;
   recent_rows[1]=-1;
@@ -69,7 +73,7 @@ public Alias(BTFrame parent, String sys_mac, String home_dir) {
   parent.alias_table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 }
 
-private void read_alias(String home_dir) {
+private void read_alias() {
   try {
 
     /*
@@ -95,7 +99,7 @@ private void read_alias(String home_dir) {
     */
 
     String fs =  System.getProperty("file.separator");
-    File cdir = new File(home_dir+"p25rx"+fs+"p25rx_aliases.csv");
+    File cdir = new File(home_dir+"p25rx"+fs+sys_mac_id+fs+"p25rx_aliases.csv");
     LineNumberReader lnr = new LineNumberReader( new FileReader(cdir) );
     import_alias_csv(parent, lnr);
 
@@ -295,7 +299,8 @@ public void addRID(BTFrame parent, String rid) {
 }
 
 private void save_alias() {
-  try {
+
+    /*
     if(prefs!=null) {
 
       for(int i=0;i<NRECS;i++) {
@@ -320,9 +325,41 @@ private void save_alias() {
         if(alias_str!=null && alias_str.length()>0) prefs.put( idx_alias, alias_str );
 
       }
-    }
 
-    //prefs.flush();
+      prefs.flush();
+    }
+    */
+
+    try {
+      String fs =  System.getProperty("file.separator");
+      File file = new File(home_dir+"p25rx"+fs+sys_mac_id+fs+"p25rx_aliases.csv");
+
+      FileOutputStream fos = new FileOutputStream(file);
+
+      for(int i=0;i<NRECS;i++) {
+        String rid_str="";
+        String alias_str="";
+
+        try {
+          rid_str = (String) parent.getAliasObject(i,0);
+        } catch(Exception e) {
+          e.printStackTrace();
+        }
+        try {
+          alias_str = (String) parent.getAliasObject(i,1);
+        } catch(Exception e) {
+          e.printStackTrace();
+        }
+
+        String out_line = rid_str+","+alias_str+"\r\n";
+
+        fos.write(out_line.getBytes()); 
+
+      }
+
+      fos.flush();
+      fos.close();
+
   } catch(Exception e) {
     e.printStackTrace();
   }
