@@ -723,6 +723,8 @@ class updateTask extends java.util.TimerTask
                     macid.setVisible(true);
                     macid.setText("MAC: "+sys_mac_id);
 
+                    if(alias==null) alias = new Alias(parent, parent.sys_mac_id, home_dir);
+
                     break;
                   }
 
@@ -1714,12 +1716,12 @@ int do_alias_export=0;
     //////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////
     void addAliasObject(Object obj, int row, int col) {
-      alias_table.getModel().setValueAt(obj,row,col);
+      alias_table.setValueAt(obj,row,col);
     }
     //////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////
     Object getAliasObject(int row, int col) {
-      return alias_table.getModel().getValueAt(row,col);
+      return alias_table.getValueAt(row,col);
     }
 
 
@@ -1794,7 +1796,7 @@ int do_alias_export=0;
 
                 try {
                   String src_rid_str = new Integer(src_uid).toString();
-                  alias.addRID(this, src_rid_str);
+                  if(alias!=null) alias.addRID(this, src_rid_str);
                 } catch(Exception e) {
                   e.printStackTrace();
                 }
@@ -1840,7 +1842,7 @@ int do_alias_export=0;
                 src_uid = src_uid_d;
                 try {
                   String src_rid_str = new Integer(src_uid).toString();
-                  alias.addRID(this, src_rid_str);
+                  if(alias!=null) alias.addRID(this, src_rid_str);
                 } catch(Exception e) {
                   e.printStackTrace();
                 }
@@ -5450,7 +5452,6 @@ public void update_prefs() {
 
       restore_position();
 
-      if(alias==null) alias = new Alias(this, sys_mac_id, home_dir);
 
   } catch(Exception e) {
     e.printStackTrace();

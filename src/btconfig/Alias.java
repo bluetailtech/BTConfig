@@ -49,7 +49,7 @@ int previous_rid;
 String home_dir;
 String sys_mac_id;
 
-public Alias(BTFrame parent, String sys_mac, String home_dir) {
+public Alias(BTFrame parent, String sys_mac_id, String home_dir) {
   this.parent = parent;
   this.home_dir = home_dir;
   this.sys_mac_id = sys_mac_id;
@@ -58,7 +58,7 @@ public Alias(BTFrame parent, String sys_mac, String home_dir) {
   //prefs = Preferences.userRoot().node("p25rx_aliasdef");
   //prefs = Preferences.userRoot().node("0x123456789");
   //System.out.println( "prefs:" + prefs.toString() );
-  prefs = Preferences.userRoot().node(sys_mac);
+  prefs = Preferences.userRoot().node(sys_mac_id);
   read_alias();
   recent_rows = new int[8];
   recent_rows[0]=-1;
@@ -100,6 +100,15 @@ private void read_alias() {
 
     String fs =  System.getProperty("file.separator");
     File cdir = new File(home_dir+"p25rx"+fs+sys_mac_id+fs+"p25rx_aliases.csv");
+    try {
+      if(cdir.length()==0) {
+        do_import_from_prefs();
+      }
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
+
+
     LineNumberReader lnr = new LineNumberReader( new FileReader(cdir) );
     import_alias_csv(parent, lnr);
 
@@ -165,6 +174,8 @@ public void import_alias_csv(BTFrame parent, LineNumberReader lnr)
 
       number_of_records++;
     }
+
+    lnr.close();
 
   } catch (Exception e) {
     e.printStackTrace();
@@ -298,41 +309,44 @@ public void addRID(BTFrame parent, String rid) {
 
 }
 
-private void save_alias() {
+private void do_import_from_prefs() {
 
-    /*
+    int rec_n=0;
+
     if(prefs!=null) {
-
       for(int i=0;i<NRECS;i++) {
-
-        String rid_str="";
-        String alias_str="";
-
-        try {
-          rid_str = (String) parent.getAliasObject(i,0);
-        } catch(Exception e) {
-          e.printStackTrace();
-        }
-        try {
-          alias_str = (String) parent.getAliasObject(i,1);
-        } catch(Exception e) {
-          e.printStackTrace();
-        }
-
         String idx_rid = i+"_rid";
         String idx_alias = i+"_alias";
-        if(rid_str!=null && rid_str.length()>0) prefs.put( idx_rid, rid_str );
-        if(alias_str!=null && alias_str.length()>0) prefs.put( idx_alias, alias_str );
+        String rid_str = prefs.get( idx_rid, null );
+        String alias_str = prefs.get( idx_alias, null );
 
+        try {
+          if( rid_str!=null && alias_str!=null && rid_str.length()>0 && alias_str.length()>0) {
+            parent.addAliasObject(rid_str, rec_n,0);
+            parent.addAliasObject(alias_str, rec_n,1);
+            rec_n++;
+          }
+        } catch(Exception e) {
+          e.printStackTrace();
+        }
+        try {
+        } catch(Exception e) {
+          e.printStackTrace();
+        }
       }
 
-      prefs.flush();
+      save_alias();
     }
-    */
+}
+private void save_alias() {
+
 
     try {
+
       String fs =  System.getProperty("file.separator");
       File file = new File(home_dir+"p25rx"+fs+sys_mac_id+fs+"p25rx_aliases.csv");
+
+      System.out.println("\r\nsaving alias file "+file);
 
       FileOutputStream fos = new FileOutputStream(file);
 
@@ -350,6 +364,9 @@ private void save_alias() {
         } catch(Exception e) {
           e.printStackTrace();
         }
+
+        if(rid_str==null || rid_str.equals("null")) rid_str="";
+        if(alias_str==null || alias_str.equals("null")) alias_str="";
 
         String out_line = rid_str+","+alias_str+"\r\n";
 
