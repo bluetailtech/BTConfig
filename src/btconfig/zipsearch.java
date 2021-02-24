@@ -139,8 +139,8 @@ public class zipsearch
     fs.freqsearch_ta.setText("");
     */
 
-    parent.testfreqs.setEnabled(false);
-    parent.use_freq_primary.setEnabled(false);
+    parent.testfreqs.setEnabled(true);
+    parent.use_freq_primary.setEnabled(true);
 
       parent.freq_table.setRowSelectionInterval(0,0);
 
