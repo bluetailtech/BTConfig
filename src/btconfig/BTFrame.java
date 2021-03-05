@@ -1365,8 +1365,8 @@ int do_alias_export=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202103031808");
-      release_date.setText("Release: 2021-03-03 1808");
+      fw_ver.setText("Latest Avail: FW Date: 202103051121");
+      release_date.setText("Release: 2021-03-05 1121");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2282,8 +2282,15 @@ int do_alias_export=0;
                 do_update_talkgroups=1;
               }
 
+              int blks_per_sec=0;
+              try {
+                blks_per_sec = Integer.valueOf(tsbk_ps);
+              } catch(Exception e) {
+                e.printStackTrace();
+              }
+
               if(is_dmr_mode==1) {
-                if( rssim1.getValue()<-127 ) {
+                if( rssim1.getValue()<-127 && blks_per_sec==0) {
                   l3.setText("NO SIG");
                 }
                 else {
@@ -2292,7 +2299,7 @@ int do_alias_export=0;
                 }
               }
               else {
-                if( rssim1.getValue()<-127 ) {
+                if( rssim1.getValue()<-127 && blks_per_sec==0) {
                   l3.setText("NO SIG");
                 }
                 else {
