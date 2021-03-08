@@ -2808,6 +2808,7 @@
                           <ComponentRef name="buttonGroup11"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Follow TG"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="single_click_opt2">
@@ -2816,6 +2817,7 @@
                           <ComponentRef name="buttonGroup11"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Bluetooth Pairing"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="single_click_opt3">
@@ -2825,6 +2827,7 @@
                         </Property>
                         <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Enable Status Leds"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="single_click_opt4">
@@ -2833,6 +2836,7 @@
                           <ComponentRef name="buttonGroup11"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Skip TG"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="single_click_opt5">
@@ -2841,6 +2845,7 @@
                           <ComponentRef name="buttonGroup11"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Toggle Unknown TG"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -2862,6 +2867,7 @@
                           <ComponentRef name="buttonGroup10"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Follow TG"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="single_click_opt7">
@@ -2871,6 +2877,7 @@
                         </Property>
                         <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Bluetooth Pairing"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="single_click_opt8">
@@ -2879,6 +2886,7 @@
                           <ComponentRef name="buttonGroup10"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Enable Status Leds"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="single_click_opt9">
@@ -2887,6 +2895,7 @@
                           <ComponentRef name="buttonGroup10"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Skip TG"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="single_click_opt10">
@@ -2895,6 +2904,7 @@
                           <ComponentRef name="buttonGroup10"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Toggle Unknown TG"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -2917,6 +2927,7 @@
                         </Property>
                         <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Follow TG"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="single_click_opt12">
@@ -2925,6 +2936,7 @@
                           <ComponentRef name="buttonGroup9"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Bluetooth Pairing"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="single_click_opt13">
@@ -2933,6 +2945,7 @@
                           <ComponentRef name="buttonGroup9"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Enable Status Leds"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="single_click_opt14">
@@ -2941,6 +2954,7 @@
                           <ComponentRef name="buttonGroup9"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Skip TG"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="single_click_opt15">
@@ -2949,6 +2963,7 @@
                           <ComponentRef name="buttonGroup9"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Toggle Unknown TG"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                   </SubComponents>

@@ -4404,23 +4404,28 @@ int do_alias_export=0;
 
         buttonGroup11.add(single_click_opt1);
         single_click_opt1.setText("Follow TG");
+        single_click_opt1.setEnabled(false);
         jPanel27.add(single_click_opt1);
 
         buttonGroup11.add(single_click_opt2);
         single_click_opt2.setText("Bluetooth Pairing");
+        single_click_opt2.setEnabled(false);
         jPanel27.add(single_click_opt2);
 
         buttonGroup11.add(single_click_opt3);
         single_click_opt3.setSelected(true);
         single_click_opt3.setText("Enable Status Leds");
+        single_click_opt3.setEnabled(false);
         jPanel27.add(single_click_opt3);
 
         buttonGroup11.add(single_click_opt4);
         single_click_opt4.setText("Skip TG");
+        single_click_opt4.setEnabled(false);
         jPanel27.add(single_click_opt4);
 
         buttonGroup11.add(single_click_opt5);
         single_click_opt5.setText("Toggle Unknown TG");
+        single_click_opt5.setEnabled(false);
         jPanel27.add(single_click_opt5);
 
         jPanel21.add(jPanel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 330, 920, 60));
@@ -4429,23 +4434,28 @@ int do_alias_export=0;
 
         buttonGroup10.add(single_click_opt6);
         single_click_opt6.setText("Follow TG");
+        single_click_opt6.setEnabled(false);
         jPanel28.add(single_click_opt6);
 
         buttonGroup10.add(single_click_opt7);
         single_click_opt7.setSelected(true);
         single_click_opt7.setText("Bluetooth Pairing");
+        single_click_opt7.setEnabled(false);
         jPanel28.add(single_click_opt7);
 
         buttonGroup10.add(single_click_opt8);
         single_click_opt8.setText("Enable Status Leds");
+        single_click_opt8.setEnabled(false);
         jPanel28.add(single_click_opt8);
 
         buttonGroup10.add(single_click_opt9);
         single_click_opt9.setText("Skip TG");
+        single_click_opt9.setEnabled(false);
         jPanel28.add(single_click_opt9);
 
         buttonGroup10.add(single_click_opt10);
         single_click_opt10.setText("Toggle Unknown TG");
+        single_click_opt10.setEnabled(false);
         jPanel28.add(single_click_opt10);
 
         jPanel21.add(jPanel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, -1, -1));
@@ -4455,22 +4465,27 @@ int do_alias_export=0;
         buttonGroup9.add(single_click_opt11);
         single_click_opt11.setSelected(true);
         single_click_opt11.setText("Follow TG");
+        single_click_opt11.setEnabled(false);
         jPanel45.add(single_click_opt11);
 
         buttonGroup9.add(single_click_opt12);
         single_click_opt12.setText("Bluetooth Pairing");
+        single_click_opt12.setEnabled(false);
         jPanel45.add(single_click_opt12);
 
         buttonGroup9.add(single_click_opt13);
         single_click_opt13.setText("Enable Status Leds");
+        single_click_opt13.setEnabled(false);
         jPanel45.add(single_click_opt13);
 
         buttonGroup9.add(single_click_opt14);
         single_click_opt14.setText("Skip TG");
+        single_click_opt14.setEnabled(false);
         jPanel45.add(single_click_opt14);
 
         buttonGroup9.add(single_click_opt15);
         single_click_opt15.setText("Toggle Unknown TG");
+        single_click_opt15.setEnabled(false);
         jPanel45.add(single_click_opt15);
 
         jPanel21.add(jPanel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 920, 60));
