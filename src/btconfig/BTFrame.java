@@ -88,12 +88,14 @@ class updateTask extends java.util.TimerTask
         }
 
 
+        /*
         long usb_ctime = new java.util.Date().getTime();
         if(wdog_time==0 || usb_ctime - wdog_time > 5000) {
           wdog_time = usb_ctime;
           if(sys_config!=null && is_mac_osx==0) sys_config.do_usb_watchdog(serial_port);
           //System.out.println("\r\nusb watchdog");
         }
+        */
 
         if(bluetooth_streaming_timer>0) {
           bluetooth_streaming_timer--;
@@ -662,7 +664,7 @@ class updateTask extends java.util.TimerTask
               do_connect=0;
 
               serial_port_name = serial_port.getSystemPortName();
-              serial_port.setBaudRate( 4000000 ); //this probably doesn't really matter
+              serial_port.setBaudRate( 1000000 ); //this probably doesn't really matter
               serial_port.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 500, 0);
 
               is_connected=1;
@@ -765,12 +767,11 @@ class updateTask extends java.util.TimerTask
 
         }
         else if(is_connected==1 && do_update_firmware==0) {
-          byte[] b = new byte[1024];
-          byte[] str_b = new byte[1024];
-          int str_idx=0;
-
           int avail = serial_port.bytesAvailable();
-          if(avail>1024) avail=1024;
+
+          byte[] b = new byte[avail];
+          byte[] str_b = new byte[avail];
+          int str_idx=0;
 
           //if( (rx_state>0 && avail>=32) || (rx_state==0 && avail>0 && skip_bytes==0) ) {
           if( avail>0 ) {
@@ -950,7 +951,8 @@ class updateTask extends java.util.TimerTask
                   }
                 }
                 else if(skip_bytes>0) {
-                  skip_bytes--;
+                  skip_bytes--; //handle unknown state
+                  if(skip_bytes==0) rx_state=0;
                 }
 
                 if(skip_bytes==0) {
@@ -986,7 +988,7 @@ class updateTask extends java.util.TimerTask
                     if(b[i]==(byte) 0x15) {
                       skip_bytes=140+1;
                       rx_state=0;
-                      //System.out.println("do tdma");
+                      //System.out.println("do sysinfo");
                     }
 
                     if(b[i]==(byte) 0x31) {
@@ -1002,32 +1004,16 @@ class updateTask extends java.util.TimerTask
                     }
                   }
                   else {
-                   // rx_state=0;
+                    rx_state=0;
 
-                      if(rx_state==0 && skip_bytes==0 ) {
+                    if(rx_state==0 && skip_bytes==0 ) {
+                      int isprint=1;
 
-                        /*
-                        if( (b[i]>=(byte) 'a' && b[i]<=(byte) 'z') ||
-                            (b[i]>=(byte) 'A' && b[i]<=(byte) 'Z') ||
-                            (b[i]>=(byte) '0' && b[i]<=(byte) '9') ||
-                            b[i]==(byte) 0x0d || 
-                            b[i]==(byte) 0x0a || 
-                            b[i]==(byte) ',' || 
-                            b[i]==(byte)' ' ||
-                            b[i]==(byte)'-' ||
-                            b[i]==(byte)'+' ||
-                            b[i]==(byte)'_' ||
-                            b[i]==(byte)'*' ||
-                            b[i]==(byte)':' ||
-                            b[i]==(byte)',' ||
-                            b[i]==(byte)'$' ||
-                            b[i]==(byte)'.' 
-                                                   ) { 
-                          str_b[str_idx++] = b[i];
-                        }
-                        */
-                        str_b[str_idx++] = b[i];
-                      }
+                      if( b[i]>=(byte) 0x00 && b[i]<=(byte)0x1f && b[i]!=(byte)0x0a && b[i]!=(byte)0x0d) isprint=0;
+                      if( b[i]>(byte)'z') isprint=0;
+
+                      if(isprint==1) str_b[str_idx++] = b[i];
+                    }
                   }
                 }
               }
@@ -1365,8 +1351,8 @@ int do_alias_export=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202103051121");
-      release_date.setText("Release: 2021-03-05 1121");
+      fw_ver.setText("Latest Avail: FW Date: 202103071559");
+      release_date.setText("Release: 2021-03-07 1559");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4868,6 +4854,7 @@ int do_alias_export=0;
       //if(minimize.isSelected()) {
        // setSize(1054,192);
       //}
+      save_position();
     }//GEN-LAST:event_formComponentResized
 
     private void disconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disconnectActionPerformed
@@ -5283,7 +5270,7 @@ int do_alias_export=0;
     }//GEN-LAST:event_duid_enhActionPerformed
 
     private void formComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentMoved
-        // TODO add your handling code here:
+      save_position();
     }//GEN-LAST:event_formComponentMoved
 
     private void audio_dev_playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_audio_dev_playActionPerformed
