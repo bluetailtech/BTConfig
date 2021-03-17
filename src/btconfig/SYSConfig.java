@@ -332,7 +332,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                       System.out.println( String.format("\r\nbluetooth reset: %d",bb3.getInt(260)/5) );
                       System.out.println( String.format("\r\nbt_gain: %3.2f",bb3.getFloat(176)) );
                       System.out.println( String.format("\r\nled_mode: %d",bb3.getInt(196)) );
-                      System.out.println( String.format("\r\nallow unknown tg: %d",bb3.getInt(130)) );
+                      System.out.println( String.format("\r\nallow unknown tg: %d",bb3.getShort(130)) );
                       System.out.println( String.format("\r\nenable_roaming %d",bb3.getInt(68)) );
                       System.out.println( String.format("\r\nno_voice_roam_sec",bb3.getInt(280)) );
 
@@ -599,7 +599,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           //if(rfmg<0) rfmg=0;
                           //parent.rfmaxgain.setSelectedIndex( rfmg ); 
 
-                          if(bb3.getInt(130)==1) b=true;
+                          if(bb3.getShort(130)==1) b=true;
                               else b=false;
                           parent.allow_unknown_tg_cb.setSelected(b); 
 
