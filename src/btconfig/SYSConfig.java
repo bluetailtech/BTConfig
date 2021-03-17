@@ -131,6 +131,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
   }
 
   int config_length = 0;
+  int CONFIG_SIZE=1024;
 
   try {
 
@@ -289,7 +290,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                   }
 
                   offset+=32;
-                  int CONFIG_SIZE=1024;
                   //if(offset >= 552+32) { //finished?
                   if(offset >= CONFIG_SIZE+32) { //finished?
 
@@ -299,9 +299,9 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                     parent.system_crc=crc;
                     System.out.println(String.format("config crc 0x%08x", crc));
 
-                    int config_crc = bb3.getInt(CONFIG_SIZE-4);
+                    int config_crc = bb3.getInt(CONFIG_SIZE-4);  //1024-4
 
-                      if(crc==0) {
+                      if(crc==0 || config_crc == 0xffffffff) {
                         parent.do_update_firmware=1;
                         parent.do_update_firmware2=1;
                         parent.do_read_talkgroups=0;
