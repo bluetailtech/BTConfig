@@ -1351,8 +1351,8 @@ int do_alias_export=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202103170957");
-      release_date.setText("Release: 2021-03-17 0957");
+      fw_ver.setText("Latest Avail: FW Date: 202103171109");
+      release_date.setText("Release: 2021-03-17 1109");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2786,7 +2786,7 @@ int do_alias_export=0;
         triple_click_opt1 = new javax.swing.JRadioButton();
         triple_click_opt2 = new javax.swing.JRadioButton();
         triple_click_opt3 = new javax.swing.JRadioButton();
-        triple_click_op4 = new javax.swing.JRadioButton();
+        triple_click_opt4 = new javax.swing.JRadioButton();
         triple_click_opt5 = new javax.swing.JRadioButton();
         alias_panel = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -4403,6 +4403,7 @@ int do_alias_export=0;
         jPanel27.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         buttonGroup11.add(single_click_opt1);
+        single_click_opt1.setSelected(true);
         single_click_opt1.setText("Follow TG");
         jPanel27.add(single_click_opt1);
 
@@ -4411,7 +4412,6 @@ int do_alias_export=0;
         jPanel27.add(single_click_opt2);
 
         buttonGroup11.add(single_click_opt3);
-        single_click_opt3.setSelected(true);
         single_click_opt3.setText("Enable/Disable Status Leds");
         jPanel27.add(single_click_opt3);
 
@@ -4423,7 +4423,7 @@ int do_alias_export=0;
         single_click_opt5.setText("Enable/Disable Unknown TG");
         jPanel27.add(single_click_opt5);
 
-        jPanel21.add(jPanel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 330, 920, 60));
+        jPanel21.add(jPanel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, 920, 60));
 
         jPanel28.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
@@ -4453,7 +4453,6 @@ int do_alias_export=0;
         jPanel45.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         buttonGroup9.add(triple_click_opt1);
-        triple_click_opt1.setSelected(true);
         triple_click_opt1.setText("Follow TG");
         jPanel45.add(triple_click_opt1);
 
@@ -4462,18 +4461,24 @@ int do_alias_export=0;
         jPanel45.add(triple_click_opt2);
 
         buttonGroup9.add(triple_click_opt3);
+        triple_click_opt3.setSelected(true);
         triple_click_opt3.setText("Enable/Disable Status Leds");
         jPanel45.add(triple_click_opt3);
 
-        buttonGroup9.add(triple_click_op4);
-        triple_click_op4.setText("Skip TG");
-        jPanel45.add(triple_click_op4);
+        buttonGroup9.add(triple_click_opt4);
+        triple_click_opt4.setText("Skip TG");
+        triple_click_opt4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                triple_click_opt4ActionPerformed(evt);
+            }
+        });
+        jPanel45.add(triple_click_opt4);
 
         buttonGroup9.add(triple_click_opt5);
         triple_click_opt5.setText("Enable/Disable Unknown TG");
         jPanel45.add(triple_click_opt5);
 
-        jPanel21.add(jPanel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 920, 60));
+        jPanel21.add(jPanel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 320, 920, 60));
 
         buttong_config.add(jPanel21, java.awt.BorderLayout.CENTER);
 
@@ -5289,6 +5294,10 @@ int do_alias_export=0;
         // TODO add your handling code here:
     }//GEN-LAST:event_p25_tone_volActionPerformed
 
+    private void triple_click_opt4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_triple_click_opt4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_triple_click_opt4ActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5759,11 +5768,11 @@ private void SLEEP(long val) {
     public javax.swing.JCheckBox dmr_slot2;
     public javax.swing.JTextField dmr_sys_id;
     private javax.swing.JButton dmr_write_config;
-    private javax.swing.JRadioButton double_click_opt1;
-    private javax.swing.JRadioButton double_click_opt2;
-    private javax.swing.JRadioButton double_click_opt3;
-    private javax.swing.JRadioButton double_click_opt4;
-    private javax.swing.JRadioButton double_click_opt5;
+    public javax.swing.JRadioButton double_click_opt1;
+    public javax.swing.JRadioButton double_click_opt2;
+    public javax.swing.JRadioButton double_click_opt3;
+    public javax.swing.JRadioButton double_click_opt4;
+    public javax.swing.JRadioButton double_click_opt5;
     public javax.swing.JCheckBox duid_enh;
     public javax.swing.JCheckBox en_bluetooth_cb;
     public javax.swing.JCheckBox en_encout;
@@ -5999,11 +6008,11 @@ private void SLEEP(long val) {
     private javax.swing.JButton send_tg;
     private javax.swing.JLabel ser_dev;
     private javax.swing.JPanel signalinsightpanel;
-    private javax.swing.JRadioButton single_click_opt1;
-    private javax.swing.JRadioButton single_click_opt2;
-    private javax.swing.JRadioButton single_click_opt3;
-    private javax.swing.JRadioButton single_click_opt4;
-    private javax.swing.JRadioButton single_click_opt5;
+    public javax.swing.JRadioButton single_click_opt1;
+    public javax.swing.JRadioButton single_click_opt2;
+    public javax.swing.JRadioButton single_click_opt3;
+    public javax.swing.JRadioButton single_click_opt4;
+    public javax.swing.JRadioButton single_click_opt5;
     public javax.swing.JLabel siteid;
     private javax.swing.JToggleButton sq_indicator;
     private javax.swing.JLabel sq_lb;
@@ -6017,11 +6026,11 @@ private void SLEEP(long val) {
     private javax.swing.JToggleButton tg_indicator;
     private javax.swing.JLabel tg_lb;
     private javax.swing.JPanel tiny_const;
-    private javax.swing.JRadioButton triple_click_op4;
-    private javax.swing.JRadioButton triple_click_opt1;
-    private javax.swing.JRadioButton triple_click_opt2;
-    private javax.swing.JRadioButton triple_click_opt3;
-    private javax.swing.JRadioButton triple_click_opt5;
+    public javax.swing.JRadioButton triple_click_opt1;
+    public javax.swing.JRadioButton triple_click_opt2;
+    public javax.swing.JRadioButton triple_click_opt3;
+    public javax.swing.JRadioButton triple_click_opt4;
+    public javax.swing.JRadioButton triple_click_opt5;
     public javax.swing.JButton use_freq_primary;
     public javax.swing.JLabel volume_label;
     public javax.swing.JComboBox<String> vtimeout;

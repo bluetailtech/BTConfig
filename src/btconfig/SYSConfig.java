@@ -395,6 +395,31 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           if(add_tdu_silence==1) parent.add_tdu_silence.setSelected(true);
                             else parent.add_tdu_silence.setSelected(false);
 
+                          int but1_cfg = bb3.getInt(540);
+                          int but2_cfg = bb3.getInt(544);
+                          int but3_cfg = bb3.getInt(548);
+
+                          if( but1_cfg == 0 ) parent.single_click_opt1.setSelected(true);
+                          else if( but1_cfg == 1 ) parent.single_click_opt2.setSelected(true);
+                          else if( but1_cfg == 2 ) parent.single_click_opt3.setSelected(true);
+                          else if( but1_cfg == 3 ) parent.single_click_opt4.setSelected(true);
+                          else if( but1_cfg == 4 ) parent.single_click_opt5.setSelected(true);
+                          else parent.single_click_opt1.setSelected(true); //default
+
+                          if( but2_cfg == 0 ) parent.double_click_opt1.setSelected(true);
+                          else if( but2_cfg == 1 ) parent.double_click_opt2.setSelected(true);
+                          else if( but2_cfg == 2 ) parent.double_click_opt3.setSelected(true);
+                          else if( but2_cfg == 3 ) parent.double_click_opt4.setSelected(true);
+                          else if( but2_cfg == 4 ) parent.double_click_opt5.setSelected(true);
+                          else parent.double_click_opt2.setSelected(true); //default
+
+                          if( but3_cfg == 0 ) parent.triple_click_opt1.setSelected(true);
+                          else if( but3_cfg == 1 ) parent.triple_click_opt2.setSelected(true);
+                          else if( but3_cfg == 2 ) parent.triple_click_opt3.setSelected(true);
+                          else if( but3_cfg == 3 ) parent.triple_click_opt4.setSelected(true);
+                          else if( but3_cfg == 4 ) parent.triple_click_opt5.setSelected(true);
+                          else parent.triple_click_opt3.setSelected(true); //default
+
 
                           int is_wacn_en=0;
                           is_wacn_en = bb3.getInt(184);
@@ -1007,6 +1032,48 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
                           result=new byte[64];
                           cmd = "sys_name "+parent.system_alias.getText()+"\r\n"; 
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          SLEEP(10);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
+                          int optb1 = 0;
+                          if( parent.single_click_opt1.isSelected() ) optb1 = 0;
+                          else if( parent.single_click_opt2.isSelected() ) optb1 = 1;
+                          else if( parent.single_click_opt3.isSelected() ) optb1 = 2;
+                          else if( parent.single_click_opt4.isSelected() ) optb1 = 3;
+                          else if( parent.single_click_opt5.isSelected() ) optb1 = 4;
+
+                          int optb2 = 0;
+                          if( parent.double_click_opt1.isSelected() ) optb2 = 0;
+                          else if( parent.double_click_opt2.isSelected() ) optb2 = 1;
+                          else if( parent.double_click_opt3.isSelected() ) optb2 = 2;
+                          else if( parent.double_click_opt4.isSelected() ) optb2 = 3;
+                          else if( parent.double_click_opt5.isSelected() ) optb2 = 4;
+
+                          int optb3 = 0;
+                          if( parent.triple_click_opt1.isSelected() ) optb3 = 0;
+                          else if( parent.triple_click_opt2.isSelected() ) optb3 = 1;
+                          else if( parent.triple_click_opt3.isSelected() ) optb3 = 2;
+                          else if( parent.triple_click_opt4.isSelected() ) optb3 = 3;
+                          else if( parent.triple_click_opt5.isSelected() ) optb3 = 4;
+
+                          result=new byte[64];
+                          cmd = "but1_cfg "+optb1+"\r\n"; 
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          SLEEP(10);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
+                          result=new byte[64];
+                          cmd = "but2_cfg "+optb2+"\r\n"; 
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          SLEEP(10);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
+                          result=new byte[64];
+                          cmd = "but3_cfg "+optb3+"\r\n"; 
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           SLEEP(10);
                           rlen=serial_port.readBytes( result, 64);
