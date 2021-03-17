@@ -2808,7 +2808,6 @@
                           <ComponentRef name="buttonGroup11"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Follow TG"/>
-                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="single_click_opt2">
@@ -2817,7 +2816,6 @@
                           <ComponentRef name="buttonGroup11"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Bluetooth Pairing"/>
-                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="single_click_opt3">
@@ -2826,8 +2824,7 @@
                           <ComponentRef name="buttonGroup11"/>
                         </Property>
                         <Property name="selected" type="boolean" value="true"/>
-                        <Property name="text" type="java.lang.String" value="Enable Status Leds"/>
-                        <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="text" type="java.lang.String" value="Enable/Disable Status Leds"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="single_click_opt4">
@@ -2836,7 +2833,6 @@
                           <ComponentRef name="buttonGroup11"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Skip TG"/>
-                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="single_click_opt5">
@@ -2844,8 +2840,7 @@
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="buttonGroup11"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Toggle Unknown TG"/>
-                        <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="text" type="java.lang.String" value="Enable/Disable Unknown TG"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -2861,50 +2856,45 @@
                     <Property name="alignment" type="int" value="0"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JRadioButton" name="single_click_opt6">
+                    <Component class="javax.swing.JRadioButton" name="double_click_opt1">
                       <Properties>
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="buttonGroup10"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Follow TG"/>
-                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JRadioButton" name="single_click_opt7">
+                    <Component class="javax.swing.JRadioButton" name="double_click_opt2">
                       <Properties>
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="buttonGroup10"/>
                         </Property>
                         <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Bluetooth Pairing"/>
-                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JRadioButton" name="single_click_opt8">
+                    <Component class="javax.swing.JRadioButton" name="double_click_opt3">
                       <Properties>
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="buttonGroup10"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Enable Status Leds"/>
-                        <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="text" type="java.lang.String" value="Enable/Disable Status Leds"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JRadioButton" name="single_click_opt9">
+                    <Component class="javax.swing.JRadioButton" name="double_click_opt4">
                       <Properties>
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="buttonGroup10"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Skip TG"/>
-                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JRadioButton" name="single_click_opt10">
+                    <Component class="javax.swing.JRadioButton" name="double_click_opt5">
                       <Properties>
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="buttonGroup10"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Toggle Unknown TG"/>
-                        <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="text" type="java.lang.String" value="Enable/Disable Unknown TG"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -2920,50 +2910,45 @@
                     <Property name="alignment" type="int" value="0"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JRadioButton" name="single_click_opt11">
+                    <Component class="javax.swing.JRadioButton" name="triple_click_opt1">
                       <Properties>
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="buttonGroup9"/>
                         </Property>
                         <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Follow TG"/>
-                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JRadioButton" name="single_click_opt12">
+                    <Component class="javax.swing.JRadioButton" name="triple_click_opt2">
                       <Properties>
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="buttonGroup9"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Bluetooth Pairing"/>
-                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JRadioButton" name="single_click_opt13">
+                    <Component class="javax.swing.JRadioButton" name="triple_click_opt3">
                       <Properties>
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="buttonGroup9"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Enable Status Leds"/>
-                        <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="text" type="java.lang.String" value="Enable/Disable Status Leds"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JRadioButton" name="single_click_opt14">
+                    <Component class="javax.swing.JRadioButton" name="triple_click_op4">
                       <Properties>
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="buttonGroup9"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Skip TG"/>
-                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JRadioButton" name="single_click_opt15">
+                    <Component class="javax.swing.JRadioButton" name="triple_click_opt5">
                       <Properties>
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="buttonGroup9"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Toggle Unknown TG"/>
-                        <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="text" type="java.lang.String" value="Enable/Disable Unknown TG"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -3078,7 +3063,7 @@
             <Component class="javax.swing.JCheckBox" name="add_tdu_silence">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Add Silent Period To Audio Buffer On Phase 1 TDU / TDULC (default on)"/>
+                <Property name="text" type="java.lang.String" value="Add Silent Period To Audio Buffer On Phase 1 TDU / TDULC (default off)"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="add_tdu_silenceActionPerformed"/>

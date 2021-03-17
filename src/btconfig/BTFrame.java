@@ -1351,8 +1351,8 @@ int do_alias_export=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202103100709");
-      release_date.setText("Release: 2021-03-10 0709");
+      fw_ver.setText("Latest Avail: FW Date: 202103170957");
+      release_date.setText("Release: 2021-03-17 0957");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2777,17 +2777,17 @@ int do_alias_export=0;
         single_click_opt4 = new javax.swing.JRadioButton();
         single_click_opt5 = new javax.swing.JRadioButton();
         jPanel28 = new javax.swing.JPanel();
-        single_click_opt6 = new javax.swing.JRadioButton();
-        single_click_opt7 = new javax.swing.JRadioButton();
-        single_click_opt8 = new javax.swing.JRadioButton();
-        single_click_opt9 = new javax.swing.JRadioButton();
-        single_click_opt10 = new javax.swing.JRadioButton();
+        double_click_opt1 = new javax.swing.JRadioButton();
+        double_click_opt2 = new javax.swing.JRadioButton();
+        double_click_opt3 = new javax.swing.JRadioButton();
+        double_click_opt4 = new javax.swing.JRadioButton();
+        double_click_opt5 = new javax.swing.JRadioButton();
         jPanel45 = new javax.swing.JPanel();
-        single_click_opt11 = new javax.swing.JRadioButton();
-        single_click_opt12 = new javax.swing.JRadioButton();
-        single_click_opt13 = new javax.swing.JRadioButton();
-        single_click_opt14 = new javax.swing.JRadioButton();
-        single_click_opt15 = new javax.swing.JRadioButton();
+        triple_click_opt1 = new javax.swing.JRadioButton();
+        triple_click_opt2 = new javax.swing.JRadioButton();
+        triple_click_opt3 = new javax.swing.JRadioButton();
+        triple_click_op4 = new javax.swing.JRadioButton();
+        triple_click_opt5 = new javax.swing.JRadioButton();
         alias_panel = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         alias_table = new javax.swing.JTable();
@@ -4404,89 +4404,74 @@ int do_alias_export=0;
 
         buttonGroup11.add(single_click_opt1);
         single_click_opt1.setText("Follow TG");
-        single_click_opt1.setEnabled(false);
         jPanel27.add(single_click_opt1);
 
         buttonGroup11.add(single_click_opt2);
         single_click_opt2.setText("Bluetooth Pairing");
-        single_click_opt2.setEnabled(false);
         jPanel27.add(single_click_opt2);
 
         buttonGroup11.add(single_click_opt3);
         single_click_opt3.setSelected(true);
-        single_click_opt3.setText("Enable Status Leds");
-        single_click_opt3.setEnabled(false);
+        single_click_opt3.setText("Enable/Disable Status Leds");
         jPanel27.add(single_click_opt3);
 
         buttonGroup11.add(single_click_opt4);
         single_click_opt4.setText("Skip TG");
-        single_click_opt4.setEnabled(false);
         jPanel27.add(single_click_opt4);
 
         buttonGroup11.add(single_click_opt5);
-        single_click_opt5.setText("Toggle Unknown TG");
-        single_click_opt5.setEnabled(false);
+        single_click_opt5.setText("Enable/Disable Unknown TG");
         jPanel27.add(single_click_opt5);
 
         jPanel21.add(jPanel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 330, 920, 60));
 
         jPanel28.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        buttonGroup10.add(single_click_opt6);
-        single_click_opt6.setText("Follow TG");
-        single_click_opt6.setEnabled(false);
-        jPanel28.add(single_click_opt6);
+        buttonGroup10.add(double_click_opt1);
+        double_click_opt1.setText("Follow TG");
+        jPanel28.add(double_click_opt1);
 
-        buttonGroup10.add(single_click_opt7);
-        single_click_opt7.setSelected(true);
-        single_click_opt7.setText("Bluetooth Pairing");
-        single_click_opt7.setEnabled(false);
-        jPanel28.add(single_click_opt7);
+        buttonGroup10.add(double_click_opt2);
+        double_click_opt2.setSelected(true);
+        double_click_opt2.setText("Bluetooth Pairing");
+        jPanel28.add(double_click_opt2);
 
-        buttonGroup10.add(single_click_opt8);
-        single_click_opt8.setText("Enable Status Leds");
-        single_click_opt8.setEnabled(false);
-        jPanel28.add(single_click_opt8);
+        buttonGroup10.add(double_click_opt3);
+        double_click_opt3.setText("Enable/Disable Status Leds");
+        jPanel28.add(double_click_opt3);
 
-        buttonGroup10.add(single_click_opt9);
-        single_click_opt9.setText("Skip TG");
-        single_click_opt9.setEnabled(false);
-        jPanel28.add(single_click_opt9);
+        buttonGroup10.add(double_click_opt4);
+        double_click_opt4.setText("Skip TG");
+        jPanel28.add(double_click_opt4);
 
-        buttonGroup10.add(single_click_opt10);
-        single_click_opt10.setText("Toggle Unknown TG");
-        single_click_opt10.setEnabled(false);
-        jPanel28.add(single_click_opt10);
+        buttonGroup10.add(double_click_opt5);
+        double_click_opt5.setText("Enable/Disable Unknown TG");
+        jPanel28.add(double_click_opt5);
 
         jPanel21.add(jPanel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, -1, -1));
 
         jPanel45.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        buttonGroup9.add(single_click_opt11);
-        single_click_opt11.setSelected(true);
-        single_click_opt11.setText("Follow TG");
-        single_click_opt11.setEnabled(false);
-        jPanel45.add(single_click_opt11);
+        buttonGroup9.add(triple_click_opt1);
+        triple_click_opt1.setSelected(true);
+        triple_click_opt1.setText("Follow TG");
+        jPanel45.add(triple_click_opt1);
 
-        buttonGroup9.add(single_click_opt12);
-        single_click_opt12.setText("Bluetooth Pairing");
-        single_click_opt12.setEnabled(false);
-        jPanel45.add(single_click_opt12);
+        buttonGroup9.add(triple_click_opt2);
+        triple_click_opt2.setText("Bluetooth Pairing");
+        jPanel45.add(triple_click_opt2);
 
-        buttonGroup9.add(single_click_opt13);
-        single_click_opt13.setText("Enable Status Leds");
-        single_click_opt13.setEnabled(false);
-        jPanel45.add(single_click_opt13);
+        buttonGroup9.add(triple_click_opt3);
+        triple_click_opt3.setText("Enable/Disable Status Leds");
+        jPanel45.add(triple_click_opt3);
 
-        buttonGroup9.add(single_click_opt14);
-        single_click_opt14.setText("Skip TG");
-        single_click_opt14.setEnabled(false);
-        jPanel45.add(single_click_opt14);
+        buttonGroup9.add(triple_click_op4);
+        triple_click_op4.setText("Skip TG");
+        jPanel45.add(triple_click_op4);
 
-        buttonGroup9.add(single_click_opt15);
-        single_click_opt15.setText("Toggle Unknown TG");
-        single_click_opt15.setEnabled(false);
-        jPanel45.add(single_click_opt15);
+        buttonGroup9.add(triple_click_opt5);
+        triple_click_opt5.setText("Enable/Disable Unknown TG");
+        jPanel45.add(triple_click_opt5);
 
         jPanel21.add(jPanel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 920, 60));
 
@@ -4554,7 +4539,7 @@ int do_alias_export=0;
         advancedpanel.add(freq_correct_on_voice, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, -1));
 
         add_tdu_silence.setSelected(true);
-        add_tdu_silence.setText("Add Silent Period To Audio Buffer On Phase 1 TDU / TDULC (default on)");
+        add_tdu_silence.setText("Add Silent Period To Audio Buffer On Phase 1 TDU / TDULC (default off)");
         add_tdu_silence.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 add_tdu_silenceActionPerformed(evt);
@@ -5774,6 +5759,11 @@ private void SLEEP(long val) {
     public javax.swing.JCheckBox dmr_slot2;
     public javax.swing.JTextField dmr_sys_id;
     private javax.swing.JButton dmr_write_config;
+    private javax.swing.JRadioButton double_click_opt1;
+    private javax.swing.JRadioButton double_click_opt2;
+    private javax.swing.JRadioButton double_click_opt3;
+    private javax.swing.JRadioButton double_click_opt4;
+    private javax.swing.JRadioButton double_click_opt5;
     public javax.swing.JCheckBox duid_enh;
     public javax.swing.JCheckBox en_bluetooth_cb;
     public javax.swing.JCheckBox en_encout;
@@ -6010,20 +6000,10 @@ private void SLEEP(long val) {
     private javax.swing.JLabel ser_dev;
     private javax.swing.JPanel signalinsightpanel;
     private javax.swing.JRadioButton single_click_opt1;
-    private javax.swing.JRadioButton single_click_opt10;
-    private javax.swing.JRadioButton single_click_opt11;
-    private javax.swing.JRadioButton single_click_opt12;
-    private javax.swing.JRadioButton single_click_opt13;
-    private javax.swing.JRadioButton single_click_opt14;
-    private javax.swing.JRadioButton single_click_opt15;
     private javax.swing.JRadioButton single_click_opt2;
     private javax.swing.JRadioButton single_click_opt3;
     private javax.swing.JRadioButton single_click_opt4;
     private javax.swing.JRadioButton single_click_opt5;
-    private javax.swing.JRadioButton single_click_opt6;
-    private javax.swing.JRadioButton single_click_opt7;
-    private javax.swing.JRadioButton single_click_opt8;
-    private javax.swing.JRadioButton single_click_opt9;
     public javax.swing.JLabel siteid;
     private javax.swing.JToggleButton sq_indicator;
     private javax.swing.JLabel sq_lb;
@@ -6037,6 +6017,11 @@ private void SLEEP(long val) {
     private javax.swing.JToggleButton tg_indicator;
     private javax.swing.JLabel tg_lb;
     private javax.swing.JPanel tiny_const;
+    private javax.swing.JRadioButton triple_click_op4;
+    private javax.swing.JRadioButton triple_click_opt1;
+    private javax.swing.JRadioButton triple_click_opt2;
+    private javax.swing.JRadioButton triple_click_opt3;
+    private javax.swing.JRadioButton triple_click_opt5;
     public javax.swing.JButton use_freq_primary;
     public javax.swing.JLabel volume_label;
     public javax.swing.JComboBox<String> vtimeout;
