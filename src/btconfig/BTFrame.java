@@ -1351,8 +1351,8 @@ int do_alias_export=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202103171649");
-      release_date.setText("Release: 2021-03-17 1649");
+      fw_ver.setText("Latest Avail: FW Date: 202103191733");
+      release_date.setText("Release: 2021-03-19 1733");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2788,6 +2788,9 @@ int do_alias_export=0;
         triple_click_opt3 = new javax.swing.JRadioButton();
         triple_click_opt4 = new javax.swing.JRadioButton();
         triple_click_opt5 = new javax.swing.JRadioButton();
+        jLabel21 = new javax.swing.JLabel();
+        skip_tg_to = new javax.swing.JTextField();
+        jLabel22 = new javax.swing.JLabel();
         alias_panel = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         alias_table = new javax.swing.JTable();
@@ -4480,6 +4483,16 @@ int do_alias_export=0;
 
         jPanel21.add(jPanel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 320, 920, 60));
 
+        jLabel21.setText("Skip TG Timeout ");
+        jPanel21.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 400, -1, -1));
+
+        skip_tg_to.setColumns(5);
+        skip_tg_to.setText("60");
+        jPanel21.add(skip_tg_to, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 389, -1, 30));
+
+        jLabel22.setText("Minutes");
+        jPanel21.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 400, -1, -1));
+
         buttong_config.add(jPanel21, java.awt.BorderLayout.CENTER);
 
         jTabbedPane1.addTab("Button CFG", buttong_config);
@@ -5831,6 +5844,8 @@ private void SLEEP(long val) {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
@@ -6014,6 +6029,7 @@ private void SLEEP(long val) {
     public javax.swing.JRadioButton single_click_opt4;
     public javax.swing.JRadioButton single_click_opt5;
     public javax.swing.JLabel siteid;
+    public javax.swing.JTextField skip_tg_to;
     private javax.swing.JToggleButton sq_indicator;
     private javax.swing.JLabel sq_lb;
     private javax.swing.JTextField state;

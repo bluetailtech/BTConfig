@@ -381,6 +381,9 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           double reffreq = bb3.getDouble(112);
                           parent.ref_freq.setText( String.format("%5.0f", reffreq) );
 
+                          int skip_tg_to = bb3.getInt(552);
+                          parent.skip_tg_to.setText( Integer.toString(skip_tg_to/1000/60) );
+
 
                           int duid_enh = bb3.getInt(156);
                           int freq_correct_on_voice = bb3.getInt(160);
@@ -1074,6 +1077,18 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
                           result=new byte[64];
                           cmd = "but3_cfg "+optb3+"\r\n"; 
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          SLEEP(10);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
+                          result=new byte[64];
+                          int skip_tg_to = 60; 
+                          try {
+                            skip_tg_to = Integer.valueOf( parent.skip_tg_to.getText() );
+                          } catch(Exception e) {
+                          }
+                          cmd = "skip_tg_to "+skip_tg_to+"\r\n"; 
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           SLEEP(10);
                           rlen=serial_port.readBytes( result, 64);
