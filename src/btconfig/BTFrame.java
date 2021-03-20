@@ -975,23 +975,22 @@ class updateTask extends java.util.TimerTask
                       rx_state=4;
                       //System.out.println("do voice");
                     }
-                    if(b[i]==(byte) 0xe4) {
+                    else if(b[i]==(byte) 0xe4) {
                       skip_bytes=320+1;
                       rx_state=5;
                       //System.out.println("do const");
                     }
-                    if(b[i]==(byte) 0x72) {
+                    else if(b[i]==(byte) 0x72) {
                       skip_bytes=256+1;
                       rx_state=6;
                       //System.out.println("do tdma");
                     }
-                    if(b[i]==(byte) 0x15) {
+                    else if(b[i]==(byte) 0x15) {
                       skip_bytes=140+1;
                       rx_state=0;
                       //System.out.println("do sysinfo");
                     }
-
-                    if(b[i]==(byte) 0x31) {
+                    else if(b[i]==(byte) 0x31) {
                       //audio flush
                       //System.out.println("\r\naudio flush");
 
@@ -999,6 +998,10 @@ class updateTask extends java.util.TimerTask
                         aud.playStop();
                       }
 
+                      rx_state=0;
+                      skip_bytes=0;
+                    }
+                    else {
                       rx_state=0;
                       skip_bytes=0;
                     }
@@ -1352,7 +1355,7 @@ int do_alias_export=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202103191733");
-      release_date.setText("Release: 2021-03-19 1733");
+      release_date.setText("Release: 2021-03-19 1836");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
