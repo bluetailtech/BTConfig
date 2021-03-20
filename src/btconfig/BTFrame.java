@@ -1009,7 +1009,7 @@ class updateTask extends java.util.TimerTask
                     }
                   }
                   else {
-                    rx_state=0;
+                    //rx_state=0;  dont do this
 
                     if(rx_state==0 && skip_bytes==0 ) {
                       int isprint=1;
@@ -1357,7 +1357,7 @@ int do_alias_export=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202103191733");
-      release_date.setText("Release: 2021-03-19 2155");
+      release_date.setText("Release: 2021-03-20 0513");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
