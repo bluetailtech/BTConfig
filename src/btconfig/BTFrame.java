@@ -769,12 +769,13 @@ class updateTask extends java.util.TimerTask
         else if(is_connected==1 && do_update_firmware==0) {
           int avail = serial_port.bytesAvailable();
 
-          byte[] b = new byte[avail];
-          byte[] str_b = new byte[avail];
-          int str_idx=0;
 
           //if( (rx_state>0 && avail>=32) || (rx_state==0 && avail>0 && skip_bytes==0) ) {
           if( avail>0 ) {
+
+            byte[] b = new byte[avail];
+            byte[] str_b = new byte[avail];
+            int str_idx=0;
 
             try {
               int len = serial_port.readBytes(b, avail);
@@ -1357,7 +1358,7 @@ int do_alias_export=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202103200611");
-      release_date.setText("Release: 2021-03-20 0611");
+      release_date.setText("Release: 2021-03-20 0845");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
