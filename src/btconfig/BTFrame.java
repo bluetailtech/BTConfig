@@ -767,18 +767,17 @@ class updateTask extends java.util.TimerTask
 
         }
         else if(is_connected==1 && do_update_firmware==0) {
-          int avail = serial_port.bytesAvailable();
-
+          avail = serial_port.bytesAvailable();
+          str_idx=0;
 
           //if( (rx_state>0 && avail>=32) || (rx_state==0 && avail>0 && skip_bytes==0) ) {
           if( avail>0 ) {
 
-            byte[] b = new byte[avail];
-            byte[] str_b = new byte[avail];
-            int str_idx=0;
 
             try {
               int len = serial_port.readBytes(b, avail);
+
+              if(len>256000) len = 256000;
 
               for(int i=0;i<len;i++) {
 
@@ -1031,7 +1030,7 @@ class updateTask extends java.util.TimerTask
 
 
             } catch(Exception e) {
-              //e.printStackTrace();
+              e.printStackTrace();
             }
           }
 
@@ -1094,7 +1093,7 @@ class updateTask extends java.util.TimerTask
 
 
       } catch(Exception e) {
-        //e.printStackTrace(System.out);
+        e.printStackTrace(System.out);
       }
 
       long time = new java.util.Date().getTime();
@@ -1243,11 +1242,17 @@ Alias alias;
 String current_alias;
 int do_alias_import=0;
 int do_alias_export=0;
+byte[] b;
+byte[] str_b;
+int str_idx=0;
+int avail=0;
 
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
       initComponents();
 
+      b = new byte[256000];
+      str_b = new byte[256000];
 
       supergroup_hash = new Hashtable();
 
@@ -1358,7 +1363,7 @@ int do_alias_export=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202103200611");
-      release_date.setText("Release: 2021-03-20 0845");
+      release_date.setText("Release: 2021-03-20 0952");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1736,7 +1741,7 @@ int do_alias_export=0;
 
       if(command_input==1) return;
 
-
+     try {
 
       if(str!=null && do_console_output==1) System.out.println(str.trim());
 
@@ -2460,6 +2465,9 @@ int do_alias_export=0;
           jTextArea1.getCaret().setBlinkRate(250);
         }
       }
+     } catch(Exception e) {
+       e.printStackTrace();
+     }
     }
     //////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////
