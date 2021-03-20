@@ -782,9 +782,10 @@ class updateTask extends java.util.TimerTask
               for(int i=0;i<len;i++) {
 
                 if(skip_bytes>0 && rx_state==6) {
+                    skip_bytes--;
+
                     try {
                       if(tdma_idx<256) tdma_bytes[tdma_idx++] = b[i];
-                      skip_bytes--;
 
                       if(tdma_idx==256) {
                         tdma_idx=0;
@@ -796,9 +797,10 @@ class updateTask extends java.util.TimerTask
                     }
                 }
                 else if(skip_bytes>0 && rx_state==5) {
+                  skip_bytes--;
+
                   if(const_idx<320) constellation_bytes[const_idx++] = b[i];
 
-                   skip_bytes--;
                     //System.out.println("constellation "+skip_bytes);
                   //constellation data
                   if(skip_bytes==0) {
@@ -817,9 +819,9 @@ class updateTask extends java.util.TimerTask
                   }
                 }
                 else if(skip_bytes>0 && rx_state==4) {
-                  if(pcm_idx<320) pcm_bytes[pcm_idx++] = b[i];
-
                   skip_bytes--;
+
+                  if(pcm_idx<320) pcm_bytes[pcm_idx++] = b[i];
 
                   if( !enable_mp3.isSelected() && skip_bytes==0 ) {
                     do_meta();
@@ -1355,7 +1357,7 @@ int do_alias_export=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202103191733");
-      release_date.setText("Release: 2021-03-19 1836");
+      release_date.setText("Release: 2021-03-19 2155");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5670,7 +5672,12 @@ private void resizeColumns3() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 private void SLEEP(long val) {
   try {
-    Thread.sleep(val);
+    //Thread.sleep(val);
+    long start_time  = new java.util.Date().getTime();
+    long end_time=start_time+val;
+    while(end_time>start_time) {
+      start_time  = new java.util.Date().getTime();
+    }
   } catch(Exception e) {
   }
 }

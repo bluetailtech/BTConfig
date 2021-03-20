@@ -113,7 +113,12 @@ Boolean is_valid_freq(double freq) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 private void SLEEP(long val) {
   try {
-    Thread.sleep(val);
+    //Thread.sleep(val);
+    long start_time  = new java.util.Date().getTime();
+    long end_time=start_time+val;
+    while(end_time>start_time) {
+      start_time  = new java.util.Date().getTime();
+    }
   } catch(Exception e) {
   }
 }
