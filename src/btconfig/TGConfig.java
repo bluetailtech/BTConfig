@@ -1429,7 +1429,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                     int count=0;
                     while(serial_port.bytesAvailable()<48) {
                       try {
-                        SLEEP(1);
+                        //SLEEP(1);
                       } catch(Exception e) {
                       }
                       if(count++>500) break;
