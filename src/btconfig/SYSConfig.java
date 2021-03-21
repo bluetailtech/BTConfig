@@ -408,6 +408,11 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           int but3_cfg = bb3.getInt(548);
                           int but4_cfg = bb3.getInt(556);
 
+                          int roam_ret_to_cc = bb3.getInt(560);
+
+                          if( roam_ret_to_cc == 1) parent.roaming_ret_to_cc.setSelected(true);
+                            else parent.roaming_ret_to_cc.setSelected(false); 
+
                           if( but1_cfg == 0 ) parent.single_click_opt1.setSelected(true);
                           else if( but1_cfg == 1 ) parent.single_click_opt2.setSelected(true);
                           else if( but1_cfg == 2 ) parent.single_click_opt3.setSelected(true);
@@ -1057,6 +1062,18 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
 
+
+                          int roam_ret_to_cc = 0;
+                          if( parent.roaming_ret_to_cc.isSelected() ) roam_ret_to_cc = 1;
+
+                          result=new byte[64];
+                          cmd = "roam_ret_to_cc "+roam_ret_to_cc+"\r\n"; 
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          SLEEP(10);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
+
                           int optb1 = 0;
                           if( parent.single_click_opt1.isSelected() ) optb1 = 0;
                           else if( parent.single_click_opt2.isSelected() ) optb1 = 1;
@@ -1088,6 +1105,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           else if( parent.quad_click_opt4.isSelected() ) optb4 = 3;
                           else if( parent.quad_click_opt5.isSelected() ) optb4 = 4;
                           else if( parent.quad_click_opt6.isSelected() ) optb4 = 5;
+
 
                           result=new byte[64];
                           cmd = "but1_cfg "+optb1+"\r\n"; 

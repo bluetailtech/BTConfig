@@ -1362,8 +1362,8 @@ int avail=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202103210812");
-      release_date.setText("Release: 2021-03-21 0812");
+      fw_ver.setText("Latest Avail: FW Date: 202103211343");
+      release_date.setText("Release: 2021-03-21 1343");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2811,6 +2811,8 @@ int avail=0;
         jLabel21 = new javax.swing.JLabel();
         skip_tg_to = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
+        jSeparator40 = new javax.swing.JSeparator();
+        roaming_ret_to_cc = new javax.swing.JCheckBox();
         jLabel33 = new javax.swing.JLabel();
         jPanel49 = new javax.swing.JPanel();
         quad_click_opt1 = new javax.swing.JRadioButton();
@@ -4533,6 +4535,14 @@ int avail=0;
         jLabel22.setText("Minutes");
         jPanel48.add(jLabel22);
 
+        jSeparator40.setMinimumSize(new java.awt.Dimension(75, 10));
+        jSeparator40.setPreferredSize(new java.awt.Dimension(75, 0));
+        jPanel48.add(jSeparator40);
+
+        roaming_ret_to_cc.setSelected(true);
+        roaming_ret_to_cc.setText("Roaming Return To Primary On Disable");
+        jPanel48.add(roaming_ret_to_cc);
+
         jPanel21.add(jPanel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 350, 870, 50));
 
         jLabel33.setText("Quad Click");
@@ -6059,6 +6069,7 @@ private void SLEEP(long val) {
     private javax.swing.JSeparator jSeparator38;
     private javax.swing.JSeparator jSeparator39;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator40;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
@@ -6118,6 +6129,7 @@ private void SLEEP(long val) {
     public javax.swing.JLabel rfid;
     public javax.swing.JComboBox<String> rfmaxgain;
     public javax.swing.JCheckBox roaming;
+    public javax.swing.JCheckBox roaming_ret_to_cc;
     private javax.swing.JTextField search_radius;
     private javax.swing.JButton select_home;
     private javax.swing.JButton send_tg;
