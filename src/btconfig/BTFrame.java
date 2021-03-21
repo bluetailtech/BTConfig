@@ -1362,8 +1362,8 @@ int avail=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202103201737");
-      release_date.setText("Release: 2021-03-20 1750");
+      fw_ver.setText("Latest Avail: FW Date: 202103210812");
+      release_date.setText("Release: 2021-03-21 0812");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2523,6 +2523,8 @@ int avail=0;
         buttonGroup9 = new javax.swing.ButtonGroup();
         buttonGroup10 = new javax.swing.ButtonGroup();
         buttonGroup11 = new javax.swing.ButtonGroup();
+        buttonGroup12 = new javax.swing.ButtonGroup();
+        buttonGroup13 = new javax.swing.ButtonGroup();
         bottom_panel = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         status_panel = new javax.swing.JPanel();
@@ -2790,21 +2792,33 @@ int avail=0;
         single_click_opt3 = new javax.swing.JRadioButton();
         single_click_opt4 = new javax.swing.JRadioButton();
         single_click_opt5 = new javax.swing.JRadioButton();
+        single_click_opt6 = new javax.swing.JRadioButton();
         jPanel28 = new javax.swing.JPanel();
         double_click_opt1 = new javax.swing.JRadioButton();
         double_click_opt2 = new javax.swing.JRadioButton();
         double_click_opt3 = new javax.swing.JRadioButton();
         double_click_opt4 = new javax.swing.JRadioButton();
         double_click_opt5 = new javax.swing.JRadioButton();
+        double_click_opt6 = new javax.swing.JRadioButton();
         jPanel45 = new javax.swing.JPanel();
         triple_click_opt1 = new javax.swing.JRadioButton();
         triple_click_opt2 = new javax.swing.JRadioButton();
         triple_click_opt3 = new javax.swing.JRadioButton();
         triple_click_opt4 = new javax.swing.JRadioButton();
         triple_click_opt5 = new javax.swing.JRadioButton();
+        triple_click_opt6 = new javax.swing.JRadioButton();
+        jPanel48 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         skip_tg_to = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jPanel49 = new javax.swing.JPanel();
+        quad_click_opt1 = new javax.swing.JRadioButton();
+        quad_click_opt2 = new javax.swing.JRadioButton();
+        quad_click_opt3 = new javax.swing.JRadioButton();
+        quad_click_opt4 = new javax.swing.JRadioButton();
+        quad_click_opt5 = new javax.swing.JRadioButton();
+        quad_click_opt6 = new javax.swing.JRadioButton();
         alias_panel = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         alias_table = new javax.swing.JTable();
@@ -4401,13 +4415,13 @@ int avail=0;
         jPanel21.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel18.setText("Single Click");
-        jPanel21.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, -1, -1));
+        jPanel21.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, -1, -1));
 
         jLabel19.setText("Double Click");
-        jPanel21.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 190, -1, -1));
+        jPanel21.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, 20));
 
         jLabel20.setText("Triple Click");
-        jPanel21.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 290, -1, -1));
+        jPanel21.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, -1, -1));
 
         button_write_config.setText("Write Config");
         button_write_config.addActionListener(new java.awt.event.ActionListener() {
@@ -4415,7 +4429,7 @@ int avail=0;
                 button_write_configActionPerformed(evt);
             }
         });
-        jPanel21.add(button_write_config, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 460, -1, -1));
+        jPanel21.add(button_write_config, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 390, -1, -1));
 
         jPanel27.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
@@ -4440,7 +4454,11 @@ int avail=0;
         single_click_opt5.setText("Enable/Disable Unknown TG");
         jPanel27.add(single_click_opt5);
 
-        jPanel21.add(jPanel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, 920, 60));
+        buttonGroup11.add(single_click_opt6);
+        single_click_opt6.setText("Enable/Disable Roaming");
+        jPanel27.add(single_click_opt6);
+
+        jPanel21.add(jPanel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 1010, 40));
 
         jPanel28.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
@@ -4465,7 +4483,11 @@ int avail=0;
         double_click_opt5.setText("Enable/Disable Unknown TG");
         jPanel28.add(double_click_opt5);
 
-        jPanel21.add(jPanel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, -1, -1));
+        buttonGroup10.add(double_click_opt6);
+        double_click_opt6.setText("Enable/Disable Roaming");
+        jPanel28.add(double_click_opt6);
+
+        jPanel21.add(jPanel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 153, -1, 70));
 
         jPanel45.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
@@ -4495,17 +4517,60 @@ int avail=0;
         triple_click_opt5.setText("Enable/Disable Unknown TG");
         jPanel45.add(triple_click_opt5);
 
-        jPanel21.add(jPanel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 320, 920, 60));
+        buttonGroup9.add(triple_click_opt6);
+        triple_click_opt6.setText("Enable/Disable Roaming");
+        jPanel45.add(triple_click_opt6);
+
+        jPanel21.add(jPanel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 1040, 40));
 
         jLabel21.setText("Skip TG Timeout ");
-        jPanel21.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 400, -1, -1));
+        jPanel48.add(jLabel21);
 
         skip_tg_to.setColumns(5);
         skip_tg_to.setText("60");
-        jPanel21.add(skip_tg_to, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 389, -1, 30));
+        jPanel48.add(skip_tg_to);
 
         jLabel22.setText("Minutes");
-        jPanel21.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 400, -1, -1));
+        jPanel48.add(jLabel22);
+
+        jPanel21.add(jPanel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 350, 870, 50));
+
+        jLabel33.setText("Quad Click");
+        jPanel21.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, -1, -1));
+
+        jPanel49.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        buttonGroup13.add(quad_click_opt1);
+        quad_click_opt1.setText("Follow TG");
+        jPanel49.add(quad_click_opt1);
+
+        buttonGroup13.add(quad_click_opt2);
+        quad_click_opt2.setText("Bluetooth Pairing");
+        jPanel49.add(quad_click_opt2);
+
+        buttonGroup13.add(quad_click_opt3);
+        quad_click_opt3.setText("Enable/Disable Status Leds");
+        jPanel49.add(quad_click_opt3);
+
+        buttonGroup13.add(quad_click_opt4);
+        quad_click_opt4.setText("Skip TG");
+        quad_click_opt4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quad_click_opt4ActionPerformed(evt);
+            }
+        });
+        jPanel49.add(quad_click_opt4);
+
+        buttonGroup13.add(quad_click_opt5);
+        quad_click_opt5.setText("Enable/Disable Unknown TG");
+        jPanel49.add(quad_click_opt5);
+
+        buttonGroup13.add(quad_click_opt6);
+        quad_click_opt6.setSelected(true);
+        quad_click_opt6.setText("Enable/Disable Roaming");
+        jPanel49.add(quad_click_opt6);
+
+        jPanel21.add(jPanel49, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 1030, -1));
 
         buttong_config.add(jPanel21, java.awt.BorderLayout.CENTER);
 
@@ -5325,6 +5390,10 @@ int avail=0;
         // TODO add your handling code here:
     }//GEN-LAST:event_triple_click_opt4ActionPerformed
 
+    private void quad_click_opt4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quad_click_opt4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_quad_click_opt4ActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5754,6 +5823,8 @@ private void SLEEP(long val) {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup10;
     private javax.swing.ButtonGroup buttonGroup11;
+    private javax.swing.ButtonGroup buttonGroup12;
+    private javax.swing.ButtonGroup buttonGroup13;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.ButtonGroup buttonGroup4;
@@ -5805,6 +5876,7 @@ private void SLEEP(long val) {
     public javax.swing.JRadioButton double_click_opt3;
     public javax.swing.JRadioButton double_click_opt4;
     public javax.swing.JRadioButton double_click_opt5;
+    public javax.swing.JRadioButton double_click_opt6;
     public javax.swing.JCheckBox duid_enh;
     public javax.swing.JCheckBox en_bluetooth_cb;
     public javax.swing.JCheckBox en_encout;
@@ -5876,6 +5948,7 @@ private void SLEEP(long val) {
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
@@ -5939,6 +6012,8 @@ private void SLEEP(long val) {
     private javax.swing.JPanel jPanel45;
     private javax.swing.JPanel jPanel46;
     private javax.swing.JPanel jPanel47;
+    private javax.swing.JPanel jPanel48;
+    private javax.swing.JPanel jPanel49;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -6027,6 +6102,12 @@ private void SLEEP(long val) {
     private javax.swing.JPanel p25rxconfigpanel;
     private javax.swing.JProgressBar progbar;
     private javax.swing.JLabel progress_label;
+    public javax.swing.JRadioButton quad_click_opt1;
+    public javax.swing.JRadioButton quad_click_opt2;
+    public javax.swing.JRadioButton quad_click_opt3;
+    public javax.swing.JRadioButton quad_click_opt4;
+    public javax.swing.JRadioButton quad_click_opt5;
+    public javax.swing.JRadioButton quad_click_opt6;
     private javax.swing.JButton read_config;
     private javax.swing.JButton read_tg;
     private javax.swing.JToggleButton record_to_mp3;
@@ -6047,6 +6128,7 @@ private void SLEEP(long val) {
     public javax.swing.JRadioButton single_click_opt3;
     public javax.swing.JRadioButton single_click_opt4;
     public javax.swing.JRadioButton single_click_opt5;
+    public javax.swing.JRadioButton single_click_opt6;
     public javax.swing.JLabel siteid;
     public javax.swing.JTextField skip_tg_to;
     private javax.swing.JToggleButton sq_indicator;
@@ -6066,6 +6148,7 @@ private void SLEEP(long val) {
     public javax.swing.JRadioButton triple_click_opt3;
     public javax.swing.JRadioButton triple_click_opt4;
     public javax.swing.JRadioButton triple_click_opt5;
+    public javax.swing.JRadioButton triple_click_opt6;
     public javax.swing.JButton use_freq_primary;
     public javax.swing.JLabel volume_label;
     public javax.swing.JComboBox<String> vtimeout;
