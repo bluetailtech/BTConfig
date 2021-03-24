@@ -222,7 +222,7 @@ class updateTask extends java.util.TimerTask
         }
 
         if(do_read_config==1 && serial_port!=null && is_connected==1) {
-          if(sys_config==null) sys_config = new SYSConfig();
+          if(sys_config==null) sys_config = new SYSConfig(parent);
           if(sys_config!=null) {
 
             String cmd= new String("en_voice_send 0\r\n");
@@ -1362,8 +1362,8 @@ int avail=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202103231938");
-      release_date.setText("Release: 2021-03-23 2027");
+      fw_ver.setText("Latest Avail: FW Date: 202103240442");
+      release_date.setText("Release: 2021-03-24 0442");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5754,7 +5754,7 @@ private void resizeColumns3() {
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-private void SLEEP(long val) {
+public void SLEEP(long val) {
   try {
     if(is_windows==1) {
       Thread.sleep(val);
@@ -5767,6 +5767,7 @@ private void SLEEP(long val) {
       }
     }
   } catch(Exception e) {
+    e.printStackTrace();
   }
 }
 

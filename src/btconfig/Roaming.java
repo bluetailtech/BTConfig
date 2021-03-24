@@ -1616,17 +1616,9 @@ public void set_freq_binary(String freq_d) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 private void SLEEP(long val) {
   try {
-    if(parent.is_windows==1) {
-      Thread.sleep(val);
-    }
-    else {
-      long start_time  = new java.util.Date().getTime();
-      long end_time=start_time+val;
-      while(end_time>start_time) {
-        start_time  = new java.util.Date().getTime();
-      }
-    }
+    parent.SLEEP(val);
   } catch(Exception e) {
+    e.printStackTrace();
   }
 }
 }

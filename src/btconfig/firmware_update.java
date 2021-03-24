@@ -43,6 +43,7 @@ int did_save=0;
   public void send_firmware(BTFrame parent, BufferedInputStream bis, SerialPort serial_port)
   {
     this.serial_port = serial_port;
+    this.parent = parent;
 
     byte[] appcrc = new byte[4]; 
     byte[] image_buffer = new byte[128 * 1024 * 6];
@@ -529,22 +530,13 @@ int did_save=0;
     }
     return 0;
   }
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 private void SLEEP(long val) {
   try {
-    if(parent.is_windows==1) {
-      Thread.sleep(val);
-    }
-    else {
-      long start_time  = new java.util.Date().getTime();
-      long end_time=start_time+val;
-      while(end_time>start_time) {
-        start_time  = new java.util.Date().getTime();
-      }
-    }
+    parent.SLEEP(val);
   } catch(Exception e) {
+    e.printStackTrace();
   }
 }
 }
