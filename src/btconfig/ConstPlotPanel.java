@@ -219,7 +219,7 @@ public class ConstPlotPanel extends JPanel {
            ref_freq_est = "Estimated Reference Frequency: "+ String.format( "%3.0f", est_ref_sum);
          }
          else {
-           ref_freq_est = "Estimated Reference Frequency: ";
+           ref_freq_est = null; 
          }
        //}
        //else {

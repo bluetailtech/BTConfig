@@ -414,7 +414,7 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
 
                 if(offset==0) {
                   try {
-                    SLEEP(500);
+                    SLEEP(800);
                   } catch(Exception e) {
                   }
                 }
@@ -426,7 +426,7 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
                         SLEEP(1);
                       } catch(Exception e) {
                       }
-                      if(count++>500) break;
+                      if(count++>800) break;
                     }
                   } catch(Exception e) {
                     e.printStackTrace();
@@ -477,7 +477,7 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
 
             //TODO: need to check for ack
             try {
-              SLEEP(100);
+              SLEEP(500);
             } catch(Exception e) {
             }
 
@@ -699,7 +699,7 @@ public void import_DSD(BTFrame parent, LineNumberReader lnr, SerialPort serial_p
 
                 if(offset==0) {
                   try {
-                    SLEEP(500);
+                    SLEEP(800);
                   } catch(Exception e) {
                   }
                 }
@@ -711,7 +711,7 @@ public void import_DSD(BTFrame parent, LineNumberReader lnr, SerialPort serial_p
                         SLEEP(1);
                       } catch(Exception e) {
                       }
-                      if(count++>500) break;
+                      if(count++>800) break;
                     }
                   } catch(Exception e) {
                     e.printStackTrace();
@@ -762,7 +762,7 @@ public void import_DSD(BTFrame parent, LineNumberReader lnr, SerialPort serial_p
 
             //TODO: need to check for ack
             try {
-              SLEEP(100);
+              SLEEP(500);
             } catch(Exception e) {
             }
 

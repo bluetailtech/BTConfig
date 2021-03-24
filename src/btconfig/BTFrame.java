@@ -1363,7 +1363,7 @@ int avail=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202103240442");
-      release_date.setText("Release: 2021-03-24 0442");
+      release_date.setText("Release: 2021-03-24 1434");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4194,7 +4194,7 @@ int avail=0;
         jTable1.setEditingColumn(1);
         jTable1.setEditingRow(1);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object[4915][7],
+            new Object[4916][7],
             new String [] {
                 "Enabled", "SYS_ID(HEX)", "Priority", "TGRP", "AlphaTag", "Description", "WACN(HEX)"
             }
