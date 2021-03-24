@@ -1362,8 +1362,8 @@ int avail=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202103231847");
-      release_date.setText("Release: 2021-03-23 1847");
+      fw_ver.setText("Latest Avail: FW Date: 202103231938");
+      release_date.setText("Release: 2021-03-23 1938");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5756,11 +5756,15 @@ private void resizeColumns3() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 private void SLEEP(long val) {
   try {
-    //Thread.sleep(val);
-    long start_time  = new java.util.Date().getTime();
-    long end_time=start_time+val;
-    while(end_time>start_time) {
-      start_time  = new java.util.Date().getTime();
+    if(is_windows==1) {
+      Thread.sleep(val);
+    }
+    else {
+      long start_time  = new java.util.Date().getTime();
+      long end_time=start_time+val;
+      while(end_time>start_time) {
+        start_time  = new java.util.Date().getTime();
+      }
     }
   } catch(Exception e) {
   }
