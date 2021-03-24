@@ -1362,8 +1362,8 @@ int avail=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202103212028");
-      release_date.setText("Release: 2021-03-21 2028");
+      fw_ver.setText("Latest Avail: FW Date: 202103231847");
+      release_date.setText("Release: 2021-03-23 1847");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2560,7 +2560,6 @@ int avail=0;
         en_bluetooth_cb = new javax.swing.JCheckBox();
         allow_unknown_tg_cb = new javax.swing.JCheckBox();
         volume_label = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         enable_leds = new javax.swing.JCheckBox();
         btreset1 = new javax.swing.JLabel();
         bluetooth_reset = new javax.swing.JTextField();
@@ -3085,9 +3084,6 @@ int avail=0;
 
         volume_label.setText("1.0");
         p25rxconfigpanel.add(volume_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, -1, -1));
-
-        jLabel9.setText("Default: 0.8");
-        p25rxconfigpanel.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 130, -1, -1));
 
         enable_leds.setSelected(true);
         enable_leds.setText("Enable Status LEDS");
@@ -5979,7 +5975,6 @@ private void SLEEP(long val) {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
