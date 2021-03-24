@@ -43,8 +43,15 @@ SerialPort serial_port;
 java.text.SimpleDateFormat formatter_date;
 int did_write_tg=0;
 java.util.Hashtable tg_hash;
+BTFrame parent;
 
 int NRECS=4915; //3 banks of 128k flash with record size of 80 bytes
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public TGConfig(BTFrame parent) {
+  this.parent = parent;
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1740,11 +1747,15 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 private void SLEEP(long val) {
   try {
-    //Thread.sleep(val);
-    long start_time  = new java.util.Date().getTime();
-    long end_time=start_time+val;
-    while(end_time>start_time) {
-      start_time  = new java.util.Date().getTime();
+    if(parent.is_windows==1) {
+      Thread.sleep(val);
+    }
+    else {
+      long start_time  = new java.util.Date().getTime();
+      long end_time=start_time+val;
+      while(end_time>start_time) {
+        start_time  = new java.util.Date().getTime();
+      }
     }
   } catch(Exception e) {
   }

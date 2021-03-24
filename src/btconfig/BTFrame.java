@@ -322,7 +322,7 @@ class updateTask extends java.util.TimerTask
               cmd= new String("logging -999\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
 
-              if(tg_config==null) tg_config = new TGConfig();
+              if(tg_config==null) tg_config = new TGConfig(parent);
               alias.import_alias_csv(parent, lnr);
 
               cmd= new String("logging 0\r\n");
@@ -367,7 +367,7 @@ class updateTask extends java.util.TimerTask
               cmd= new String("logging -999\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
 
-              if(tg_config==null) tg_config = new TGConfig();
+              if(tg_config==null) tg_config = new TGConfig(parent);
               tg_config.import_talkgroups_csv(parent, lnr, serial_port);
               do_read_talkgroups=1;
 
@@ -413,7 +413,7 @@ class updateTask extends java.util.TimerTask
               cmd= new String("logging -999\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
 
-              if(tg_config==null) tg_config = new TGConfig();
+              if(tg_config==null) tg_config = new TGConfig(parent);
               tg_config.restore_talkgroups(parent, bis, serial_port);
               do_read_talkgroups=1;
 
@@ -591,7 +591,7 @@ class updateTask extends java.util.TimerTask
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
               cmd= new String("logging -999\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-          if(tg_config==null) tg_config = new TGConfig();
+          if(tg_config==null) tg_config = new TGConfig(parent);
           tg_config.send_talkgroups(parent, serial_port);
           setProgress(-1);
           do_update_talkgroups=0;
@@ -626,7 +626,7 @@ class updateTask extends java.util.TimerTask
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
               cmd= new String("logging -999\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-          if(tg_config==null) tg_config = new TGConfig();
+          if(tg_config==null) tg_config = new TGConfig(parent);
           tg_config.read_talkgroups(parent, serial_port);
           setProgress(-1);
 
@@ -1363,7 +1363,7 @@ int avail=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202103231938");
-      release_date.setText("Release: 2021-03-23 1938");
+      release_date.setText("Release: 2021-03-23 2027");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
