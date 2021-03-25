@@ -872,7 +872,7 @@ public void restore_talkgroups(BTFrame parent, BufferedInputStream bis, SerialPo
 
                 if(offset==0) {
                   try {
-                    SLEEP(500);
+                    SLEEP(800);
                   } catch(Exception e) {
                   }
                 }
@@ -884,7 +884,7 @@ public void restore_talkgroups(BTFrame parent, BufferedInputStream bis, SerialPo
                         SLEEP(1);
                       } catch(Exception e) {
                       }
-                      if(count++>500) break;
+                      if(count++>800) break;
                     }
                   } catch(Exception e) {
                     e.printStackTrace();
@@ -935,7 +935,7 @@ public void restore_talkgroups(BTFrame parent, BufferedInputStream bis, SerialPo
 
             //TODO: need to check for ack
             try {
-              SLEEP(100);
+              SLEEP(500);
             } catch(Exception e) {
             }
 
@@ -1170,7 +1170,7 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
 
                 if(offset==0) {
                   try {
-                    SLEEP(500);
+                    SLEEP(800);
                   } catch(Exception e) {
                   }
                 }
@@ -1182,7 +1182,7 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
                         SLEEP(1);
                       } catch(Exception e) {
                       }
-                      if(count++>500) break;
+                      if(count++>800) break;
                     }
                   } catch(Exception e) {
                     e.printStackTrace();
@@ -1233,7 +1233,7 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
 
             //TODO: need to check for ack
             try {
-              SLEEP(100);
+              SLEEP(500);
             } catch(Exception e) {
             }
 
@@ -1350,7 +1350,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                         SLEEP(1);
                       } catch(Exception e) {
                       }
-                      if(count++>500) break;
+                      if(count++>800) break;
                     }
                   } catch(Exception e) {
                     e.printStackTrace();
@@ -1427,7 +1427,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                 serial_port.writeBytes( out_buffer, 48, 0); //16 + data len=0
                 if(offset==0) {
                   try {
-                    SLEEP(500);
+                    SLEEP(800);
                   } catch(Exception e) {
                   }
                 }
@@ -1439,7 +1439,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                         //SLEEP(1);
                       } catch(Exception e) {
                       }
-                      if(count++>500) break;
+                      if(count++>800) break;
                     }
                   } catch(Exception e) {
                     e.printStackTrace();
