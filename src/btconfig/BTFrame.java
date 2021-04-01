@@ -1363,7 +1363,7 @@ int avail=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202103250703");
-      release_date.setText("Release: 2021-03-31 1544");
+      release_date.setText("Release: 2021-04-01 0938");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5447,6 +5447,8 @@ public void do_meta() {
     if(src_uid!=0) src_uid_str = "RID "+new Integer(src_uid).toString()+",";
 
     if(is_enc!=0) is_enc_str = "(ENC),";
+
+    is_enc=0;
 
     //meta String
     String metadata =""; 
