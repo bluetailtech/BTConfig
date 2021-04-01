@@ -1,5 +1,0 @@
-Download the entire file and process
-convert.sh
-build_files.sh
-http://data.fcc.gov/download/license-view/fcc-license-view-data-csv-format.zip
-
