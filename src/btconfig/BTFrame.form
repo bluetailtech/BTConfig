@@ -2033,25 +2033,14 @@
                 <Component class="javax.swing.JTable" name="freq_table">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="11" rowCount="250">
-                        <Column editable="true" title="LICENSE" type="java.lang.String"/>
-                        <Column editable="true" title="GRANTEE" type="java.lang.String"/>
-                        <Column editable="true" title="ENTITY(GOV,BUS)" type="java.lang.String"/>
-                        <Column editable="true" title="CC FREQ" type="java.lang.String"/>
-                        <Column editable="true" title="TEST" type="java.lang.Object"/>
-                        <Column editable="true" title="RESULTS" type="java.lang.String"/>
-                        <Column editable="true" title="INFLASH" type="java.lang.Object"/>
-                        <Column editable="true" title="SRV_CLASS" type="java.lang.String"/>
-                        <Column editable="true" title="CITY" type="java.lang.String"/>
-                        <Column editable="true" title="STATE" type="java.lang.String"/>
-                        <Column editable="true" title="EMISSION" type="java.lang.String"/>
-                      </Table>
+                      <Table columnCount="0" rowCount="0"/>
                     </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="freq_tableKeyTyped"/>
                   </Events>
                   <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="&#xa;&#xa;        freq_table.setModel(new javax.swing.table.DefaultTableModel(&#xa;            new Object [8000][11],&#xa;            new String [] {&#xa;                &quot;LICENSE&quot;, &quot;GRANTEE&quot;, &quot;ENTITY(GOV,BUS)&quot;, &quot;CC FREQ&quot;, &quot;TEST&quot;, &quot;RESULTS&quot;, &quot;INFLASH&quot;, &quot;SRV_CLASS&quot;, &quot;CITY&quot;, &quot;STATE&quot;, &quot;EMISSION&quot;&#xa;            }&#xa;        ) {&#xa;            Class[] types = new Class [] {&#xa;                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class&#xa;            };&#xa;&#xa;            public Class getColumnClass(int columnIndex) {&#xa;                return types [columnIndex];&#xa;            }&#xa;        });"/>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
