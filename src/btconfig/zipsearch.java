@@ -37,6 +37,8 @@ public class zipsearch
   private BTFrame parent;
   private int do_search3=0;
 
+  private int MAXREC=8000;
+
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -146,14 +148,14 @@ public class zipsearch
 
     try {
       if(do_search3==1) {
-        for(int i=0;i<250;i++) {
+        for(int i=0;i<MAXREC;i++) {
          addTableObject( null, i, 4); 
         }
       }
 
       if(do_search3==0) {
 
-        for(int i=0;i<250;i++) {
+        for(int i=0;i<MAXREC;i++) {
          addTableObject( null, i, 0); 
          addTableObject( null, i, 1); 
          addTableObject( null, i, 2); 
@@ -274,6 +276,7 @@ public class zipsearch
         String lng = strs[8];
         String emission = strs[9];
 
+
         double llat=0.0;
         double llng=0.0;
         double freq_d=0.0;
@@ -296,6 +299,7 @@ public class zipsearch
         }
 
         if( do_search3==1 && p2d!=null && p2d.x == llat && p2d.y == llng ) {
+
 
             if(line.contains("7K6") && !parent.inc_dmr.isSelected()) continue;  //include DMR?
             //if( (line.contains("8K10F1D")||line.contains("8K10F1E")||line.contains("8K30"))  && !parent.inc_p25p1.isSelected()) continue;  //include P25P1?
@@ -357,6 +361,7 @@ public class zipsearch
             }
 
             if(f==0.0 || (freq_hash.get(freq)!=null && !parent.inc_dup_freq.isSelected()) ) {
+              //if( desc.toLowerCase().contains("solano") ) System.out.println("1:"+line);
               continue;  //no records with the same freq as other records
             }
             else {
@@ -436,7 +441,7 @@ public class zipsearch
        //ta = ta.concat(p25f+"\n");
        //fs.freqsearch_ta.setText(ta);
        nresults++;
-       if(idx>249) break;
+       if(idx>MAXREC-1) break;
      }
 
      if(nresults>0) {
@@ -455,7 +460,7 @@ public class zipsearch
        List<String> tmp2 = Collections.list(parent.no_loc_freqs.keys());
        Collections.sort(tmp2);
        Iterator<String> it2 = tmp2.iterator();
-       while(it2.hasNext() && idx<250) {
+       while(it2.hasNext() && idx<MAXREC) {
          String p25f = it2.next();
          System.out.println("no loc freq "+p25f);
          addTableObject( p25f, idx, 3); 

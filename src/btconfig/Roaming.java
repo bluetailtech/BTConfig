@@ -56,6 +56,8 @@ int did_crc_reset=0;
 int did_write_roaming=0;
 int append_mode=0;
 
+int MAXRECS=8000;
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Boolean is_valid_freq(double freq) {
@@ -406,7 +408,7 @@ public void restore_roaming(BTFrame parent, BufferedInputStream bis, SerialPort 
             }
 
             parent.do_read_roaming=1;
-              for(int i=0;i<250;i++) {
+              for(int i=0;i<MAXRECS;i++) {
                parent.freq_table.getModel().setValueAt( null, i, 0); 
                parent.freq_table.getModel().setValueAt( null, i, 1); 
                parent.freq_table.getModel().setValueAt( null, i, 2); 
@@ -576,7 +578,7 @@ public void erase_roaming(BTFrame parent, SerialPort serial_port)
             parent.setProgress(100);
             did_write_roaming=1;
             parent.do_read_roaming=1;
-              for(int i=0;i<250;i++) {
+              for(int i=0;i<MAXRECS;i++) {
                parent.freq_table.getModel().setValueAt( null, i, 0); 
                parent.freq_table.getModel().setValueAt( null, i, 1); 
                parent.freq_table.getModel().setValueAt( null, i, 2); 
@@ -634,7 +636,7 @@ public void append_roaming(BTFrame parent, SerialPort serial_port)
     backup_roaming(parent, serial_port);
     System.out.println("offset: "+offset_only_length);
 
-    if( offset_only_length/32 >= 250) {
+    if( offset_only_length/32 >= MAXRECS) {
       JOptionPane.showMessageDialog(parent, "Roaming flash already contains max number of frequency entries. (250).");
       get_offset_only=0;
       return;
@@ -699,9 +701,9 @@ public void send_roaming(BTFrame parent, SerialPort serial_port, int start_offse
             config_length=0;
 
             if(write_flash_only==1) {
-              int[] r = new int[250];
+              int[] r = new int[MAXRECS];
               int n=0;
-              for(int i=0;i<250;i++) {
+              for(int i=0;i<MAXRECS;i++) {
                 if(parent.freq_table.getModel().getValueAt(i,6)==null) {
                   r[i] = -1; 
                 }
@@ -720,7 +722,7 @@ public void send_roaming(BTFrame parent, SerialPort serial_port, int start_offse
 
               rows = new int[n];
               int idx=0;
-              for(int i=0;i<250;i++) {
+              for(int i=0;i<MAXRECS;i++) {
                 if(r[i]>=0) {
                   rows[idx++] = i;
                 }
@@ -938,7 +940,7 @@ public void send_roaming(BTFrame parent, SerialPort serial_port, int start_offse
             parent.do_read_roaming=1;
 
           try {
-              for(int i=0;i<250;i++) {
+              for(int i=0;i<MAXRECS;i++) {
                parent.freq_table.getModel().setValueAt( null, i, 5); 
               }
           } catch(Exception e) {
@@ -946,7 +948,7 @@ public void send_roaming(BTFrame parent, SerialPort serial_port, int start_offse
           }
 
           try {
-              for(int i=0;i<250;i++) {
+              for(int i=0;i<MAXRECS;i++) {
                parent.freq_table.getModel().setValueAt( null, i, 0); 
                parent.freq_table.getModel().setValueAt( null, i, 1); 
                parent.freq_table.getModel().setValueAt( null, i, 2); 
@@ -1435,7 +1437,7 @@ public void fill_freq_table(Hashtable freq_hash, Hashtable rectype_hash) {
    Hashtable found_freqs = new Hashtable();
 
    int first_null=0;
-   for(int i=0;i<250;i++) {
+   for(int i=0;i<MAXRECS;i++) {
      String val =  (String) parent.freq_table.getModel().getValueAt(i,3);
      if(val!=null && freq_hash.get(val)!=null ) {
        parent.freq_table.getModel().setValueAt("X", i, 6);
@@ -1502,7 +1504,7 @@ public void fill_freq_table(Hashtable freq_hash, Hashtable rectype_hash) {
        parent.freq_table.getModel().setValueAt(rec,first_null,5);
        //parent.freq_table.getModel().setValueAt("IN FLASH",first_null,1);
        first_null++;
-       if(first_null==250) break;
+       if(first_null==MAXRECS) break;
      }
    }
 
@@ -1512,7 +1514,7 @@ public void fill_freq_table(Hashtable freq_hash, Hashtable rectype_hash) {
   }
   else {
      int idx=0;
-     for(int i=0;i<250;i++) {
+     for(int i=0;i<MAXRECS;i++) {
        if(parent.freq_table.getModel().getValueAt(i,3)!=null && parent.freq_table.getModel().getValueAt(i,0)==null) {
          break;
        }
@@ -1521,7 +1523,7 @@ public void fill_freq_table(Hashtable freq_hash, Hashtable rectype_hash) {
      List<String> tmp2 = Collections.list(parent.no_loc_freqs.keys());
      Collections.sort(tmp2);
      Iterator<String> it2 = tmp2.iterator();
-     while(it2.hasNext() && idx<250) {
+     while(it2.hasNext() && idx<MAXRECS) {
        String p25f = it2.next();
        System.out.println("no loc freq "+p25f);
        parent.freq_table.getModel().setValueAt( p25f, idx, 3); 
