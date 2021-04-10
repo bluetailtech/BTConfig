@@ -1362,8 +1362,8 @@ int avail=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202104061243");
-      release_date.setText("Release: 2021-04-06 1243");
+      fw_ver.setText("Latest Avail: FW Date: 202104100908");
+      release_date.setText("Release: 2021-04-10 0908");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2093,7 +2093,7 @@ int avail=0;
               }
             }
 
-            if(console_line.contains("Disabling talkgroup") && st1.equals("talkgroup") ) {
+            if(console_line.contains("ENCRYPTED talkgroup") && st1.equals("talkgroup") ) {
               String tg_id = st.nextToken();
               tg_config.disable_enc_tg(parent, tg_id, new Integer(current_sys_id).toString() );
               is_enc=1;
