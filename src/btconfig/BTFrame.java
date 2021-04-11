@@ -1363,7 +1363,7 @@ int avail=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202104100908");
-      release_date.setText("Release: 2021-04-10 0908");
+      release_date.setText("Release: 2021-04-11 12:14");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5174,6 +5174,8 @@ public void update_dmr_lcn1_label() {
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 public void do_meta() {
+
+  if( is_dmr_mode==0 && src_uid==0 ) return;
 
   if( did_metadata==0 ) meta_count++;
 
