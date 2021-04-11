@@ -1363,7 +1363,7 @@ int avail=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202104100908");
-      release_date.setText("Release: 2021-04-11 12:14");
+      release_date.setText("Release: 2021-04-11 12:24");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1828,6 +1828,7 @@ int avail=0;
                       status.setText(system_alias.getText());
                     }
 
+                    do_meta();
 
               } catch(Exception e) {
                 src_uid = 0;
@@ -1874,6 +1875,7 @@ int avail=0;
                       status.setText(system_alias.getText());
                     }
 
+                    do_meta();
 
               } catch(Exception e) {
                 src_uid = 0;
