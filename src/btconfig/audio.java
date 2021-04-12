@@ -143,7 +143,7 @@ BTFrame parent;
 
             //if(af==null) {
               af = new AudioFormat(
-                47750,
+                47000,
                 16,  // sample size in bits
                 2,  // channels
                 true,  // signed
