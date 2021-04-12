@@ -1363,7 +1363,7 @@ int avail=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202104100908");
-      release_date.setText("Release: 2021-04-11 12:24");
+      release_date.setText("Release: 2021-04-12 07:36");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2840,6 +2840,7 @@ int avail=0;
         p25_tone_vol = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        en_zero_rid = new javax.swing.JCheckBox();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
@@ -3722,13 +3723,22 @@ int avail=0;
         freqdb_panel.setLayout(new java.awt.BorderLayout());
 
         freq_table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+
+        freq_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [8000][11],
             new String [] {
                 "LICENSE", "GRANTEE", "ENTITY(GOV,BUS)", "CC FREQ", "TEST", "RESULTS", "INFLASH", "SRV_CLASS", "CITY", "STATE", "EMISSION"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -4407,7 +4417,7 @@ int avail=0;
                 adv_write_configActionPerformed(evt);
             }
         });
-        advancedpanel.add(adv_write_config, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 370, -1, -1));
+        advancedpanel.add(adv_write_config, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 400, -1, -1));
 
         wacn_en.setText("Include The WACN field in talk group lookup");
         wacn_en.addActionListener(new java.awt.event.ActionListener() {
@@ -4446,6 +4456,15 @@ int avail=0;
 
         jLabel13.setText("Range (0.01 to 1.0), Default 1.0");
         advancedpanel.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 300, -1, -1));
+
+        en_zero_rid.setSelected(true);
+        en_zero_rid.setText("Allow Logging Of RID = 0 (some transmissions report SRC ID of 0)");
+        en_zero_rid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                en_zero_ridActionPerformed(evt);
+            }
+        });
+        advancedpanel.add(en_zero_rid, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, -1, -1));
 
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
@@ -5151,6 +5170,10 @@ int avail=0;
         // TODO add your handling code here:
     }//GEN-LAST:event_quad_click_opt4ActionPerformed
 
+    private void en_zero_ridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_en_zero_ridActionPerformed
+      if(prefs!=null) prefs.putBoolean("en_zero_rid", en_zero_rid.isSelected());
+    }//GEN-LAST:event_en_zero_ridActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5177,7 +5200,7 @@ public void update_dmr_lcn1_label() {
 //////////////////////////////////////////////////////////////////////////////
 public void do_meta() {
 
-  if( is_dmr_mode==0 && src_uid==0 ) return;
+  if( is_dmr_mode==0 && src_uid==0 && !en_zero_rid.isSelected() ) return;
 
   if( did_metadata==0 ) meta_count++;
 
@@ -5197,7 +5220,7 @@ public void do_meta() {
 
     if(current_alias!=null && current_alias.length()>0) alias_str = current_alias+",";
 
-    if(src_uid!=0) src_uid_str = "RID "+new Integer(src_uid).toString()+",";
+    src_uid_str = "RID "+new Integer(src_uid).toString()+",";
 
     if(is_enc!=0) is_enc_str = "(ENC),";
 
@@ -5354,6 +5377,9 @@ public void update_prefs() {
       nsymbols.setSelectedIndex( prefs.getInt("nsymbols", 0) );
 
       system_alias.setText( prefs.get("system_alias", "") );
+
+
+      en_zero_rid.setSelected( prefs.getBoolean("en_zero_rid", true) );
 
       int constellation = prefs.getInt("const_select", 1);
     }
@@ -5648,6 +5674,7 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox en_encout;
     public javax.swing.JCheckBox en_p2_tones;
     public javax.swing.JCheckBox en_usb_wdog;
+    public javax.swing.JCheckBox en_zero_rid;
     public javax.swing.JCheckBox enable_audio;
     private javax.swing.JRadioButton enable_commands;
     private javax.swing.JCheckBox enable_conlog;
