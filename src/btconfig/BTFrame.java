@@ -1363,7 +1363,7 @@ int avail=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202104100908");
-      release_date.setText("Release: 2021-04-12 07:54");
+      release_date.setText("Release: 2021-04-12 08:59");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3738,7 +3738,8 @@ int avail=0;
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,
+
             };
 
             public Class getColumnClass(int columnIndex) {
