@@ -143,7 +143,7 @@ BTFrame parent;
 
             //if(af==null) {
               af = new AudioFormat(
-                48000,
+                47750,
                 16,  // sample size in bits
                 2,  // channels
                 true,  // signed
@@ -155,6 +155,21 @@ BTFrame parent;
               dataLineInfo = new DataLine.Info( SourceDataLine.class, af);
               if( dataLineInfo.isFormatSupported(af) ) {
                 System.out.println("af is supported");
+              }
+              else {
+                try {
+                  af = new AudioFormat(
+                    48000,
+                    16,  // sample size in bits
+                    2,  // channels
+                    true,  // signed
+                    false  // bigendian
+                  );
+                  dataLineInfo = new DataLine.Info( SourceDataLine.class, af);
+                } catch(Exception e) {
+                    e.printStackTrace();
+                } 
+
               }
 
               //sourceDataLine = (SourceDataLine)AudioSystem.getLine( dataLineInfo);
