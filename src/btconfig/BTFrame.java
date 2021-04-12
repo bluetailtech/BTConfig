@@ -1363,7 +1363,7 @@ int avail=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202104121421");
-      release_date.setText("Release: 2021-04-12 14:21");
+      release_date.setText("Release: 2021-04-12 16:55");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1790,7 +1790,7 @@ int avail=0;
         }
       }
 
-      if( console_line.contains("P25_PII: SRC_RID: ") && console_line.contains("$") ) {
+      if( console_line.contains("P25_PII: SRC_RID: ") && console_line.contains("$") && console_line.contains("GRP") ) {
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
         while(st.hasMoreTokens()) {
@@ -1838,7 +1838,7 @@ int avail=0;
         }
       }
 
-      if( console_line.contains("P25_P1: SRC_RID: ") && console_line.contains("$") ) {
+      if( console_line.contains("P25_P1: SRC_RID: ") && console_line.contains("$") && console_line.contains("GRP") ) {
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
         while(st.hasMoreTokens()) {
