@@ -1363,7 +1363,7 @@ int avail=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202104121421");
-      release_date.setText("Release: 2021-04-12 17:10");
+      release_date.setText("Release: 2021-04-12 17:18");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1806,7 +1806,7 @@ int avail=0;
 
                 try {
                   String src_rid_str = new Integer(src_uid).toString();
-                  if(alias!=null) alias.addRID(this, src_rid_str);
+                  if(alias!=null && src_uid!=0) alias.addRID(this, src_rid_str);
                 } catch(Exception e) {
                   e.printStackTrace();
                 }
@@ -1853,7 +1853,7 @@ int avail=0;
                 src_uid = src_uid_d;
                 try {
                   String src_rid_str = new Integer(src_uid).toString();
-                  if(alias!=null) alias.addRID(this, src_rid_str);
+                  if(alias!=null && src_uid!=0) alias.addRID(this, src_rid_str);
                 } catch(Exception e) {
                   e.printStackTrace();
                 }
