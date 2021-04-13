@@ -2718,6 +2718,7 @@ int avail=0;
         jLabel9 = new javax.swing.JLabel();
         audio_rate = new javax.swing.JTextField();
         jLabel35 = new javax.swing.JLabel();
+        jLabel50 = new javax.swing.JLabel();
         apply_audio_rate = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
         freqdb_panel = new javax.swing.JPanel();
@@ -3728,7 +3729,10 @@ int avail=0;
         jLabel35.setText("Hz");
         jPanel50.add(jLabel35);
 
-        jPanel11.add(jPanel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 290, 40));
+        jLabel50.setText("Default: 47000 Hz");
+        jPanel50.add(jLabel50);
+
+        jPanel11.add(jPanel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 290, 50));
 
         apply_audio_rate.setText("Apply Rate");
         apply_audio_rate.addActionListener(new java.awt.event.ActionListener() {
@@ -5804,6 +5808,7 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
