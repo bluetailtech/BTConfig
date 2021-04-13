@@ -1363,7 +1363,7 @@ int avail=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202104121421");
-      release_date.setText("Release: 2021-04-12 17:07");
+      release_date.setText("Release: 2021-04-12 17:10");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5201,7 +5201,6 @@ public void update_dmr_lcn1_label() {
 //////////////////////////////////////////////////////////////////////////////
 public void do_meta() {
 
-  if( src_uid==0 ) current_alias="";
 
   if( is_dmr_mode==0 && src_uid==0 && !en_zero_rid.isSelected() ) return;
 
@@ -5222,6 +5221,7 @@ public void do_meta() {
     String alias_str = "";
 
     if(current_alias!=null && src_uid!=0 && current_alias.length()>0) alias_str = current_alias+",";
+      current_alias="";
 
     src_uid_str = "RID "+new Integer(src_uid).toString()+",";
 
