@@ -1363,7 +1363,7 @@ int avail=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202104121421");
-      release_date.setText("Release: 2021-04-12 17:18");
+      release_date.setText("Release: 2021-04-13 16:26");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2714,6 +2714,11 @@ int avail=0;
         home_dir_label = new javax.swing.JLabel();
         audio_dev_play = new javax.swing.JRadioButton();
         audio_dev_all = new javax.swing.JRadioButton();
+        jPanel50 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        audio_rate = new javax.swing.JTextField();
+        jLabel35 = new javax.swing.JLabel();
+        apply_audio_rate = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
         freqdb_panel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
@@ -3712,6 +3717,26 @@ int avail=0;
             }
         });
         jPanel11.add(audio_dev_all, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 480, -1, -1));
+
+        jLabel9.setText("Audio Playback Rate");
+        jPanel50.add(jLabel9);
+
+        audio_rate.setColumns(8);
+        audio_rate.setText("47000");
+        jPanel50.add(audio_rate);
+
+        jLabel35.setText("Hz");
+        jPanel50.add(jLabel35);
+
+        jPanel11.add(jPanel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 290, 40));
+
+        apply_audio_rate.setText("Apply Rate");
+        apply_audio_rate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                apply_audio_rateActionPerformed(evt);
+            }
+        });
+        jPanel11.add(apply_audio_rate, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 420, -1, -1));
 
         audiopanel.add(jPanel11, java.awt.BorderLayout.CENTER);
 
@@ -5175,6 +5200,18 @@ int avail=0;
       if(prefs!=null) prefs.putBoolean("en_zero_rid", en_zero_rid.isSelected());
     }//GEN-LAST:event_en_zero_ridActionPerformed
 
+    private void apply_audio_rateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_apply_audio_rateActionPerformed
+      try {
+        if(aud!=null) {
+          aud.update_audio_rate(); 
+        }
+
+        if(prefs!=null) prefs.put("audio_sample_rate", audio_rate.getText() );
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+    }//GEN-LAST:event_apply_audio_rateActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5383,6 +5420,8 @@ public void update_prefs() {
 
 
       en_zero_rid.setSelected( prefs.getBoolean("en_zero_rid", true) );
+
+      audio_rate.setText( prefs.get("audio_sample_rate", "47000" ) ); 
 
       int constellation = prefs.getInt("const_select", 1);
     }
@@ -5601,9 +5640,11 @@ public void SLEEP(long val) {
     public javax.swing.JTable alias_table;
     public javax.swing.JCheckBox allow_unknown_tg_cb;
     public javax.swing.JButton append_cc;
+    private javax.swing.JButton apply_audio_rate;
     public javax.swing.JRadioButton audio_dev_all;
     public javax.swing.JList<String> audio_dev_list;
     public javax.swing.JRadioButton audio_dev_play;
+    public javax.swing.JTextField audio_rate;
     private javax.swing.JPanel audiopanel;
     public javax.swing.JCheckBox auto_flash_tg;
     public javax.swing.JCheckBox autoscale_const;
@@ -5746,6 +5787,7 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
@@ -5765,6 +5807,7 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -5810,6 +5853,7 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel48;
     private javax.swing.JPanel jPanel49;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel50;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
