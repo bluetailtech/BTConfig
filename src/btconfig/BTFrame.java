@@ -1362,8 +1362,8 @@ int avail=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202104121421");
-      release_date.setText("Release: 2021-04-13 16:26");
+      fw_ver.setText("Latest Avail: FW Date: 202104141055");
+      release_date.setText("Release: 2021-04-14 10:55");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2847,6 +2847,7 @@ int avail=0;
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         en_zero_rid = new javax.swing.JCheckBox();
+        enc_mode = new javax.swing.JCheckBox();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
@@ -4422,7 +4423,7 @@ int avail=0;
                 duid_enhActionPerformed(evt);
             }
         });
-        advancedpanel.add(duid_enh, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, -1, -1));
+        advancedpanel.add(duid_enh, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, -1, -1));
 
         freq_correct_on_voice.setText("Correct Frequency On Trunked Voice Channels (default off)");
         freq_correct_on_voice.addActionListener(new java.awt.event.ActionListener() {
@@ -4430,7 +4431,7 @@ int avail=0;
                 freq_correct_on_voiceActionPerformed(evt);
             }
         });
-        advancedpanel.add(freq_correct_on_voice, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, -1));
+        advancedpanel.add(freq_correct_on_voice, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
 
         add_tdu_silence.setSelected(true);
         add_tdu_silence.setText("Add Silent Period To Audio Buffer On Phase 1 TDU / TDULC (default off)");
@@ -4439,7 +4440,7 @@ int avail=0;
                 add_tdu_silenceActionPerformed(evt);
             }
         });
-        advancedpanel.add(add_tdu_silence, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, -1, -1));
+        advancedpanel.add(add_tdu_silence, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, -1, -1));
 
         adv_write_config.setText("Write Config");
         adv_write_config.addActionListener(new java.awt.event.ActionListener() {
@@ -4447,7 +4448,7 @@ int avail=0;
                 adv_write_configActionPerformed(evt);
             }
         });
-        advancedpanel.add(adv_write_config, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 400, -1, -1));
+        advancedpanel.add(adv_write_config, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 370, -1, -1));
 
         wacn_en.setText("Include The WACN field in talk group lookup");
         wacn_en.addActionListener(new java.awt.event.ActionListener() {
@@ -4455,22 +4456,22 @@ int avail=0;
                 wacn_enActionPerformed(evt);
             }
         });
-        advancedpanel.add(wacn_en, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, -1, -1));
+        advancedpanel.add(wacn_en, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
 
         en_usb_wdog.setSelected(true);
         en_usb_wdog.setText("Enable USB Watchdog (disable this when monitoring in stand-alone mode)");
-        advancedpanel.add(en_usb_wdog, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, -1, -1));
+        advancedpanel.add(en_usb_wdog, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, -1, -1));
 
         en_encout.setText("Enable Encrypted Audio Output");
-        advancedpanel.add(en_encout, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, -1, -1));
+        advancedpanel.add(en_encout, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
 
         en_p2_tones.setSelected(true);
         en_p2_tones.setText("Enable Phase II Tone Output");
-        advancedpanel.add(en_p2_tones, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, -1, -1));
+        advancedpanel.add(en_p2_tones, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, -1, -1));
 
         p25_reinit.setSelected(true);
         p25_reinit.setText("P25 Mode: Re-init P25RX after 3 minutes of not receiving a P25 sync word");
-        advancedpanel.add(p25_reinit, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 330, -1, -1));
+        advancedpanel.add(p25_reinit, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, -1, -1));
 
         p25_tone_vol.setColumns(5);
         p25_tone_vol.setText("1.0");
@@ -4479,13 +4480,13 @@ int avail=0;
                 p25_tone_volActionPerformed(evt);
             }
         });
-        advancedpanel.add(p25_tone_vol, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 300, -1, -1));
+        advancedpanel.add(p25_tone_vol, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, -1, -1));
 
         jLabel12.setText("P25 Phase II Tone Volume");
-        advancedpanel.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 300, -1, -1));
+        advancedpanel.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, -1, -1));
 
         jLabel13.setText("Range (0.01 to 1.0), Default 1.0");
-        advancedpanel.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 300, -1, -1));
+        advancedpanel.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, -1, -1));
 
         en_zero_rid.setSelected(true);
         en_zero_rid.setText("Allow Logging Of RID = 0 (some transmissions report SRC ID of 0)");
@@ -4494,7 +4495,15 @@ int avail=0;
                 en_zero_ridActionPerformed(evt);
             }
         });
-        advancedpanel.add(en_zero_rid, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, -1, -1));
+        advancedpanel.add(en_zero_rid, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, -1, -1));
+
+        enc_mode.setText("Return To Control Control Channel And Skip TG for 30 Sec If Encrypted");
+        enc_mode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enc_modeActionPerformed(evt);
+            }
+        });
+        advancedpanel.add(enc_mode, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 320, -1, -1));
 
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
@@ -5216,6 +5225,10 @@ int avail=0;
       }
     }//GEN-LAST:event_apply_audio_rateActionPerformed
 
+    private void enc_modeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enc_modeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_enc_modeActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5730,6 +5743,7 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox enable_mp3;
     private javax.swing.JButton enable_table_rows;
     private javax.swing.JRadioButton enable_voice_const;
+    public javax.swing.JCheckBox enc_mode;
     public javax.swing.JButton erase_roaming;
     public javax.swing.JLabel freq;
     public javax.swing.JCheckBox freq_correct_on_voice;

@@ -395,6 +395,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           int duid_enh = bb3.getInt(156);
                           int freq_correct_on_voice = bb3.getInt(160);
                           int add_tdu_silence = bb3.getInt(164);
+                          int enc_mode = bb3.getInt(564);
 
                           if(duid_enh==1) parent.duid_enh.setSelected(true);
                             else parent.duid_enh.setSelected(false);
@@ -404,6 +405,10 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
                           if(add_tdu_silence==1) parent.add_tdu_silence.setSelected(true);
                             else parent.add_tdu_silence.setSelected(false);
+
+                          if(enc_mode==1) parent.enc_mode.setSelected(true);
+                            else parent.enc_mode.setSelected(false);
+
 
                           int but1_cfg = bb3.getInt(540);
                           int but2_cfg = bb3.getInt(544);
@@ -1025,6 +1030,15 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
 
+                          b = parent.enc_mode.isSelected();
+                          if(b) cmd = "enc_mode 1\r\n";
+                            else cmd = "enc_mode 0\r\n"; 
+
+                          result=new byte[64];
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          SLEEP(10);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
 
                           b = parent.p25_reinit.isSelected();
                           if(b) cmd = "p25_reinit 1\r\n";
