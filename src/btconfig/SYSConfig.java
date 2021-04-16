@@ -660,9 +660,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                               else b=false;
                           parent.allow_unknown_tg_cb.setSelected(b); 
 
-                          if(bb3.getInt(36)==1) b=true;
-                              else b=false;
-
                           if(bb3.getInt(196)==1) b=true;
                               else b=false;
                           parent.enable_leds.setSelected(b); 
@@ -1004,7 +1001,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
                           result=new byte[64];
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-                          SLEEP(10);
+                          SLEEP(50);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
 

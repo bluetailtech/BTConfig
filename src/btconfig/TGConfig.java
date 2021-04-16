@@ -59,6 +59,7 @@ public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String 
   int first_empty_row=0;
 
   if(talkgroup==null || sys_id==null ) return;
+  if(!parent.auto_pop_table.isSelected()) return; 
 
   if(parent.is_dmr_mode==0 && wacn==null) {
     return; //p25
@@ -164,6 +165,9 @@ public void disable_enc_tg(BTFrame parent, String talkgroup, String sys_id) {
   int first_empty_row=0;
 
   if(talkgroup==null || sys_id==null) return;
+
+  if(!parent.auto_flash_tg.isSelected()) return; 
+  if(!parent.disable_encrypted.isSelected()) return;
 
   talkgroup = talkgroup.trim();
   sys_id = sys_id.trim();

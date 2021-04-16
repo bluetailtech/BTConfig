@@ -1362,8 +1362,8 @@ int avail=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202104141055");
-      release_date.setText("Release: 2021-04-14 10:55");
+      fw_ver.setText("Latest Avail: FW Date: 202104160948");
+      release_date.setText("Release: 2021-04-16 13:07");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2776,7 +2776,7 @@ int avail=0;
         import_csv = new javax.swing.JButton();
         auto_flash_tg = new javax.swing.JCheckBox();
         disable_encrypted = new javax.swing.JCheckBox();
-        jLabel26 = new javax.swing.JLabel();
+        auto_pop_table = new javax.swing.JCheckBox();
         consolePanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -4095,9 +4095,15 @@ int avail=0;
         });
         jPanel23.add(disable_encrypted);
 
-        jLabel26.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel26.setText("   Use DEL key to delete selected records.");
-        jPanel23.add(jLabel26);
+        auto_pop_table.setForeground(new java.awt.Color(255, 255, 255));
+        auto_pop_table.setSelected(true);
+        auto_pop_table.setText("AUTO POPULATE TABLE");
+        auto_pop_table.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                auto_pop_tableActionPerformed(evt);
+            }
+        });
+        jPanel23.add(auto_pop_table);
 
         jPanel22.add(jPanel23);
 
@@ -5229,6 +5235,10 @@ int avail=0;
         // TODO add your handling code here:
     }//GEN-LAST:event_enc_modeActionPerformed
 
+    private void auto_pop_tableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_auto_pop_tableActionPerformed
+      if(prefs!=null) prefs.putBoolean( "tg_auto_pop_table", auto_pop_table.isSelected());
+    }//GEN-LAST:event_auto_pop_tableActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5428,6 +5438,7 @@ public void update_prefs() {
       enable_mp3.setSelected( prefs.getBoolean("enable_mp3", true) ); 
       enable_audio.setSelected( prefs.getBoolean("enable_audio", true) ); 
       auto_flash_tg.setSelected( prefs.getBoolean("tg_auto_flash", false) );
+      auto_pop_table.setSelected( prefs.getBoolean("tg_auto_pop_table", true) );
       disable_encrypted.setSelected( prefs.getBoolean("enc_auto_flash", false) );
       autoscale_const.setSelected( prefs.getBoolean("autoscale_const", true) );
       mp3_separate_files.setSelected( prefs.getBoolean("mp3_separate_files", false) );
@@ -5664,6 +5675,7 @@ public void SLEEP(long val) {
     public javax.swing.JTextField audio_rate;
     private javax.swing.JPanel audiopanel;
     public javax.swing.JCheckBox auto_flash_tg;
+    public javax.swing.JCheckBox auto_pop_table;
     public javax.swing.JCheckBox autoscale_const;
     public javax.swing.JButton backup_roam;
     private javax.swing.JButton backup_tg;
@@ -5795,7 +5807,6 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;

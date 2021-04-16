@@ -2581,13 +2581,20 @@
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                       </AuxValues>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel26">
+                    <Component class="javax.swing.JCheckBox" name="auto_pop_table">
                       <Properties>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="   Use DEL key to delete selected records."/>
+                        <Property name="selected" type="boolean" value="true"/>
+                        <Property name="text" type="java.lang.String" value="AUTO POPULATE TABLE"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="auto_pop_tableActionPerformed"/>
+                      </Events>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
