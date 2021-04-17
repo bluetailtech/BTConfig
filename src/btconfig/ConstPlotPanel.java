@@ -419,13 +419,13 @@ public class ConstPlotPanel extends JPanel {
      }
 
      try {
-        if( (int) ref_freq_error < 3 ) {
+        if( (int) ref_freq_error < 6 ) {
           g2d.setColor( Color.green ); 
         }
-        else if( (int) ref_freq_error < 4 ) {
+        else if( (int) ref_freq_error < 8 ) {
           g2d.setColor( Color.white ); 
         }
-        else if( (int) ref_freq_error < 8 ) {
+        else if( (int) ref_freq_error < 10 ) {
           g2d.setColor( Color.yellow ); 
         }
         else {
