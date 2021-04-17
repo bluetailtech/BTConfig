@@ -215,7 +215,7 @@ public class ConstPlotPanel extends JPanel {
        }
        
        //if( ppb_est!=0.0 && ppb2!=0.0) {
-         if(est_ref_tot>2048 && est_ref_sum > 39999820 && est_ref_sum < 40000500 ) {
+         if(est_ref_tot>2048 && est_ref_sum > 38000000 && est_ref_sum < 40000500 ) {
            ref_freq_est = "Estimated Reference Frequency: "+ String.format( "%3.0f", est_ref_sum);
          }
          else {
