@@ -1246,6 +1246,8 @@ byte[] b;
 byte[] str_b;
 int str_idx=0;
 int avail=0;
+int is_phase1=0;
+int is_phase2=0;
 
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
@@ -1362,8 +1364,8 @@ int avail=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202104192046");
-      release_date.setText("Release: 2021-04-19 20:46");
+      fw_ver.setText("Latest Avail: FW Date: 202104201114");
+      release_date.setText("Release: 2021-04-20 11:14");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1860,6 +1862,8 @@ int avail=0;
 
       if(console_line.contains("$TDMA")) {
         p25_status_timeout=6000;
+        is_phase1=0;
+        is_phase2=1;
       }
 
       if(console_line.contains("TG PRI")) {
@@ -1967,6 +1971,11 @@ int avail=0;
       if( (console_line.contains("DMR")) || (console_line.contains("rssi:") || console_line.contains("\r\n  ->(VOICE)")) && console_line.contains("$") ) {
 
         try {
+
+            if(console_line.contains("->(VOICE)")) {
+              is_phase1=1;
+              is_phase2=0;
+            }
 
             if(console_line.contains("VOICE") || console_line.contains("rssi:") ) {
               p25_status_timeout=6000;
@@ -5235,6 +5244,10 @@ public void do_meta() {
     String src_uid_str = "";
     String is_enc_str = "";
     String alias_str = "";
+    String phase_str="";
+
+    if(is_phase1==1) phase_str="P1";
+    if(is_phase2==1) phase_str="P2";
 
     if(current_alias!=null && src_uid!=0 && current_alias.length()>0) alias_str = current_alias+",";
       current_alias="";
@@ -5248,10 +5261,10 @@ public void do_meta() {
     //meta String
     String metadata =""; 
     if(enable_mp3.isSelected()) {
-      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+mp3_file.length()+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str + alias_str;
+      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+mp3_file.length()+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str + alias_str + ","+phase_str;
     }
     else {
-      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+"0"+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str + alias_str;
+      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+"0"+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str + alias_str + ","+phase_str;
     }
 
     if(tg_pri>0) {
@@ -5291,6 +5304,8 @@ public void do_meta() {
         //(ENC)
         if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
         //current alias
+        if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
+        //phase
         if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
 
         if(tg_pri>0) {
