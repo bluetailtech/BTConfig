@@ -200,16 +200,18 @@ public class ConstPlotPanel extends JPanel {
          rfreq_cor *= (ppb_est+ppb2);
          ref_correct = (int) (rfreq-rfreq_cor);;
 
-         est_ref_array[est_ref_cnt++] = ref_correct; 
-         if(est_ref_cnt==2048) est_ref_cnt=0;
-         est_ref_tot++;
+         if(ref_correct > 39999500 && ref_correct < 40000500) {
+           est_ref_array[est_ref_cnt++] = ref_correct; 
+           if(est_ref_cnt==2048) est_ref_cnt=0;
+           est_ref_tot++;
 
-         for(int i=0;i<2048;i++) {
-           est_ref_sum += est_ref_array[i];
-         }
-         est_ref_sum /= 2048.0;
+           for(int i=0;i<2048;i++) {
+             est_ref_sum += est_ref_array[i];
+           }
+           est_ref_sum /= 2048.0;
 
-         ref_freq_error = java.lang.Math.abs( rfreq-est_ref_sum );
+           ref_freq_error = java.lang.Math.abs( rfreq-est_ref_sum );
+          }
 
        } catch(Exception e) {
        }
