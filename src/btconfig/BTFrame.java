@@ -1362,8 +1362,8 @@ int avail=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202104161727");
-      release_date.setText("Release: 2021-04-16 17:27");
+      fw_ver.setText("Latest Avail: FW Date: 202104192046");
+      release_date.setText("Release: 2021-04-19 20:46");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1790,55 +1790,7 @@ int avail=0;
         }
       }
 
-      if( console_line.contains("P25_PII: SRC_RID: ") && console_line.contains("$") && console_line.contains("GRP") ) {
-        StringTokenizer st = new StringTokenizer(console_line," \r\n");
-        String st1 = ""; 
-        while(st.hasMoreTokens()) {
-          st1 = st.nextToken();
-          if(st1!=null && st1.equals("SRC_RID:")) {
-            if( st.hasMoreTokens() ) {
-              try {
-                int src_uid_d = Integer.parseInt(st.nextToken());
-                if(did_metadata==1 && src_uid_d!=0 && src_uid_d != src_uid) {
-                  did_metadata=0;
-                }
-                src_uid = src_uid_d;
-
-                try {
-                  String src_rid_str = new Integer(src_uid).toString();
-                  if(alias!=null && src_uid!=0) alias.addRID(this, src_rid_str);
-                } catch(Exception e) {
-                  e.printStackTrace();
-                }
-
-                    String src_uid_str="";
-                    try {
-                      if(src_uid!=0) src_uid_str = new Integer(src_uid).toString();
-                    } catch(Exception e) {
-                      e.printStackTrace();
-                    }
-
-                    if(src_uid_str!=null && src_uid_str.length()>0 && current_alias!=null) {
-                      status.setText(system_alias.getText()+", RID: "+src_uid_str+", "+current_alias);
-                    }
-                    else if(src_uid_str!=null && src_uid_str.length()>0 ) {
-                      status.setText(system_alias.getText()+", RID: "+src_uid_str);
-                    }
-                    else {
-                      status.setText(system_alias.getText());
-                    }
-
-                    do_meta();
-
-              } catch(Exception e) {
-                src_uid = 0;
-              }
-            }
-          }
-        }
-      }
-
-      if( console_line.contains("P25_P1: SRC_RID: ") && console_line.contains("$") && console_line.contains("GRP") ) {
+      if( (console_line.contains("P25_P1: SRC_RID: ") || console_line.contains("P25_PII: SRC_RID: ")) && console_line.contains("$") && console_line.contains("GRP") ) {
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
         while(st.hasMoreTokens()) {
