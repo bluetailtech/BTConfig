@@ -1364,8 +1364,8 @@ int is_phase2=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202104201114");
-      release_date.setText("Release: 2021-04-20 12:34");
+      fw_ver.setText("Latest Avail: FW Date: 202104211407");
+      release_date.setText("Release: 2021-04-21 14:07");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2035,6 +2035,14 @@ int is_phase2=0;
               }
 
 
+              if(is_dmr_mode==1) {
+                try {
+                  current_sys_id = Integer.valueOf( dmr_sys_id.getText() ); 
+                } catch(Exception e) {
+                  current_sys_id=1;
+                }
+              }
+
               if( tg_id!=null && tg_id.length()>0 && tg_config!=null && current_sys_id!=0) {
                 String city="unknown";
                 try {
@@ -2576,6 +2584,7 @@ int is_phase2=0;
         jSeparator39 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
         dmr_sys_id = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
         jPanel33 = new javax.swing.JPanel();
         dmr_cc_en4 = new javax.swing.JCheckBox();
         jSeparator10 = new javax.swing.JSeparator();
@@ -3259,6 +3268,9 @@ int is_phase2=0;
         dmr_sys_id.setColumns(5);
         dmr_sys_id.setText("1");
         jPanel32.add(dmr_sys_id);
+
+        jLabel26.setText("Decimal");
+        jPanel32.add(jLabel26);
 
         jPanel26.add(jPanel32);
 
@@ -5774,6 +5786,7 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
