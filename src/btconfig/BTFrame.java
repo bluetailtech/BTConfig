@@ -1365,7 +1365,7 @@ int is_phase2=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202104211407");
-      release_date.setText("Release: 2021-04-21 14:07");
+      release_date.setText("Release: 2021-04-21 18:25");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1422,6 +1422,8 @@ int is_phase2=0;
       p25_status_timeout=1;
       l3.setText("");
 
+
+      /*
       alias_table.setAutoCreateRowSorter(true);
       alias_table.getRowSorter().addRowSorterListener(new RowSorterListener() {
        public void sorterChanged(RowSorterEvent rse) {
@@ -1433,6 +1435,7 @@ int is_phase2=0;
           }
         }
       });
+      */
 
 
       /*
@@ -4356,21 +4359,13 @@ int is_phase2=0;
         alias_panel.setLayout(new java.awt.BorderLayout());
 
         alias_table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        alias_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object[8000][2],
             new String [] {
                 "Radio ID", "Alias_And_Comments"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {

@@ -32,6 +32,7 @@ import java.nio.file.Paths;
 import com.fazecast.jSerialComm.*;
 import javax.swing.filechooser.*;
 import javax.swing.*;
+import javax.swing.table.*;
 import java.util.prefs.Preferences;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,6 +49,7 @@ int recent_idx=0;
 int previous_rid;
 String home_dir;
 String sys_mac_id;
+TableRowSorter trs;
 
 public Alias(BTFrame parent, String sys_mac_id, String home_dir) {
   this.parent = parent;
@@ -68,6 +70,10 @@ public Alias(BTFrame parent, String sys_mac_id, String home_dir) {
   recent_rows[7]=-1;
   parent.alias_table.setRowSelectionAllowed(true);
   parent.alias_table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+  trs = new TableRowSorter(parent.alias_table.getModel());
+  trs.setComparator(0, new IntComparator());
+  parent.alias_table.setRowSorter(trs);
 }
 
 private void read_alias() {
@@ -128,7 +134,7 @@ public void import_alias_csv(BTFrame parent, LineNumberReader lnr)
             //System.out.println(":"+str1+":"+str2+":");
 
             try {
-              if( str1!=null ) parent.addAliasObject(str1, number_of_records,0);
+              if( str1!=null ) parent.addAliasObject(new Integer(str1), number_of_records,0);
             } catch(Exception e) {
               e.printStackTrace();
             }
@@ -143,14 +149,19 @@ public void import_alias_csv(BTFrame parent, LineNumberReader lnr)
         }
       }
       else {
-        parent.addAliasObject(null, number_of_records,0);
-        parent.addAliasObject(null, number_of_records,1);
+        //parent.addAliasObject(null, number_of_records,0);
+        //parent.addAliasObject(null, number_of_records,1);
+        break;
       }
 
       number_of_records++;
     }
 
-    System.out.println(number_of_records+" records");
+    NRECS=number_of_records;
+
+    if(parent!=null) ((DefaultTableModel) parent.alias_table.getModel()).setRowCount(NRECS);
+
+    System.out.println(number_of_records+" alias records");
 
     lnr.close();
 
@@ -165,7 +176,6 @@ public void addRID(BTFrame parent, String rid) {
   //System.out.println("Alias.addRID()");
 
   if(rid==null ) return;
-
 
 
   try {
@@ -201,7 +211,7 @@ public void addRID(BTFrame parent, String rid) {
         Object o1 = parent.getAliasObject(i,0);
         Object o2 = parent.getAliasObject(i,1);
 
-        if(o1!=null && ((String) o1).equals(rid.trim()) )  {
+        if(o1!=null && ((Integer) o1).toString().equals(rid.trim()) )  {
           parent.setAlias( (String) o2 ); 
           break;
         }
@@ -233,6 +243,12 @@ public void addRID(BTFrame parent, String rid) {
     return;  //already found this one
   }
 
+  if(parent!=null) {
+    NRECS++;
+    ((DefaultTableModel) parent.alias_table.getModel()).setRowCount(NRECS);
+  }
+
+
   //check for NAN
   try {
     int i = Integer.valueOf(rid);
@@ -263,7 +279,7 @@ public void addRID(BTFrame parent, String rid) {
   int idx = first_empty_row;
 
     try {
-        parent.addAliasObject( rid, idx, 0);
+        parent.addAliasObject( new Integer(rid), idx, 0);
      } catch(Exception e) {
       e.printStackTrace();
      }
@@ -305,7 +321,7 @@ private void do_import_from_prefs() {
 
         try {
           if( rid_str!=null && alias_str!=null && rid_str.length()>0 && alias_str.length()>0) {
-            parent.addAliasObject(rid_str, rec_n,0);
+            parent.addAliasObject(new Integer(rid_str), rec_n,0);
             parent.addAliasObject(alias_str, rec_n,1);
             rec_n++;
           }
@@ -338,7 +354,7 @@ private void save_alias() {
         String alias_str="";
 
         try {
-          rid_str = (String) parent.getAliasObject(i,0);
+          rid_str = (String) parent.getAliasObject(i,0).toString();
         } catch(Exception e) {
           e.printStackTrace();
         }
@@ -363,6 +379,18 @@ private void save_alias() {
 
   } catch(Exception e) {
     e.printStackTrace();
+  }
+}
+
+class IntComparator implements Comparator {
+  public int compare(Object o1, Object o2) {
+    Integer int1 = (Integer)o1;
+    Integer int2 = (Integer)o2;
+    return int1.compareTo(int2);
+  }
+
+  public boolean equals(Object o2) {
+    return this.equals(o2);
   }
 }
 
