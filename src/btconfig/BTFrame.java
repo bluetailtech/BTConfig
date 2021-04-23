@@ -1364,8 +1364,8 @@ int is_phase2=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202104211407");
-      release_date.setText("Release: 2021-04-21 18:25");
+      fw_ver.setText("Latest Avail: FW Date: 202104221759");
+      release_date.setText("Release: 2021-04-22 17:59");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1775,6 +1775,39 @@ int is_phase2=0;
         sys_info_count=0; 
         src_uid=0;
         is_enc=0;
+      }
+
+      if( console_line.contains("$P25_GRP_UP grp1:") && console_line.contains("ch2:") ) {
+        StringTokenizer st = new StringTokenizer(console_line," ,\r\n");
+        String st1 = ""; 
+        String active_tg="Adjacent Active Talk Groups: ";
+
+        while(st.hasMoreTokens()) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.equals("grp1:")) {
+            String grp1 = st.nextToken().trim();
+            active_tg = active_tg.concat(grp1+", ");
+          }
+          if(st1!=null && st1.equals("grp2:")) {
+            String grp2 = st.nextToken().trim();
+            active_tg = active_tg.concat(grp2);
+            parent.setStatus(active_tg);
+          }
+        }
+      }
+
+      if( console_line.contains("$P25_GRP_EXP_UP grp") && console_line.contains("rx:") ) {
+        StringTokenizer st = new StringTokenizer(console_line," \r\n");
+        String st1 = ""; 
+        String active_tg="Adjacent Active Talk Groups: ";
+
+        while(st.hasMoreTokens()) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.equals("grp")) {
+            String grp1 = st.nextToken().trim();
+            active_tg = active_tg.concat(grp1);
+          }
+        }
       }
 
       if( console_line.contains("$SYS_INFO") && console_line.contains("nac 0x") ) {
