@@ -2499,10 +2499,6 @@ long status_time;
     //////////////////////////////////////////////////////////////////////
     void setStatus(String str) {
       if(str==null) return;
-      if(str.length()==0) {
-        //status.setVisible(false);
-        return;
-      }
       status.setVisible(true);
       status.setText("Status: "+str);
       status_timeout=1600;
