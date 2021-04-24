@@ -87,6 +87,11 @@ class updateTask extends java.util.TimerTask
           audio_tick_start = new java.util.Date().getTime();
         }
 
+        if(  new java.util.Date().getTime() - status_time  > 2000) {
+          status_time = new java.util.Date().getTime();
+          setStatus("");
+        }
+
 
         /*
         long usb_ctime = new java.util.Date().getTime();
@@ -464,14 +469,6 @@ class updateTask extends java.util.TimerTask
             //l3.setText("");
           }
           else {
-          }
-        }
-
-        if(status_timeout>0) {
-          status_timeout--;
-          if(status_timeout==0) {
-            status_timeout=1000;
-            setStatus("");
           }
         }
 
@@ -1248,6 +1245,7 @@ int str_idx=0;
 int avail=0;
 int is_phase1=0;
 int is_phase2=0;
+long status_time;
 
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
@@ -1364,8 +1362,8 @@ int is_phase2=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202104221759");
-      release_date.setText("Release: 2021-04-22 17:59");
+      fw_ver.setText("Latest Avail: FW Date: 202104240745");
+      release_date.setText("Release: 2021-04-24 15:59");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
