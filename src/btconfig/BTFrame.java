@@ -87,7 +87,11 @@ class updateTask extends java.util.TimerTask
           audio_tick_start = new java.util.Date().getTime();
         }
 
-        if(  new java.util.Date().getTime() - status_time  > 2000) {
+        if(status_timeout>0) {
+          status_timeout--;
+        }
+
+        if(  status_timeout==0 && new java.util.Date().getTime() - status_time  > 2000) {
           status_time = new java.util.Date().getTime();
           setStatus("");
         }
