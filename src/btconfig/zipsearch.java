@@ -38,6 +38,7 @@ public class zipsearch
   private int do_search3=0;
 
   private int MAXREC=8000;
+  private Hashtable en_hash;
 
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,8 +48,10 @@ public class zipsearch
   }
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  public void search3() {
+  public void search3(Hashtable en_hash) {
     do_search3=1;
+    this.en_hash = en_hash;
+
     try {
       do_search(null);
     } catch(Exception e) {
@@ -167,6 +170,7 @@ public class zipsearch
          addTableObject( null, i, 8); 
          addTableObject( null, i, 9); 
          addTableObject( null, i, 10); 
+         addTableObject( null, i, 11); 
         }
         if(arg==null || arg.length<2) {
           parent.setStatus("no records found");
@@ -471,6 +475,27 @@ public class zipsearch
          else {
            parent.freq_table.getModel().setValueAt("",idx,4);
          }
+
+         try {
+           byte r_en = 0; 
+           try {
+             r_en = ((Byte) en_hash.get(p25f)).byteValue();
+           } catch(Exception e) {
+             r_en=0;
+           }
+           System.out.println("r_en: "+r_en);
+
+           if(r_en>0) {
+             parent.freq_table.getModel().setValueAt(true,idx,11);
+           }
+           else {
+             parent.freq_table.getModel().setValueAt(false,idx,11);
+           }
+         } catch(Exception e) {
+           e.printStackTrace();
+         }
+
+
          idx++;
        }
        console = "\nfound "+nresults+" records with unique frequencies.";
