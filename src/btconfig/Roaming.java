@@ -644,6 +644,8 @@ public void append_roaming(BTFrame parent, SerialPort serial_port)
       return;
     }
 
+    offset_only_length=0;
+
     send_roaming(parent, serial_port, offset_only_length);
 
     //if(parent.zs!=null) parent.zs.search3();

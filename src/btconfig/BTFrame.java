@@ -1367,8 +1367,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202104240745");
-      release_date.setText("Release: 2021-04-24 15:59");
+      fw_ver.setText("Latest Avail: FW Date: 202104242218");
+      release_date.setText("Release: 2021-04-24 22:18");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3937,7 +3937,7 @@ long status_time;
         });
         jPanel15.add(write_cc);
 
-        append_cc.setText("Add Selected Frequencies To Roaming Flash");
+        append_cc.setText("Add/Update Selected Frequencies");
         append_cc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 append_ccActionPerformed(evt);

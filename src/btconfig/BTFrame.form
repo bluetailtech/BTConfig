@@ -2352,7 +2352,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="append_cc">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Add Selected Frequencies To Roaming Flash"/>
+                        <Property name="text" type="java.lang.String" value="Add/Update Selected Frequencies"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="append_ccActionPerformed"/>
