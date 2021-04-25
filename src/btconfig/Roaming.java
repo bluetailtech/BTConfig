@@ -420,7 +420,6 @@ public void restore_roaming(BTFrame parent, BufferedInputStream bis, SerialPort 
                parent.freq_table.getModel().setValueAt( null, i, 8); 
                parent.freq_table.getModel().setValueAt( null, i, 9); 
                parent.freq_table.getModel().setValueAt( null, i, 10); 
-               parent.freq_table.getModel().setValueAt( null, i, 11); 
               }
             parent.setStatus("\r\nCompleted restoring roaming.");
             parent.setProgress(100);
@@ -591,7 +590,6 @@ public void erase_roaming(BTFrame parent, SerialPort serial_port)
                parent.freq_table.getModel().setValueAt( null, i, 8); 
                parent.freq_table.getModel().setValueAt( null, i, 9); 
                parent.freq_table.getModel().setValueAt( null, i, 10); 
-               parent.freq_table.getModel().setValueAt( null, i, 11); 
               }
             parent.freq_table.setRowSelectionInterval(0,0);
             return;
@@ -643,8 +641,6 @@ public void append_roaming(BTFrame parent, SerialPort serial_port)
       get_offset_only=0;
       return;
     }
-
-    offset_only_length=0;
 
     send_roaming(parent, serial_port, offset_only_length);
 
@@ -779,26 +775,22 @@ public void send_roaming(BTFrame parent, SerialPort serial_port, int start_offse
                       } catch(Exception e) {
                       }
 
-                    Boolean r_enabled = (Boolean) parent.freq_table.getModel().getValueAt(rows[i],11);
-
 
                     bb_image.put((byte) rec_result);  //  test result,  0=unknown, 1=p25_sync, 2=p1_cc, 3=nosig, 4 = primary_cc
-
-                    if(r_enabled) bb_image.put((byte) 0x01);
-                      else bb_image.put((byte) 0x00);
 
                     double lat = 0.0;
                     double lon = 0.0;
                     Point2D.Double p2d = (Point2D.Double) parent.lat_lon_hash1.get( String.format("%3.8f",rfreq) );
 
                     if(p2d!=null) {
-                      bb_image.put((byte) 0); //padding 2
-                      bb_image.put((byte) 0); //padding 3
+                      for(int j=0;j<3;j++) {
+                        bb_image.put((byte) 0);
+                      }
                       bb_image.putDouble( p2d.x );
                       bb_image.putDouble( p2d.y );
                     }
                     else {
-                      for(int j=0;j<18;j++) {
+                      for(int j=0;j<19;j++) {
                         bb_image.put((byte) 0);
                       }
                     }
@@ -968,7 +960,6 @@ public void send_roaming(BTFrame parent, SerialPort serial_port, int start_offse
                parent.freq_table.getModel().setValueAt( null, i, 8); 
                parent.freq_table.getModel().setValueAt( null, i, 9); 
                parent.freq_table.getModel().setValueAt( null, i, 10); 
-               parent.freq_table.getModel().setValueAt( null, i, 11); 
               }
           } catch(Exception e) {
           }
@@ -1304,7 +1295,6 @@ public void read_roaming(BTFrame parent, SerialPort serial_port)
           int offset = 0;
 
           Hashtable freq_hash = new Hashtable();
-          Hashtable en_hash = new Hashtable();
           Hashtable rectype_hash = new Hashtable();
           parent.lat_lon_hash2 = new Hashtable();
           parent.no_loc_freqs = new Hashtable();
@@ -1394,11 +1384,9 @@ public void read_roaming(BTFrame parent, SerialPort serial_port)
                     bb4.order(ByteOrder.LITTLE_ENDIAN);
                     double freq = bb4.getDouble();
                     byte result = bb4.get();
-                    byte freq_en = bb4.get();  //enabled
                     bb4.get();  //padding
                     bb4.get();  //padding
-
-                    //System.out.println("freq_en: "+freq_en);
+                    bb4.get();  //padding
 
                     double lat = bb4.getDouble();
                     double lon = bb4.getDouble();
@@ -1407,9 +1395,6 @@ public void read_roaming(BTFrame parent, SerialPort serial_port)
                       String freq_s = String.format("%3.8f", freq);
                       append_hash.put(freq_s,freq_s);
 
-                      en_hash.put(freq_s, new Byte(freq_en) );
-                      System.out.println("en_hash "+freq_s+" "+freq_en);
-
                       rectype_hash.put(freq_s,new Byte(result));
                       freq_hash.put(freq_s,freq_s);
                       parent.lat_lon_hash2.put(freq_s, new Point2D.Double(lat,lon) );
@@ -1417,8 +1402,6 @@ public void read_roaming(BTFrame parent, SerialPort serial_port)
                     else if(lat==0.0 && lon==0.0) {
                       String freq_s = String.format("%3.8f", freq);
                       parent.no_loc_freqs.put(freq_s,freq_s);
-                      en_hash.put(freq_s, new Byte(freq_en) );
-                      System.out.println("en_hash "+freq_s+" "+freq_en);
                     }
                   }
                   else {
@@ -1426,7 +1409,7 @@ public void read_roaming(BTFrame parent, SerialPort serial_port)
 
                     //pass lat_lon_hash to zip search3 to fill in the blanks
                     parent.do_read_roaming=0;
-                    fill_freq_table(freq_hash, rectype_hash, en_hash);
+                    fill_freq_table(freq_hash, rectype_hash);
 
                     parent.do_read_roaming=0;
                     parent.setStatus("complete."); 
@@ -1448,7 +1431,7 @@ public void read_roaming(BTFrame parent, SerialPort serial_port)
 
 /////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////
-public void fill_freq_table(Hashtable freq_hash, Hashtable rectype_hash, Hashtable enable_hash) {
+public void fill_freq_table(Hashtable freq_hash, Hashtable rectype_hash) {
  if(parent==null || parent.freq_table==null) return;
 
    Hashtable found_freqs = new Hashtable();
@@ -1458,15 +1441,6 @@ public void fill_freq_table(Hashtable freq_hash, Hashtable rectype_hash, Hashtab
      String val =  (String) parent.freq_table.getModel().getValueAt(i,3);
      if(val!=null && freq_hash.get(val)!=null ) {
        parent.freq_table.getModel().setValueAt("X", i, 6);
-       byte r_en = 0; 
-       try {
-         r_en = ((Byte) enable_hash.get(val)).byteValue();
-       } catch(Exception e) {
-         r_en=0;
-       }
-       System.out.println("r_en: "+r_en);
-
-
        byte rectype = 0; 
        try {
          rectype = ((Byte) rectype_hash.get(val)).byteValue();
@@ -1481,13 +1455,6 @@ public void fill_freq_table(Hashtable freq_hash, Hashtable rectype_hash, Hashtab
        if(rectype==4) rec="P25CC";
        //System.out.println("rectype "+rectype+"  rec "+rec);
        parent.freq_table.getModel().setValueAt(rec,i,5);
-
-       if(r_en>0) {
-         parent.freq_table.getModel().setValueAt(true,i,11);
-       }
-       else {
-         parent.freq_table.getModel().setValueAt(false,i,11);
-       }
 
        if(parent.frequency_tf1.getText().trim().equals(val.trim())) {
          parent.freq_table.getModel().setValueAt("PRIM",i,4);
@@ -1519,29 +1486,11 @@ public void fill_freq_table(Hashtable freq_hash, Hashtable rectype_hash, Hashtab
      if( found_freqs.get(f)==null ) {
        parent.freq_table.getModel().setValueAt(f, first_null, 3);
        parent.freq_table.getModel().setValueAt("X", first_null, 6);
-
-       byte r_en = 0; 
-       try {
-         r_en = ((Byte) enable_hash.get(f)).byteValue();
-       } catch(Exception e) {
-         r_en=0;
-       }
-       System.out.println("r_en: "+r_en);
-
        byte rectype = 0; 
        try {
          rectype = ((Byte) rectype_hash.get(f)).byteValue();
        } catch(Exception e) {
        }
-
-       if(r_en>0) {
-         parent.freq_table.getModel().setValueAt(true,first_null,11);
-       }
-       else {
-         parent.freq_table.getModel().setValueAt(false,first_null,11);
-       }
-
-
        String rec="";
        if(rectype==1) rec="P1";
        if(rectype==2) rec="P25CC";
@@ -1561,7 +1510,7 @@ public void fill_freq_table(Hashtable freq_hash, Hashtable rectype_hash, Hashtab
 
 
   if(parent.zs!=null && do_s3==1) {
-    parent.zs.search3(enable_hash);
+    parent.zs.search3();
   }
   else {
      int idx=0;
@@ -1585,25 +1534,6 @@ public void fill_freq_table(Hashtable freq_hash, Hashtable rectype_hash, Hashtab
        } 
        else {
          parent.freq_table.getModel().setValueAt("",idx,4);
-       }
-
-       try {
-         byte r_en = 0; 
-         try {
-           r_en = ((Byte) enable_hash.get(p25f)).byteValue();
-         } catch(Exception e) {
-           r_en=0;
-         }
-         System.out.println("r_en: "+r_en);
-
-         if(r_en>0) {
-           parent.freq_table.getModel().setValueAt(true,idx,11);
-         }
-         else {
-           parent.freq_table.getModel().setValueAt(false,idx,11);
-         }
-       } catch(Exception e) {
-         e.printStackTrace();
        }
 
 

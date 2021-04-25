@@ -89,7 +89,6 @@ class updateTask extends java.util.TimerTask
 
         if(status_timeout>0) {
           status_timeout--;
-          status_time = new java.util.Date().getTime();
         }
 
         if(  status_timeout==0 && new java.util.Date().getTime() - status_time  > 2000) {
@@ -1367,8 +1366,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202104242218");
-      release_date.setText("Release: 2021-04-24 22:18");
+      fw_ver.setText("Latest Avail: FW Date: 202104240745");
+      release_date.setText("Release: 2021-04-24 15:59");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3770,15 +3769,13 @@ long status_time;
         ));
 
         freq_table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [8000][12],
+            new Object [8000][11],
             new String [] {
-                "LICENSE", "GRANTEE", "ENTITY(GOV,BUS)", "CC FREQ", "TEST", "RESULTS", "INFLASH", "SRV_CLASS", "CITY", "STATE", "EMISSION", "ENABLED"
+                "LICENSE", "GRANTEE", "ENTITY(GOV,BUS)", "CC FREQ", "TEST", "RESULTS", "INFLASH", "SRV_CLASS", "CITY", "STATE", "EMISSION"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class,
-                java.lang.Object.class, java.lang.String.class,java.lang.String.class,java.lang.String.class,
-                java.lang.String.class,java.lang.String.class,java.lang.String.class, java.lang.Boolean.class,
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,
 
             };
 
@@ -3937,7 +3934,7 @@ long status_time;
         });
         jPanel15.add(write_cc);
 
-        append_cc.setText("Add/Update Selected Frequencies");
+        append_cc.setText("Add Selected Frequencies To Roaming Flash");
         append_cc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 append_ccActionPerformed(evt);
@@ -5585,7 +5582,7 @@ private void resizeColumns() {
 }
 
 //SUMS 1
-float[] columnWidthPercentage2 = {0.08f, 0.20f, .05f, 0.12f, 0.05f, 0.05f, 0.058f, 0.05f, 0.1f, 0.035f, 0.13f, 0.05f };
+float[] columnWidthPercentage2 = {0.08f, 0.25f, .05f, 0.12f, 0.05f, 0.05f, 0.058f, 0.05f, 0.1f, 0.035f, 0.13f };
 private void resizeColumns2() {
   int tW = freq_table.getColumnModel().getTotalColumnWidth();
   TableColumn column;
