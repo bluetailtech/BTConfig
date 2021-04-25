@@ -89,6 +89,7 @@ class updateTask extends java.util.TimerTask
 
         if(status_timeout>0) {
           status_timeout--;
+          status_time = new java.util.Date().getTime();
         }
 
         if(  status_timeout==0 && new java.util.Date().getTime() - status_time  > 2000) {
@@ -3769,13 +3770,15 @@ long status_time;
         ));
 
         freq_table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [8000][11],
+            new Object [8000][12],
             new String [] {
-                "LICENSE", "GRANTEE", "ENTITY(GOV,BUS)", "CC FREQ", "TEST", "RESULTS", "INFLASH", "SRV_CLASS", "CITY", "STATE", "EMISSION"
+                "LICENSE", "GRANTEE", "ENTITY(GOV,BUS)", "CC FREQ", "TEST", "RESULTS", "INFLASH", "SRV_CLASS", "CITY", "STATE", "EMISSION", "ENABLED"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class,
+                java.lang.Object.class, java.lang.String.class,java.lang.String.class,java.lang.String.class,
+                java.lang.String.class,java.lang.String.class,java.lang.String.class, java.lang.Boolean.class,
 
             };
 
@@ -5582,7 +5585,7 @@ private void resizeColumns() {
 }
 
 //SUMS 1
-float[] columnWidthPercentage2 = {0.08f, 0.25f, .05f, 0.12f, 0.05f, 0.05f, 0.058f, 0.05f, 0.1f, 0.035f, 0.13f };
+float[] columnWidthPercentage2 = {0.08f, 0.20f, .05f, 0.12f, 0.05f, 0.05f, 0.058f, 0.05f, 0.1f, 0.035f, 0.13f, 0.05f };
 private void resizeColumns2() {
   int tW = freq_table.getColumnModel().getTotalColumnWidth();
   TableColumn column;
