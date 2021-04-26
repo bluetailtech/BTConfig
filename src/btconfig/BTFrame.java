@@ -1366,8 +1366,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202104240745");
-      release_date.setText("Release: 2021-04-24 15:59");
+      fw_ver.setText("Latest Avail: FW Date: 202104260603");
+      release_date.setText("Release: 2021-04-26 06:03");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2785,9 +2785,13 @@ long status_time;
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jPanel6 = new javax.swing.JPanel();
+        jPanel51 = new javax.swing.JPanel();
         enable_voice_const = new javax.swing.JRadioButton();
         enable_commands = new javax.swing.JRadioButton();
         enable_conlog = new javax.swing.JCheckBox();
+        jPanel52 = new javax.swing.JPanel();
+        follow_tg = new javax.swing.JButton();
+        skip_tg = new javax.swing.JButton();
         logpanel = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         log_ta = new javax.swing.JTextArea();
@@ -4149,6 +4153,8 @@ long status_time;
 
         consolePanel.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
+        jPanel6.setLayout(new java.awt.GridLayout(2, 1));
+
         buttonGroup4.add(enable_voice_const);
         enable_voice_const.setSelected(true);
         enable_voice_const.setText("Enable Logging");
@@ -4157,7 +4163,7 @@ long status_time;
                 enable_voice_constActionPerformed(evt);
             }
         });
-        jPanel6.add(enable_voice_const);
+        jPanel51.add(enable_voice_const);
 
         buttonGroup4.add(enable_commands);
         enable_commands.setText("Enter Commands");
@@ -4166,7 +4172,7 @@ long status_time;
                 enable_commandsActionPerformed(evt);
             }
         });
-        jPanel6.add(enable_commands);
+        jPanel51.add(enable_commands);
 
         enable_conlog.setText("Enable Log To File");
         enable_conlog.addActionListener(new java.awt.event.ActionListener() {
@@ -4174,7 +4180,27 @@ long status_time;
                 enable_conlogActionPerformed(evt);
             }
         });
-        jPanel6.add(enable_conlog);
+        jPanel51.add(enable_conlog);
+
+        jPanel6.add(jPanel51);
+
+        follow_tg.setText("Follow TG");
+        follow_tg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                follow_tgActionPerformed(evt);
+            }
+        });
+        jPanel52.add(follow_tg);
+
+        skip_tg.setText("Skip TG");
+        skip_tg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                skip_tgActionPerformed(evt);
+            }
+        });
+        jPanel52.add(skip_tg);
+
+        jPanel6.add(jPanel52);
 
         consolePanel.add(jPanel6, java.awt.BorderLayout.PAGE_END);
 
@@ -5238,6 +5264,16 @@ long status_time;
       if(prefs!=null) prefs.putBoolean( "tg_auto_pop_table", auto_pop_table.isSelected());
     }//GEN-LAST:event_auto_pop_tableActionPerformed
 
+    private void follow_tgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_follow_tgActionPerformed
+      String cmd= new String("f \r\n");
+      serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+    }//GEN-LAST:event_follow_tgActionPerformed
+
+    private void skip_tgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skip_tgActionPerformed
+      String cmd= new String("s \r\n");
+      serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+    }//GEN-LAST:event_skip_tgActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5762,6 +5798,7 @@ public void SLEEP(long val) {
     private javax.swing.JRadioButton enable_voice_const;
     public javax.swing.JCheckBox enc_mode;
     public javax.swing.JButton erase_roaming;
+    private javax.swing.JButton follow_tg;
     public javax.swing.JLabel freq;
     public javax.swing.JCheckBox freq_correct_on_voice;
     public javax.swing.JLabel freq_label;
@@ -5890,6 +5927,8 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel49;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel50;
+    private javax.swing.JPanel jPanel51;
+    private javax.swing.JPanel jPanel52;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
@@ -6007,6 +6046,7 @@ public void SLEEP(long val) {
     public javax.swing.JRadioButton single_click_opt5;
     public javax.swing.JRadioButton single_click_opt6;
     public javax.swing.JLabel siteid;
+    private javax.swing.JButton skip_tg;
     public javax.swing.JTextField skip_tg_to;
     private javax.swing.JToggleButton sq_indicator;
     private javax.swing.JLabel sq_lb;
