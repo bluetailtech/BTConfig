@@ -395,7 +395,6 @@ BTFrame parent;
 
     if(sourceDataLine==null) return;
 
-    /*
     if(sourceDataLine.isOpen() && sourceDataLine.isRunning() && dbuffer_tot > 0) { 
       if( dbuffer_mod == 0 ) {
         //dbuffer1
@@ -409,7 +408,6 @@ BTFrame parent;
       dbuffer_mod=0;
       dbuffer_tot=0;
     }
-    */
   }
 
   /////////////////////////////////////////////////////////////////////////////////
@@ -474,14 +472,7 @@ BTFrame parent;
 
             idx+=4;
           }
-              try {
-                sourceDataLine.write(outbytes, 0, idx);
-                if(!sourceDataLine.isRunning()) sourceDataLine.start();
-              } catch(Exception e) {
-                e.printStackTrace();
-              }
 
-          /*
           if( dbuffer_mod == 0 ) {
             for(int i=0;i<idx;i++) {
               dbuffer1[dbuffer_tot++] = outbytes[i];
@@ -520,7 +511,6 @@ BTFrame parent;
 
             dbuffer_tot=0;
           }
-          */
 
 
         }
