@@ -1366,8 +1366,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202104271256");
-      release_date.setText("Release: 2021-04-27 15:43");
+      fw_ver.setText("Latest Avail: FW Date: 202104271615");
+      release_date.setText("Release: 2021-04-27 16:15");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2856,6 +2856,7 @@ long status_time;
         jLabel13 = new javax.swing.JLabel();
         en_zero_rid = new javax.swing.JCheckBox();
         enc_mode = new javax.swing.JCheckBox();
+        allow_tg_pri_int = new javax.swing.JCheckBox();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
@@ -4479,7 +4480,7 @@ long status_time;
                 adv_write_configActionPerformed(evt);
             }
         });
-        advancedpanel.add(adv_write_config, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 370, -1, -1));
+        advancedpanel.add(adv_write_config, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 390, -1, -1));
 
         wacn_en.setText("Include The WACN field in talk group lookup");
         wacn_en.addActionListener(new java.awt.event.ActionListener() {
@@ -4535,6 +4536,15 @@ long status_time;
             }
         });
         advancedpanel.add(enc_mode, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 320, -1, -1));
+
+        allow_tg_pri_int.setSelected(true);
+        allow_tg_pri_int.setText("Allow Talk Group Priority Interrupts");
+        allow_tg_pri_int.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                allow_tg_pri_intActionPerformed(evt);
+            }
+        });
+        advancedpanel.add(allow_tg_pri_int, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, -1, -1));
 
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
@@ -5274,6 +5284,10 @@ long status_time;
       serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
     }//GEN-LAST:event_skip_tgActionPerformed
 
+    private void allow_tg_pri_intActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allow_tg_pri_intActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_allow_tg_pri_intActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5707,6 +5721,7 @@ public void SLEEP(long val) {
     private javax.swing.JLabel agc_kp_lb;
     private javax.swing.JPanel alias_panel;
     public javax.swing.JTable alias_table;
+    public javax.swing.JCheckBox allow_tg_pri_int;
     public javax.swing.JCheckBox allow_unknown_tg_cb;
     public javax.swing.JButton append_cc;
     private javax.swing.JButton apply_audio_rate;
