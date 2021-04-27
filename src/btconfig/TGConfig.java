@@ -58,6 +58,8 @@ public TGConfig(BTFrame parent) {
 public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String city, String wacn) {
   int first_empty_row=0;
 
+  if(parent!=null && parent.op_mode.getSelectedIndex()==0) parent.is_dmr_mode=0; 
+
   if(talkgroup==null || sys_id==null ) return;
   if(!parent.auto_pop_table.isSelected()) return; 
 

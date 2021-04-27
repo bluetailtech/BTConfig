@@ -1366,8 +1366,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202104260603");
-      release_date.setText("Release: 2021-04-26 09:09");
+      fw_ver.setText("Latest Avail: FW Date: 202104271256");
+      release_date.setText("Release: 2021-04-27 15:43");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2192,7 +2192,7 @@ long status_time;
               }
             }
 
-            if(st1.equals("DMR")) {
+            if(st1.equals("DMR DATA_SYNC")) {
               is_dmr_mode=1;
               p25_status_timeout=6000;
             }
