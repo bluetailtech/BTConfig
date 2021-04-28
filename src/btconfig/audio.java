@@ -67,7 +67,7 @@ BTFrame parent;
 
   Line.Info[] lineInfo;
 
-  int audio_srate=47000;
+  int audio_srate=8000;
 
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
@@ -171,8 +171,8 @@ BTFrame parent;
               }
               else {
                 try {
-                  audio_srate = 48000;
-                  parent.audio_rate.setText("48000");
+                  audio_srate = audio_srate;
+                  parent.audio_rate.setText("8000");
 
                   af = new AudioFormat(
                     audio_srate,
@@ -209,7 +209,7 @@ BTFrame parent;
 
               sourceDataLine = AudioSystem.getSourceDataLine( af, mixer_info );
 
-              sourceDataLine.open(af, 48000*4*2);
+              sourceDataLine.open(af, 8000*4*2);
 
 
               try {
@@ -273,16 +273,16 @@ BTFrame parent;
 
 
     if(parent.is_mac_osx==1) {
-      dbuffer_size = 7680*4;
+      dbuffer_size = 1280*4;
     }
     else if(parent.is_linux==1) {
-      dbuffer_size = 7680*4; 
+      dbuffer_size = 1280*4; 
     }
     else if(parent.is_windows==1) {
-      dbuffer_size = 7680*4; 
+      dbuffer_size = 1280*4; 
     }
     else {
-      dbuffer_size = 7680*4;
+      dbuffer_size = 1280*4;
     }
 
     dbuffer1 = new byte[dbuffer_size];
@@ -451,11 +451,9 @@ BTFrame parent;
             buffer_in[i] = (int) bg.getShort()/2;
           }
 
-          int[] buffer_out = new int[ buffer_in.length * 6 ];
-
-          int nsamp = resamp.resample(buffer_in, buffer_out, 0, 1);
-
-          int[] buffer_out_agc = buffer_out; 
+          int[] buffer_out = new int[ buffer_in.length  ];
+          //int nsamp = resamp.resample(buffer_in, buffer_out, 0, 1);
+          int[] buffer_out_agc = buffer_in; 
 
 
           Boolean isWindows = System.getProperty("os.name").startsWith("Windows");
