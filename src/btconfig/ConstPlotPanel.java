@@ -125,6 +125,11 @@ public class ConstPlotPanel extends JPanel {
          audio_bytes[i] /= 200;
        }
 
+       if(did_draw_audio_fft) {
+         fft.applyReal( audio_in, 0, true, audio_out, 0);  //real in, complex out
+         did_draw_audio_fft=false;
+       }
+
        paint_audio=15;
        audio_frame_count++;
        if(audio_frame_count%2==0) repaint();
@@ -267,12 +272,6 @@ public class ConstPlotPanel extends JPanel {
    public void paint(Graphics g){
      //super.paint(g);
      Graphics2D g2d = (Graphics2D) g;
-
-       if(did_draw_audio_fft) {
-         fft.applyReal( audio_in, 0, true, audio_out, 0);  //real in, complex out
-         did_draw_audio_fft=false;
-       }
-
 
      //Rectangle r = g2d.getClipBounds();
      Rectangle r = getBounds(); 
