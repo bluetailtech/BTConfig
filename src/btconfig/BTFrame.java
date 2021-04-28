@@ -1366,8 +1366,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202104272222");
-      release_date.setText("Release: 2021-04-27 22:22");
+      fw_ver.setText("Latest Avail: FW Date: 202104281421");
+      release_date.setText("Release: 2021-04-28 14:21");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2857,6 +2857,7 @@ long status_time;
         en_zero_rid = new javax.swing.JCheckBox();
         enc_mode = new javax.swing.JCheckBox();
         allow_tg_pri_int = new javax.swing.JCheckBox();
+        en_visuals = new javax.swing.JCheckBox();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
@@ -4480,7 +4481,7 @@ long status_time;
                 adv_write_configActionPerformed(evt);
             }
         });
-        advancedpanel.add(adv_write_config, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 390, -1, -1));
+        advancedpanel.add(adv_write_config, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 420, -1, -1));
 
         wacn_en.setText("Include The WACN field in talk group lookup");
         wacn_en.addActionListener(new java.awt.event.ActionListener() {
@@ -4545,6 +4546,15 @@ long status_time;
             }
         });
         advancedpanel.add(allow_tg_pri_int, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, -1, -1));
+
+        en_visuals.setSelected(true);
+        en_visuals.setText("Enable Visuals In Signal Insights Tab  (disable for system with over-taxed CPU)");
+        en_visuals.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                en_visualsActionPerformed(evt);
+            }
+        });
+        advancedpanel.add(en_visuals, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, -1, -1));
 
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
@@ -5288,6 +5298,10 @@ long status_time;
         // TODO add your handling code here:
     }//GEN-LAST:event_allow_tg_pri_intActionPerformed
 
+    private void en_visualsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_en_visualsActionPerformed
+      if(prefs!=null) prefs.putBoolean( "en_visuals", en_visuals.isSelected());
+    }//GEN-LAST:event_en_visualsActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5498,6 +5512,8 @@ public void update_prefs() {
       autoscale_const.setSelected( prefs.getBoolean("autoscale_const", true) );
       mp3_separate_files.setSelected( prefs.getBoolean("mp3_separate_files", false) );
       nsymbols.setSelectedIndex( prefs.getInt("nsymbols", 0) );
+
+      en_visuals.setSelected( prefs.getBoolean("en_visuals", true) );
 
       system_alias.setText( prefs.get("system_alias", "") );
 
@@ -5803,6 +5819,7 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox en_encout;
     public javax.swing.JCheckBox en_p2_tones;
     public javax.swing.JCheckBox en_usb_wdog;
+    public javax.swing.JCheckBox en_visuals;
     public javax.swing.JCheckBox en_zero_rid;
     public javax.swing.JCheckBox enable_audio;
     private javax.swing.JRadioButton enable_commands;
