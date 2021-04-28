@@ -1367,7 +1367,7 @@ long status_time;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202104272222");
-      release_date.setText("Release: 2021-04-27 22:22");
+      release_date.setText("Release: 2021-04-28 07:12");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
