@@ -1366,8 +1366,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202104281421");
-      release_date.setText("Release: 2021-04-28 14:21");
+      fw_ver.setText("Latest Avail: FW Date: 202104281545");
+      release_date.setText("Release: 2021-04-29 06:58");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3736,19 +3736,21 @@ long status_time;
         jLabel9.setText("Audio Playback Rate");
         jPanel50.add(jLabel9);
 
+        audio_rate.setEditable(false);
         audio_rate.setColumns(8);
-        audio_rate.setText("47000");
+        audio_rate.setText("48000");
         jPanel50.add(audio_rate);
 
         jLabel35.setText("Hz");
         jPanel50.add(jLabel35);
 
-        jLabel50.setText("Default: 47000 Hz");
+        jLabel50.setText("Default: 48000 Hz");
         jPanel50.add(jLabel50);
 
         jPanel11.add(jPanel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 290, 50));
 
         apply_audio_rate.setText("Apply Rate");
+        apply_audio_rate.setEnabled(false);
         apply_audio_rate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 apply_audio_rateActionPerformed(evt);
