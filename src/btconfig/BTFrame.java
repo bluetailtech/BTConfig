@@ -1366,8 +1366,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202104281545");
-      release_date.setText("Release: 2021-04-29 06:58");
+      fw_ver.setText("Latest Avail: FW Date: 202104300258");
+      release_date.setText("Release: 2021-04-30 02:58");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2847,7 +2847,6 @@ long status_time;
         add_tdu_silence = new javax.swing.JCheckBox();
         adv_write_config = new javax.swing.JButton();
         wacn_en = new javax.swing.JCheckBox();
-        en_usb_wdog = new javax.swing.JCheckBox();
         en_encout = new javax.swing.JCheckBox();
         en_p2_tones = new javax.swing.JCheckBox();
         p25_reinit = new javax.swing.JCheckBox();
@@ -4493,10 +4492,6 @@ long status_time;
         });
         advancedpanel.add(wacn_en, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
 
-        en_usb_wdog.setSelected(true);
-        en_usb_wdog.setText("Enable USB Watchdog (disable this when monitoring in stand-alone mode)");
-        advancedpanel.add(en_usb_wdog, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, -1, -1));
-
         en_encout.setText("Enable Encrypted Audio Output");
         advancedpanel.add(en_encout, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
 
@@ -5820,7 +5815,6 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox en_bluetooth_cb;
     public javax.swing.JCheckBox en_encout;
     public javax.swing.JCheckBox en_p2_tones;
-    public javax.swing.JCheckBox en_usb_wdog;
     public javax.swing.JCheckBox en_visuals;
     public javax.swing.JCheckBox en_zero_rid;
     public javax.swing.JCheckBox enable_audio;

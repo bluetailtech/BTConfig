@@ -463,10 +463,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           if(is_wacn_en==1) parent.wacn_en.setSelected(true);
                               else parent.wacn_en.setSelected(false);
 
-                          int en_usb_wdog = bb3.getInt(208);
-                          if( en_usb_wdog==0 ) parent.en_usb_wdog.setSelected(false);
-                            else parent.en_usb_wdog.setSelected(true);
-
 
                           int iscontrol = bb3.getInt(36);
                           int is_analog = bb3.getInt(52);
@@ -973,19 +969,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           SLEEP(50);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
-
-
-                          result=new byte[64];
-
-                          b = parent.en_usb_wdog.isSelected();
-                          if(b && parent.is_mac_osx==0) cmd = "en_usb_wdog 1\r\n";
-                            else cmd = "en_usb_wdog 0\r\n"; 
-
-                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-                          SLEEP(50);
-                          rlen=serial_port.readBytes( result, 64);
-                          System.out.println("result: "+new String(result) );
-
 
 
                           result=new byte[64];
