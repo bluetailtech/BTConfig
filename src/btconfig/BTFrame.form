@@ -4032,11 +4032,25 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Dialog" size="10" style="1"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="MONITOR"/>
+                    <Property name="text" type="java.lang.String" value="MON"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="minimizeActionPerformed"/>
                   </Events>
+                </Component>
+                <Component class="javax.swing.JToggleButton" name="mute">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="10" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="MUTE"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="muteActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JToggleButton" name="record_to_mp3">
                   <Properties>
@@ -4048,7 +4062,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="release_date">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Release: "/>
+                    <Property name="text" type="java.lang.String" value="V: "/>
                   </Properties>
                 </Component>
               </SubComponents>

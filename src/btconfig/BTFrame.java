@@ -1366,8 +1366,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202104300258");
-      release_date.setText("Release: 2021-04-30 02:58");
+      fw_ver.setText("Latest Avail: FW Date: 202104300922");
+      release_date.setText("Release: 2021-05-02 13:43");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2890,6 +2890,7 @@ long status_time;
         macid = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         minimize = new javax.swing.JToggleButton();
+        mute = new javax.swing.JToggleButton();
         record_to_mp3 = new javax.swing.JToggleButton();
         release_date = new javax.swing.JLabel();
         ser_dev = new javax.swing.JLabel();
@@ -4702,13 +4703,22 @@ long status_time;
         jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         minimize.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
-        minimize.setText("MONITOR");
+        minimize.setText("MON");
         minimize.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 minimizeActionPerformed(evt);
             }
         });
         jPanel4.add(minimize);
+
+        mute.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        mute.setText("MUTE");
+        mute.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                muteActionPerformed(evt);
+            }
+        });
+        jPanel4.add(mute);
 
         record_to_mp3.setText("REC");
         record_to_mp3.addActionListener(new java.awt.event.ActionListener() {
@@ -4718,7 +4728,7 @@ long status_time;
         });
         jPanel4.add(record_to_mp3);
 
-        release_date.setText("Release: ");
+        release_date.setText("V: ");
         jPanel4.add(release_date);
 
         logo_panel.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 0, 360, -1));
@@ -5298,6 +5308,15 @@ long status_time;
     private void en_visualsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_en_visualsActionPerformed
       if(prefs!=null) prefs.putBoolean( "en_visuals", en_visuals.isSelected());
     }//GEN-LAST:event_en_visualsActionPerformed
+
+    private void muteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_muteActionPerformed
+      if(mute.isSelected()) {
+        mute.setBackground(java.awt.Color.green);
+      }
+      else {
+        mute.setBackground(java.awt.Color.gray);
+      }
+    }//GEN-LAST:event_muteActionPerformed
 
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
@@ -6034,6 +6053,7 @@ public void SLEEP(long val) {
     private javax.swing.JPanel meter_panel;
     private javax.swing.JToggleButton minimize;
     public javax.swing.JCheckBox mp3_separate_files;
+    public javax.swing.JToggleButton mute;
     private javax.swing.JLabel nac;
     public javax.swing.JPanel no_voice_panel;
     public javax.swing.JTextField no_voice_secs;

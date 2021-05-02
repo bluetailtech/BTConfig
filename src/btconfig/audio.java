@@ -448,6 +448,8 @@ BTFrame parent;
 
           if(buffer==null || buffer.length!=320) return; 
 
+          if(parent.mute.isSelected()) return;
+
           ByteBuffer bg = ByteBuffer.wrap(buffer);
           bg.order(ByteOrder.LITTLE_ENDIAN);
 
