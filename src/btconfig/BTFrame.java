@@ -1366,8 +1366,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202104300922");
-      release_date.setText("Release: 2021-05-02 13:43");
+      fw_ver.setText("Latest Avail: FW Date: 202105061451");
+      release_date.setText("Release: 2021-05-06 14:51");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5345,7 +5345,10 @@ public void update_dmr_lcn1_label() {
 public void do_meta() {
 
 
-  if( is_dmr_mode==0 && src_uid==0 && !en_zero_rid.isSelected() ) return;
+  if( is_dmr_mode==0 && src_uid==0 && !en_zero_rid.isSelected() ) {
+    did_metadata=1;
+    return;
+  }
 
   if( did_metadata==0 ) meta_count++;
 
