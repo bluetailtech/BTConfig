@@ -1367,7 +1367,7 @@ long status_time;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202105061451");
-      release_date.setText("Release: 2021-05-06 14:51");
+      release_date.setText("Release: 2021-05-06 15:09");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2857,6 +2857,7 @@ long status_time;
         enc_mode = new javax.swing.JCheckBox();
         allow_tg_pri_int = new javax.swing.JCheckBox();
         en_visuals = new javax.swing.JCheckBox();
+        process_rid_alias = new javax.swing.JCheckBox();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
@@ -4483,7 +4484,7 @@ long status_time;
                 adv_write_configActionPerformed(evt);
             }
         });
-        advancedpanel.add(adv_write_config, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 420, -1, -1));
+        advancedpanel.add(adv_write_config, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 430, -1, -1));
 
         wacn_en.setText("Include The WACN field in talk group lookup");
         wacn_en.addActionListener(new java.awt.event.ActionListener() {
@@ -4520,7 +4521,7 @@ long status_time;
         advancedpanel.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, -1, -1));
 
         en_zero_rid.setSelected(true);
-        en_zero_rid.setText("Allow Logging Of RID = 0 (some transmissions report SRC ID of 0)");
+        en_zero_rid.setText("Allow Logging Of RID = 0 (some transmissions report SRC ID of 0) (no need to write config)");
         en_zero_rid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 en_zero_ridActionPerformed(evt);
@@ -4546,13 +4547,22 @@ long status_time;
         advancedpanel.add(allow_tg_pri_int, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, -1, -1));
 
         en_visuals.setSelected(true);
-        en_visuals.setText("Enable Visuals In Signal Insights Tab  (disable for system with over-taxed CPU)");
+        en_visuals.setText("Enable Visuals In Signal Insights Tab  (disable for system with over-taxed CPU) (no need to write config)");
         en_visuals.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 en_visualsActionPerformed(evt);
             }
         });
-        advancedpanel.add(en_visuals, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, -1, -1));
+        advancedpanel.add(en_visuals, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, -1, -1));
+
+        process_rid_alias.setSelected(true);
+        process_rid_alias.setText("Process RID / Alias (no need to write config)");
+        process_rid_alias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                process_rid_aliasActionPerformed(evt);
+            }
+        });
+        advancedpanel.add(process_rid_alias, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, -1, -1));
 
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
@@ -5318,6 +5328,10 @@ long status_time;
       }
     }//GEN-LAST:event_muteActionPerformed
 
+    private void process_rid_aliasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_process_rid_aliasActionPerformed
+      if(prefs!=null) prefs.putBoolean("process_rid_alias", process_rid_alias.isSelected());
+    }//GEN-LAST:event_process_rid_aliasActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5538,6 +5552,8 @@ public void update_prefs() {
 
 
       en_zero_rid.setSelected( prefs.getBoolean("en_zero_rid", true) );
+
+      process_rid_alias.setSelected( prefs.getBoolean("process_rid_alias", true) );
 
       audio_rate.setText( prefs.get("audio_sample_rate", "47000" ) ); 
 
@@ -6066,6 +6082,7 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox p25_reinit;
     public javax.swing.JTextField p25_tone_vol;
     private javax.swing.JPanel p25rxconfigpanel;
+    public javax.swing.JCheckBox process_rid_alias;
     private javax.swing.JProgressBar progbar;
     private javax.swing.JLabel progress_label;
     public javax.swing.JRadioButton quad_click_opt1;

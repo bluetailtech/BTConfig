@@ -177,6 +177,8 @@ public void addRID(BTFrame parent, String rid) {
 
   if(rid==null ) return;
 
+  if(!parent.process_rid_alias.isSelected()) return;
+
 
   try {
     int zcheck = Integer.valueOf(rid);
