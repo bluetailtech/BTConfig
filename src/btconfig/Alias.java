@@ -339,7 +339,7 @@ private void do_import_from_prefs() {
       save_alias();
     }
 }
-private void save_alias() {
+public void save_alias() {
 
 
     try {

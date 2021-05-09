@@ -1366,8 +1366,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202105061451");
-      release_date.setText("Release: 2021-05-06 15:09");
+      fw_ver.setText("Latest Avail: FW Date: 202105081735");
+      release_date.setText("Release: 2021-05-08 17:35");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4882,6 +4882,7 @@ long status_time;
       }
 
       save_position();
+      if(alias!=null) alias.save_alias();
 
     }//GEN-LAST:event_formWindowClosing
 
