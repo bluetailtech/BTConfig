@@ -81,6 +81,8 @@ private void read_alias() {
 
     String fs =  System.getProperty("file.separator");
     File cdir = new File(home_dir+"p25rx"+fs+sys_mac_id+fs+"p25rx_aliases.csv");
+
+    /*
     try {
       if(cdir.length()==0) {
         do_import_from_prefs();
@@ -88,6 +90,7 @@ private void read_alias() {
     } catch(Exception e) {
       e.printStackTrace();
     }
+    */
 
 
     LineNumberReader lnr = new LineNumberReader( new FileReader(cdir) );
