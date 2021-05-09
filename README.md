@@ -2,7 +2,7 @@
 Configuration Software for the Bluetail Technologies <a href="https://bluetailtechnologies.com/products/p25rx-digital-police-receiver"> P25RX Digital Police Receiver </a> 
 <BR>
 <BR>Recommended Release (stable)  
-https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2021-01-05_1304.exe 
+https://github.com/bluetailtech/BTConfig/blob/master/releases_exe/BTConfig-2021-02-17_1118.exe 
   
 <BR><BR>User Manual
 https://github.com/bluetailtech/BTConfig/blob/master/Documentation/p25rx_user_manual.pdf  (updated 2020-12-18)
@@ -69,4 +69,9 @@ https://github.com/jgaeddert/liquid-dsp<BR>
 https://github.com/szechyjs/dsd<BR>
 https://github.com/szechyjs/mbelib<BR>
 https://github.com/uwarc/dsd-dmr<BR>
-https://github.com/osmocom/op25  (Our partial port of TDMA to C can be found on our github page in the decoders/p25_phase_2 directory)
+https://github.com/osmocom/op25  (P2 TDMA support is from OP25)<BR>
+https://github.com/boatbod/op25  (P2 tone support is from the boatbod fork)<BR>
+<BR><BR>
+(Our port of P2 TDMA in OP25 to the C language for use in the P25RX can be found on our github page in the decoders/p25_phase_2 directory)
+
+  
