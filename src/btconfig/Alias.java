@@ -41,7 +41,7 @@ class Alias
 {
 
 java.util.Hashtable alias_hash;
-private int NRECS=8000;
+private int NRECS=16000;
 private BTFrame parent; 
 Preferences prefs;
 int[] recent_rows;

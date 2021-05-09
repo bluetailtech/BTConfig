@@ -1367,7 +1367,7 @@ long status_time;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202105081939");
-      release_date.setText("Release: 2021-05-08 19:39");
+      release_date.setText("Release: 2021-05-08 20:43");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4421,7 +4421,7 @@ long status_time;
         alias_panel.setLayout(new java.awt.BorderLayout());
 
         alias_table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object[8000][2],
+            new Object[16000][2],
             new String [] {
                 "Radio ID", "Alias_And_Comments"
             }
