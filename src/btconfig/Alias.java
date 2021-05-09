@@ -94,6 +94,8 @@ private void read_alias() {
 
 
     LineNumberReader lnr = new LineNumberReader( new FileReader(cdir) );
+
+
     import_alias_csv(parent, lnr);
 
   } catch(Exception e) {
@@ -110,12 +112,15 @@ public void import_alias_csv(BTFrame parent, LineNumberReader lnr)
 
     int number_of_records=0;
 
+    if(parent!=null) ((DefaultTableModel) parent.alias_table.getModel()).setRowCount(64000);
+
     String in_line="";
     String[] strs = null;
 
     System.out.println("import aliases");
 
-    while(number_of_records<NRECS) {
+    //while(number_of_records<NRECS) {
+    while(number_of_records<64000) {
 
       in_line = lnr.readLine();
       
