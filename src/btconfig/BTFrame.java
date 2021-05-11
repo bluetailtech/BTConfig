@@ -1367,7 +1367,7 @@ long status_time;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202105082153");
-      release_date.setText("Release: 2021-05-08 21:53");
+      release_date.setText("Release: 2021-05-11 10:58");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2193,6 +2193,12 @@ long status_time;
             }
 
             if(st1.equals("DMR DATA_SYNC")) {
+              is_dmr_mode=1;
+              did_metadata=0;
+              p25_status_timeout=6000;
+            }
+
+            if(st1.equals("Con+ Voice Grant:")) {
               is_dmr_mode=1;
               did_metadata=0;
               p25_status_timeout=6000;
