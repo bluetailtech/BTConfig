@@ -2192,13 +2192,13 @@ long status_time;
               }
             }
 
-            if(st1.equals("DMR DATA_SYNC")) {
+            if(console_line.contains("DMR DATA_SYNC")) {
               is_dmr_mode=1;
               did_metadata=0;
               p25_status_timeout=6000;
             }
 
-            if(st1.equals("Con+ Voice Grant:")) {
+            if(console_line.contains("Con+ Voice Grant:")) {
               is_dmr_mode=1;
               did_metadata=0;
               p25_status_timeout=6000;
