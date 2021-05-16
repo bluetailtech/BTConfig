@@ -1366,8 +1366,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202105082153");
-      release_date.setText("Release: 2021-05-11 10:58");
+      fw_ver.setText("Latest Avail: FW Date: 202105161001");
+      release_date.setText("Release: 2021-05-16 10:54");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2865,6 +2865,8 @@ long status_time;
         allow_tg_pri_int = new javax.swing.JCheckBox();
         en_visuals = new javax.swing.JCheckBox();
         process_rid_alias = new javax.swing.JCheckBox();
+        p1_ch_bw = new javax.swing.JComboBox<>();
+        jLabel51 = new javax.swing.JLabel();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
@@ -4571,6 +4573,12 @@ long status_time;
         });
         advancedpanel.add(process_rid_alias, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, -1, -1));
 
+        p1_ch_bw.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10.0 kHz", "10.4 kHz", "10.6 kHz", "11.0 kHz", "11.4 kHz", "12.0 kHz", "12.4 kHz", "13.0 kHz", "13.4 kHz", "14.2 kHz", "14.8 kHz", "15.6 kHz", "16.4 kHz", "17.2 kHz", "18.2 kHz", "19.4 kHz", "20.0 kHz", "22.0 kHz", "24.0 kHz" }));
+        advancedpanel.add(p1_ch_bw, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 20, -1, 30));
+
+        jLabel51.setText("P25 P1 Channel Filter BW");
+        advancedpanel.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 30, -1, -1));
+
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
         signalinsightpanel.setLayout(new javax.swing.BoxLayout(signalinsightpanel, javax.swing.BoxLayout.X_AXIS));
@@ -5951,6 +5959,7 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -6087,6 +6096,7 @@ public void SLEEP(long val) {
     public javax.swing.JComboBox<String> nsymbols;
     public javax.swing.JComboBox<String> op_mode;
     private javax.swing.JLabel os_string;
+    public javax.swing.JComboBox<String> p1_ch_bw;
     public javax.swing.JCheckBox p25_reinit;
     public javax.swing.JTextField p25_tone_vol;
     private javax.swing.JPanel p25rxconfigpanel;

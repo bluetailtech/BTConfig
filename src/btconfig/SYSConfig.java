@@ -391,6 +391,66 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           int skip_tg_to = bb3.getInt(552);
                           parent.skip_tg_to.setText( Integer.toString(skip_tg_to/1000/60) );
 
+                          int p1_ch_bw = bb3.getInt(100);
+                          switch(p1_ch_bw) {
+                              case  100 :
+                               parent.p1_ch_bw.setSelectedIndex(0);
+                              break;
+                              case  104 :
+                               parent.p1_ch_bw.setSelectedIndex(1);
+                              break;
+                              case  106 :
+                               parent.p1_ch_bw.setSelectedIndex(2);
+                              break;
+                              case  110 :
+                               parent.p1_ch_bw.setSelectedIndex(3);
+                              break;
+                              case  114 :
+                               parent.p1_ch_bw.setSelectedIndex(4);
+                              break;
+                              case  120 :
+                               parent.p1_ch_bw.setSelectedIndex(5);
+                              break;
+                              case  124 :
+                               parent.p1_ch_bw.setSelectedIndex(6);
+                              break;
+                              case  130 :
+                               parent.p1_ch_bw.setSelectedIndex(7);
+                              break;
+                              case  134 :
+                               parent.p1_ch_bw.setSelectedIndex(8);
+                              break;
+                              case  142 :
+                               parent.p1_ch_bw.setSelectedIndex(9);
+                              break;
+                              case  148 :
+                               parent.p1_ch_bw.setSelectedIndex(10);
+                              break;
+                              case  156 :
+                               parent.p1_ch_bw.setSelectedIndex(11);
+                              break;
+                              case  164 :
+                               parent.p1_ch_bw.setSelectedIndex(12);
+                              break;
+                              case  172 :
+                               parent.p1_ch_bw.setSelectedIndex(13);
+                              break;
+                              case  182 :
+                               parent.p1_ch_bw.setSelectedIndex(14);
+                              break;
+                              case  194 :
+                               parent.p1_ch_bw.setSelectedIndex(15);
+                              break;
+                              case  200 :
+                               parent.p1_ch_bw.setSelectedIndex(16);
+                              break;
+                              case  220 :
+                               parent.p1_ch_bw.setSelectedIndex(17);
+                              break;
+                              case  240 :
+                               parent.p1_ch_bw.setSelectedIndex(18);
+                              break;
+                          }
 
                           int duid_enh = bb3.getInt(156);
                           int freq_correct_on_voice = bb3.getInt(160);
@@ -896,6 +956,74 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           result=new byte[64];
 
 
+                          int p1_ch_bw_idx = parent.p1_ch_bw.getSelectedIndex(); 
+                          String p1_cmd="124";
+
+                          switch(p1_ch_bw_idx) {
+                              case  0 :
+                                p1_cmd = "100";
+                              break;
+                              case  1 :
+                               p1_cmd = "104";
+                              break;
+                              case  2 :
+                               p1_cmd = "106";
+                              break;
+                              case  3 :
+                               p1_cmd = "110";
+                              break;
+                              case  4 :
+                               p1_cmd = "114";
+                              break;
+                              case  5 :
+                               p1_cmd = "120";
+                              break;
+                              case  6 :
+                               p1_cmd = "124";
+                              break;
+                              case  7 :
+                               p1_cmd = "130";
+                              break;
+                              case  8 :
+                               p1_cmd = "134";
+                              break;
+                              case  9 :
+                               p1_cmd = "142";
+                              break;
+                              case  10 :
+                               p1_cmd = "148";
+                              break;
+                              case  11 :
+                               p1_cmd = "156";
+                              break;
+                              case  12 :
+                               p1_cmd = "164";
+                              break;
+                              case  13 :
+                               p1_cmd = "172";
+                              break;
+                              case  14 :
+                               p1_cmd = "182";
+                              break;
+                              case  15 :
+                               p1_cmd = "194";
+                              break;
+                              case  16 :
+                               p1_cmd = "200";
+                              break;
+                              case  17 :
+                               p1_cmd = "220";
+                              break;
+                              case  18 :
+                               p1_cmd = "240";
+                              break;
+                          }
+                          result=new byte[64];
+                          cmd = "bw "+p1_cmd+"\r\n";  
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          SLEEP(10);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
 
                           //if(duid_enh==1) parent.duid_enh.setSelected(true);
                           //  else parent.duid_enh.setSelected(false);
