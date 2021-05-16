@@ -1367,7 +1367,7 @@ long status_time;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202105161001");
-      release_date.setText("Release: 2021-05-16 10:54");
+      release_date.setText("Release: 2021-05-16 11:28");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2867,6 +2867,7 @@ long status_time;
         process_rid_alias = new javax.swing.JCheckBox();
         p1_ch_bw = new javax.swing.JComboBox<>();
         jLabel51 = new javax.swing.JLabel();
+        jLabel52 = new javax.swing.JLabel();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
@@ -4579,6 +4580,9 @@ long status_time;
         jLabel51.setText("P25 P1 Channel Filter BW");
         advancedpanel.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 30, -1, -1));
 
+        jLabel52.setText("Default of 18.2 kHz");
+        advancedpanel.add(jLabel52, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 30, -1, -1));
+
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
         signalinsightpanel.setLayout(new javax.swing.BoxLayout(signalinsightpanel, javax.swing.BoxLayout.X_AXIS));
@@ -5960,6 +5964,7 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
