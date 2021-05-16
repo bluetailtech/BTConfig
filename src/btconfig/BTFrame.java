@@ -1366,8 +1366,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202105161001");
-      release_date.setText("Release: 2021-05-16 11:28");
+      fw_ver.setText("Latest Avail: FW Date: 202105161318");
+      release_date.setText("Release: 2021-05-16 13:18");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2868,6 +2868,9 @@ long status_time;
         p1_ch_bw = new javax.swing.JComboBox<>();
         jLabel51 = new javax.swing.JLabel();
         jLabel52 = new javax.swing.JLabel();
+        jLabel53 = new javax.swing.JLabel();
+        p2_ch_bw = new javax.swing.JComboBox<>();
+        jLabel54 = new javax.swing.JLabel();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
@@ -4577,11 +4580,20 @@ long status_time;
         p1_ch_bw.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10.0 kHz", "10.4 kHz", "10.6 kHz", "11.0 kHz", "11.4 kHz", "12.0 kHz", "12.4 kHz", "13.0 kHz", "13.4 kHz", "14.2 kHz", "14.8 kHz", "15.6 kHz", "16.4 kHz", "17.2 kHz", "18.2 kHz", "19.4 kHz", "20.0 kHz", "22.0 kHz", "24.0 kHz" }));
         advancedpanel.add(p1_ch_bw, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 20, -1, 30));
 
-        jLabel51.setText("P25 P1 Channel Filter BW");
-        advancedpanel.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 30, -1, -1));
+        jLabel51.setText("P25 P2 Channel Filter BW");
+        advancedpanel.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 80, -1, -1));
 
-        jLabel52.setText("Default of 18.2 kHz");
-        advancedpanel.add(jLabel52, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 30, -1, -1));
+        jLabel52.setText("Default of 15.6 kHz");
+        advancedpanel.add(jLabel52, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 80, -1, -1));
+
+        jLabel53.setText("P25 P1 Channel Filter BW");
+        advancedpanel.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 30, -1, -1));
+
+        p2_ch_bw.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10.0 kHz", "10.4 kHz", "10.6 kHz", "11.0 kHz", "11.4 kHz", "12.0 kHz", "12.4 kHz", "13.0 kHz", "13.4 kHz", "14.2 kHz", "14.8 kHz", "15.6 kHz", "16.4 kHz", "17.2 kHz", "18.2 kHz", "19.4 kHz", "20.0 kHz", "22.0 kHz", "24.0 kHz" }));
+        advancedpanel.add(p2_ch_bw, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 70, -1, 30));
+
+        jLabel54.setText("Default of 12.4 kHz");
+        advancedpanel.add(jLabel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 30, -1, -1));
 
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
@@ -5965,6 +5977,8 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -6105,6 +6119,7 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox p25_reinit;
     public javax.swing.JTextField p25_tone_vol;
     private javax.swing.JPanel p25rxconfigpanel;
+    public javax.swing.JComboBox<String> p2_ch_bw;
     public javax.swing.JCheckBox process_rid_alias;
     private javax.swing.JProgressBar progbar;
     private javax.swing.JLabel progress_label;
