@@ -1366,8 +1366,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202105161801");
-      release_date.setText("Release: 2021-05-16 23:20");
+      fw_ver.setText("Latest Avail: FW Date: 202105170555");
+      release_date.setText("Release: 2021-05-17 05:55");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4595,7 +4595,7 @@ long status_time;
         p2_ch_bw.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10.0 kHz", "10.4 kHz", "10.6 kHz", "11.0 kHz", "11.4 kHz", "12.0 kHz", "12.4 kHz", "13.0 kHz", "13.4 kHz", "14.2 kHz", "14.8 kHz", "15.6 kHz", "16.4 kHz", "17.2 kHz", "18.2 kHz", "19.4 kHz", "20.0 kHz", "22.0 kHz", "24.0 kHz" }));
         advancedpanel.add(p2_ch_bw, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 120, -1, 30));
 
-        jLabel54.setText("Default of 12.4 kHz");
+        jLabel54.setText("Default of 15.6 kHz");
         advancedpanel.add(jLabel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 80, -1, -1));
 
         jLabel55.setText("For P25 P2, the best bw setting is likely to be in the range 15.6 kHz - 18.2 kHz");
