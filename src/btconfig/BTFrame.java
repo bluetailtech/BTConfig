@@ -1366,8 +1366,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202105161318");
-      release_date.setText("Release: 2021-05-16 13:18");
+      fw_ver.setText("Latest Avail: FW Date: 202105161801");
+      release_date.setText("Release: 2021-05-16 18:01");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4475,6 +4475,7 @@ long status_time;
         advancedpanel.add(duid_enh, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, -1, -1));
 
         freq_correct_on_voice.setText("Correct Frequency On Trunked Voice Channels (default off)");
+        freq_correct_on_voice.setEnabled(false);
         freq_correct_on_voice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 freq_correct_on_voiceActionPerformed(evt);
