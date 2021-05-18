@@ -522,6 +522,11 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           if(en_tg_pri_int==1) parent.allow_tg_pri_int.setSelected(true);
                             else parent.allow_tg_pri_int.setSelected(false);
 
+                          int en_tg_int_tone = bb3.getInt(576);
+                          if(en_tg_int_tone==1) parent.en_tg_int_tone.setSelected(true);
+                            else parent.en_tg_int_tone.setSelected(false);
+
+
                           if(duid_enh==1) parent.duid_enh.setSelected(true);
                             else parent.duid_enh.setSelected(false);
 
@@ -1297,6 +1302,16 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           b = parent.allow_tg_pri_int.isSelected();
                           if(b) cmd = "en_tg_pri_int 1\r\n";
                             else cmd = "en_tg_pri_int 0\r\n"; 
+
+                          result=new byte[64];
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          SLEEP(10);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
+                          b = parent.en_tg_int_tone.isSelected();
+                          if(b) cmd = "en_tg_int_tone 1\r\n";
+                            else cmd = "en_tg_int_tone 0\r\n"; 
 
                           result=new byte[64];
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);

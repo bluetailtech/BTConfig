@@ -1366,8 +1366,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202105171846");
-      release_date.setText("Release: 2021-05-17 19:14");
+      fw_ver.setText("Latest Avail: FW Date: 202105180611");
+      release_date.setText("Release: 2021-05-18 06:11");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2878,6 +2878,7 @@ long status_time;
         jLabel54 = new javax.swing.JLabel();
         jLabel55 = new javax.swing.JLabel();
         jLabel56 = new javax.swing.JLabel();
+        en_tg_int_tone = new javax.swing.JCheckBox();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
@@ -4503,7 +4504,7 @@ long status_time;
                 adv_write_configActionPerformed(evt);
             }
         });
-        advancedpanel.add(adv_write_config, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 430, -1, -1));
+        advancedpanel.add(adv_write_config, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 460, -1, -1));
 
         wacn_en.setText("Include The WACN field in talk group lookup");
         wacn_en.addActionListener(new java.awt.event.ActionListener() {
@@ -4572,7 +4573,7 @@ long status_time;
                 en_visualsActionPerformed(evt);
             }
         });
-        advancedpanel.add(en_visuals, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, -1, -1));
+        advancedpanel.add(en_visuals, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, -1, -1));
 
         process_rid_alias.setSelected(true);
         process_rid_alias.setText("Process RID / Alias (no need to write config)");
@@ -4581,7 +4582,7 @@ long status_time;
                 process_rid_aliasActionPerformed(evt);
             }
         });
-        advancedpanel.add(process_rid_alias, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, -1, -1));
+        advancedpanel.add(process_rid_alias, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 440, -1, -1));
 
         p1_ch_bw.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10.0 kHz", "10.4 kHz", "10.6 kHz", "11.0 kHz", "11.4 kHz", "12.0 kHz", "12.4 kHz", "13.0 kHz", "13.4 kHz", "14.2 kHz", "14.8 kHz", "15.6 kHz", "16.4 kHz", "17.2 kHz", "18.2 kHz", "19.4 kHz", "20.0 kHz", "22.0 kHz", "24.0 kHz" }));
         advancedpanel.add(p1_ch_bw, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 70, -1, 30));
@@ -4606,6 +4607,10 @@ long status_time;
 
         jLabel56.setText("For P25 P1, the best bw setting is likely to be in the range 12.4 kHz - 15.6 kHz");
         advancedpanel.add(jLabel56, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 170, -1, -1));
+
+        en_tg_int_tone.setSelected(true);
+        en_tg_int_tone.setText("Enable 440 Hz tone on Talk Group priority interrupt event");
+        advancedpanel.add(en_tg_int_tone, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, -1, -1));
 
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
@@ -5897,6 +5902,7 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox en_bluetooth_cb;
     public javax.swing.JCheckBox en_encout;
     public javax.swing.JCheckBox en_p2_tones;
+    public javax.swing.JCheckBox en_tg_int_tone;
     public javax.swing.JCheckBox en_visuals;
     public javax.swing.JCheckBox en_zero_rid;
     public javax.swing.JCheckBox enable_audio;
