@@ -74,10 +74,10 @@ BTFrame parent;
   public void update_audio_rate() {
     try {
       audio_srate = new Integer( parent.audio_rate.getText() ).intValue();
-      //if(audio_srate < 40000) {
+      if(audio_srate < 40000) {
         audio_srate = 48000;
         parent.audio_rate.setText(new Integer(audio_srate).toString() );
-      //}
+      }
 
       dev_changed();
       parent.setStatus("Audio Sample Rate updated");

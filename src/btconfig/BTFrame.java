@@ -1366,8 +1366,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202105170555");
-      release_date.setText("Release: 2021-05-17 12:17");
+      fw_ver.setText("Latest Avail: FW Date: 202105171846");
+      release_date.setText("Release: 2021-05-17 19:14");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3757,7 +3757,6 @@ long status_time;
         jLabel9.setText("Audio Playback Rate");
         jPanel50.add(jLabel9);
 
-        audio_rate.setEditable(false);
         audio_rate.setColumns(8);
         audio_rate.setText("48000");
         jPanel50.add(audio_rate);
@@ -3771,7 +3770,6 @@ long status_time;
         jPanel11.add(jPanel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 290, 50));
 
         apply_audio_rate.setText("Apply Rate");
-        apply_audio_rate.setEnabled(false);
         apply_audio_rate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 apply_audio_rateActionPerformed(evt);
@@ -4603,7 +4601,7 @@ long status_time;
         jLabel54.setText("Default of 15.6 kHz");
         advancedpanel.add(jLabel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 80, -1, -1));
 
-        jLabel55.setText("For P25 P2, the best bw setting is likely to be in the range 15.6 kHz - 18.2 kHz");
+        jLabel55.setText("For P25 P2, the best bw setting is likely to be in the range 12.4 kHz - 15.6 kHz");
         advancedpanel.add(jLabel55, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 200, -1, -1));
 
         jLabel56.setText("For P25 P1, the best bw setting is likely to be in the range 12.4 kHz - 15.6 kHz");
