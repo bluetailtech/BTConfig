@@ -1366,8 +1366,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202105180611");
-      release_date.setText("Release: 2021-05-18 06:11");
+      fw_ver.setText("Latest Avail: FW Date: 202106021518");
+      release_date.setText("Release: 2021-06-02 15:18");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4208,7 +4208,7 @@ long status_time;
 
         jPanel6.add(jPanel51);
 
-        follow_tg.setText("Follow TG");
+        follow_tg.setText("(Un)Follow TG");
         follow_tg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 follow_tgActionPerformed(evt);

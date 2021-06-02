@@ -2720,7 +2720,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JButton" name="follow_tg">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Follow TG"/>
+                        <Property name="text" type="java.lang.String" value="(Un)Follow TG"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="follow_tgActionPerformed"/>
