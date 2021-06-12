@@ -1366,8 +1366,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202106021518");
-      release_date.setText("Release: 2021-06-02 15:18");
+      fw_ver.setText("Latest Avail: FW Date: 202106091141");
+      release_date.setText("Release: 2021-06-09 11:41");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2861,7 +2861,6 @@ long status_time;
         wacn_en = new javax.swing.JCheckBox();
         en_encout = new javax.swing.JCheckBox();
         en_p2_tones = new javax.swing.JCheckBox();
-        p25_reinit = new javax.swing.JCheckBox();
         p25_tone_vol = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -4521,10 +4520,6 @@ long status_time;
         en_p2_tones.setText("Enable Phase II Tone Output");
         advancedpanel.add(en_p2_tones, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, -1, -1));
 
-        p25_reinit.setSelected(true);
-        p25_reinit.setText("P25 Mode: Re-init P25RX after 3 minutes of not receiving a P25 sync word");
-        advancedpanel.add(p25_reinit, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, -1, -1));
-
         p25_tone_vol.setColumns(5);
         p25_tone_vol.setText("1.0");
         p25_tone_vol.addActionListener(new java.awt.event.ActionListener() {
@@ -6136,7 +6131,6 @@ public void SLEEP(long val) {
     public javax.swing.JComboBox<String> op_mode;
     private javax.swing.JLabel os_string;
     public javax.swing.JComboBox<String> p1_ch_bw;
-    public javax.swing.JCheckBox p25_reinit;
     public javax.swing.JTextField p25_tone_vol;
     private javax.swing.JPanel p25rxconfigpanel;
     public javax.swing.JComboBox<String> p2_ch_bw;
