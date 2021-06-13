@@ -2261,6 +2261,9 @@
                         <Property name="columns" type="int" value="6"/>
                         <Property name="text" type="java.lang.String" value="99352"/>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JButton" name="freq_search">
                       <Properties>
@@ -2287,6 +2290,9 @@
                         <Property name="columns" type="int" value="16"/>
                         <Property name="text" type="java.lang.String" value="Richland"/>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel17">
                       <Properties>
@@ -2298,6 +2304,9 @@
                         <Property name="columns" type="int" value="3"/>
                         <Property name="text" type="java.lang.String" value="Wa"/>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JButton" name="freq_search2">
                       <Properties>

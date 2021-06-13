@@ -1366,8 +1366,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202106091141");
-      release_date.setText("Release: 2021-06-09 11:41");
+      fw_ver.setText("Latest Avail: FW Date: 202106130711");
+      release_date.setText("Release: 2021-06-13 07:11");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4923,6 +4923,18 @@ long status_time;
         cmd= new String("logging 0\r\n");
         serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
       }
+          try {
+            prefs.put("sys_zipcode", zipcode.getText());
+          } catch(Exception e) {
+          }
+          try {
+            prefs.put("sys_city", city.getText());
+          } catch(Exception e) {
+          }
+          try {
+            prefs.put("sys_state", state.getText());
+          } catch(Exception e) {
+          }
 
       save_position();
       if(alias!=null) alias.save_alias();
@@ -5594,6 +5606,9 @@ public void update_prefs() {
 
       system_alias.setText( prefs.get("system_alias", "") );
 
+      zipcode.setText( prefs.get("sys_zipcode", "99352") );
+      city.setText( prefs.get("sys_city", "Richland") );
+      state.setText( prefs.get("sys_state", "Wa") );
 
       en_zero_rid.setSelected( prefs.getBoolean("en_zero_rid", true) );
 
@@ -5852,7 +5867,7 @@ public void SLEEP(long val) {
     private javax.swing.JButton button_write_config;
     private javax.swing.JPanel buttong_config;
     private javax.swing.JButton check_firmware;
-    private javax.swing.JTextField city;
+    public javax.swing.JTextField city;
     private javax.swing.JPanel consolePanel;
     private javax.swing.JPanel const_panel;
     public javax.swing.JRadioButton controlchannel;
@@ -6170,7 +6185,7 @@ public void SLEEP(long val) {
     public javax.swing.JTextField skip_tg_to;
     private javax.swing.JToggleButton sq_indicator;
     private javax.swing.JLabel sq_lb;
-    private javax.swing.JTextField state;
+    public javax.swing.JTextField state;
     private javax.swing.JLabel status;
     private javax.swing.JPanel status_panel;
     private javax.swing.JLabel sysid;
@@ -6193,6 +6208,6 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox wacn_en;
     public javax.swing.JButton write_cc;
     private javax.swing.JButton write_config;
-    private javax.swing.JTextField zipcode;
+    public javax.swing.JTextField zipcode;
     // End of variables declaration//GEN-END:variables
 }
