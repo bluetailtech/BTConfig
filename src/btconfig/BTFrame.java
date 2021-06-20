@@ -1366,8 +1366,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202106130711");
-      release_date.setText("Release: 2021-06-13 07:11");
+      fw_ver.setText("Latest Avail: FW Date: 202106171518");
+      release_date.setText("Release: 2021-06-19 19:35");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1522,32 +1522,7 @@ long status_time;
         {
           public void actionPerformed(java.awt.event.ActionEvent deleteEvent)
           {
-            //if (jTable1.getSelectedRow() != -1) {
-             // tableModel.removeRow(table.convertRowIndexToModel(table.getSelectedRow()));
-            //}
-            //if(evt.getKeyChar()==java.awt.event.KeyEvent.VK_DELETE) {
-              //System.out.println(evt);
-              int[] rows = jTable1.getSelectedRows();
-              if(rows.length>0) {
-                for(int i=0;i<rows.length;i++) {
-                  jTable1.getModel().setValueAt(null,jTable1.convertRowIndexToModel(rows[i]),0);
-                  jTable1.getModel().setValueAt(null,jTable1.convertRowIndexToModel(rows[i]),1);
-                  jTable1.getModel().setValueAt(null,jTable1.convertRowIndexToModel(rows[i]),2);
-                  jTable1.getModel().setValueAt(null,jTable1.convertRowIndexToModel(rows[i]),3);
-                  jTable1.getModel().setValueAt(null,jTable1.convertRowIndexToModel(rows[i]),4);
-                  jTable1.getModel().setValueAt(null,jTable1.convertRowIndexToModel(rows[i]),5);
-                  jTable1.getModel().setValueAt(null,jTable1.convertRowIndexToModel(rows[i]),6);
-                  //System.out.println("row "+i);
-                } 
-              }
-            //}
-
-            jTable1.getRowSorter().toggleSortOrder(0);
-            jTable1.getRowSorter().toggleSortOrder(0);
-
-            do_update_talkgroups=1;
-            do_read_talkgroups=1;
-            jTable1.setRowSelectionInterval(0,0);
+              delete_talkgroup_rows();
           }
         });
 
@@ -1561,34 +1536,7 @@ long status_time;
         {
           public void actionPerformed(java.awt.event.ActionEvent deleteEvent)
           {
-              int[] rows = freq_table.getSelectedRows();
-              int flash_recs=0;
-
-              if(did_freq_tests==1) return;
-
-              for(int i=0;i<250;i++) {
-                String str1 = (String) freq_table.getModel().getValueAt(i, 6);
-                if(str1!=null && str1.equals("X") ) {
-                  flash_recs++;
-                }
-              }
-
-              if(rows.length>0) {
-                for(int i=0;i<rows.length;i++) {
-                  freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),0);
-                  freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),1);
-                  freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),2);
-                  freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),3);
-                  freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),4);
-                  freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),5);
-                  freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),6);
-                  freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),7);
-                  freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),8);
-                  freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),9);
-                  freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),10);
-                } 
-              }
-              if(flash_recs>0) do_write_roaming_flash_only=1;
+              delete_roaming_rows();
           }
         });
 
@@ -1599,6 +1547,61 @@ long status_time;
       utimer.schedule( new updateTask(), 100, 1);
       setSize(1054,750);
     }
+  //////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////
+  void delete_roaming_rows() {
+      int[] rows = freq_table.getSelectedRows();
+      int flash_recs=0;
+
+      if(did_freq_tests==1) return;
+
+      for(int i=0;i<250;i++) {
+        String str1 = (String) freq_table.getModel().getValueAt(i, 6);
+        if(str1!=null && str1.equals("X") ) {
+          flash_recs++;
+        }
+      }
+
+      if(rows.length>0) {
+        for(int i=0;i<rows.length;i++) {
+          freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),0);
+          freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),1);
+          freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),2);
+          freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),3);
+          freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),4);
+          freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),5);
+          freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),6);
+          freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),7);
+          freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),8);
+          freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),9);
+          freq_table.getModel().setValueAt(null,freq_table.convertRowIndexToModel(rows[i]),10);
+        } 
+      }
+      if(flash_recs>0) do_write_roaming_flash_only=1;
+  }
+  //////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////
+  void delete_talkgroup_rows() {
+      int[] rows = jTable1.getSelectedRows();
+      if(rows.length>0) {
+        for(int i=0;i<rows.length;i++) {
+          jTable1.getModel().setValueAt(null,jTable1.convertRowIndexToModel(rows[i]),0);
+          jTable1.getModel().setValueAt(null,jTable1.convertRowIndexToModel(rows[i]),1);
+          jTable1.getModel().setValueAt(null,jTable1.convertRowIndexToModel(rows[i]),2);
+          jTable1.getModel().setValueAt(null,jTable1.convertRowIndexToModel(rows[i]),3);
+          jTable1.getModel().setValueAt(null,jTable1.convertRowIndexToModel(rows[i]),4);
+          jTable1.getModel().setValueAt(null,jTable1.convertRowIndexToModel(rows[i]),5);
+          jTable1.getModel().setValueAt(null,jTable1.convertRowIndexToModel(rows[i]),6);
+        } 
+      }
+
+    jTable1.getRowSorter().toggleSortOrder(0);
+    jTable1.getRowSorter().toggleSortOrder(0);
+
+    do_update_talkgroups=1;
+    do_read_talkgroups=1;
+    jTable1.setRowSelectionInterval(0,0);
+  }
 
   //////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////
@@ -2776,7 +2779,7 @@ long status_time;
         restore_roam = new javax.swing.JButton();
         backup_roam = new javax.swing.JButton();
         erase_roaming = new javax.swing.JButton();
-        jLabel23 = new javax.swing.JLabel();
+        delete_roaming = new javax.swing.JButton();
         talkgroup_panel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -2787,6 +2790,7 @@ long status_time;
         read_tg = new javax.swing.JButton();
         send_tg = new javax.swing.JButton();
         backup_tg = new javax.swing.JButton();
+        tg_edit_del = new javax.swing.JButton();
         jPanel23 = new javax.swing.JPanel();
         restore_tg = new javax.swing.JButton();
         import_csv = new javax.swing.JButton();
@@ -4005,8 +4009,13 @@ long status_time;
         });
         jPanel20.add(erase_roaming);
 
-        jLabel23.setText("   Use DEL key to delete selected records from flash.");
-        jPanel20.add(jLabel23);
+        delete_roaming.setText("Delete Selected Rows");
+        delete_roaming.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delete_roamingActionPerformed(evt);
+            }
+        });
+        jPanel20.add(delete_roaming);
 
         jPanel19.add(jPanel20);
 
@@ -4087,6 +4096,14 @@ long status_time;
             }
         });
         jPanel3.add(backup_tg);
+
+        tg_edit_del.setText("DEL Selected");
+        tg_edit_del.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tg_edit_delActionPerformed(evt);
+            }
+        });
+        jPanel3.add(tg_edit_del);
 
         jPanel22.add(jPanel3);
 
@@ -5388,6 +5405,14 @@ long status_time;
       if(prefs!=null) prefs.putBoolean("process_rid_alias", process_rid_alias.isSelected());
     }//GEN-LAST:event_process_rid_aliasActionPerformed
 
+    private void delete_roamingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_roamingActionPerformed
+      delete_roaming_rows();
+    }//GEN-LAST:event_delete_roamingActionPerformed
+
+    private void tg_edit_delActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tg_edit_delActionPerformed
+      delete_talkgroup_rows();
+    }//GEN-LAST:event_tg_edit_delActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5872,6 +5897,7 @@ public void SLEEP(long val) {
     private javax.swing.JPanel const_panel;
     public javax.swing.JRadioButton controlchannel;
     public javax.swing.JRadioButton conventionalchannel;
+    private javax.swing.JButton delete_roaming;
     private javax.swing.JPanel desc_panel;
     public javax.swing.JCheckBox disable_encrypted;
     private javax.swing.JButton disable_table_rows;
@@ -5972,7 +5998,6 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
@@ -6192,6 +6217,7 @@ public void SLEEP(long val) {
     public javax.swing.JTextField system_alias;
     private javax.swing.JPanel talkgroup_panel;
     public javax.swing.JButton testfreqs;
+    private javax.swing.JButton tg_edit_del;
     private javax.swing.JToggleButton tg_indicator;
     private javax.swing.JLabel tg_lb;
     private javax.swing.JPanel tiny_const;

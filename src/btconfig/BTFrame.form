@@ -2422,10 +2422,13 @@
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                       </AuxValues>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel23">
+                    <Component class="javax.swing.JButton" name="delete_roaming">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="   Use DEL key to delete selected records from flash."/>
+                        <Property name="text" type="java.lang.String" value="Delete Selected Rows"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="delete_roamingActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -2533,6 +2536,14 @@
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backup_tgActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="tg_edit_del">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="DEL Selected"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tg_edit_delActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
