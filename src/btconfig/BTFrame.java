@@ -1366,8 +1366,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202106171518");
-      release_date.setText("Release: 2021-06-19 19:35");
+      fw_ver.setText("Latest Avail: FW Date: 202106240027");
+      release_date.setText("Release: 2021-07-02 11:09");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5797,7 +5797,7 @@ private void resizeColumns3() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 public void SLEEP(long val) {
   try {
-    if(is_windows==1) {
+    if(is_windows==1 || is_mac_osx==1) {
       Thread.sleep(val);
     }
     else {

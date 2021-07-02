@@ -418,9 +418,15 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
 
                 serial_port.writeBytes( out_buffer, 16+32, 0);
 
-                if(offset==0) {
+                if(offset%131072==0) {
                   try {
                     SLEEP(1200);
+                  } catch(Exception e) {
+                  }
+                }
+                else {
+                  try {
+                    SLEEP(5);
                   } catch(Exception e) {
                   }
                 }
@@ -703,9 +709,15 @@ public void import_DSD(BTFrame parent, LineNumberReader lnr, SerialPort serial_p
 
                 serial_port.writeBytes( out_buffer, 16+32, 0);
 
-                if(offset==0) {
+                if(offset%131072==0) {
                   try {
                     SLEEP(1200);
+                  } catch(Exception e) {
+                  }
+                }
+                else {
+                  try {
+                    SLEEP(5);
                   } catch(Exception e) {
                   }
                 }
@@ -876,9 +888,15 @@ public void restore_talkgroups(BTFrame parent, BufferedInputStream bis, SerialPo
 
                 serial_port.writeBytes( out_buffer, 16+32, 0);
 
-                if(offset==0) {
+                if(offset%131072==0) {
                   try {
                     SLEEP(1200);
+                  } catch(Exception e) {
+                  }
+                }
+                else {
+                  try {
+                    SLEEP(5);
                   } catch(Exception e) {
                   }
                 }
@@ -1174,9 +1192,15 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
 
                 serial_port.writeBytes( out_buffer, 16+32, 0);
 
-                if(offset==0) {
+                if(offset%131072==0) {
                   try {
                     SLEEP(1200);
+                  } catch(Exception e) {
+                  }
+                }
+                else {
+                  try {
+                    SLEEP(5);
                   } catch(Exception e) {
                   }
                 }
@@ -1431,9 +1455,15 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
               int rlen=0;
               while(rlen!=48) {
                 serial_port.writeBytes( out_buffer, 48, 0); //16 + data len=0
-                if(offset==0) {
+                if(offset%131072==0) {
                   try {
                     SLEEP(1200);
+                  } catch(Exception e) {
+                  }
+                }
+                else {
+                  try {
+                    SLEEP(5);
                   } catch(Exception e) {
                   }
                 }
