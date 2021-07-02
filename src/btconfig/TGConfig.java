@@ -424,9 +424,9 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
                   } catch(Exception e) {
                   }
                 }
-                else {
+                else if(parent.is_mac_osx==1) {
                   try {
-                    SLEEP(5);
+                    SLEEP(2);
                   } catch(Exception e) {
                   }
                 }
@@ -715,9 +715,9 @@ public void import_DSD(BTFrame parent, LineNumberReader lnr, SerialPort serial_p
                   } catch(Exception e) {
                   }
                 }
-                else {
+                else if(parent.is_mac_osx==1) {
                   try {
-                    SLEEP(5);
+                    SLEEP(2);
                   } catch(Exception e) {
                   }
                 }
@@ -894,9 +894,9 @@ public void restore_talkgroups(BTFrame parent, BufferedInputStream bis, SerialPo
                   } catch(Exception e) {
                   }
                 }
-                else {
+                else if(parent.is_mac_osx==1) {
                   try {
-                    SLEEP(5);
+                    SLEEP(2);
                   } catch(Exception e) {
                   }
                 }
@@ -1198,9 +1198,9 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
                   } catch(Exception e) {
                   }
                 }
-                else {
+                else if(parent.is_mac_osx==1) {
                   try {
-                    SLEEP(5);
+                    SLEEP(2);
                   } catch(Exception e) {
                   }
                 }
@@ -1461,11 +1461,11 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                   } catch(Exception e) {
                   }
                 }
-                else {
-                  try {
-                    SLEEP(5);
-                  } catch(Exception e) {
-                  }
+                else if(parent.is_mac_osx==1) {
+                  //try {
+                   // SLEEP(5);
+                  //} catch(Exception e) {
+                  //}
                 }
 
                   try {
