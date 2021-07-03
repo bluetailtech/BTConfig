@@ -243,6 +243,7 @@ class updateTask extends java.util.TimerTask
 
             cmd= new String("en_voice_send 1\r\n");
             serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+            SLEEP(600);
             cmd= new String("logging 0\r\n");
             serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
 
@@ -289,8 +290,10 @@ class updateTask extends java.util.TimerTask
 
 
 
+              SLEEP(100);
               cmd= new String("logging 0\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+              SLEEP(100);
               cmd= new String("en_voice_send 1\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
             }
@@ -334,8 +337,10 @@ class updateTask extends java.util.TimerTask
               if(tg_config==null) tg_config = new TGConfig(parent);
               alias.import_alias_csv(parent, lnr);
 
+              SLEEP(100);
               cmd= new String("logging 0\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+              SLEEP(100);
               cmd= new String("en_voice_send 1\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
             }
@@ -380,8 +385,10 @@ class updateTask extends java.util.TimerTask
               tg_config.import_talkgroups_csv(parent, lnr, serial_port);
               do_read_talkgroups=1;
 
+              SLEEP(100);
               cmd= new String("logging 0\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+              SLEEP(100);
               cmd= new String("en_voice_send 1\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
             }
@@ -426,8 +433,10 @@ class updateTask extends java.util.TimerTask
               tg_config.restore_talkgroups(parent, bis, serial_port);
               do_read_talkgroups=1;
 
+              SLEEP(100);
               cmd= new String("logging 0\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+              SLEEP(100);
               cmd= new String("en_voice_send 1\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
             }
@@ -508,6 +517,7 @@ class updateTask extends java.util.TimerTask
             setProgress(-1);
             //firmware_checked=1;
             //do_update_firmware=0;
+              SLEEP(100);
               cmd= new String("logging 0\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
           }
@@ -522,6 +532,7 @@ class updateTask extends java.util.TimerTask
                 setProgress(-1);
                 do_backup_roaming=0;
 
+              SLEEP(100);
               cmd= new String("logging 0\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
               cmd= new String("en_voice_send 1\r\n");
@@ -537,6 +548,7 @@ class updateTask extends java.util.TimerTask
                 setProgress(-1);
                 do_erase_roaming=0;
 
+              SLEEP(100);
               cmd= new String("logging 0\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
               cmd= new String("en_voice_send 1\r\n");
@@ -552,6 +564,7 @@ class updateTask extends java.util.TimerTask
                 setProgress(-1);
                 do_write_roaming_flash_only=0;
 
+              SLEEP(100);
               cmd= new String("logging 0\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
               cmd= new String("en_voice_send 1\r\n");
@@ -567,6 +580,7 @@ class updateTask extends java.util.TimerTask
                 setProgress(-1);
                 do_append_roaming=0;
 
+              SLEEP(100);
               cmd= new String("logging 0\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
               cmd= new String("en_voice_send 1\r\n");
@@ -582,6 +596,7 @@ class updateTask extends java.util.TimerTask
                 setProgress(-1);
                 do_update_roaming=0;
 
+              SLEEP(100);
               cmd= new String("logging 0\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
               cmd= new String("en_voice_send 1\r\n");
@@ -596,8 +611,10 @@ class updateTask extends java.util.TimerTask
           tg_config.send_talkgroups(parent, serial_port);
           setProgress(-1);
           do_update_talkgroups=0;
+              SLEEP(100);
               cmd= new String("logging 0\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+              SLEEP(100);
               cmd= new String("en_voice_send 1\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
         }
@@ -616,8 +633,10 @@ class updateTask extends java.util.TimerTask
             //}
 
           if(do_read_roaming==0) {
+              SLEEP(100);
               cmd= new String("en_voice_send 1\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+              SLEEP(100);
               cmd= new String("logging 0\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
           }
@@ -632,8 +651,10 @@ class updateTask extends java.util.TimerTask
           setProgress(-1);
 
           if(do_read_talkgroups==0) {
+              SLEEP(100);
               cmd= new String("en_voice_send 1\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+              SLEEP(100);
               cmd= new String("logging 0\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
           }
@@ -760,6 +781,7 @@ class updateTask extends java.util.TimerTask
         else if(is_connected==1 && do_toggle_record==1 && skip_bytes==0) {
           do_toggle_record=0;
 
+          SLEEP(100);
           String cmd= new String("logging 0\r\n");
           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
 
@@ -1367,7 +1389,7 @@ long status_time;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202106240027");
-      release_date.setText("Release: 2021-07-02 11:09");
+      release_date.setText("Release: 2021-07-02 18:22");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4935,8 +4957,10 @@ long status_time;
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
       if(serial_port!=null) {
+          SLEEP(100);
         String cmd= new String("en_voice_send 0\r\n");
         serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+          SLEEP(100);
         cmd= new String("logging 0\r\n");
         serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
       }
@@ -5797,7 +5821,7 @@ private void resizeColumns3() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 public void SLEEP(long val) {
   try {
-    if(is_windows==1 || is_mac_osx==1) {
+    if(is_windows==1 ) {
       Thread.sleep(val);
     }
     else {
