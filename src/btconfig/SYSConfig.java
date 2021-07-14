@@ -263,7 +263,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
               bb.putInt( (int) Long.parseLong("32", 10) );  //data len  to return
 
 
-              byte[] input_buffer = new byte[48];
+              byte[] input_buffer = new byte[32000];
               rlen=0;
               while(rlen!=48) {
                 serial_port.writeBytes( out_buffer, 48, 0); //16 + data len=0
@@ -279,7 +279,12 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                   }
 
                 rlen=serial_port.readBytes( input_buffer, 48 );
-                if(rlen==48) break;
+                if(rlen==48) {
+                  break;
+                }
+                else {
+                  serial_port.readBytes( input_buffer, serial_port.bytesAvailable() );
+                }
               }
 
               ByteBuffer bb2 = ByteBuffer.wrap(input_buffer);
