@@ -522,6 +522,10 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           int freq_correct_on_voice = bb3.getInt(160);
                           int add_tdu_silence = bb3.getInt(164);
                           int enc_mode = bb3.getInt(564);
+                          int clk480 = bb3.getInt(580);
+
+                          if(clk480==1) parent.clock480.setSelected(true);
+                            else parent.clock480.setSelected(false);
 
                           int en_tg_pri_int = bb3.getInt(568);
                           if(en_tg_pri_int==1) parent.allow_tg_pri_int.setSelected(true);
@@ -1234,6 +1238,19 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           SLEEP(50);
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
+
+
+                          result=new byte[64];
+
+                          b = parent.clock480.isSelected();
+                          if(b) cmd = "clk_480 1\r\n";
+                            else cmd = "clk_480 0\r\n"; 
+
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          SLEEP(50);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
 
 
                           result=new byte[64];

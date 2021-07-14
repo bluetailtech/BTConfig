@@ -1388,8 +1388,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202106240027");
-      release_date.setText("Release: 2021-07-02 18:22");
+      fw_ver.setText("Latest Avail: FW Date: 202107141617");
+      release_date.setText("Release: 2021-07-14 16:17");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2904,6 +2904,7 @@ long status_time;
         jLabel55 = new javax.swing.JLabel();
         jLabel56 = new javax.swing.JLabel();
         en_tg_int_tone = new javax.swing.JCheckBox();
+        clock480 = new javax.swing.JCheckBox();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
@@ -4646,6 +4647,9 @@ long status_time;
         en_tg_int_tone.setText("Enable 440 Hz tone on Talk Group priority interrupt event");
         advancedpanel.add(en_tg_int_tone, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, -1, -1));
 
+        clock480.setText("Clock MCU to 480 MHz   (default clock speed is 400 MHz)   May cause issues on 'Y' variant devices. Use 'mcu_ver' command to check if 'Y' or 'V'.");
+        advancedpanel.add(clock480, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, -1, -1));
+
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
         signalinsightpanel.setLayout(new javax.swing.BoxLayout(signalinsightpanel, javax.swing.BoxLayout.X_AXIS));
@@ -5917,6 +5921,7 @@ public void SLEEP(long val) {
     private javax.swing.JPanel buttong_config;
     private javax.swing.JButton check_firmware;
     public javax.swing.JTextField city;
+    public javax.swing.JCheckBox clock480;
     private javax.swing.JPanel consolePanel;
     private javax.swing.JPanel const_panel;
     public javax.swing.JRadioButton controlchannel;

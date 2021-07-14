@@ -3713,6 +3713,19 @@
                 </Constraint>
               </Constraints>
             </Component>
+            <Component class="javax.swing.JCheckBox" name="clock480">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Clock MCU to 480 MHz   (default clock speed is 400 MHz)   May cause issues on &apos;Y&apos; variant devices. Use &apos;mcu_ver&apos; command to check if &apos;Y&apos; or &apos;V&apos;."/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+              </AuxValues>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                  <AbsoluteConstraints x="50" y="260" width="-1" height="-1"/>
+                </Constraint>
+              </Constraints>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="signalinsightpanel">
