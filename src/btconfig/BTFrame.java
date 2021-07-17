@@ -721,6 +721,39 @@ class updateTask extends java.util.TimerTask
               rlen=serial_port.readBytes( result, 64);
               //System.out.println("result: "+new String(result) );
 
+              for(int i=0;i<8;i++) {
+
+                  result=new byte[64];
+                  String mcmd = "mcu_ver_t\r\n";  
+                  serial_port.writeBytes( mcmd.getBytes(), mcmd.length(), 0);
+                  SLEEP(100);
+                  rlen=serial_port.readBytes( result, 64);
+
+
+                  if( rlen>=3) { 
+                    String r = new String(result).trim();
+                    byte[] rb = r.getBytes();
+                    if(rb[0]=='V') {
+                      mcu_ver_t.setText("MCU VER 'V'"); 
+                      break;
+                    }
+                    if(rb[0]=='Y') {
+                      mcu_ver_t.setText("MCU VER 'Y'"); 
+                      break;
+                    }
+                    if(rb[0]=='U') {
+                      //unknown, assume ok
+                      //mcu_ver_t.setText("MCU 'U'"); 
+                      break;
+                    }
+                  }
+                  else {
+                    result = new byte[4096];
+                    rlen=serial_port.readBytes( result, 4096);
+                    SLEEP(50);
+                  }
+
+              }
 
               for(int i=0;i<15;i++) {
 
@@ -1388,8 +1421,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202107170829");
-      release_date.setText("Release: 2021-07-17 11:44");
+      fw_ver.setText("Latest Avail: FW Date: 202107171200");
+      release_date.setText("Release: 2021-07-17 12:00");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2630,6 +2663,7 @@ long status_time;
         os_string = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         system_alias = new javax.swing.JTextField();
+        mcu_ver_t = new javax.swing.JLabel();
         jPanel25 = new javax.swing.JPanel();
         jPanel26 = new javax.swing.JPanel();
         jPanel29 = new javax.swing.JPanel();
@@ -3267,6 +3301,9 @@ long status_time;
         jLabel11.setText("System Alias");
         p25rxconfigpanel.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, -1, -1));
         p25rxconfigpanel.add(system_alias, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 199, 350, 30));
+
+        mcu_ver_t.setText("MCU:");
+        p25rxconfigpanel.add(mcu_ver_t, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, -1, -1));
 
         jTabbedPane1.addTab("P25RX Configuration", p25rxconfigpanel);
 
@@ -6194,6 +6231,7 @@ public void SLEEP(long val) {
     private javax.swing.JPanel logpanel;
     public javax.swing.JLabel macid;
     public javax.swing.JComboBox<String> mcu_speed;
+    public javax.swing.JLabel mcu_ver_t;
     private javax.swing.JPanel meter_panel;
     private javax.swing.JToggleButton minimize;
     public javax.swing.JCheckBox mp3_separate_files;
