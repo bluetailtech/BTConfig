@@ -1388,8 +1388,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202107141617");
-      release_date.setText("Release: 2021-07-14 16:17");
+      fw_ver.setText("Latest Avail: FW Date: 202107170829");
+      release_date.setText("Release: 2021-07-17 08:29");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2904,7 +2904,8 @@ long status_time;
         jLabel55 = new javax.swing.JLabel();
         jLabel56 = new javax.swing.JLabel();
         en_tg_int_tone = new javax.swing.JCheckBox();
-        clock480 = new javax.swing.JCheckBox();
+        jLabel23 = new javax.swing.JLabel();
+        mcu_speed = new javax.swing.JComboBox<>();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
@@ -4543,7 +4544,7 @@ long status_time;
                 adv_write_configActionPerformed(evt);
             }
         });
-        advancedpanel.add(adv_write_config, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 460, -1, -1));
+        advancedpanel.add(adv_write_config, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 470, -1, -1));
 
         wacn_en.setText("Include The WACN field in talk group lookup");
         wacn_en.addActionListener(new java.awt.event.ActionListener() {
@@ -4582,7 +4583,7 @@ long status_time;
                 en_zero_ridActionPerformed(evt);
             }
         });
-        advancedpanel.add(en_zero_rid, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, -1, -1));
+        advancedpanel.add(en_zero_rid, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, -1, -1));
 
         enc_mode.setText("Return To Control Control Channel And Skip TG for 30 Sec If Encrypted");
         enc_mode.addActionListener(new java.awt.event.ActionListener() {
@@ -4590,7 +4591,7 @@ long status_time;
                 enc_modeActionPerformed(evt);
             }
         });
-        advancedpanel.add(enc_mode, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 320, -1, -1));
+        advancedpanel.add(enc_mode, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, -1, -1));
 
         allow_tg_pri_int.setSelected(true);
         allow_tg_pri_int.setText("Allow Talk Group Priority Interrupts");
@@ -4599,7 +4600,7 @@ long status_time;
                 allow_tg_pri_intActionPerformed(evt);
             }
         });
-        advancedpanel.add(allow_tg_pri_int, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, -1, -1));
+        advancedpanel.add(allow_tg_pri_int, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, -1, -1));
 
         en_visuals.setSelected(true);
         en_visuals.setText("Enable Visuals In Signal Insights Tab  (disable for system with over-taxed CPU) (no need to write config)");
@@ -4608,7 +4609,7 @@ long status_time;
                 en_visualsActionPerformed(evt);
             }
         });
-        advancedpanel.add(en_visuals, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, -1, -1));
+        advancedpanel.add(en_visuals, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 420, -1, -1));
 
         process_rid_alias.setSelected(true);
         process_rid_alias.setText("Process RID / Alias (no need to write config)");
@@ -4617,7 +4618,7 @@ long status_time;
                 process_rid_aliasActionPerformed(evt);
             }
         });
-        advancedpanel.add(process_rid_alias, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 440, -1, -1));
+        advancedpanel.add(process_rid_alias, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 450, -1, -1));
 
         p1_ch_bw.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10.0 kHz", "10.4 kHz", "10.6 kHz", "11.0 kHz", "11.4 kHz", "12.0 kHz", "12.4 kHz", "13.0 kHz", "13.4 kHz", "14.2 kHz", "14.8 kHz", "15.6 kHz", "16.4 kHz", "17.2 kHz", "18.2 kHz", "19.4 kHz", "20.0 kHz", "22.0 kHz", "24.0 kHz" }));
         advancedpanel.add(p1_ch_bw, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 70, -1, 30));
@@ -4645,10 +4646,13 @@ long status_time;
 
         en_tg_int_tone.setSelected(true);
         en_tg_int_tone.setText("Enable 440 Hz tone on Talk Group priority interrupt event");
-        advancedpanel.add(en_tg_int_tone, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, -1, -1));
+        advancedpanel.add(en_tg_int_tone, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, -1, -1));
 
-        clock480.setText("Clock MCU to 480 MHz   (default clock speed is 400 MHz)   May cause issues on 'Y' variant devices. Use 'mcu_ver' command to check if 'Y' or 'V'.");
-        advancedpanel.add(clock480, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, -1, -1));
+        jLabel23.setText(" System Clock Speed (default 400 MHz)  'Y' version devices guaranteed to 400 MHz.");
+        advancedpanel.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 265, -1, 20));
+
+        mcu_speed.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "400 MHz (default)", "408 MHz", "432 MHz", "440 MHz", "456 MHz", "480 MHz" }));
+        advancedpanel.add(mcu_speed, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 260, -1, -1));
 
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
@@ -5921,7 +5925,6 @@ public void SLEEP(long val) {
     private javax.swing.JPanel buttong_config;
     private javax.swing.JButton check_firmware;
     public javax.swing.JTextField city;
-    public javax.swing.JCheckBox clock480;
     private javax.swing.JPanel consolePanel;
     private javax.swing.JPanel const_panel;
     public javax.swing.JRadioButton controlchannel;
@@ -6027,6 +6030,7 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
@@ -6189,6 +6193,7 @@ public void SLEEP(long val) {
     private javax.swing.JPanel logo_panel;
     private javax.swing.JPanel logpanel;
     public javax.swing.JLabel macid;
+    public javax.swing.JComboBox<String> mcu_speed;
     private javax.swing.JPanel meter_panel;
     private javax.swing.JToggleButton minimize;
     public javax.swing.JCheckBox mp3_separate_files;
