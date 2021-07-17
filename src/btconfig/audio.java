@@ -420,6 +420,7 @@ BTFrame parent;
   public void playStop() {
 
 
+    /*
     Boolean isWindows = System.getProperty("os.name").startsWith("Windows");
 
     //if(!isWindows && !sourceDataLine.isRunning() && start_playing>0) sourceDataLine.start();
@@ -428,7 +429,9 @@ BTFrame parent;
       if(sourceDataLine.isOpen() && sourceDataLine.isRunning()) sourceDataLine.drain();
       if(sourceDataLine.isRunning()) sourceDataLine.stop();
     //}
+    */
 
+    audio_tick();
 
   }
   /////////////////////////////////////////////////////////////////////////////////
