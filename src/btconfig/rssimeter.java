@@ -64,7 +64,7 @@ public class rssimeter extends javax.swing.JPanel
 
         int list_screenRes = Toolkit.getDefaultToolkit().getScreenResolution();
         int list_fontSize = (int)Math.round(8.0 * list_screenRes / 72.0);
-        Font list_font = new Font("Arial", Font.PLAIN, list_fontSize);
+        Font list_font = new Font("Arial", Font.PLAIN, 12);
 
         setFont( list_font );
     }
