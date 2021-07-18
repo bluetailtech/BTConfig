@@ -1421,8 +1421,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202107171200");
-      release_date.setText("Release: 2021-07-17 12:00");
+      fw_ver.setText("Latest Avail: FW Date: 202107171706");
+      release_date.setText("Release: 2021-07-17 18:03");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2324,10 +2324,16 @@ long status_time;
 
             if(st1.contains("rssi:")) {
               String rssi = st.nextToken();
-              rssi = rssi.replace(","," ").trim();
-              rssim1.setValue( Integer.valueOf(rssi).intValue(),true );
-              sig_meter_timeout=20000;
-              if(l3.getText().contains("NO SIG")) l3.setText("");
+              if(rssi!=null) {
+                try {
+                  rssi = rssi.replace(","," ").trim();
+                  rssim1.setValue( Integer.valueOf(rssi).intValue(),true );
+                } catch(Exception e) {
+                  e.printStackTrace();
+                }
+                sig_meter_timeout=20000;
+                if(l3.getText().contains("NO SIG")) l3.setText("");
+              }
             }
 
 
