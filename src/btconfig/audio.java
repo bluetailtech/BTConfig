@@ -420,16 +420,9 @@ BTFrame parent;
   public void playStop() {
 
 
-    /*
-    Boolean isWindows = System.getProperty("os.name").startsWith("Windows");
-
-    //if(!isWindows && !sourceDataLine.isRunning() && start_playing>0) sourceDataLine.start();
-
-    //if(isWindows) {
-      if(sourceDataLine.isOpen() && sourceDataLine.isRunning()) sourceDataLine.drain();
-      if(sourceDataLine.isRunning()) sourceDataLine.stop();
-    //}
-    */
+    //windows works ok with the following 2 lines
+    if(sourceDataLine.isOpen() && sourceDataLine.isRunning()) sourceDataLine.drain();
+    if(sourceDataLine.isRunning()) sourceDataLine.stop();
 
     //audio_tick(); //DONT DO THIS. Windows doesn't like it.
 
