@@ -431,7 +431,7 @@ BTFrame parent;
     //}
     */
 
-    audio_tick();
+    //audio_tick(); //DONT DO THIS. Windows doesn't like it.
 
   }
   /////////////////////////////////////////////////////////////////////////////////
