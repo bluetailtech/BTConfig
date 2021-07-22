@@ -424,7 +424,9 @@ BTFrame parent;
     if(sourceDataLine.isOpen() && sourceDataLine.isRunning()) sourceDataLine.drain();
     if(sourceDataLine.isRunning()) sourceDataLine.stop();
 
-    //audio_tick(); //DONT DO THIS. Windows doesn't like it.
+    if(parent.is_linux==1) {
+      //audio_tick(); //DONT DO THIS on Windows. Windows doesn't like it.
+    }
 
   }
   /////////////////////////////////////////////////////////////////////////////////
