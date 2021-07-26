@@ -1421,8 +1421,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202107240403");
-      release_date.setText("Release: 2021-07-24 04:03");
+      fw_ver.setText("Latest Avail: FW Date: 202107261219");
+      release_date.setText("Release: 2021-07-26 12:19");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3263,7 +3263,7 @@ long status_time;
         jLabel6.setText("Power-on Mode");
         p25rxconfigpanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, -1));
 
-        op_mode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "P25", "DMR", "NXDN4800", "FM NB" }));
+        op_mode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "P25", "DMR", "NXDN4800", "FM NB", "TDMA CC" }));
         op_mode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 op_modeActionPerformed(evt);
