@@ -1310,6 +1310,21 @@ long status_time;
     public BTFrame(String[] args) {
       initComponents();
 
+      formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
+      String ndate = formatter_date.format(new java.util.Date() );
+      String fdate=new String(ndate);  //date changed
+      String exe_path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath().toString();
+      exe_path = exe_path.replace("BTConfig.exe", "");
+      System.out.println("log file path: "+exe_path+"p25rx_conlog_"+fdate+".txt");
+
+      try {
+        conlog_file = new File(exe_path+"p25rx_conlog_"+fdate+".txt");
+        fos_conlog = new FileOutputStream( conlog_file, true ); 
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+
+
       b = new byte[256000];
       str_b = new byte[256000];
 
@@ -1421,8 +1436,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202107261219");
-      release_date.setText("Release: 2021-07-26 12:19");
+      fw_ver.setText("Latest Avail: FW Date: 202107261921");
+      release_date.setText("Release: 2021-07-26 19:21");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5647,12 +5662,6 @@ public void open_audio_output_files() {
 
     fos_mp3 = new FileOutputStream( mp3_file, true ); 
     fos_meta = new FileOutputStream( meta_file, true ); 
-    try {
-      conlog_file = new File(exe_path+"p25rx_conlog_"+current_date+".txt");
-      fos_conlog = new FileOutputStream( conlog_file, true ); 
-    } catch(Exception e) {
-      e.printStackTrace();
-    }
 
   } catch(Exception e) {
     StringWriter sw = new StringWriter();
