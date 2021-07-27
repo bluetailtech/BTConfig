@@ -1302,7 +1302,7 @@ byte[] b;
 byte[] str_b;
 int str_idx=0;
 int avail=0;
-int is_phase1=0;
+int is_phase1=1;
 int is_phase2=0;
 long status_time;
 
@@ -1436,8 +1436,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202107261921");
-      release_date.setText("Release: 2021-07-26 19:21");
+      fw_ver.setText("Latest Avail: FW Date: 202107262035");
+      release_date.setText("Release: 2021-07-26 21:04");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1971,7 +1971,7 @@ long status_time;
         siteid.setText("");
       }
 
-      if(console_line.contains("$TDMA")) {
+      if(console_line.contains("$TDMA") || console_line.contains("P25_PII_CC") ) {
         p25_status_timeout=6000;
         is_phase1=0;
         is_phase2=1;
@@ -2395,7 +2395,12 @@ long status_time;
                   l3.setText("NO SIG");
                 }
                 else {
-                  l3.setText("  P25P1 CONTROL CHANNEL BLKS_PER_SEC "+tsbk_ps);
+                  if( is_phase1==1 ) {
+                    l3.setText("  P25P1 CONTROL CHANNEL BLKS_PER_SEC "+tsbk_ps);
+                  }
+                  else if( is_phase1==2 ) {
+                    l3.setText("  P25P2 CONTROL CHANNEL BLKS_PER_SEC "+tsbk_ps);
+                  }
                   reset_session=1;
                   if(system_alias.getText()!=null && system_alias.getText().length()>0 ) {
 
