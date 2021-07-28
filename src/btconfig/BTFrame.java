@@ -1304,6 +1304,7 @@ int str_idx=0;
 int avail=0;
 int is_phase1=1;
 int is_phase2=0;
+int is_tdma_cc=0;
 long status_time;
 
   ///////////////////////////////////////////////////////////////////
@@ -1436,8 +1437,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202107270445");
-      release_date.setText("Release: 2021-07-27 04:45");
+      fw_ver.setText("Latest Avail: FW Date: 202107271705");
+      release_date.setText("Release: 2021-07-27 17:05");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1971,7 +1972,14 @@ long status_time;
         siteid.setText("");
       }
 
-      if(console_line.contains("$TDMA") || console_line.contains("P25_PII_CC") ) {
+      if(console_line.contains("P25_PII_CC") ) {
+        is_tdma_cc=1;
+        p25_status_timeout=6000;
+        is_phase1=0;
+        is_phase2=1;
+      }
+
+      if(console_line.contains("$TDMA") ) {
         p25_status_timeout=6000;
         is_phase1=0;
         is_phase2=1;
@@ -2130,6 +2138,8 @@ long status_time;
                 current_talkgroup = tg_id;
 
                 talkgroup = ", TG "+tg_id;
+
+                talkgroup = talkgroup.replace("Time"," ").trim();
 
                 if(tg_id.contains(",")) has_comma=1;
 
@@ -2395,11 +2405,11 @@ long status_time;
                   l3.setText("NO SIG");
                 }
                 else {
-                  if( is_phase1==1 ) {
-                    l3.setText("  P25P1 CONTROL CHANNEL BLKS_PER_SEC "+tsbk_ps);
-                  }
-                  else if( is_phase1==2 ) {
+                  if( is_tdma_cc==1 ) {
                     l3.setText("  P25P2 CONTROL CHANNEL BLKS_PER_SEC "+tsbk_ps);
+                  }
+                  else {
+                    l3.setText("  P25P1 CONTROL CHANNEL BLKS_PER_SEC "+tsbk_ps);
                   }
                   reset_session=1;
                   if(system_alias.getText()!=null && system_alias.getText().length()>0 ) {
