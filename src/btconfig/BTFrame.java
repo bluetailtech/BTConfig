@@ -1437,8 +1437,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202107271705");
-      release_date.setText("Release: 2021-07-27 17:05");
+      fw_ver.setText("Latest Avail: FW Date: 202108021401");
+      release_date.setText("Release: 2021-08-02 14:01");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2636,6 +2636,7 @@ long status_time;
         buttonGroup11 = new javax.swing.ButtonGroup();
         buttonGroup12 = new javax.swing.ButtonGroup();
         buttonGroup13 = new javax.swing.ButtonGroup();
+        buttonGroup14 = new javax.swing.ButtonGroup();
         bottom_panel = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         status_panel = new javax.swing.JPanel();
@@ -2981,6 +2982,8 @@ long status_time;
         jPanel24 = new javax.swing.JPanel();
         autoscale_const = new javax.swing.JCheckBox();
         nsymbols = new javax.swing.JComboBox<>();
+        eq_en = new javax.swing.JCheckBox();
+        eq_train = new javax.swing.JCheckBox();
         jPanel8 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -4756,6 +4759,22 @@ long status_time;
         });
         jPanel24.add(nsymbols);
 
+        eq_en.setText("EQ Enable");
+        eq_en.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eq_enActionPerformed(evt);
+            }
+        });
+        jPanel24.add(eq_en);
+
+        eq_train.setText("EQ Train");
+        eq_train.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eq_trainActionPerformed(evt);
+            }
+        });
+        jPanel24.add(eq_train);
+
         const_panel.add(jPanel24, java.awt.BorderLayout.NORTH);
 
         signalinsightpanel.add(const_panel);
@@ -5518,6 +5537,20 @@ long status_time;
       delete_talkgroup_rows();
     }//GEN-LAST:event_tg_edit_delActionPerformed
 
+    private void eq_enActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eq_enActionPerformed
+      String cmd= "";
+      if(eq_en.isSelected()) cmd = new String("eq_en 1\r\n");
+      if(!eq_en.isSelected()) cmd = new String("eq_en 0\r\n");
+      serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+    }//GEN-LAST:event_eq_enActionPerformed
+
+    private void eq_trainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eq_trainActionPerformed
+      String cmd= "";
+      if(eq_train.isSelected()) cmd = new String("eq_learn 1\r\n");
+      if(!eq_train.isSelected()) cmd = new String("eq_learn 0\r\n");
+      serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+    }//GEN-LAST:event_eq_trainActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5980,6 +6013,7 @@ public void SLEEP(long val) {
     private javax.swing.ButtonGroup buttonGroup11;
     private javax.swing.ButtonGroup buttonGroup12;
     private javax.swing.ButtonGroup buttonGroup13;
+    private javax.swing.ButtonGroup buttonGroup14;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.ButtonGroup buttonGroup4;
@@ -6048,6 +6082,8 @@ public void SLEEP(long val) {
     private javax.swing.JButton enable_table_rows;
     private javax.swing.JRadioButton enable_voice_const;
     public javax.swing.JCheckBox enc_mode;
+    public javax.swing.JCheckBox eq_en;
+    public javax.swing.JCheckBox eq_train;
     public javax.swing.JButton erase_roaming;
     private javax.swing.JButton follow_tg;
     public javax.swing.JLabel freq;

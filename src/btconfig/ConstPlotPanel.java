@@ -148,10 +148,16 @@ public class ConstPlotPanel extends JPanel {
      try {
        this.do_synced = do_synced;
 
-       for(int i=0;i<300/2;i++) {
+       bb = ByteBuffer.wrap(data);
+       bb.order(ByteOrder.LITTLE_ENDIAN);
 
-         int ii = (int) ((double) data[j++]);
-         int qq = (int) ((double) data[j++]);
+       for(int i=0;i<300/4;i++) {
+
+         short ii = (short) ((double) bb.getShort());
+         short qq = (short) ((double) bb.getShort());
+
+
+         //System.out.println( String.format("%d, %d", ii, qq) );
 
          plot_data[plot_idx++] = ii;
          plot_data[plot_idx++] = qq;
@@ -310,15 +316,18 @@ public class ConstPlotPanel extends JPanel {
      //avg_mag /= DATA_SIZE; 
      scale = 100.0 / avg_mag;
 
-     if(!parent.autoscale_const.isSelected()) scale=2.0;
+     //if(!parent.autoscale_const.isSelected()) scale=10.0;
+     parent.autoscale_const.setSelected(true);
+     parent.autoscale_const.setEnabled(false);
 
 
      j=0;
      int j2=0;
      for(int i=0;i<DATA_SIZE;i++) {
 
-         int ii = (int) ((double) plot_data[j++]);
-         int qq = (int) ((double) plot_data[j++]);
+         int ii = (int) ((double) plot_data[j++]*scale);
+         int qq = (int) ((double) plot_data[j++]*scale);
+
 
          if(do_log) {
            int idir=1;
@@ -330,8 +339,8 @@ public class ConstPlotPanel extends JPanel {
            scaled_data[j2++] = (int) ((double) java.lang.Math.log10( java.lang.Math.abs(qq))*10.0*4.0*qdir ); 
          }
          else {
-           scaled_data[j2++] = (int) ((double)ii*scale); 
-           scaled_data[j2++] = (int) ((double)qq*scale); 
+           scaled_data[j2++] = (int) ((double)ii); 
+           scaled_data[j2++] = (int) ((double)qq); 
          }
       }
 
