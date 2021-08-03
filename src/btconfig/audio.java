@@ -422,7 +422,8 @@ BTFrame parent;
 
     //windows works ok with the following 2 lines
     if(sourceDataLine.isOpen() && sourceDataLine.isRunning()) sourceDataLine.drain();
-    if(sourceDataLine.isRunning()) sourceDataLine.stop();
+
+    if(sourceDataLine.isRunning() && parent.is_linux==0) sourceDataLine.stop();
 
     if(parent.is_linux==1) {
       //audio_tick(); //DONT DO THIS on Windows. Windows doesn't like it.
