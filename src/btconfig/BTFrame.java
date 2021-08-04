@@ -1270,6 +1270,7 @@ int is_dmr_mode=0;
 int tsbk_ps_i=0;
 int bluetooth_streaming_timer=0;
 int p25_status_timeout=1;
+Hashtable rid_hash;
 Hashtable lat_lon_hash1;
 Hashtable lat_lon_hash2;
 Hashtable supergroup_hash;
@@ -1330,6 +1331,7 @@ long status_time;
       str_b = new byte[256000];
 
       supergroup_hash = new Hashtable();
+      rid_hash = new Hashtable();
 
       agc_kp.setVisible(false);
       agc_kp_lb.setVisible(false);
@@ -1438,7 +1440,7 @@ long status_time;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202108021401");
-      release_date.setText("Release: 2021-08-02 14:01");
+      release_date.setText("Release: 2021-08-03 17:09");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1912,7 +1914,20 @@ long status_time;
           if(st1!=null && st1.equals("SRC_RID:")) {
             if( st.hasMoreTokens() ) {
               try {
+
                 int src_uid_d = Integer.parseInt(st.nextToken());
+
+                int rid_cnt=0;
+                String ridstr = new Integer(src_uid_d).toString();
+                try {
+                  rid_cnt = new Integer( (String) rid_hash.get( ridstr ) ).intValue(); 
+                  rid_hash.put( ridstr, new Integer( rid_cnt+1 ).toString() ); 
+                } catch(Exception e) {
+                  rid_hash.put( ridstr, new Integer( "1" ).toString() ); 
+                }
+
+                if( rid_cnt<3 ) src_uid_d = 0; //invalidate until we confirm
+
                 if(did_metadata==1 && src_uid_d!=0 && src_uid_d != src_uid) {
                   did_metadata=0;
                 }
