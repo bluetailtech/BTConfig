@@ -1439,8 +1439,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202108021401");
-      release_date.setText("Release: 2021-08-03 17:09");
+      fw_ver.setText("Latest Avail: FW Date: 202108040334");
+      release_date.setText("Release: 2021-08-06 05:09");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1859,8 +1859,9 @@ long status_time;
         StringTokenizer st = new StringTokenizer(console_line," ,\r\n");
         String st1 = ""; 
         String active_tg="Adjacent Active Talk Groups: ";
+        int cnt=0;
 
-        while(st.hasMoreTokens()) {
+        while(st.hasMoreTokens() && cnt++<5) {
           st1 = st.nextToken();
           if(st1!=null && st1.equals("grp1:")) {
             String grp1 = st.nextToken().trim();
@@ -1878,8 +1879,9 @@ long status_time;
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
         String active_tg="Adjacent Active Talk Groups: ";
+        int cnt=0;
 
-        while(st.hasMoreTokens()) {
+        while(st.hasMoreTokens() && cnt++<5) {
           st1 = st.nextToken();
           if(st1!=null && st1.equals("grp")) {
             String grp1 = st.nextToken().trim();
@@ -1893,7 +1895,8 @@ long status_time;
         is_enc=0;
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
-        while(st.hasMoreTokens()) {
+        int cnt=0;
+        while(st.hasMoreTokens() && cnt++<5) {
           st1 = st.nextToken();
           if(st1!=null && st1.equals("wacn")) {
             String w = st.nextToken().trim();
@@ -1909,7 +1912,8 @@ long status_time;
       if( (console_line.contains("P25_P1: SRC_RID: ") || console_line.contains("P25_PII: SRC_RID: ")) && console_line.contains("$") && console_line.contains("GRP") ) {
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
-        while(st.hasMoreTokens()) {
+        int cnt=0;
+        while(st.hasMoreTokens() && cnt++<5) {
           st1 = st.nextToken();
           if(st1!=null && st1.equals("SRC_RID:")) {
             if( st.hasMoreTokens() ) {
@@ -1925,6 +1929,8 @@ long status_time;
                 } catch(Exception e) {
                   rid_hash.put( ridstr, new Integer( "1" ).toString() ); 
                 }
+
+                //System.out.println(ridstr+" cnt: "+rid_cnt);
 
                 if( rid_cnt<3 ) src_uid_d = 0; //invalidate until we confirm
 
@@ -2002,7 +2008,8 @@ long status_time;
 
       if(console_line.contains("TG PRI")) {
         StringTokenizer st = new StringTokenizer(console_line,"\r\n");
-        while(st.hasMoreTokens()) { 
+        int cnt=0;
+        while(st.hasMoreTokens() && cnt++<5) { 
           String l = st.nextToken();
           if(l.startsWith("TG PRI")) {
             tg_pri=1;
@@ -2039,7 +2046,8 @@ long status_time;
       if(console_line.contains("\r\ngrant 0x02") && (console_line.contains("tgroup") && console_line.contains("TDMA")) ) {
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
-        while(st.hasMoreTokens()) {
+        int cnt=0;
+        while(st.hasMoreTokens() && cnt++<5) {
           st1 = st.nextToken();
           if(st1!=null && st1.contains("tgroup") && st.hasMoreTokens()) {
             try {
@@ -2055,7 +2063,8 @@ long status_time;
 
         st = new StringTokenizer(console_line," \r\n");
         st1 = ""; 
-        while(st.hasMoreTokens()) {
+        cnt=0;
+        while(st.hasMoreTokens() && cnt++<5) {
           st1 = st.nextToken();
           if(st1!=null && st1.contains("follow") && st.hasMoreTokens()) {
             try {
@@ -2071,7 +2080,8 @@ long status_time;
       if(console_line.contains("\r\n") && (console_line.contains("tgroup") && console_line.contains("rf_channel")) ) {
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
-        while(st.hasMoreTokens()) {
+        int cnt=0;
+        while(st.hasMoreTokens() && cnt++<5) {
           st1 = st.nextToken();
           if(st1!=null && st1.contains("follow") && st.hasMoreTokens()) {
             try {
@@ -2086,7 +2096,8 @@ long status_time;
       if(console_line.contains("\r\n") && (console_line.contains("supergroup") && console_line.contains("rf_channel")) ) {
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
-        while(st.hasMoreTokens()) {
+        int cnt=0;
+        while(st.hasMoreTokens() && cnt++<5) {
           st1 = st.nextToken();
           if(st1!=null && st1.contains("supergroup") && st.hasMoreTokens()) {
             try {
@@ -2140,7 +2151,8 @@ long status_time;
 
           //do_add=0;
           StringTokenizer st = new StringTokenizer(console_line," \r\n");
-          while(st.hasMoreTokens()) {
+          int cnt=0;
+          while(st.hasMoreTokens() && cnt++<15) {
             String st1 = st.nextToken();
 
             if(st1.equals("TGroup:") && st.hasMoreTokens()) {
@@ -2504,7 +2516,8 @@ long status_time;
             String st2 = new String("");
             if(st1.contains("Desc:") ) {
 
-              while(st.hasMoreTokens()) {
+              cnt=0;
+              while(st.hasMoreTokens() && cnt++<15) {
                 String next_str  = st.nextToken()+" ";
                 if(next_str.contains("Con+")) break;
                 
