@@ -1440,7 +1440,7 @@ long status_time;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202108040334");
-      release_date.setText("Release: 2021-08-06 05:09");
+      release_date.setText("Release: 2021-08-06 05:21");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1861,7 +1861,7 @@ long status_time;
         String active_tg="Adjacent Active Talk Groups: ";
         int cnt=0;
 
-        while(st.hasMoreTokens() && cnt++<5) {
+        while(st.hasMoreTokens() && cnt++<15) {
           st1 = st.nextToken();
           if(st1!=null && st1.equals("grp1:")) {
             String grp1 = st.nextToken().trim();
@@ -1881,7 +1881,7 @@ long status_time;
         String active_tg="Adjacent Active Talk Groups: ";
         int cnt=0;
 
-        while(st.hasMoreTokens() && cnt++<5) {
+        while(st.hasMoreTokens() && cnt++<15) {
           st1 = st.nextToken();
           if(st1!=null && st1.equals("grp")) {
             String grp1 = st.nextToken().trim();
@@ -1896,7 +1896,7 @@ long status_time;
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
         int cnt=0;
-        while(st.hasMoreTokens() && cnt++<5) {
+        while(st.hasMoreTokens() && cnt++<15) {
           st1 = st.nextToken();
           if(st1!=null && st1.equals("wacn")) {
             String w = st.nextToken().trim();
@@ -1913,7 +1913,7 @@ long status_time;
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
         int cnt=0;
-        while(st.hasMoreTokens() && cnt++<5) {
+        while(st.hasMoreTokens() && cnt++<15) {
           st1 = st.nextToken();
           if(st1!=null && st1.equals("SRC_RID:")) {
             if( st.hasMoreTokens() ) {
@@ -2009,7 +2009,7 @@ long status_time;
       if(console_line.contains("TG PRI")) {
         StringTokenizer st = new StringTokenizer(console_line,"\r\n");
         int cnt=0;
-        while(st.hasMoreTokens() && cnt++<5) { 
+        while(st.hasMoreTokens() && cnt++<15) { 
           String l = st.nextToken();
           if(l.startsWith("TG PRI")) {
             tg_pri=1;
@@ -2047,7 +2047,7 @@ long status_time;
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
         int cnt=0;
-        while(st.hasMoreTokens() && cnt++<5) {
+        while(st.hasMoreTokens() && cnt++<15) {
           st1 = st.nextToken();
           if(st1!=null && st1.contains("tgroup") && st.hasMoreTokens()) {
             try {
@@ -2064,7 +2064,7 @@ long status_time;
         st = new StringTokenizer(console_line," \r\n");
         st1 = ""; 
         cnt=0;
-        while(st.hasMoreTokens() && cnt++<5) {
+        while(st.hasMoreTokens() && cnt++<15) {
           st1 = st.nextToken();
           if(st1!=null && st1.contains("follow") && st.hasMoreTokens()) {
             try {
@@ -2081,7 +2081,7 @@ long status_time;
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
         int cnt=0;
-        while(st.hasMoreTokens() && cnt++<5) {
+        while(st.hasMoreTokens() && cnt++<15) {
           st1 = st.nextToken();
           if(st1!=null && st1.contains("follow") && st.hasMoreTokens()) {
             try {
@@ -2097,7 +2097,7 @@ long status_time;
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
         int cnt=0;
-        while(st.hasMoreTokens() && cnt++<5) {
+        while(st.hasMoreTokens() && cnt++<15) {
           st1 = st.nextToken();
           if(st1!=null && st1.contains("supergroup") && st.hasMoreTokens()) {
             try {
