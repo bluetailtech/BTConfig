@@ -1932,7 +1932,7 @@ long status_time;
 
                 //System.out.println(ridstr+" cnt: "+rid_cnt);
 
-                if( rid_cnt<12 ) src_uid_d = 0; //invalidate until we confirm
+                if( rid_cnt<6 ) src_uid_d = 0; //invalidate until we confirm
 
                 if(did_metadata==1 && src_uid_d!=0 && src_uid_d != src_uid) {
                   did_metadata=0;
