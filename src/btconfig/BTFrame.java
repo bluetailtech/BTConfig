@@ -1440,7 +1440,7 @@ long status_time;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202108040334");
-      release_date.setText("Release: 2021-08-06 05:21");
+      release_date.setText("Release: 2021-08-06 10:47");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1932,7 +1932,7 @@ long status_time;
 
                 //System.out.println(ridstr+" cnt: "+rid_cnt);
 
-                if( rid_cnt<3 ) src_uid_d = 0; //invalidate until we confirm
+                if( rid_cnt<12 ) src_uid_d = 0; //invalidate until we confirm
 
                 if(did_metadata==1 && src_uid_d!=0 && src_uid_d != src_uid) {
                   did_metadata=0;
