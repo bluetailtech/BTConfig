@@ -5613,7 +5613,8 @@ long status_time;
     }//GEN-LAST:event_eq_trainActionPerformed
 
     private void eq_resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eq_resetActionPerformed
-        // TODO add your handling code here:
+      String cmd = new String("eqr\r\n");
+      serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
     }//GEN-LAST:event_eq_resetActionPerformed
 
     public void enable_voice() {
