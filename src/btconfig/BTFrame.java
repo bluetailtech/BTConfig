@@ -4401,7 +4401,6 @@ long status_time;
         log_ta.setColumns(120);
         log_ta.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
         log_ta.setForeground(new java.awt.Color(255, 255, 255));
-        log_ta.setLineWrap(true);
         log_ta.setRows(40);
         log_ta.setText("P25RX Received Talk group Log\n\n");
         log_ta.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
