@@ -1231,6 +1231,7 @@ File conlog_file=null;
 File tdma_file=null;
 java.text.SimpleDateFormat formatter_date;
 java.text.SimpleDateFormat time_format;
+float current_nco_off=0.0f;
 int current_sys_id = 0;
 int current_wacn_id = 0; 
 int do_toggle_record=1;
@@ -1853,6 +1854,7 @@ long status_time;
         sys_info_count=0; 
         src_uid=0;
         is_enc=0;
+        current_nco_off=0.0f;
       }
 
       if( console_line.contains("$P25_GRP_UP grp1:") && console_line.contains("ch2:") ) {
@@ -1905,6 +1907,10 @@ long status_time;
           if(st1!=null && st1.equals("sys_id")) {
             String s = st.nextToken().trim();
             current_sys_id = Integer.parseInt(s.substring(2,s.length()),16);
+          }
+          if(st1!=null && st1.equals("nco_off")) {
+            String s = st.nextToken().trim();
+            current_nco_off = Float.parseFloat(s);
           }
         }
       }
@@ -5659,9 +5665,15 @@ public void do_meta() {
     String is_enc_str = "";
     String alias_str = "";
     String phase_str="";
+    String NCO_OFF="";
 
     if(is_phase1==1) phase_str="P1";
     if(is_phase2==1) phase_str="P2";
+
+    try {
+      NCO_OFF = "nco_off "+new Float(current_nco_off).toString();
+    } catch(Exception e) {
+    }
 
     if(current_alias!=null && src_uid!=0 && current_alias.length()>0) alias_str = current_alias+",";
       current_alias="";
@@ -5675,10 +5687,10 @@ public void do_meta() {
     //meta String
     String metadata =""; 
     if(enable_mp3.isSelected()) {
-      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+mp3_file.length()+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str + alias_str + ","+phase_str;
+      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+mp3_file.length()+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str + alias_str + ","+phase_str + "," + NCO_OFF;
     }
     else {
-      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+"0"+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str + alias_str + ","+phase_str;
+      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+"0"+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str + alias_str + ","+phase_str + "," + NCO_OFF;
     }
 
     if(tg_pri>0) {
