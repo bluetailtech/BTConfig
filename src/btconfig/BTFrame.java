@@ -1440,7 +1440,7 @@ long status_time;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202108040334");
-      release_date.setText("Release: 2021-08-06 10:47");
+      release_date.setText("Release: 2021-08-06 11:00");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1922,6 +1922,11 @@ long status_time;
                 int src_uid_d = Integer.parseInt(st.nextToken());
 
                 int rid_cnt=0;
+                int rid_valid_n=3;
+                try {
+                  rid_valid_n = new Integer( rid_valid_cnt.getText() ).intValue();
+                } catch(Exception e) {
+                }
                 String ridstr = new Integer(src_uid_d).toString();
                 try {
                   rid_cnt = new Integer( (String) rid_hash.get( ridstr ) ).intValue(); 
@@ -1932,7 +1937,7 @@ long status_time;
 
                 //System.out.println(ridstr+" cnt: "+rid_cnt);
 
-                if( rid_cnt<6 ) src_uid_d = 0; //invalidate until we confirm
+                if( rid_cnt<rid_valid_n ) src_uid_d = 0; //invalidate until we confirm
 
                 if(did_metadata==1 && src_uid_d!=0 && src_uid_d != src_uid) {
                   did_metadata=0;
@@ -2978,6 +2983,8 @@ long status_time;
         alias_table = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         import_alias = new javax.swing.JButton();
+        jLabel57 = new javax.swing.JLabel();
+        rid_valid_cnt = new javax.swing.JTextField();
         advancedpanel = new javax.swing.JPanel();
         duid_enh = new javax.swing.JCheckBox();
         freq_correct_on_voice = new javax.swing.JCheckBox();
@@ -3012,6 +3019,7 @@ long status_time;
         nsymbols = new javax.swing.JComboBox<>();
         eq_en = new javax.swing.JCheckBox();
         eq_train = new javax.swing.JCheckBox();
+        eq_reset = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -4609,6 +4617,13 @@ long status_time;
         });
         jPanel5.add(import_alias);
 
+        jLabel57.setText("RID Validation Count");
+        jPanel5.add(jLabel57);
+
+        rid_valid_cnt.setColumns(3);
+        rid_valid_cnt.setText("3");
+        jPanel5.add(rid_valid_cnt);
+
         alias_panel.add(jPanel5, java.awt.BorderLayout.SOUTH);
 
         jTabbedPane1.addTab("Alias", alias_panel);
@@ -4802,6 +4817,14 @@ long status_time;
             }
         });
         jPanel24.add(eq_train);
+
+        eq_reset.setText("EQ Reset");
+        eq_reset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eq_resetActionPerformed(evt);
+            }
+        });
+        jPanel24.add(eq_reset);
 
         const_panel.add(jPanel24, java.awt.BorderLayout.NORTH);
 
@@ -5104,6 +5127,11 @@ long status_time;
             prefs.put("sys_state", state.getText());
           } catch(Exception e) {
           }
+          try {
+            prefs.put("rid_valid_cnt", rid_valid_cnt.getText());
+          } catch(Exception e) {
+          }
+
 
       save_position();
       if(alias!=null) alias.save_alias();
@@ -5579,6 +5607,10 @@ long status_time;
       serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
     }//GEN-LAST:event_eq_trainActionPerformed
 
+    private void eq_resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eq_resetActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_eq_resetActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5791,6 +5823,7 @@ public void update_prefs() {
 
       system_alias.setText( prefs.get("system_alias", "") );
 
+      rid_valid_cnt.setText( prefs.get("rid_valid_cnt", "3") );
       zipcode.setText( prefs.get("sys_zipcode", "99352") );
       city.setText( prefs.get("sys_city", "Richland") );
       state.setText( prefs.get("sys_state", "Wa") );
@@ -6111,6 +6144,7 @@ public void SLEEP(long val) {
     private javax.swing.JRadioButton enable_voice_const;
     public javax.swing.JCheckBox enc_mode;
     public javax.swing.JCheckBox eq_en;
+    private javax.swing.JButton eq_reset;
     public javax.swing.JCheckBox eq_train;
     public javax.swing.JButton erase_roaming;
     private javax.swing.JButton follow_tg;
@@ -6198,6 +6232,7 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
+    private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -6358,6 +6393,7 @@ public void SLEEP(long val) {
     private javax.swing.JButton restore_tg;
     public javax.swing.JLabel rfid;
     public javax.swing.JComboBox<String> rfmaxgain;
+    public javax.swing.JTextField rid_valid_cnt;
     public javax.swing.JCheckBox roaming;
     public javax.swing.JCheckBox roaming_ret_to_cc;
     private javax.swing.JTextField search_radius;

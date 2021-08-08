@@ -3338,6 +3338,20 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="import_aliasActionPerformed"/>
                   </Events>
                 </Component>
+                <Component class="javax.swing.JLabel" name="jLabel57">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="RID Validation Count"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="rid_valid_cnt">
+                  <Properties>
+                    <Property name="columns" type="int" value="3"/>
+                    <Property name="text" type="java.lang.String" value="3"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
+                </Component>
               </SubComponents>
             </Container>
           </SubComponents>
@@ -3863,6 +3877,14 @@
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                       </AuxValues>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="eq_reset">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="EQ Reset"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="eq_resetActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
