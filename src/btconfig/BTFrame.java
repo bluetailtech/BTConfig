@@ -1910,7 +1910,10 @@ long status_time;
           }
           if(st1!=null && st1.equals("nco_off")) {
             String s = st.nextToken().trim();
-            current_nco_off = Float.parseFloat(s);
+            try {
+              current_nco_off = Float.parseFloat(s);
+            } catch(Exception e) {
+            }
           }
         }
       }
