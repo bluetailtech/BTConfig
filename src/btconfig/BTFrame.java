@@ -4320,7 +4320,6 @@ long status_time;
         jTextArea1.setColumns(120);
         jTextArea1.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
         jTextArea1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextArea1.setLineWrap(true);
         jTextArea1.setRows(40);
         jTextArea1.setText("\nBlueTail Technologies P25RX Console\n\n$ ");
         jTextArea1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
