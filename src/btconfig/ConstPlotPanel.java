@@ -38,7 +38,7 @@ public class ConstPlotPanel extends JPanel {
 
    int xoff=0;
    int yoff=+96;
-   double avg_mag=0.0;
+   double peak_mag=0.0;
    double scale=1.0;
 
    int gains_idx;
@@ -247,7 +247,9 @@ public class ConstPlotPanel extends JPanel {
 
        //System.out.println("gain: "+java.lang.Math.log10(gain)*20.0f);
        current_gain = "soft agc gain: "+String.format("%3.1f", java.lang.Math.log10(gain)*20.0f)+" dB";
-       current_rf_gain = "front-end RF gain: "+String.format("%d", rfgain)+" dB";
+       String auto_gain="";
+       if(rfgain==0) auto_gain = " (auto)";
+       current_rf_gain = "front-end RF gain: "+String.format("%d", rfgain)+" dB"+auto_gain;
 
 
        gains[gains_idx++] = (float) java.lang.Math.log10(gain)*20.0f;
@@ -261,7 +263,7 @@ public class ConstPlotPanel extends JPanel {
 
        last_sync_state=synced;
 
-       if(draw_mod++%2==0) {
+       if(draw_mod++%1==0) {
          repaint();
          parent.jPanel24.repaint();
        }
@@ -300,23 +302,22 @@ public class ConstPlotPanel extends JPanel {
      //if( parent.off_const.isSelected() ) return;
 
      int j = 0;
-     avg_mag = 0.0;
+     peak_mag = 0.0;
      for(int i=0;i<DATA_SIZE;i++) {
 
        int ii = (int) ((double) plot_data[j++]);
        int qq = (int) ((double) plot_data[j++]);
        try {
          double mag = java.lang.Math.pow( ((double) ii * (double) ii) + ((double) qq * (double) qq), 0.5 );
-         if(mag > avg_mag) avg_mag = mag; 
+         if(mag > peak_mag) peak_mag = mag; 
        } catch(Exception e) {
        }
 
      }
 
-     //avg_mag /= DATA_SIZE; 
-     scale = 100.0 / avg_mag;
+     scale = 100.0 * (1.0 / peak_mag);
 
-     //if(!parent.autoscale_const.isSelected()) scale=10.0;
+     if(!parent.autoscale_const.isSelected()) scale=0.125;
      parent.autoscale_const.setSelected(true);
      parent.autoscale_const.setEnabled(false);
 
@@ -412,7 +413,7 @@ public class ConstPlotPanel extends JPanel {
      for(int i=0;i<256*3;i++) {
        //g2d.drawLine( j+xoff2, (int) gains[j]+256, j+129, (int) gains[j+1]+256 );
        //j+=2;
-       g2d.drawRoundRect(i+xoff2, (int) (yoff2 + 875 - ((2.5f*gains[j++])+320) ),1, 1, 1, 1);
+       g2d.drawRoundRect(i+xoff2, (int) (yoff2 + 925 - ((2.5f*gains[j++])+320) ),1, 1, 1, 1);
      }
      
      
