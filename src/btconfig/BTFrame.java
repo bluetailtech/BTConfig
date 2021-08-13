@@ -188,6 +188,7 @@ class updateTask extends java.util.TimerTask
                   }
                 }
               } catch(Exception e) {
+                e.printStackTrace();
               }
             }
           }
@@ -200,6 +201,7 @@ class updateTask extends java.util.TimerTask
             setStatus("device reset detected");
             SLEEP(100);
           } catch(Exception e) {
+                e.printStackTrace();
           }
           do_connect=1;
           do_read_config=1;
@@ -214,6 +216,7 @@ class updateTask extends java.util.TimerTask
           try {
             zip_str = new Integer(zipcode.getText().trim()).toString();
           } catch(Exception e) {
+                e.printStackTrace();
           }
           args[0] = zip_str; 
           args[1] = search_radius.getText().trim();
@@ -300,6 +303,7 @@ class updateTask extends java.util.TimerTask
             setProgress(-1);
           } catch(Exception e) {
             //e.printStackTrace();
+                e.printStackTrace();
           }
 
           do_restore_roaming=0;
@@ -346,6 +350,7 @@ class updateTask extends java.util.TimerTask
             }
             setProgress(-1);
           } catch(Exception e) {
+                e.printStackTrace();
             //e.printStackTrace();
           }
 
@@ -394,6 +399,7 @@ class updateTask extends java.util.TimerTask
             }
             setProgress(-1);
           } catch(Exception e) {
+                e.printStackTrace();
             //e.printStackTrace();
           }
 
@@ -443,6 +449,7 @@ class updateTask extends java.util.TimerTask
             setProgress(-1);
           } catch(Exception e) {
             //e.printStackTrace();
+                e.printStackTrace();
           }
 
           do_restore_tg=0;
@@ -768,6 +775,7 @@ class updateTask extends java.util.TimerTask
                     mid = mid.replace(" ","_");
                     mid = new String(result,0,16).trim();
                   } catch(Exception e) {
+                    e.printStackTrace();
                     mid="";
                   }
                   if(mid.startsWith("0x") && mid.length()==14) {
@@ -850,6 +858,7 @@ class updateTask extends java.util.TimerTask
                         //fos_tdma.flush();
                       }
                     } catch(Exception e) {
+                      e.printStackTrace();
                     }
                 }
                 else if(skip_bytes>0 && rx_state==5) {
@@ -897,7 +906,7 @@ class updateTask extends java.util.TimerTask
                         //iztimer.schedule( new insertZeroTask(), 22, 22);
                       }
                     } catch(Exception e) {
-                      //e.printStackTrace();
+                      e.printStackTrace();
                     }
                     rx_state=0;
                     pcm_idx=0;
@@ -920,6 +929,7 @@ class updateTask extends java.util.TimerTask
                         //iztimer.schedule( new insertZeroTask(), 22, 22);
                       }
                     } catch(Exception e) {
+                      e.printStackTrace();
                       //e.printStackTrace();
                     }
 
@@ -948,6 +958,7 @@ class updateTask extends java.util.TimerTask
                             encoder=null;
                           }
                         } catch(Exception e) {
+                          e.printStackTrace();
                           //e.printStackTrace();
                         }
 
@@ -982,6 +993,7 @@ class updateTask extends java.util.TimerTask
 
                         } catch(Exception e) {
                           //e.printStackTrace();
+                          e.printStackTrace();
                         }
 
                       }
@@ -1441,7 +1453,7 @@ long status_time;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202108121043");
-      release_date.setText("Release: 2021-08-12 12:56");
+      release_date.setText("Release: 2021-08-13 10:29");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1792,6 +1804,7 @@ long status_time;
         }
       } catch(Exception e) {
         //e.printStackTrace();
+        e.printStackTrace();
       }
 
       return b;
@@ -1839,6 +1852,7 @@ long status_time;
           fos_conlog.write(str.getBytes(),0,str.length());  //write Int num records
           fos_conlog.flush();
         } catch(Exception e) {
+          e.printStackTrace();
         }
       }
 
@@ -1913,6 +1927,7 @@ long status_time;
             try {
               current_nco_off = Float.parseFloat(s);
             } catch(Exception e) {
+              e.printStackTrace();
             }
           }
         }
@@ -1935,12 +1950,14 @@ long status_time;
                 try {
                   rid_valid_n = new Integer( rid_valid_cnt.getText() ).intValue();
                 } catch(Exception e) {
+                    e.printStackTrace();
                 }
                 String ridstr = new Integer(src_uid_d).toString();
                 try {
                   rid_cnt = new Integer( (String) rid_hash.get( ridstr ) ).intValue(); 
                   rid_hash.put( ridstr, new Integer( rid_cnt+1 ).toString() ); 
                 } catch(Exception e) {
+                  e.printStackTrace();
                   rid_hash.put( ridstr, new Integer( "1" ).toString() ); 
                 }
 
@@ -1979,6 +1996,7 @@ long status_time;
                     do_meta();
 
               } catch(Exception e) {
+                e.printStackTrace();
                 src_uid = 0;
               }
             }
@@ -1997,6 +2015,7 @@ long status_time;
           freq.setText("");
         }
       } catch(Exception e) {
+        e.printStackTrace();
       }
 
       if( console_line.contains("DATA_SYNC") ) {
@@ -2050,6 +2069,7 @@ long status_time;
             try {
               tg_follow_blink = new Integer( st.nextToken() ).intValue();
             } catch(Exception e) {
+              e.printStackTrace();
             }
         }
         if(console_line.contains("un-following talkgroup")) {
@@ -2070,6 +2090,7 @@ long status_time;
 
               break;
             } catch(Exception e) {
+              e.printStackTrace();
               break;
             }
           }
@@ -2085,6 +2106,7 @@ long status_time;
               tg_follow_blink = new Integer( st.nextToken() ).intValue();
               break;
             } catch(Exception e) {
+              e.printStackTrace();
               break;
             }
           }
@@ -2102,6 +2124,7 @@ long status_time;
               tg_follow_blink = new Integer( st.nextToken() ).intValue();
               break;
             } catch(Exception e) {
+              e.printStackTrace();
               break;
             }
           }
@@ -2120,6 +2143,7 @@ long status_time;
               supergroup_hash.put( sg, sg ); 
               break;
             } catch(Exception e) {
+              e.printStackTrace();
               break;
             }
           }
@@ -2193,6 +2217,7 @@ long status_time;
                     talkgroup = talkgroup+"(P) ";
                   } 
                 } catch(Exception e) {
+                  e.printStackTrace();
                 }
               }
 
@@ -2201,6 +2226,7 @@ long status_time;
                 try {
                   current_sys_id = Integer.valueOf( dmr_sys_id.getText() ); 
                 } catch(Exception e) {
+                  e.printStackTrace();
                   current_sys_id=1;
                 }
               }
@@ -2214,12 +2240,14 @@ long status_time;
                     d = new Double(freq.getText().substring(6,15));
                     ff = String.format("%3.8f", d);
                   } catch(Exception e) {
+                    e.printStackTrace();
                   }
                   if(prefs!=null) city = prefs.get("city_state_"+ff, "unknown");
                   if(city==null) city="";
 
 
                 } catch(Exception e) {
+                    e.printStackTrace();
                 }
 
                 if(has_comma==1) tg_config.addUknownTG(parent, tg_id, new Integer(current_sys_id).toString(), city, new Integer(current_wacn_id).toString() ); 
@@ -2240,6 +2268,7 @@ long status_time;
                   try {
                     current_freq = Double.valueOf(freq_str)*1e6;
                   } catch(Exception e) {
+                    e.printStackTrace();
                   }
 
                   if(fval!=0) {
@@ -2249,6 +2278,7 @@ long status_time;
                     freq.setText("");
                   }
                 } catch(Exception e) {
+                    e.printStackTrace();
                     freq.setText("");
                 }
               }
@@ -2282,6 +2312,7 @@ long status_time;
                   siteid.setText("");
                 }
               } catch(Exception e) {
+                  e.printStackTrace();
                   siteid.setText("");
               }
             }
@@ -2297,6 +2328,7 @@ long status_time;
                   rfid.setText("");
                 }
               } catch(Exception e) {
+                  e.printStackTrace();
                   rfid.setText("");
               }
             }
@@ -2312,6 +2344,7 @@ long status_time;
                   if(nacval==0) nac.setText("");
                 }
               } catch(Exception e) {
+                  e.printStackTrace();
                   nac.setText("");
               }
             }
@@ -2339,6 +2372,7 @@ long status_time;
                   sysid.setText("");
                 }
               } catch(Exception e) {
+                  e.printStackTrace();
                   sysid.setText("");
               }
             }
@@ -2356,6 +2390,7 @@ long status_time;
 
                 is_dmr_mode=0;
               } catch(Exception e) {
+                  e.printStackTrace();
                   wacn.setText("");
                 //e.printStackTrace();
               }
@@ -2368,6 +2403,7 @@ long status_time;
               try {
                 current_freq = Double.valueOf(freqval)*1e6;
               } catch(Exception e) {
+                  e.printStackTrace();
               }
 
               freq.setText("Freq: "+freqval);
@@ -2385,6 +2421,7 @@ long status_time;
                 fos_meta.write(phase2_str.getBytes(),0,phase2_str.length());  //write Int num records
                 fos_meta.flush();
               } catch(Exception e) {
+                  e.printStackTrace();
               }
             }
 
@@ -2469,6 +2506,7 @@ long status_time;
                   d = new Double(freq.getText().substring(6,15));
                   ff = String.format("%3.8f", d);
                 } catch(Exception e) {
+                  e.printStackTrace();
                 }
 
                 if(prefs!=null) city = prefs.get("city_state_"+ff, "unknown");
@@ -2481,6 +2519,7 @@ long status_time;
                   p25_status_timeout=6000;
                 }
               } catch(Exception e) {
+                  e.printStackTrace();
               }
 
               try {
@@ -2523,6 +2562,7 @@ long status_time;
                  }
 
                 } catch(Exception e) {
+                  e.printStackTrace();
                   //e.printStackTrace();
                 }
             }
@@ -2595,6 +2635,7 @@ long status_time;
 
           console_line = new String("");
         } catch(Exception e) {
+          e.printStackTrace();
           console_line = new String("");
           //e.printStackTrace();
         }
@@ -5125,18 +5166,22 @@ long status_time;
           try {
             prefs.put("sys_zipcode", zipcode.getText());
           } catch(Exception e) {
+          e.printStackTrace();
           }
           try {
             prefs.put("sys_city", city.getText());
           } catch(Exception e) {
+          e.printStackTrace();
           }
           try {
             prefs.put("sys_state", state.getText());
           } catch(Exception e) {
+          e.printStackTrace();
           }
           try {
             prefs.put("rid_valid_cnt", rid_valid_cnt.getText());
           } catch(Exception e) {
+          e.printStackTrace();
           }
 
 
@@ -5675,6 +5720,7 @@ public void do_meta() {
     try {
       NCO_OFF = "nco_off "+new Float(current_nco_off).toString();
     } catch(Exception e) {
+          e.printStackTrace();
     }
 
     if(current_alias!=null && src_uid!=0 && current_alias.length()>0) alias_str = current_alias+",";
@@ -5752,6 +5798,7 @@ public void do_meta() {
         log_ta.getCaret().setBlinkRate(250);
 
       } catch(Exception e) {
+          e.printStackTrace();
         //e.printstacktrace();
       }
     }
@@ -5786,6 +5833,7 @@ public void open_audio_output_files() {
     fos_meta = new FileOutputStream( meta_file, true ); 
 
   } catch(Exception e) {
+    e.printStackTrace();
     StringWriter sw = new StringWriter();
     e.printStackTrace(new PrintWriter(sw));
     JOptionPane.showMessageDialog(this, sw.toString(), "ok", JOptionPane.OK_OPTION);
@@ -5799,6 +5847,7 @@ public void open_audio_output_files() {
     if(aud!=null) aud.dev_changed();
     if(aud!=null) aud.audio_tick();
   } catch(Exception e) {
+    e.printStackTrace();
     StringWriter sw = new StringWriter();
     e.printStackTrace(new PrintWriter(sw));
     JOptionPane.showMessageDialog(this, sw.toString(), "ok", JOptionPane.OK_OPTION);
@@ -5886,6 +5935,7 @@ public void save_position() {
     prefs.putBoolean("form_min", b);
 
   } catch(Exception e) {
+    e.printStackTrace();
   }
 }
 //////////////////////////////////////////////////////////////////////////////
@@ -5912,6 +5962,7 @@ public void restore_position() {
     minimize.setSelected(b);
 
   } catch(Exception e) {
+    e.printStackTrace();
   }
 }
 
@@ -5932,6 +5983,7 @@ void toggle_recording(Boolean isrec) {
       SLEEP(50);
       if(serial_port.bytesAvailable()>29) break;
     } catch(Exception e) {
+      e.printStackTrace();
       //e.printStackTrace();
     }
     byte[] b = new byte[32];
