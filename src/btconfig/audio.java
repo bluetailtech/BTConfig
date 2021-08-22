@@ -278,16 +278,16 @@ BTFrame parent;
 
 
     if(parent.is_mac_osx==1) {
-      dbuffer_size = 7680*4;
+      dbuffer_size = 7680*5;
     }
     else if(parent.is_linux==1) {
-      dbuffer_size = 7680*4; 
+      dbuffer_size = 7680*5; 
     }
     else if(parent.is_windows==1) {
-      dbuffer_size = 7680*4; 
+      dbuffer_size = 7680*5; 
     }
     else {
-      dbuffer_size = 7680*4;
+      dbuffer_size = 7680*5;
     }
 
     dbuffer1 = new byte[dbuffer_size];
@@ -400,18 +400,30 @@ BTFrame parent;
 
     if(sourceDataLine==null) return;
 
-    if(sourceDataLine.isOpen() && sourceDataLine.isRunning() && dbuffer_tot > 0) { 
-      if( dbuffer_mod == 0 ) {
-        //dbuffer1
-        sourceDataLine.write(dbuffer1, 0, dbuffer_tot);
-      }
-      else {
-        //dbuffer2
-        sourceDataLine.write(dbuffer2, 0, dbuffer_tot);
-      }
+    //if(sourceDataLine.isOpen() && sourceDataLine.isRunning() && dbuffer_tot > 0) { 
 
-      dbuffer_mod=0;
+    try {
+      if(dbuffer_tot > 0) { 
+        if( dbuffer_mod == 0 ) {
+          //dbuffer1
+          sourceDataLine.write(dbuffer1, 0, dbuffer_tot);
+        }
+        else {
+          //dbuffer2
+          sourceDataLine.write(dbuffer2, 0, dbuffer_tot);
+        }
+
+        //Don't do this on Windows 10!!!
+        //sourceDataLine.drain();
+        //sourceDataLine.stop();
+
+        dbuffer_mod=0;
+        dbuffer_tot=0;
+      }
+      if(dbuffer_tot>0) System.out.println("dbuffer_tot: "+dbuffer_tot);
       dbuffer_tot=0;
+    } catch(Exception e) {
+      e.printStackTrace();
     }
   }
 
@@ -421,14 +433,15 @@ BTFrame parent;
 
 
     //windows works ok with the following 2 lines
-    if(sourceDataLine.isOpen() && sourceDataLine.isRunning()) sourceDataLine.drain();
+    //if(sourceDataLine.isOpen() && sourceDataLine.isRunning() ) sourceDataLine.drain();
+    //if(sourceDataLine.isRunning() ) sourceDataLine.stop();
+    if(sourceDataLine!=null) sourceDataLine.drain();
+    if(sourceDataLine!=null) sourceDataLine.stop();
 
-    if(sourceDataLine.isRunning() && parent.is_linux==0) sourceDataLine.stop();
+    dbuffer_mod=0;
+    dbuffer_tot=0;
 
-    if(parent.is_linux==1) {
-      //audio_tick(); //DONT DO THIS on Windows. Windows doesn't like it.
-    }
-
+    System.out.println("drain_and_stop");
   }
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
@@ -496,6 +509,7 @@ BTFrame parent;
             if( dbuffer_mod==1 ) {
               try {
                 sourceDataLine.write(dbuffer1, 0, dbuffer_size);
+                System.out.println("source:Write "+dbuffer_size);
               } catch(Exception e) {
                 e.printStackTrace();
               }
@@ -504,11 +518,15 @@ BTFrame parent;
             else {
               try {
                 sourceDataLine.write(dbuffer2, 0, dbuffer_size);
+                System.out.println("source:Write "+dbuffer_size);
               } catch(Exception e) {
                 e.printStackTrace();
               }
               try {
-                if(!sourceDataLine.isRunning()) sourceDataLine.start();
+                //if(!sourceDataLine.isRunning()) {
+                  sourceDataLine.start();
+                  System.out.println("source: Start");
+                //}
               } catch(Exception e) {
                 e.printStackTrace();
               }
