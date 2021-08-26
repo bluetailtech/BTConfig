@@ -214,7 +214,12 @@ BTFrame parent;
 
               sourceDataLine = AudioSystem.getSourceDataLine( af, mixer_info );
 
-              sourceDataLine.open(af, 48000*4*2);
+              if(parent.is_linux==1) {
+                sourceDataLine.open(af, 48000*2);
+              }
+              else {
+                sourceDataLine.open(af, 48000*2);
+              }
 
 
               try {
@@ -278,16 +283,16 @@ BTFrame parent;
 
 
     if(parent.is_mac_osx==1) {
-      dbuffer_size = 7680*5;
+      dbuffer_size = 7680*4;
     }
     else if(parent.is_linux==1) {
-      dbuffer_size = 7680*5; 
+      dbuffer_size = 7680*4; 
     }
     else if(parent.is_windows==1) {
-      dbuffer_size = 7680*5; 
+      dbuffer_size = 7680*4; 
     }
     else {
-      dbuffer_size = 7680*5;
+      dbuffer_size = 7680*4;
     }
 
     dbuffer1 = new byte[dbuffer_size];
