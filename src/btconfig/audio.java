@@ -31,7 +31,55 @@ import javax.swing.*;
 
 import pcmsampledsp.*;
 
+
+
 public class audio {
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  class updateTask extends java.util.TimerTask
+  {
+
+      public void run()
+      {
+        try {
+
+          //////////////////////
+          //////////////////////
+          if(do_drain==1) {
+            do_drain=0;
+
+            if(sourceDataLine.isRunning() && sourceDataLine.getBufferSize()!=sourceDataLine.available() ) {
+              if(debug) System.out.println("stop");
+              sourceDataLine.drain();
+              if(do_start==0) sourceDataLine.stop();
+                else if(debug) {
+                  System.out.println("abort stop.");
+                  stop_timer=100;
+                }
+              do_start=0;
+            }
+            voice_count=0;
+          }
+
+          if(stop_timer>0) {
+            stop_timer--;
+            if(stop_timer==0) {
+              if(debug) System.out.println("stop");
+              sourceDataLine.stop();
+            }
+          }
+
+
+        } catch(Exception e) {
+        }
+      }
+  }
+
+  java.util.Timer utimer;
+  int do_drain=0;
+  int do_start=0;
+  int stop_timer=0;
 
   Boolean initialized=false;
   AudioFormat af=null;
@@ -49,12 +97,6 @@ FloatControl src_volume;
 
 BTFrame parent;
 
-  byte[] dbuffer1;
-  byte[] dbuffer2;
-  int dbuffer_mod=0;
-  int dbuffer_tot=0;
-
-  int dbuffer_size;
   Vector mixer_v;
   int dev_changed=0;
 
@@ -67,18 +109,20 @@ BTFrame parent;
 
   Line.Info[] lineInfo;
 
-  int audio_srate=47000;
+  int audio_srate=48000;
+
+  int voice_count=0;
+
+  boolean debug=true;
+
+
 
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
   public void update_audio_rate() {
     try {
-      audio_srate = new Integer( parent.audio_rate.getText() ).intValue();
-      if(audio_srate < 40000) {
-        audio_srate = 48000;
-        parent.audio_rate.setText(new Integer(audio_srate).toString() );
-      }
 
+      audio_srate = 48000;
       dev_changed();
       parent.setStatus("Audio Sample Rate updated");
     } catch(Exception e) {
@@ -98,10 +142,10 @@ BTFrame parent;
   public void init() {
 
     try {
+      utimer = new java.util.Timer();
+      utimer.schedule( new updateTask(), 100, 1);
 
         closeAll();
-        dbuffer_mod=0;
-        dbuffer_tot=0;
 
           try {
             int count = 0;
@@ -177,7 +221,6 @@ BTFrame parent;
               else {
                 try {
                   audio_srate = 48000;
-                  parent.audio_rate.setText("48000");
 
                   af = new AudioFormat(
                     audio_srate,
@@ -215,10 +258,10 @@ BTFrame parent;
               sourceDataLine = AudioSystem.getSourceDataLine( af, mixer_info );
 
               if(parent.is_linux==1) {
-                sourceDataLine.open(af, 48000*2);
+                sourceDataLine.open(af, 48000*4);
               }
               else {
-                sourceDataLine.open(af, 48000*2);
+                sourceDataLine.open(af, 48000*4);
               }
 
 
@@ -280,23 +323,6 @@ BTFrame parent;
     parent = p;
 
     resamp = new Resampler( Rational.valueOf( (48000.0f/8000.0f) ) ); 
-
-
-    if(parent.is_mac_osx==1) {
-      dbuffer_size = 7680*4;
-    }
-    else if(parent.is_linux==1) {
-      dbuffer_size = 7680*4; 
-    }
-    else if(parent.is_windows==1) {
-      dbuffer_size = 7680*4; 
-    }
-    else {
-      dbuffer_size = 7680*4;
-    }
-
-    dbuffer1 = new byte[dbuffer_size];
-    dbuffer2 = new byte[dbuffer_size];
 
 
 
@@ -402,33 +428,12 @@ BTFrame parent;
       return;
     }
 
-
     if(sourceDataLine==null) return;
 
-    //if(sourceDataLine.isOpen() && sourceDataLine.isRunning() && dbuffer_tot > 0) { 
-
-    try {
-      if(dbuffer_tot > 0) { 
-        if( dbuffer_mod == 0 ) {
-          //dbuffer1
-          sourceDataLine.write(dbuffer1, 0, dbuffer_tot);
-        }
-        else {
-          //dbuffer2
-          sourceDataLine.write(dbuffer2, 0, dbuffer_tot);
-        }
-
-        //Don't do this on Windows 10!!!
-        //sourceDataLine.drain();
-        //sourceDataLine.stop();
-
-        dbuffer_mod=0;
-        dbuffer_tot=0;
-      }
-      if(dbuffer_tot>0) System.out.println("dbuffer_tot: "+dbuffer_tot);
-      dbuffer_tot=0;
-    } catch(Exception e) {
-      e.printStackTrace();
+    if(sourceDataLine.isRunning() && sourceDataLine.getBufferSize()==sourceDataLine.available() ) {
+      voice_count=0;
+      if(debug) System.out.println("stop");
+      sourceDataLine.stop();
     }
   }
 
@@ -436,17 +441,9 @@ BTFrame parent;
   /////////////////////////////////////////////////////////////////////////////////
   public void playStop() {
 
+    if(debug) System.out.println("drain");
+    do_drain=1;
 
-    //windows works ok with the following 2 lines
-    //if(sourceDataLine.isOpen() && sourceDataLine.isRunning() ) sourceDataLine.drain();
-    //if(sourceDataLine.isRunning() ) sourceDataLine.stop();
-    if(sourceDataLine!=null) sourceDataLine.drain();
-    if(sourceDataLine!=null) sourceDataLine.stop();
-
-    dbuffer_mod=0;
-    dbuffer_tot=0;
-
-    System.out.println("drain_and_stop");
   }
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
@@ -481,7 +478,6 @@ BTFrame parent;
 
           int[] buffer_out_agc = buffer_out; 
 
-
           Boolean isWindows = System.getProperty("os.name").startsWith("Windows");
 
           byte[] outbytes = new byte[ buffer_out_agc.length * 2 *2]; 
@@ -497,65 +493,28 @@ BTFrame parent;
             idx+=4;
           }
 
-          if( dbuffer_mod == 0 ) {
-            for(int i=0;i<idx;i++) {
-              dbuffer1[dbuffer_tot++] = outbytes[i];
+          sourceDataLine.write(outbytes, 0, idx);
+
+          if(voice_count++>10 ) {
+            voice_count=0;
+
+            if(!sourceDataLine.isRunning()) {
+              sourceDataLine.start();
+              do_start=1;
+              if(debug) System.out.println("source: Start");
             }
           }
-          else {
-            for(int i=0;i<idx;i++) {
-              dbuffer2[dbuffer_tot++] = outbytes[i];
-            }
-          }
-
-          if(dbuffer_tot==dbuffer_size) {
-            dbuffer_mod ^= 0x01;
-
-            if( dbuffer_mod==1 ) {
-              try {
-                sourceDataLine.write(dbuffer1, 0, dbuffer_size);
-                System.out.println("source:Write "+dbuffer_size);
-              } catch(Exception e) {
-                e.printStackTrace();
-              }
-              //System.out.println("dbuffer 1");
-            }
-            else {
-              try {
-                sourceDataLine.write(dbuffer2, 0, dbuffer_size);
-                System.out.println("source:Write "+dbuffer_size);
-              } catch(Exception e) {
-                e.printStackTrace();
-              }
-              try {
-                //if(!sourceDataLine.isRunning()) {
-                  sourceDataLine.start();
-                  System.out.println("source: Start");
-                //}
-              } catch(Exception e) {
-                e.printStackTrace();
-              }
-              //System.out.println("dbuffer 2");
-            }
-
-            dbuffer_tot=0;
-          }
-
 
         }
 
       } catch(Exception e) {
         e.printStackTrace();
-        dbuffer_mod=0;
-        dbuffer_tot=0;
       }
 
 
 
     } catch(Exception e) {
       e.printStackTrace();
-        dbuffer_mod=0;
-        dbuffer_tot=0;
     }
 
 

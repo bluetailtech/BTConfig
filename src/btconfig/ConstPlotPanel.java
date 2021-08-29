@@ -285,7 +285,7 @@ public class ConstPlotPanel extends JPanel {
 
      //Rectangle r = g2d.getClipBounds();
      Rectangle r = getBounds(); 
-     g2d.setStroke( new BasicStroke(2.0f) );
+     g2d.setStroke( new BasicStroke(1.2f) );
       //clear to black
      g2d.setColor( Color.black ); 
      g2d.fill3DRect(r.x-250,r.y-250,r.width+500,r.height+500,false); 
