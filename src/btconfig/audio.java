@@ -44,6 +44,31 @@ public class audio {
       {
         try {
 
+          int blen = sourceDataLine.getBufferSize()-sourceDataLine.available();
+          if(sourceDataLine.isRunning() && blen > 0) {
+            int kb = (int) ( (float) blen / (float) 1024 );
+
+            /*
+            System.out.print("\r\n");
+            for(int i=0;i<kb;i++) {
+              System.out.print("#");
+            }
+            System.out.print("\r\n");
+            */
+            //parent.audio_prog.setValue(kb);
+          }
+
+
+          /*
+          if(voice_count > 0) {
+            vc_timer++;
+            if(vc_timer>150) {
+              do_drain=1;
+              vc_timer=0;
+            }
+          } 
+          */
+
           //////////////////////
           //////////////////////
           if(do_drain==1) {
@@ -52,14 +77,17 @@ public class audio {
             if(sourceDataLine.isRunning() && sourceDataLine.getBufferSize()!=sourceDataLine.available() ) {
               if(debug) System.out.println("stop");
               sourceDataLine.drain();
-              if(do_start==0) sourceDataLine.stop();
-                else if(debug) {
-                  System.out.println("abort stop.");
-                  stop_timer=100;
-                }
-              do_start=0;
+              if(do_start==0) {
+                sourceDataLine.stop();
+                //parent.audio_prog.setValue(0);
+              }
+              else if(debug) {
+                System.out.println("abort stop.");
+                stop_timer=100;
+                do_start=0;
+              }
+              voice_count=0;
             }
-            voice_count=0;
           }
 
           if(stop_timer>0) {
@@ -67,6 +95,7 @@ public class audio {
             if(stop_timer==0) {
               if(debug) System.out.println("stop");
               sourceDataLine.stop();
+              //parent.audio_prog.setValue(0);
             }
           }
 
@@ -75,6 +104,8 @@ public class audio {
         }
       }
   }
+
+  int vc_timer;
 
   java.util.Timer utimer;
   int do_drain=0;
@@ -395,6 +426,7 @@ BTFrame parent;
     if(mixer!=null) mixer.close();
     if(sourceDataLine!=null) sourceDataLine.stop();
     if(sourceDataLine!=null) sourceDataLine.close();
+    //parent.audio_prog.setValue(0);
     //if(sourceDataLine!=null) sourceDataLine.removeLineListener(listener);
     try {
       SLEEP(1);
@@ -434,6 +466,7 @@ BTFrame parent;
       voice_count=0;
       if(debug) System.out.println("stop");
       sourceDataLine.stop();
+      //parent.audio_prog.setValue(0);
     }
   }
 
@@ -456,6 +489,8 @@ BTFrame parent;
       if(dev_changed==1) return;
 
       if(!parent.enable_audio.isSelected()) return;
+
+      vc_timer=0;
 
       try {
         if( af!=null ) {
@@ -495,7 +530,10 @@ BTFrame parent;
 
           sourceDataLine.write(outbytes, 0, idx);
 
-          if(voice_count++>10 ) {
+          int bsize = sourceDataLine.getBufferSize();
+          int bavail = sourceDataLine.available();
+          //if(voice_count++>10) {
+          if( ((float) bavail / (float) bsize) < 0.5 ) { 
             voice_count=0;
 
             if(!sourceDataLine.isRunning()) {
