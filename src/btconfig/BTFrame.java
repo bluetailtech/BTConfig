@@ -1453,7 +1453,7 @@ long status_time;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202108311601");
-      release_date.setText("Release: 2021-08-31 16:01");
+      release_date.setText("Release: 2021-08-31 16:18");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1914,21 +1914,25 @@ long status_time;
         int cnt=0;
         while(st.hasMoreTokens() && cnt++<15) {
           st1 = st.nextToken();
-          if(st1!=null && st1.equals("wacn")) {
-            String w = st.nextToken().trim();
-            current_wacn_id = Integer.parseInt(w.substring(2,w.length()),16);
-          }
-          if(st1!=null && st1.equals("sys_id")) {
-            String s = st.nextToken().trim();
-            current_sys_id = Integer.parseInt(s.substring(2,s.length()),16);
-          }
-          if(st1!=null && st1.equals("nco_off")) {
-            String s = st.nextToken().trim();
-            try {
-              current_nco_off = Float.parseFloat(s);
-            } catch(Exception e) {
-              e.printStackTrace();
+          try {
+            if(st1!=null && st1.equals("wacn")) {
+              String w = st.nextToken().trim();
+              current_wacn_id = Integer.parseInt(w.substring(2,w.length()),16);
             }
+            if(st1!=null && st1.equals("sys_id")) {
+              String s = st.nextToken().trim();
+              current_sys_id = Integer.parseInt(s.substring(2,s.length()),16);
+            }
+            if(st1!=null && st1.equals("nco_off")) {
+              String s = st.nextToken().trim();
+              try {
+                current_nco_off = Float.parseFloat(s);
+              } catch(Exception e) {
+                e.printStackTrace();
+              }
+            }
+          } catch(Exception e) {
+            e.printStackTrace();
           }
         }
       }
@@ -1943,7 +1947,12 @@ long status_time;
             if( st.hasMoreTokens() ) {
               try {
 
-                int src_uid_d = Integer.parseInt(st.nextToken());
+                int src_uid_d=0;
+                try {
+                  src_uid_d = Integer.parseInt(st.nextToken());
+                } catch(Exception e) {
+                  e.printStackTrace();
+                }
 
                 int rid_cnt=0;
                 int rid_valid_n=3;
@@ -2738,6 +2747,8 @@ long status_time;
         tg_indicator = new javax.swing.JToggleButton();
         bt_lb = new javax.swing.JLabel();
         bt_indicator = new javax.swing.JToggleButton();
+        jPanel53 = new javax.swing.JPanel();
+        audio_prog = new javax.swing.JProgressBar();
         jTabbedPane1 = new javax.swing.JTabbedPane();
 
         p25rxconfigpanel = new javax.swing.JPanel();
@@ -2909,12 +2920,6 @@ long status_time;
         home_dir_label = new javax.swing.JLabel();
         audio_dev_play = new javax.swing.JRadioButton();
         audio_dev_all = new javax.swing.JRadioButton();
-        jPanel50 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        audio_rate = new javax.swing.JTextField();
-        jLabel35 = new javax.swing.JLabel();
-        jLabel50 = new javax.swing.JLabel();
-        apply_audio_rate = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
         freqdb_panel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
@@ -3211,6 +3216,14 @@ long status_time;
         meter_panel.add(level_panel);
 
         bottom_panel.add(meter_panel);
+
+        jPanel53.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel53.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        audio_prog.setPreferredSize(new java.awt.Dimension(1024, 10));
+        jPanel53.add(audio_prog);
+
+        bottom_panel.add(jPanel53);
 
         getContentPane().add(bottom_panel, java.awt.BorderLayout.SOUTH);
 
@@ -3943,29 +3956,6 @@ long status_time;
             }
         });
         jPanel11.add(audio_dev_all, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 480, -1, -1));
-
-        jLabel9.setText("Audio Playback Rate");
-        jPanel50.add(jLabel9);
-
-        audio_rate.setColumns(8);
-        audio_rate.setText("48000");
-        jPanel50.add(audio_rate);
-
-        jLabel35.setText("Hz");
-        jPanel50.add(jLabel35);
-
-        jLabel50.setText("Default: 48000 Hz");
-        jPanel50.add(jLabel50);
-
-        jPanel11.add(jPanel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 290, 50));
-
-        apply_audio_rate.setText("Apply Rate");
-        apply_audio_rate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                apply_audio_rateActionPerformed(evt);
-            }
-        });
-        jPanel11.add(apply_audio_rate, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 420, -1, -1));
 
         audiopanel.add(jPanel11, java.awt.BorderLayout.CENTER);
 
@@ -5132,10 +5122,10 @@ long status_time;
     private void minimizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimizeActionPerformed
       if(minimize.isSelected()) {
         if(isWindows ) {
-          setSize(1020,200);
+          setSize(1020,200+14);
         }
         else  {
-          setSize(1020,185);  //linux and Mac
+          setSize(1020,185+14);  //linux and Mac
         }
       }
       else {
@@ -5586,18 +5576,6 @@ long status_time;
       if(prefs!=null) prefs.putBoolean("en_zero_rid", en_zero_rid.isSelected());
     }//GEN-LAST:event_en_zero_ridActionPerformed
 
-    private void apply_audio_rateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_apply_audio_rateActionPerformed
-      try {
-        if(aud!=null) {
-          aud.update_audio_rate(); 
-        }
-
-        if(prefs!=null) prefs.put("audio_sample_rate", audio_rate.getText() );
-      } catch(Exception e) {
-        e.printStackTrace();
-      }
-    }//GEN-LAST:event_apply_audio_rateActionPerformed
-
     private void enc_modeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enc_modeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_enc_modeActionPerformed
@@ -5895,7 +5873,6 @@ public void update_prefs() {
 
       process_rid_alias.setSelected( prefs.getBoolean("process_rid_alias", true) );
 
-      audio_rate.setText( prefs.get("audio_sample_rate", "47000" ) ); 
 
       int constellation = prefs.getInt("const_select", 1);
     }
@@ -6118,11 +6095,10 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox allow_tg_pri_int;
     public javax.swing.JCheckBox allow_unknown_tg_cb;
     public javax.swing.JButton append_cc;
-    private javax.swing.JButton apply_audio_rate;
     public javax.swing.JRadioButton audio_dev_all;
     public javax.swing.JList<String> audio_dev_list;
     public javax.swing.JRadioButton audio_dev_play;
-    public javax.swing.JTextField audio_rate;
+    public javax.swing.JProgressBar audio_prog;
     private javax.swing.JPanel audiopanel;
     public javax.swing.JCheckBox auto_flash_tg;
     public javax.swing.JCheckBox auto_pop_table;
@@ -6274,7 +6250,6 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
@@ -6291,7 +6266,6 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
@@ -6302,7 +6276,6 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -6348,9 +6321,9 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel48;
     private javax.swing.JPanel jPanel49;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel50;
     private javax.swing.JPanel jPanel51;
     private javax.swing.JPanel jPanel52;
+    private javax.swing.JPanel jPanel53;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
