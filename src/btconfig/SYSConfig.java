@@ -526,7 +526,8 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
                           if(clkspeed<0) clkspeed=0;
                           if(clkspeed>5) clkspeed=5;
-                          parent.mcu_speed.setSelectedItem(clkspeed);
+                          System.out.println("clk_speed "+clkspeed);
+                          parent.mcu_speed.setSelectedIndex(clkspeed);
 
                           int en_tg_pri_int = bb3.getInt(568);
                           if(en_tg_pri_int==1) parent.allow_tg_pri_int.setSelected(true);
