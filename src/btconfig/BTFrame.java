@@ -1452,8 +1452,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202108312019");
-      release_date.setText("Release: 2021-08-31 20:19");
+      fw_ver.setText("Latest Avail: FW Date: 202109070500");
+      release_date.setText("Release: 2021-09-07 05:00");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5690,16 +5690,9 @@ public void do_meta() {
     String is_enc_str = "";
     String alias_str = "";
     String phase_str="";
-    String NCO_OFF="";
 
     if(is_phase1==1) phase_str="P1";
     if(is_phase2==1) phase_str="P2";
-
-    try {
-      NCO_OFF = "nco_off "+new Float(current_nco_off).toString();
-    } catch(Exception e) {
-          e.printStackTrace();
-    }
 
     if(current_alias!=null && src_uid!=0 && current_alias.length()>0) alias_str = current_alias+",";
       current_alias="";
@@ -5713,10 +5706,10 @@ public void do_meta() {
     //meta String
     String metadata =""; 
     if(enable_mp3.isSelected()) {
-      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+mp3_file.length()+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str + alias_str + ","+phase_str + "," + NCO_OFF;
+      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+mp3_file.length()+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str + alias_str + ","+phase_str;
     }
     else {
-      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+"0"+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str + alias_str + ","+phase_str + "," + NCO_OFF;
+      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+"0"+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str + alias_str + ","+phase_str;
     }
 
     if(tg_pri>0) {
