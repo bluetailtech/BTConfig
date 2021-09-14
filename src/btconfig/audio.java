@@ -94,6 +94,7 @@ public class audio {
             stop_timer--;
             if(stop_timer==0) {
               if(debug) System.out.println("stop");
+              sourceDataLine.drain();
               sourceDataLine.stop();
               parent.audio_prog.setValue(0);
             }
@@ -533,7 +534,7 @@ BTFrame parent;
           int bsize = sourceDataLine.getBufferSize();
           int bavail = sourceDataLine.available();
           //if(voice_count++>10) {
-          if( ((float) bavail / (float) bsize) < 0.5 ) { 
+          if( ((float) bavail / (float) bsize) < 0.75 ) { 
             voice_count=0;
 
             if(!sourceDataLine.isRunning()) {
