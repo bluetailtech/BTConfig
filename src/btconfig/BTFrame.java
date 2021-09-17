@@ -35,11 +35,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import com.fazecast.jSerialComm.*;
-import net.sourceforge.lame.mp3.*;
-import net.sourceforge.lame.lowlevel.*;
-//import net.sourceforge.lame.mpeg.*;
 
-import javax.sound.sampled.*;
 
 import java.util.prefs.Preferences;
 
@@ -253,8 +249,6 @@ class updateTask extends java.util.TimerTask
             do_read_roaming=1;
           }
         }
-
-        mp3_separate_files.setSelected( false ); 
 
 
         if(do_agc_update==1) {
@@ -819,17 +813,6 @@ class updateTask extends java.util.TimerTask
 
             }
         }
-        else if(is_connected==1 && do_toggle_record==1 && skip_bytes==0) {
-          do_toggle_record=0;
-
-          SLEEP(100);
-          String cmd= new String("logging 0\r\n");
-          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-
-
-          toggle_recording( !record_to_mp3.isSelected() );
-
-        }
         else if(is_connected==1 && do_update_firmware==0) {
           avail = serial_port.bytesAvailable();
           str_idx=0;
@@ -911,113 +894,8 @@ class updateTask extends java.util.TimerTask
                     rx_state=0;
                     pcm_idx=0;
                   }
-                  else if(skip_bytes==0 && record_to_mp3.isSelected() && enable_mp3.isSelected()) {
-                    //System.out.println("read voice");
-
-                    try {
-                      start_time = new java.util.Date().getTime();
-                          tg_indicator.setBackground(java.awt.Color.yellow);
-                          tg_indicator.setForeground(java.awt.Color.yellow);
-                          tg_indicator.setEnabled(true);
-                      if(aud!=null ) {
-                        //if(iztimer!=null) iztimer.cancel();
-                        if(aud!=null) aud.playBuf(pcm_bytes);
-                        cpanel.addAudio(pcm_bytes);
-                        do_audio_tick=0;
-                        audio_tick_start = new java.util.Date().getTime();
-                        //iztimer = new java.util.Timer();
-                        //iztimer.schedule( new insertZeroTask(), 22, 22);
-                      }
-                    } catch(Exception e) {
-                      e.printStackTrace();
-                      //e.printStackTrace();
-                    }
-
-
-                    //addTextConsole("\r\npcm_idx: "+pcm_idx);
-                    byte[] mp3_bytes = encode_mp3(pcm_bytes);
-
-                    if(mp3_bytes!=null) {
-
-                      String date = formatter_date.format(new java.util.Date() );
-                      if( current_date==null || !current_date.equals(date) || mp3_separate_files.isSelected() && sys_mac_id!=null && sys_mac_id.length()>0) {
-                        current_date=new String(date);  //date changed
-
-                        boolean is_ms=mp3_separate_files.isSelected();
-
-                        try {
-
-                          if(!is_ms) {
-                            if(fos_mp3!=null) fos_mp3.close();
-                            if(fos_meta!=null) fos_meta.close();
-                            if(encoder!=null) encoder.close();
-
-                            fos_mp3 = null;
-                            fos_meta = null;
-                            skip_header=1;
-                            encoder=null;
-                          }
-                        } catch(Exception e) {
-                          e.printStackTrace();
-                          //e.printStackTrace();
-                        }
-
-                        try {
-
-
-
-                          String mp3_tg = "";
-                          if(is_ms && mp3_separate_files.isSelected()) {
-                            current_talkgroup = current_talkgroup.replace(',','_');
-
-
-                            if(reset_session==1 || mp3_time.length()==0) {
-                              mp3_time = time_format.format(new java.util.Date() );
-
-                            }
-
-                            mp3_tg = "_"+mp3_time+"_TG_"+current_talkgroup;
-
-                            if(reset_session==1) {
-                              if(fos_mp3!=null) fos_mp3.close();
-                              if(encoder!=null) encoder.close();
-                              encoder=null;
-                              skip_header=1;
-                            }
-
-                            reset_session=0;
-                          }
-
-
-                          open_audio_output_files();
-
-                        } catch(Exception e) {
-                          //e.printStackTrace();
-                          e.printStackTrace();
-                        }
-
-                      }
-
-
-                      do_meta();
-
-                      if(skip_header==1) {
-                        skip_header=0;
-                      }
-                      else {
-                        fos_mp3.write(mp3_bytes,0,mp3_bytes.length);  //write Int num records
-                        fos_mp3.flush();
-                      }
-
-                      boolean is_ms=mp3_separate_files.isSelected();
-                      if(is_ms) {
-                        fos_mp3.write(mp3_bytes,0,mp3_bytes.length);  //write Int num records
-                        fos_mp3.flush();
-                      }
-
-                    }
-                    pcm_idx=0;
-                    rx_state=0;
+                  else if(skip_bytes==0 && enable_mp3.isSelected()) {
+                    //call encode mp3 here
                   }
                 }
                 else if(skip_bytes>0) {
@@ -1229,15 +1107,11 @@ byte[] tdma_bytes;
 int pcm_idx=0;
 int const_idx=0;
 int tdma_idx=0;
-LameEncoder encoder=null;
-byte[] mp3_buffer;
 String current_date=null;
 String home_dir=null;
-FileOutputStream fos_mp3;
 FileOutputStream fos_meta;
 FileOutputStream fos_conlog;
 FileOutputStream fos_tdma;
-File mp3_file=null;
 File meta_file=null;
 File conlog_file=null;
 File tdma_file=null;
@@ -1246,7 +1120,6 @@ java.text.SimpleDateFormat time_format;
 float current_nco_off=0.0f;
 int current_sys_id = 0;
 int current_wacn_id = 0; 
-int do_toggle_record=1;
 int did_metadata=0;
 int meta_count=0;
 int skip_header=1;
@@ -1442,9 +1315,6 @@ long status_time;
       freq.setText("");
       rfid.setText("");
       siteid.setText("");
-
-
-      record_to_mp3.setSelected(true);
 
 
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
@@ -1757,58 +1627,6 @@ long status_time;
     return null;
   }
 
-    //////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////
-    public byte[] encode_mp3(byte[] pcm) {
-
-      int len=0;
-      byte[] b=null;
-
-
-      try {
-
-        if(encoder==null) {
-          //AudioFormat inputFormat = new AudioFormat( new AudioFormat.Encoding("PCM_SIGNED"), 8000.0f, 16, 1, 160, 50, false);
-          AudioFormat inputFormat = new AudioFormat( 8000.0f, 16, 1, true, false);  //booleans are signed, big-endian
-          //encoder = new LameEncoder(inputFormat, 256, MPEGMode.MONO, Lame.QUALITY_LOWEST, false);
-          encoder = new LameEncoder(inputFormat, 32, MPEGMode.MONO, Lame.QUALITY_LOWEST, true);
-          //ByteArrayOutputStream mp3 = new ByteArrayOutputStream();
-          mp3_buffer = new byte[encoder.getPCMBufferSize()];
-
-          //int bytesToTransfer = Math.min(buffer.length, pcm.length);
-          //int bytesWritten;
-          //int currentPcmPosition = 0;
-          //while (0 < (bytesWritten = encoder.encodeBuffer(pcm, currentPcmPosition, bytesToTransfer, buffer))) {
-           // currentPcmPosition += bytesToTransfer;
-            //bytesToTransfer = Math.min(buffer.length, pcm.length - currentPcmPosition);
-
-            //mp3.write(buffer, 0, bytesWritten);
-          //}
-
-          //encoder.close();
-          //return mp3.toByteArray();
-        }
-        else {
-          len = encoder.encodeBuffer(pcm, 0, 320, mp3_buffer);
-          //addTextConsole("\r\nencoder: "+len);
-        }
-
-        if(len==0) return null;
-
-        b = new byte[len];
-
-        if(len>0) {
-          for(int i=0;i<len;i++) {
-            b[i] = mp3_buffer[i];
-          }
-        }
-      } catch(Exception e) {
-        //e.printStackTrace();
-        e.printStackTrace();
-      }
-
-      return b;
-    }
 
     //////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////
@@ -5030,7 +4848,6 @@ long status_time;
         record_to_mp3.setText("REC");
         record_to_mp3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                record_to_mp3ActionPerformed(evt);
             }
         });
         jPanel4.add(record_to_mp3);
@@ -5166,9 +4983,6 @@ long status_time;
       do_restore_tg=1;
     }//GEN-LAST:event_restore_tgActionPerformed
 
-    private void record_to_mp3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_record_to_mp3ActionPerformed
-      do_toggle_record=1;
-    }//GEN-LAST:event_record_to_mp3ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
       if(serial_port!=null) {
@@ -5731,12 +5545,12 @@ public void do_meta() {
 
     //meta String
     String metadata =""; 
-    if(enable_mp3.isSelected()) {
-      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+mp3_file.length()+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str + alias_str + ","+phase_str;
-    }
-    else {
+    //if(enable_mp3.isSelected()) {
+     // metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+mp3_file.length()+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str + alias_str + ","+phase_str;
+    //}
+    //else {
       metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+"0"+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str + alias_str + ","+phase_str;
-    }
+    //}
 
     if(tg_pri>0) {
       metadata = metadata.concat(" (TG PRI)");
@@ -5818,7 +5632,6 @@ public void open_audio_output_files() {
     String date = formatter_date.format(new java.util.Date() );
     current_date=new String(date);  //date changed
 
-    mp3_file = new File(home_dir+"p25rx"+fs+sys_mac_id+fs+"p25rx_recording_"+current_date+".mp3");
     meta_file = new File(home_dir+"p25rx"+fs+sys_mac_id+fs+"p25rx_recmeta_"+current_date+".txt");
     //conlog_file = new File(home_dir+"p25rx_conlog_"+current_date+".txt");
     String exe_path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath().toString();
@@ -5826,7 +5639,6 @@ public void open_audio_output_files() {
     System.out.println("log file path: "+exe_path+"p25rx_conlog_"+current_date+".txt");
     //tdma_file = new File(exe_path+"p25rx_TDMA_PACKED_DIBITS_"+current_date+".bin");
 
-    fos_mp3 = new FileOutputStream( mp3_file, true ); 
     fos_meta = new FileOutputStream( meta_file, true ); 
 
   } catch(Exception e) {
@@ -5962,49 +5774,6 @@ public void restore_position() {
   }
 }
 
-//////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
-void toggle_recording(Boolean isrec) {
-
-  boolean is_recording=!isrec;
-
-  String recnow="";
-  if(is_recording) recnow="1";  //toggle
-  if(!is_recording) recnow="0"; //toggle
-
-  //enable binary voice output for mp3 recording
-  for(int i=0;i<99;i++) {
-    serial_port.writeBytes( new String("en_voice_send "+recnow+"\r\n").getBytes(), 17, 0);
-    try {
-      SLEEP(50);
-      if(serial_port.bytesAvailable()>29) break;
-    } catch(Exception e) {
-      e.printStackTrace();
-      //e.printStackTrace();
-    }
-    byte[] b = new byte[32];
-    int len = serial_port.readBytes(b, 30);
-    if(len>0) {
-      String s = new String(b);
-      if(s.contains("en_voice_send "+recnow)) {
-        is_recording = !isrec; 
-        break;
-      };
-    }
-  }
-
-  if(is_recording) {
-    record_to_mp3.setSelected(true);
-    record_to_mp3.setBackground(java.awt.Color.red);
-    record_to_mp3.setForeground(java.awt.Color.black);
-  }
-  else {
-    record_to_mp3.setSelected(false);
-    record_to_mp3.setBackground(java.awt.Color.white);
-    record_to_mp3.setForeground(java.awt.Color.black);
-  }
-}
-    
 //SUMS 1
 float[] columnWidthPercentage = {.075f, .10f, .075f, .075f, .25f, .325f, 0.1f };
 private void resizeColumns() {
