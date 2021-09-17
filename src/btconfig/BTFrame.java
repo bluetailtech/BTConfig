@@ -5761,7 +5761,7 @@ public void update_prefs() {
       String home_dir_str = file.getAbsolutePath()+fs;
 
 
-      home_dir = prefs.get("p25rx_home_dir", home_dir_str);
+      home_dir = prefs.get("p25rx_home_dir", home_dir_str+"p25rx");
       home_dir_label.setText(home_dir);
       System.out.println("home_dir: "+home_dir);
 

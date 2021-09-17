@@ -145,7 +145,7 @@ BTFrame parent;
 
   int voice_count=0;
 
-  boolean debug=true;
+  boolean debug=false;
 
 
 

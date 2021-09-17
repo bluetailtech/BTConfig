@@ -68,7 +68,7 @@ private int do_save_alias=0;
                 String fs =  System.getProperty("file.separator");
                 File file = new File(home_dir+fs+sys_mac_id+fs+"p25rx_aliases.csv");
 
-                System.out.println("\r\nsaving alias file "+file);
+                //System.out.println("\r\nsaving alias file "+file);
 
                 FileOutputStream fos = new FileOutputStream(file);
 

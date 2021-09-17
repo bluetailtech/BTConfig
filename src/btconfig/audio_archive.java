@@ -28,7 +28,7 @@ private int do_audio_encode=0;
 private byte[] audio_buffer=null;
 private int is_high_q=0;
 BTFrame parent;
-boolean debug=true;
+boolean debug=false;
 String tg="";
 String home_dir;
 
