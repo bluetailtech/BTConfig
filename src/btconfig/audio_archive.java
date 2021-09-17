@@ -247,8 +247,8 @@ private void SLEEP(long val) {
 
         byte[] header = new byte[44];
 
-          int totalDataLen = 999999999;
-          int totalAudioLen = 999999999;
+          int totalDataLen = 999999999*3; //little more than 24 hours
+          int totalAudioLen = 999999999*3;  //little more than 24 hours
           int channels=1;
           int longSampleRate=8000;
           int byteRate=longSampleRate*4;
