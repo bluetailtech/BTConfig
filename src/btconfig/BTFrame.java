@@ -1304,9 +1304,6 @@ audio_archive aud_archive;
       check_firmware.setEnabled(false);
       check_firmware.setVisible(false);
 
-      record_to_mp3.setEnabled(false);
-      record_to_mp3.setVisible(false);
-
       macid.setText("");
       wacn.setText("");
       sysid.setText("");
@@ -2935,7 +2932,6 @@ audio_archive aud_archive;
         jPanel4 = new javax.swing.JPanel();
         minimize = new javax.swing.JToggleButton();
         mute = new javax.swing.JToggleButton();
-        record_to_mp3 = new javax.swing.JToggleButton();
         release_date = new javax.swing.JLabel();
         ser_dev = new javax.swing.JLabel();
 
@@ -3797,15 +3793,15 @@ audio_archive aud_archive;
 
         buttonGroup16.add(audio_hiq);
         audio_hiq.setText("High");
-        jPanel11.add(audio_hiq, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, -1, -1));
+        jPanel11.add(audio_hiq, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, -1, -1));
 
         buttonGroup16.add(audio_lowq);
         audio_lowq.setSelected(true);
         audio_lowq.setText("Low");
-        jPanel11.add(audio_lowq, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, -1, -1));
+        jPanel11.add(audio_lowq, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 270, -1, -1));
 
-        jLabel9.setText("Quality");
-        jPanel11.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, -1, 20));
+        jLabel9.setText("MP3 Quality");
+        jPanel11.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(73, 270, 100, 20));
 
         audiopanel.add(jPanel11, java.awt.BorderLayout.CENTER);
 
@@ -4850,13 +4846,6 @@ audio_archive aud_archive;
             }
         });
         jPanel4.add(mute);
-
-        record_to_mp3.setText("REC");
-        record_to_mp3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-            }
-        });
-        jPanel4.add(record_to_mp3);
 
         release_date.setText("V: ");
         jPanel4.add(release_date);
@@ -6226,7 +6215,6 @@ public void SLEEP(long val) {
     public javax.swing.JRadioButton quad_click_opt6;
     private javax.swing.JButton read_config;
     private javax.swing.JButton read_tg;
-    private javax.swing.JToggleButton record_to_mp3;
     public javax.swing.JTextField ref_freq;
     private javax.swing.JLabel release_date;
     public javax.swing.JButton restore_roam;

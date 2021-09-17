@@ -23,6 +23,9 @@ FileOutputStream fos_mp3;
 File mp3_file=null;
 java.text.SimpleDateFormat mp3_time_format = new java.text.SimpleDateFormat( "HH:mm:ss" );
 String mp3_time ="";
+private int do_audio_encode=0;
+private byte[] audio_buffer=null;
+private int is_high_q=0;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +36,33 @@ String mp3_time ="";
       {
         try {
 
+          if( do_audio_encode!=0 && audio_buffer!=null) {
+            do_audio_encode=0;
+
+            if( parent.do_mp3.isSelected() ) {
+              //System.out.println("encode mp3");
+
+              if( audio_buffer!=null ) {
+                byte[] buffer = encode_mp3(audio_buffer);
+
+                if(buffer!=null && buffer.length>0) {
+                  try {
+                    fos_mp3 = new FileOutputStream( "/tmp/test.mp3", true );
+                    fos_mp3.write(buffer,0,buffer.length);  //write Int num records
+                    fos_mp3.flush();
+                    fos_mp3.close();
+                  } catch(Exception e) {
+                    e.printStackTrace();
+                  }
+                }
+              }
+            }
+            else if( parent.do_wav.isSelected() ) {
+              //System.out.println("encode wav");
+            }
+          }
         } catch(Exception e) {
+          e.printStackTrace();
         }
       }
   }
@@ -51,6 +80,9 @@ String mp3_time ="";
     try {
       utimer = new java.util.Timer();
       utimer.schedule( new updateTask(), 100, 1);
+
+      if(parent.audio_hiq.isSelected()) is_high_q=1;
+        else is_high_q=0;
     } catch(Exception e) {
      e.printStackTrace();
     }
@@ -59,6 +91,13 @@ String mp3_time ="";
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
   public void addAudio(byte[] pcm) {
+    if(do_audio_encode!=0) return; //shouldn't happen
+
+    if(audio_buffer==null || audio_buffer.length!=pcm.length) audio_buffer = new byte[pcm.length];
+    for(int i=0;i<pcm.length;i++) {
+      audio_buffer[i]=pcm[i];
+    }
+    do_audio_encode=1;
   }
 
   /////////////////////////////////////////////////////////////////////////////////
@@ -76,6 +115,90 @@ private void SLEEP(long val) {
     e.printStackTrace();
   }
 }
+
+
+    //////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////
+    public byte[] encode_mp3(byte[] pcm) {
+
+      int len=0;
+      byte[] b=null;
+
+
+      try {
+
+        int high_q=0;
+        if(parent.audio_hiq.isSelected()) high_q=1;
+            else high_q=0;
+
+        if(encoder==null || high_q!=is_high_q) {
+          AudioFormat inputFormat = new AudioFormat( 8000.0f, 16, 1, true, false);  //booleans are signed, big-endian
+          if( parent.audio_hiq.isSelected()) {
+            encoder = new LameEncoder(inputFormat, 256, MPEGMode.MONO, Lame.QUALITY_HIGHEST, true);
+            System.out.println("mp3 high quality");
+          }
+          else {
+            encoder = new LameEncoder(inputFormat, 32, MPEGMode.MONO, Lame.QUALITY_LOWEST, true);
+            System.out.println("mp3 low quality");
+          }
+          mp3_buffer = new byte[encoder.getPCMBufferSize()];
+        }
+
+        is_high_q = high_q;
+
+        len = encoder.encodeBuffer(pcm, 0, 320, mp3_buffer);
+
+        if(len==0) return null;
+
+        b = new byte[len];
+
+        if(len>0) {
+          for(int i=0;i<len;i++) {
+            b[i] = mp3_buffer[i];
+          }
+        }
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+
+      return b;
+    }
+
+
+    //////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////
+    public byte[] encode_wav(byte[] pcm) {
+      int len=0;
+      byte[] b=null;
+
+            /*
+      typedef struct wav_header {
+          // RIFF Header
+          char riff_header[4]; // Contains "RIFF"
+          int wav_size; // Size of the wav portion of the file, which follows the first 8 bytes. File size - 8
+          char wave_header[4]; // Contains "WAVE"
+          
+          // Format Header
+          char fmt_header[4]; // Contains "fmt " (includes trailing space)
+          int fmt_chunk_size; // Should be 16 for PCM
+          short audio_format; // Should be 1 for PCM. 3 for IEEE Float
+          short num_channels;
+          int sample_rate;
+          int byte_rate; // Number of bytes per second. sample_rate * num_channels * Bytes Per Sample
+          short sample_alignment; // num_channels * Bytes Per Sample
+          short bit_depth; // Number of bits per sample
+          
+          // Data
+          char data_header[4]; // Contains "data"
+          int data_bytes; // Number of bytes in data. Number of samples * num_channels * sample byte size
+          // uint8_t bytes[]; // Remainder of wave file is bytes
+      } wav_header;
+          */
+
+       return b;
+    }
+
+
 }
 
     /*
@@ -236,57 +359,3 @@ void toggle_recording(Boolean isrec) {
     */
 
 
-      /*
-    //////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////
-    public byte[] encode_mp3(byte[] pcm) {
-
-      int len=0;
-      byte[] b=null;
-
-
-      try {
-
-        if(encoder==null) {
-          //AudioFormat inputFormat = new AudioFormat( new AudioFormat.Encoding("PCM_SIGNED"), 8000.0f, 16, 1, 160, 50, false);
-          AudioFormat inputFormat = new AudioFormat( 8000.0f, 16, 1, true, false);  //booleans are signed, big-endian
-          //encoder = new LameEncoder(inputFormat, 256, MPEGMode.MONO, Lame.QUALITY_LOWEST, false);
-          encoder = new LameEncoder(inputFormat, 32, MPEGMode.MONO, Lame.QUALITY_LOWEST, true);
-          //ByteArrayOutputStream mp3 = new ByteArrayOutputStream();
-          mp3_buffer = new byte[encoder.getPCMBufferSize()];
-
-          //int bytesToTransfer = Math.min(buffer.length, pcm.length);
-          //int bytesWritten;
-          //int currentPcmPosition = 0;
-          //while (0 < (bytesWritten = encoder.encodeBuffer(pcm, currentPcmPosition, bytesToTransfer, buffer))) {
-           // currentPcmPosition += bytesToTransfer;
-            //bytesToTransfer = Math.min(buffer.length, pcm.length - currentPcmPosition);
-
-            //mp3.write(buffer, 0, bytesWritten);
-          //}
-
-          //encoder.close();
-          //return mp3.toByteArray();
-        }
-        else {
-          len = encoder.encodeBuffer(pcm, 0, 320, mp3_buffer);
-          //addTextConsole("\r\nencoder: "+len);
-        }
-
-        if(len==0) return null;
-
-        b = new byte[len];
-
-        if(len>0) {
-          for(int i=0;i<len;i++) {
-            b[i] = mp3_buffer[i];
-          }
-        }
-      } catch(Exception e) {
-        //e.printStackTrace();
-        e.printStackTrace();
-      }
-
-      return b;
-    }
-    */
