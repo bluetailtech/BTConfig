@@ -1452,8 +1452,8 @@ long status_time;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202109070500");
-      release_date.setText("Release: 2021-09-07 05:00");
+      fw_ver.setText("Latest Avail: FW Date: 202109161207");
+      release_date.setText("Release: 2021-09-16 12:07");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2729,6 +2729,8 @@ long status_time;
         buttonGroup12 = new javax.swing.ButtonGroup();
         buttonGroup13 = new javax.swing.ButtonGroup();
         buttonGroup14 = new javax.swing.ButtonGroup();
+        buttonGroup15 = new javax.swing.ButtonGroup();
+        buttonGroup16 = new javax.swing.ButtonGroup();
         bottom_panel = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         status_panel = new javax.swing.JPanel();
@@ -2920,6 +2922,11 @@ long status_time;
         home_dir_label = new javax.swing.JLabel();
         audio_dev_play = new javax.swing.JRadioButton();
         audio_dev_all = new javax.swing.JRadioButton();
+        do_mp3 = new javax.swing.JRadioButton();
+        do_wav = new javax.swing.JRadioButton();
+        audio_hiq = new javax.swing.JRadioButton();
+        audio_lowq = new javax.swing.JRadioButton();
+        jLabel9 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         freqdb_panel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
@@ -3874,7 +3881,7 @@ long status_time;
         jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         enable_mp3.setSelected(true);
-        enable_mp3.setText("Enable .mp3 audio file generation");
+        enable_mp3.setText("Enable audio file generation");
         enable_mp3.setToolTipText("This option will generate mp3 files in the p25rx directory located in the user home directory.  ~/p25rx on Linux and Documents/p25rx on Windows.");
         enable_mp3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -3890,16 +3897,15 @@ long status_time;
                 enable_audioActionPerformed(evt);
             }
         });
-        jPanel11.add(enable_audio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, -1, -1));
+        jPanel11.add(enable_audio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, -1, -1));
 
-        mp3_separate_files.setText("Generate separate files per session  ");
-        mp3_separate_files.setEnabled(false);
+        mp3_separate_files.setText("Generate separate files by talk group");
         mp3_separate_files.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mp3_separate_filesActionPerformed(evt);
             }
         });
-        jPanel11.add(mp3_separate_files, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, -1));
+        jPanel11.add(mp3_separate_files, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, -1, -1));
 
         jScrollPane3.setAutoscrolls(true);
 
@@ -3922,7 +3928,6 @@ long status_time;
         jPanel11.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, -1, -1));
 
         select_home.setText("Select");
-        select_home.setEnabled(false);
         select_home.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 select_homeActionPerformed(evt);
@@ -3956,6 +3961,27 @@ long status_time;
             }
         });
         jPanel11.add(audio_dev_all, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 480, -1, -1));
+
+        buttonGroup15.add(do_mp3);
+        do_mp3.setSelected(true);
+        do_mp3.setText("MP3");
+        jPanel11.add(do_mp3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, -1, -1));
+
+        buttonGroup15.add(do_wav);
+        do_wav.setText("WAV");
+        jPanel11.add(do_wav, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, -1, -1));
+
+        buttonGroup16.add(audio_hiq);
+        audio_hiq.setText("High");
+        jPanel11.add(audio_hiq, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, -1, -1));
+
+        buttonGroup16.add(audio_lowq);
+        audio_lowq.setSelected(true);
+        audio_lowq.setText("Low");
+        jPanel11.add(audio_lowq, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, -1, -1));
+
+        jLabel9.setText("Quality");
+        jPanel11.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, -1, 20));
 
         audiopanel.add(jPanel11, java.awt.BorderLayout.CENTER);
 
@@ -6091,6 +6117,8 @@ public void SLEEP(long val) {
     public javax.swing.JRadioButton audio_dev_all;
     public javax.swing.JList<String> audio_dev_list;
     public javax.swing.JRadioButton audio_dev_play;
+    public javax.swing.JRadioButton audio_hiq;
+    public javax.swing.JRadioButton audio_lowq;
     public javax.swing.JProgressBar audio_prog;
     private javax.swing.JPanel audiopanel;
     public javax.swing.JCheckBox auto_flash_tg;
@@ -6110,6 +6138,8 @@ public void SLEEP(long val) {
     private javax.swing.ButtonGroup buttonGroup12;
     private javax.swing.ButtonGroup buttonGroup13;
     private javax.swing.ButtonGroup buttonGroup14;
+    private javax.swing.ButtonGroup buttonGroup15;
+    private javax.swing.ButtonGroup buttonGroup16;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.ButtonGroup buttonGroup4;
@@ -6157,6 +6187,8 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox dmr_slot2;
     public javax.swing.JTextField dmr_sys_id;
     private javax.swing.JButton dmr_write_config;
+    public javax.swing.JRadioButton do_mp3;
+    public javax.swing.JRadioButton do_wav;
     public javax.swing.JRadioButton double_click_opt1;
     public javax.swing.JRadioButton double_click_opt2;
     public javax.swing.JRadioButton double_click_opt3;
@@ -6269,6 +6301,7 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -6429,7 +6462,7 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox roaming;
     public javax.swing.JCheckBox roaming_ret_to_cc;
     private javax.swing.JTextField search_radius;
-    private javax.swing.JButton select_home;
+    public javax.swing.JButton select_home;
     private javax.swing.JButton send_tg;
     private javax.swing.JLabel ser_dev;
     private javax.swing.JPanel signalinsightpanel;
