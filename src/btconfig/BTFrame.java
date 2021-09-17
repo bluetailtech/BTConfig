@@ -261,7 +261,7 @@ class updateTask extends java.util.TimerTask
           try {
             JFileChooser chooser = new JFileChooser();
 
-            File cdir = new File(home_dir+"p25rx");
+            File cdir = new File(home_dir);
             chooser.setCurrentDirectory(cdir);
 
 
@@ -310,7 +310,7 @@ class updateTask extends java.util.TimerTask
 
             JFileChooser chooser = new JFileChooser();
 
-            File cdir = new File(home_dir+"p25rx");
+            File cdir = new File(home_dir);
             chooser.setCurrentDirectory(cdir);
 
 
@@ -358,7 +358,7 @@ class updateTask extends java.util.TimerTask
 
             JFileChooser chooser = new JFileChooser();
 
-            File cdir = new File(home_dir+"p25rx");
+            File cdir = new File(home_dir);
             chooser.setCurrentDirectory(cdir);
 
 
@@ -407,7 +407,7 @@ class updateTask extends java.util.TimerTask
 
             JFileChooser chooser = new JFileChooser();
 
-            File cdir = new File(home_dir+"p25rx");
+            File cdir = new File(home_dir);
             chooser.setCurrentDirectory(cdir);
 
 
@@ -782,6 +782,7 @@ class updateTask extends java.util.TimerTask
                     macid.setVisible(true);
                     macid.setText("MAC: "+sys_mac_id);
 
+                    String fs =  System.getProperty("file.separator");
                     if(alias==null) alias = new Alias(parent, parent.sys_mac_id, home_dir);
 
                     break;
@@ -892,7 +893,8 @@ class updateTask extends java.util.TimerTask
                     pcm_idx=0;
 
                     if(enable_mp3.isSelected()) {
-                      if(aud_archive!=null) aud_archive.addAudio( pcm_bytes );
+                      String fs =  System.getProperty("file.separator");
+                      if(aud_archive!=null) aud_archive.addAudio( pcm_bytes, current_talkgroup, home_dir+fs+sys_mac_id );
                     }
                   }
 
@@ -2035,6 +2037,8 @@ audio_archive aud_archive;
 
 
                 talkgroup = talkgroup.substring(0,talkgroup.length()-1)+" ";
+
+                if(current_talkgroup.contains(",")) current_talkgroup=current_talkgroup.substring(0,current_talkgroup.length()-1);
 
                 try {
                   //System.out.println("checking tgroup superg: "+tg_id.trim().substring(0,tg_id.length()-1));
@@ -3785,19 +3789,39 @@ audio_archive aud_archive;
         buttonGroup15.add(do_mp3);
         do_mp3.setSelected(true);
         do_mp3.setText("MP3");
+        do_mp3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                do_mp3ActionPerformed(evt);
+            }
+        });
         jPanel11.add(do_mp3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, -1, -1));
 
         buttonGroup15.add(do_wav);
         do_wav.setText("WAV");
+        do_wav.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                do_wavActionPerformed(evt);
+            }
+        });
         jPanel11.add(do_wav, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, -1, -1));
 
         buttonGroup16.add(audio_hiq);
         audio_hiq.setText("High");
+        audio_hiq.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                audio_hiqActionPerformed(evt);
+            }
+        });
         jPanel11.add(audio_hiq, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, -1, -1));
 
         buttonGroup16.add(audio_lowq);
         audio_lowq.setSelected(true);
         audio_lowq.setText("Variable Bit Rate");
+        audio_lowq.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                audio_lowqActionPerformed(evt);
+            }
+        });
         jPanel11.add(audio_lowq, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 270, -1, -1));
 
         jLabel9.setText("MP3 Quality");
@@ -5370,7 +5394,7 @@ audio_archive aud_archive;
     }//GEN-LAST:event_audio_dev_listValueChanged
 
     private void select_homeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_select_homeActionPerformed
-      do_select_home_dir=1;
+      get_home_dir();
     }//GEN-LAST:event_select_homeActionPerformed
 
     private void add_tdu_silenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_tdu_silenceActionPerformed
@@ -5476,6 +5500,30 @@ audio_archive aud_archive;
       String cmd = new String("eqr\r\n");
       serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
     }//GEN-LAST:event_eq_resetActionPerformed
+
+    private void do_mp3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_do_mp3ActionPerformed
+        // TODO add your handling code here:
+     if(prefs!=null) prefs.putBoolean("do_mp3", do_mp3.isSelected());
+     if(prefs!=null) prefs.putBoolean("do_wav", !do_mp3.isSelected());
+    }//GEN-LAST:event_do_mp3ActionPerformed
+
+    private void do_wavActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_do_wavActionPerformed
+        // TODO add your handling code here:
+     if(prefs!=null) prefs.putBoolean("do_wav", do_wav.isSelected());
+     if(prefs!=null) prefs.putBoolean("do_mp3", !do_wav.isSelected());
+    }//GEN-LAST:event_do_wavActionPerformed
+
+    private void audio_hiqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_audio_hiqActionPerformed
+        // TODO add your handling code here:
+     if(prefs!=null) prefs.putBoolean("audio_hiq", audio_hiq.isSelected());
+     if(prefs!=null) prefs.putBoolean("audio_lowq", !audio_hiq.isSelected());
+    }//GEN-LAST:event_audio_hiqActionPerformed
+
+    private void audio_lowqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_audio_lowqActionPerformed
+        // TODO add your handling code here:
+     if(prefs!=null) prefs.putBoolean("audio_lowq", audio_lowq.isSelected());
+     if(prefs!=null) prefs.putBoolean("audio_hiq", !audio_lowq.isSelected());
+    }//GEN-LAST:event_audio_lowqActionPerformed
 
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
@@ -5619,20 +5667,18 @@ public void open_audio_output_files() {
   try {
     String fs =  System.getProperty("file.separator");
 
-    Path path = Paths.get(home_dir+"p25rx"+fs+sys_mac_id);
+    Path path = Paths.get(home_dir+fs+sys_mac_id);
     Files.createDirectories(path);
 
-    home_dir_label.setText(home_dir+"p25rx"+fs+sys_mac_id+fs);
+    home_dir_label.setText(home_dir);
 
     String date = formatter_date.format(new java.util.Date() );
     current_date=new String(date);  //date changed
 
-    meta_file = new File(home_dir+"p25rx"+fs+sys_mac_id+fs+"p25rx_recmeta_"+current_date+".txt");
-    //conlog_file = new File(home_dir+"p25rx_conlog_"+current_date+".txt");
+    meta_file = new File(home_dir+fs+sys_mac_id+fs+"p25rx_recmeta_"+current_date+".txt");
     String exe_path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath().toString();
     exe_path = exe_path.replace("BTConfig.exe", "");
     System.out.println("log file path: "+exe_path+"p25rx_conlog_"+current_date+".txt");
-    //tdma_file = new File(exe_path+"p25rx_TDMA_PACKED_DIBITS_"+current_date+".bin");
 
     fos_meta = new FileOutputStream( meta_file, true ); 
 
@@ -5677,13 +5723,10 @@ public void update_prefs() {
     if(prefs!=null) {
       int i = prefs.getInt("audio_buffer_system",1);
 
-      enable_mp3.setSelected( prefs.getBoolean("enable_mp3", true) ); 
-      enable_audio.setSelected( prefs.getBoolean("enable_audio", true) ); 
       auto_flash_tg.setSelected( prefs.getBoolean("tg_auto_flash", false) );
       auto_pop_table.setSelected( prefs.getBoolean("tg_auto_pop_table", true) );
       disable_encrypted.setSelected( prefs.getBoolean("enc_auto_flash", false) );
       autoscale_const.setSelected( prefs.getBoolean("autoscale_const", true) );
-      mp3_separate_files.setSelected( prefs.getBoolean("mp3_separate_files", false) );
       nsymbols.setSelectedIndex( prefs.getInt("nsymbols", 0) );
 
       en_visuals.setSelected( prefs.getBoolean("en_visuals", true) );
@@ -5699,6 +5742,15 @@ public void update_prefs() {
 
       process_rid_alias.setSelected( prefs.getBoolean("process_rid_alias", true) );
 
+      //audio stuff
+      enable_mp3.setSelected( prefs.getBoolean("enable_mp3", true) ); 
+      enable_audio.setSelected( prefs.getBoolean("enable_audio", true) ); 
+      mp3_separate_files.setSelected( prefs.getBoolean("mp3_separate_files", false) );
+
+      do_mp3.setSelected( prefs.getBoolean("do_mp3", true) );
+      do_wav.setSelected( prefs.getBoolean("do_wav", false) );
+      audio_hiq.setSelected( prefs.getBoolean("audio_hiq", false) );
+      audio_lowq.setSelected( prefs.getBoolean("audio_lowq", true) );
 
       int constellation = prefs.getInt("const_select", 1);
     }
@@ -5713,6 +5765,13 @@ public void update_prefs() {
       home_dir_label.setText(home_dir);
       System.out.println("home_dir: "+home_dir);
 
+        try {
+          Path path = Paths.get(new File(home_dir+fs+sys_mac_id).getAbsolutePath() );
+          Files.createDirectories(path);
+        } catch(Exception e) {
+          e.printStackTrace();
+        }
+
       restore_position();
 
 
@@ -5721,6 +5780,41 @@ public void update_prefs() {
   }
 }
 
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+String get_home_dir() {
+  JFileChooser chooser = new JFileChooser();
+
+  chooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+
+
+  int returnVal = chooser.showDialog(parent, "Select Home Directory/Folder");
+
+  if(returnVal == JFileChooser.APPROVE_OPTION) {
+
+    String fs =  System.getProperty("file.separator");
+    File file = chooser.getSelectedFile();  //better for windows to do it this way
+    System.out.println("file:"+file);
+
+
+    Path path = Paths.get(new File(home_dir+fs+sys_mac_id).getAbsolutePath() );
+    try {
+      Files.createDirectories(path);
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
+    System.out.println("path:"+path);
+
+    path = Paths.get(file.getAbsolutePath());
+    home_dir_label.setText(path.toString());
+    home_dir = home_dir_label.getText();
+    prefs.put("p25rx_home_dir", home_dir); 
+
+    alias = new Alias(parent, parent.sys_mac_id, home_dir);
+  }
+
+  return home_dir_label.getText();
+}
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 public void save_position() {

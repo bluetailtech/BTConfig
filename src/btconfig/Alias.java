@@ -50,6 +50,67 @@ int previous_rid;
 String home_dir;
 String sys_mac_id;
 TableRowSorter trs;
+java.util.Timer utimer;
+private int do_save_alias=0;
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  class updateTask extends java.util.TimerTask
+  {
+
+      public void run()
+      {
+        try {
+          if( do_save_alias==1 ) {
+              do_save_alias=0;
+              try {
+
+                String fs =  System.getProperty("file.separator");
+                File file = new File(home_dir+fs+sys_mac_id+fs+"p25rx_aliases.csv");
+
+                System.out.println("\r\nsaving alias file "+file);
+
+                FileOutputStream fos = new FileOutputStream(file);
+
+                for(int i=0;i<NRECS;i++) {
+                  String rid_str="";
+                  String alias_str="";
+
+                  try {
+                    rid_str = (String) parent.getAliasObject(i,0).toString();
+                  } catch(Exception e) {
+                    //e.printStackTrace();
+                  }
+                  try {
+                    alias_str = (String) parent.getAliasObject(i,1);
+                  } catch(Exception e) {
+                    //e.printStackTrace();
+                  }
+
+                  if(rid_str==null || rid_str.equals("null")) rid_str="";
+                  if(alias_str==null || alias_str.equals("null")) alias_str="";
+
+                  if(rid_str!=null && rid_str.length()>0) {
+                    String out_line = rid_str+","+alias_str+"\r\n";
+                    fos.write(out_line.getBytes()); 
+                  }
+
+                }
+
+                fos.flush();
+                fos.close();
+
+            } catch(Exception e) {
+              e.printStackTrace();
+            }
+          }
+        } catch(Exception e) {
+          e.printStackTrace();
+        }
+      }
+  }
+
+
 
 public Alias(BTFrame parent, String sys_mac_id, String home_dir) {
   this.parent = parent;
@@ -74,13 +135,20 @@ public Alias(BTFrame parent, String sys_mac_id, String home_dir) {
   trs = new TableRowSorter(parent.alias_table.getModel());
   trs.setComparator(0, new IntComparator());
   parent.alias_table.setRowSorter(trs);
+
+  try {
+      utimer = new java.util.Timer();
+      utimer.schedule( new updateTask(), 100, 1);
+  } catch(Exception e) {
+    e.printStackTrace();
+  }
 }
 
 private void read_alias() {
   try {
 
     String fs =  System.getProperty("file.separator");
-    File cdir = new File(home_dir+"p25rx"+fs+sys_mac_id+fs+"p25rx_aliases.csv");
+    File cdir = new File(home_dir+fs+sys_mac_id+fs+"p25rx_aliases.csv");
 
     /*
     try {
@@ -348,48 +416,7 @@ private void do_import_from_prefs() {
     }
 }
 public void save_alias() {
-
-
-    try {
-
-      String fs =  System.getProperty("file.separator");
-      File file = new File(home_dir+"p25rx"+fs+sys_mac_id+fs+"p25rx_aliases.csv");
-
-      //System.out.println("\r\nsaving alias file "+file);
-
-      FileOutputStream fos = new FileOutputStream(file);
-
-      for(int i=0;i<NRECS;i++) {
-        String rid_str="";
-        String alias_str="";
-
-        try {
-          rid_str = (String) parent.getAliasObject(i,0).toString();
-        } catch(Exception e) {
-          e.printStackTrace();
-        }
-        try {
-          alias_str = (String) parent.getAliasObject(i,1);
-        } catch(Exception e) {
-          e.printStackTrace();
-        }
-
-        if(rid_str==null || rid_str.equals("null")) rid_str="";
-        if(alias_str==null || alias_str.equals("null")) alias_str="";
-
-        if(rid_str!=null && rid_str.length()>0) {
-          String out_line = rid_str+","+alias_str+"\r\n";
-          fos.write(out_line.getBytes()); 
-        }
-
-      }
-
-      fos.flush();
-      fos.close();
-
-  } catch(Exception e) {
-    e.printStackTrace();
-  }
+  do_save_alias=1;
 }
 
 class IntComparator implements Comparator {

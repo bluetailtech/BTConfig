@@ -21,11 +21,18 @@ LameEncoder encoder=null;
 byte[] mp3_buffer;
 FileOutputStream fos_mp3;
 File mp3_file=null;
-java.text.SimpleDateFormat mp3_time_format = new java.text.SimpleDateFormat( "HH:mm:ss" );
+java.text.SimpleDateFormat mp3_time_format;
+java.text.SimpleDateFormat formatter_date;
 String mp3_time ="";
 private int do_audio_encode=0;
 private byte[] audio_buffer=null;
 private int is_high_q=0;
+BTFrame parent;
+boolean debug=true;
+String tg="";
+String home_dir;
+
+java.util.Timer utimer;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -36,7 +43,7 @@ private int is_high_q=0;
       {
         try {
 
-          if( do_audio_encode!=0 && audio_buffer!=null) {
+          if( do_audio_encode!=0 && audio_buffer!=null && home_dir!=null) {
             do_audio_encode=0;
 
             if( parent.do_mp3.isSelected() ) {
@@ -47,7 +54,16 @@ private int is_high_q=0;
 
                 if(buffer!=null && buffer.length>0) {
                   try {
-                    fos_mp3 = new FileOutputStream( "/tmp/test.mp3", true );
+                    if(tg==null || tg.length()==0) tg="000";
+
+                    String ndate = formatter_date.format(new java.util.Date() );
+
+                    if(parent.mp3_separate_files.isSelected()) {
+                      fos_mp3 = new FileOutputStream( home_dir+"/TG-"+tg+"_"+ndate+".mp3", true );
+                    }
+                    else {
+                      fos_mp3 = new FileOutputStream( home_dir+"/p25rx_record"+"_"+ndate+".mp3", true );
+                    }
                     fos_mp3.write(buffer,0,buffer.length);  //write Int num records
                     fos_mp3.flush();
                     fos_mp3.close();
@@ -67,11 +83,6 @@ private int is_high_q=0;
       }
   }
 
-  java.util.Timer utimer;
-  BTFrame parent;
-  boolean debug=true;
-
-
 
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
@@ -83,6 +94,10 @@ private int is_high_q=0;
 
       if(parent.audio_hiq.isSelected()) is_high_q=1;
         else is_high_q=0;
+
+      mp3_time_format = new java.text.SimpleDateFormat( "HH:mm:ss" );
+      formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
+
     } catch(Exception e) {
      e.printStackTrace();
     }
@@ -90,14 +105,18 @@ private int is_high_q=0;
 
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
-  public void addAudio(byte[] pcm) {
+  public void addAudio(byte[] pcm, String talkgroup, String home_dir) {
     if(do_audio_encode!=0) return; //shouldn't happen
+    if(home_dir==null) return;
+    this.home_dir = home_dir;
 
     if(audio_buffer==null || audio_buffer.length!=pcm.length) audio_buffer = new byte[pcm.length];
     for(int i=0;i<pcm.length;i++) {
       audio_buffer[i]=pcm[i];
     }
     do_audio_encode=1;
+
+    tg = talkgroup;
   }
 
   /////////////////////////////////////////////////////////////////////////////////
