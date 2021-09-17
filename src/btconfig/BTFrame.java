@@ -871,7 +871,7 @@ class updateTask extends java.util.TimerTask
 
                   if(pcm_idx<320) pcm_bytes[pcm_idx++] = b[i];
 
-                  if( !enable_mp3.isSelected() && skip_bytes==0 ) {
+                  if(skip_bytes==0) {
                     do_meta();
                     //System.out.println("read voice");
                     try {
@@ -880,23 +880,23 @@ class updateTask extends java.util.TimerTask
                           tg_indicator.setForeground(java.awt.Color.yellow);
                           tg_indicator.setEnabled(true);
                       if(aud!=null ) {
-                        //if(iztimer!=null) iztimer.cancel();
                         if(aud!=null) aud.playBuf(pcm_bytes);
                         cpanel.addAudio(pcm_bytes);
                         do_audio_tick=0;
                         audio_tick_start = new java.util.Date().getTime();
-                        //iztimer = new java.util.Timer();
-                        //iztimer.schedule( new insertZeroTask(), 22, 22);
                       }
                     } catch(Exception e) {
                       e.printStackTrace();
                     }
                     rx_state=0;
                     pcm_idx=0;
+
+                    if( !enable_mp3.isSelected() ) {
+                    }
+                    else if(enable_mp3.isSelected()) {
+                    }
                   }
-                  else if(skip_bytes==0 && enable_mp3.isSelected()) {
-                    //call encode mp3 here
-                  }
+
                 }
                 else if(skip_bytes>0) {
                   skip_bytes--; //handle unknown state
