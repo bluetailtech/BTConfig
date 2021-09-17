@@ -3797,7 +3797,7 @@ audio_archive aud_archive;
 
         buttonGroup16.add(audio_lowq);
         audio_lowq.setSelected(true);
-        audio_lowq.setText("Low");
+        audio_lowq.setText("Variable Bit Rate");
         jPanel11.add(audio_lowq, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 270, -1, -1));
 
         jLabel9.setText("MP3 Quality");

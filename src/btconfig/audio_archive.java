@@ -134,11 +134,11 @@ private void SLEEP(long val) {
         if(encoder==null || high_q!=is_high_q) {
           AudioFormat inputFormat = new AudioFormat( 8000.0f, 16, 1, true, false);  //booleans are signed, big-endian
           if( parent.audio_hiq.isSelected()) {
-            encoder = new LameEncoder(inputFormat, 256, MPEGMode.MONO, Lame.QUALITY_HIGHEST, true);
+            encoder = new LameEncoder(inputFormat, 256, MPEGMode.MONO, Lame.QUALITY_HIGHEST, false); //true=VBR, ignores bitrate
             System.out.println("mp3 high quality");
           }
           else {
-            encoder = new LameEncoder(inputFormat, 32, MPEGMode.MONO, Lame.QUALITY_LOWEST, true);
+            encoder = new LameEncoder(inputFormat, 32, MPEGMode.MONO, Lame.QUALITY_LOWEST, true); //true=VBR, ignores bitrate
             System.out.println("mp3 low quality");
           }
           mp3_buffer = new byte[encoder.getPCMBufferSize()];

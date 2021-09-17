@@ -2095,7 +2095,7 @@
                       <ComponentRef name="buttonGroup16"/>
                     </Property>
                     <Property name="selected" type="boolean" value="true"/>
-                    <Property name="text" type="java.lang.String" value="Low"/>
+                    <Property name="text" type="java.lang.String" value="Variable Bit Rate"/>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
