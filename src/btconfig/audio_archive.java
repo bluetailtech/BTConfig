@@ -20,6 +20,7 @@ public class audio_archive {
 LameEncoder encoder=null;
 byte[] mp3_buffer;
 FileOutputStream fos_mp3;
+FileOutputStream fos_wav;
 File mp3_file=null;
 java.text.SimpleDateFormat mp3_time_format;
 java.text.SimpleDateFormat formatter_date;
@@ -75,6 +76,31 @@ java.util.Timer utimer;
             }
             else if( parent.do_wav.isSelected() ) {
               //System.out.println("encode wav");
+              if( audio_buffer!=null ) {
+
+                try {
+                  if(tg==null || tg.length()==0) tg="000";
+
+                  String ndate = formatter_date.format(new java.util.Date() );
+
+                  if(parent.mp3_separate_files.isSelected()) {
+                    String wfname = home_dir+"/TG-"+tg+"_"+ndate+".wav";
+                    check_wav_header(wfname);
+                    fos_wav = new FileOutputStream( wfname, true );
+                  }
+                  else {
+                    String wfname = home_dir+"/p25rx_record"+"_"+ndate+".wav";
+                    check_wav_header(wfname);
+                    fos_wav = new FileOutputStream( wfname, true );
+                  }
+
+                  fos_wav.write(audio_buffer,0,audio_buffer.length);  //write Int num records
+                  fos_wav.flush();
+                  fos_wav.close();
+                } catch(Exception e) {
+                  e.printStackTrace();
+                }
+              }
             }
           }
         } catch(Exception e) {
@@ -185,12 +211,7 @@ private void SLEEP(long val) {
 
 
     //////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////
-    public byte[] encode_wav(byte[] pcm) {
-      int len=0;
-      byte[] b=null;
-
-            /*
+    /*
       typedef struct wav_header {
           // RIFF Header
           char riff_header[4]; // Contains "RIFF"
@@ -212,169 +233,81 @@ private void SLEEP(long val) {
           int data_bytes; // Number of bytes in data. Number of samples * num_channels * sample byte size
           // uint8_t bytes[]; // Remainder of wave file is bytes
       } wav_header;
-          */
+    */
+    //////////////////////////////////////////////////////////////////////
+    public void check_wav_header(String fname) {
 
-       return b;
+      File file;
+      FileOutputStream out;
+      try {
+        file = new File(fname);
+        if( file.exists() && file.length()>=44 ) return;
+
+        out = new FileOutputStream(file,false);
+
+        byte[] header = new byte[44];
+
+          int totalDataLen = 999999999;
+          int totalAudioLen = 999999999;
+          int channels=1;
+          int longSampleRate=8000;
+          int byteRate=longSampleRate*4;
+          byte RECORDER_BPP=16;
+
+          header[0] = 'R';  // RIFF/WAVE header
+          header[1] = 'I';
+          header[2] = 'F';
+          header[3] = 'F';
+          header[4] = (byte) (totalDataLen & 0xff);
+          header[5] = (byte) ((totalDataLen >> 8) & 0xff);
+          header[6] = (byte) ((totalDataLen >> 16) & 0xff);
+          header[7] = (byte) ((totalDataLen >> 24) & 0xff);
+          header[8] = 'W';
+          header[9] = 'A';
+          header[10] = 'V';
+          header[11] = 'E';
+          header[12] = 'f';  // 'fmt ' chunk
+          header[13] = 'm';
+          header[14] = 't';
+          header[15] = ' ';
+          header[16] = 16;  // 4 bytes: size of 'fmt ' chunk
+          header[17] = 0;
+          header[18] = 0;
+          header[19] = 0;
+          header[20] = 1;  // format = 1
+          header[21] = 0;
+          header[22] = (byte) channels;
+          header[23] = 0;
+          header[24] = (byte) (longSampleRate & 0xff);
+          header[25] = (byte) ((longSampleRate >> 8) & 0xff);
+          header[26] = (byte) ((longSampleRate >> 16) & 0xff);
+          header[27] = (byte) ((longSampleRate >> 24) & 0xff);
+          header[28] = (byte) (byteRate & 0xff);
+          header[29] = (byte) ((byteRate >> 8) & 0xff);
+          header[30] = (byte) ((byteRate >> 16) & 0xff);
+          header[31] = (byte) ((byteRate >> 24) & 0xff);
+          header[32] = (byte) (2 * 16 / 8);  // block align
+          header[33] = 0;
+          header[34] = RECORDER_BPP;  // bits per sample
+          header[35] = 0;
+          header[36] = 'd';
+          header[37] = 'a';
+          header[38] = 't';
+          header[39] = 'a';
+          header[40] = (byte) (totalAudioLen & 0xff);
+          header[41] = (byte) ((totalAudioLen >> 8) & 0xff);
+          header[42] = (byte) ((totalAudioLen >> 16) & 0xff);
+          header[43] = (byte) ((totalAudioLen >> 24) & 0xff);
+
+          out.write(header, 0, 44);
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+
+
+
     }
 
 
 }
-
-    /*
-    mp3_file = new File(home_dir+"p25rx"+fs+sys_mac_id+fs+"p25rx_recording_"+current_date+".mp3");
-    fos_mp3 = new FileOutputStream( mp3_file, true ); 
-//////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
-void toggle_recording(Boolean isrec) {
-
-  boolean is_recording=!isrec;
-
-  String recnow="";
-  if(is_recording) recnow="1";  //toggle
-  if(!is_recording) recnow="0"; //toggle
-
-  //enable binary voice output for mp3 recording
-  for(int i=0;i<99;i++) {
-    serial_port.writeBytes( new String("en_voice_send "+recnow+"\r\n").getBytes(), 17, 0);
-    try {
-      SLEEP(50);
-      if(serial_port.bytesAvailable()>29) break;
-    } catch(Exception e) {
-      e.printStackTrace();
-      //e.printStackTrace();
-    }
-    byte[] b = new byte[32];
-    int len = serial_port.readBytes(b, 30);
-    if(len>0) {
-      String s = new String(b);
-      if(s.contains("en_voice_send "+recnow)) {
-        is_recording = !isrec; 
-        break;
-      };
-    }
-  }
-
-  if(is_recording) {
-    record_to_mp3.setSelected(true);
-    record_to_mp3.setBackground(java.awt.Color.red);
-    record_to_mp3.setForeground(java.awt.Color.black);
-  }
-  else {
-    record_to_mp3.setSelected(false);
-    record_to_mp3.setBackground(java.awt.Color.white);
-    record_to_mp3.setForeground(java.awt.Color.black);
-  }
-}
-    */
-
-      /*
-                    //System.out.println("read voice");
-
-                    try {
-                      start_time = new java.util.Date().getTime();
-                          tg_indicator.setBackground(java.awt.Color.yellow);
-                          tg_indicator.setForeground(java.awt.Color.yellow);
-                          tg_indicator.setEnabled(true);
-                      if(aud!=null ) {
-                        //if(iztimer!=null) iztimer.cancel();
-                        if(aud!=null) aud.playBuf(pcm_bytes);
-                        cpanel.addAudio(pcm_bytes);
-                        do_audio_tick=0;
-                        audio_tick_start = new java.util.Date().getTime();
-                        //iztimer = new java.util.Timer();
-                        //iztimer.schedule( new insertZeroTask(), 22, 22);
-                      }
-                    } catch(Exception e) {
-                      e.printStackTrace();
-                      //e.printStackTrace();
-                    }
-
-
-                    //addTextConsole("\r\npcm_idx: "+pcm_idx);
-                    byte[] mp3_bytes = encode_mp3(pcm_bytes);
-
-                    if(mp3_bytes!=null) {
-
-                      String date = formatter_date.format(new java.util.Date() );
-                      if( current_date==null || !current_date.equals(date) || mp3_separate_files.isSelected() && sys_mac_id!=null && sys_mac_id.length()>0) {
-                        current_date=new String(date);  //date changed
-
-                        boolean is_ms=mp3_separate_files.isSelected();
-
-                        try {
-
-                          if(!is_ms) {
-                            if(fos_mp3!=null) fos_mp3.close();
-                            if(fos_meta!=null) fos_meta.close();
-                            if(encoder!=null) encoder.close();
-
-                            fos_mp3 = null;
-                            fos_meta = null;
-                            skip_header=1;
-                            encoder=null;
-                          }
-                        } catch(Exception e) {
-                          e.printStackTrace();
-                          //e.printStackTrace();
-                        }
-
-                        try {
-
-
-
-                          String mp3_tg = "";
-                          if(is_ms && mp3_separate_files.isSelected()) {
-                            current_talkgroup = current_talkgroup.replace(',','_');
-
-
-                            if(reset_session==1 || mp3_time.length()==0) {
-                              mp3_time = time_format.format(new java.util.Date() );
-
-                            }
-
-                            mp3_tg = "_"+mp3_time+"_TG_"+current_talkgroup;
-
-                            if(reset_session==1) {
-                              if(fos_mp3!=null) fos_mp3.close();
-                              if(encoder!=null) encoder.close();
-                              encoder=null;
-                              skip_header=1;
-                            }
-
-                            reset_session=0;
-                          }
-
-
-                          open_audio_output_files();
-
-                        } catch(Exception e) {
-                          //e.printStackTrace();
-                          e.printStackTrace();
-                        }
-
-                      }
-
-
-                      do_meta();
-
-                      if(skip_header==1) {
-                        skip_header=0;
-                      }
-                      else {
-                        fos_mp3.write(mp3_bytes,0,mp3_bytes.length);  //write Int num records
-                        fos_mp3.flush();
-                      }
-
-                      boolean is_ms=mp3_separate_files.isSelected();
-                      if(is_ms) {
-                        fos_mp3.write(mp3_bytes,0,mp3_bytes.length);  //write Int num records
-                        fos_mp3.flush();
-                      }
-
-                    }
-                    pcm_idx=0;
-                    rx_state=0;
-                  }
-    */
-
 
