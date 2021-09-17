@@ -891,9 +891,8 @@ class updateTask extends java.util.TimerTask
                     rx_state=0;
                     pcm_idx=0;
 
-                    if( !enable_mp3.isSelected() ) {
-                    }
-                    else if(enable_mp3.isSelected()) {
+                    if(enable_mp3.isSelected()) {
+                      if(aud_archive!=null) aud_archive.addAudio( pcm_bytes );
                     }
                   }
 
@@ -1171,8 +1170,6 @@ int command_input_timeout=0;
 long tg_blink_time=0;
 String current_talkgroup="";
 int reset_session=0;
-java.text.SimpleDateFormat mp3_time_format = new java.text.SimpleDateFormat( "HH:mm:ss" );
-String mp3_time ="";
 int tg_pri=0;
 int do_select_home_dir=0;
 String sys_mac_id="";
@@ -1193,6 +1190,7 @@ int is_phase1=1;
 int is_phase2=0;
 int is_tdma_cc=0;
 long status_time;
+audio_archive aud_archive;
 
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
@@ -1212,6 +1210,7 @@ long status_time;
         e.printStackTrace();
       }
 
+      aud_archive = new audio_archive(this);
 
       b = new byte[256000];
       str_b = new byte[256000];
@@ -1750,6 +1749,7 @@ long status_time;
               }
             }
           } catch(Exception e) {
+            System.out.println("error: sys_info");
             e.printStackTrace();
           }
         }
@@ -1823,6 +1823,7 @@ long status_time;
                     do_meta();
 
               } catch(Exception e) {
+                System.out.println("error: RID");
                 e.printStackTrace();
                 src_uid = 0;
               }
@@ -2139,6 +2140,7 @@ long status_time;
                   siteid.setText("");
                 }
               } catch(Exception e) {
+                  System.out.println("site_id:");
                   e.printStackTrace();
                   siteid.setText("");
               }
@@ -2155,6 +2157,7 @@ long status_time;
                   rfid.setText("");
                 }
               } catch(Exception e) {
+                  System.out.println("rf_id:");
                   e.printStackTrace();
                   rfid.setText("");
               }
@@ -2171,6 +2174,7 @@ long status_time;
                   if(nacval==0) nac.setText("");
                 }
               } catch(Exception e) {
+                  System.out.println("nac:");
                   e.printStackTrace();
                   nac.setText("");
               }
@@ -2199,6 +2203,7 @@ long status_time;
                   sysid.setText("");
                 }
               } catch(Exception e) {
+                  System.out.println("sys_id:");
                   e.printStackTrace();
                   sysid.setText("");
               }
@@ -2217,6 +2222,7 @@ long status_time;
 
                 is_dmr_mode=0;
               } catch(Exception e) {
+                  System.out.println("wacn:");
                   e.printStackTrace();
                   wacn.setText("");
                 //e.printStackTrace();
