@@ -1320,8 +1320,8 @@ audio_archive aud_archive;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202109161207");
-      release_date.setText("Release: 2021-09-17 14:37");
+      fw_ver.setText("Latest Avail: FW Date: 202109171623");
+      release_date.setText("Release: 2021-09-17 20:17");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);

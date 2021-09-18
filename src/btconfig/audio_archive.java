@@ -11,7 +11,7 @@ import net.sourceforge.lame.mp3.*;
 import net.sourceforge.lame.lowlevel.*;
 
 import pcmsampledsp.*;
-
+import java.util.concurrent.TimeUnit;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -39,9 +39,21 @@ java.util.Timer utimer;
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   class updateTask extends java.util.TimerTask
   {
+    long NS_PER_MS = 1000000; 
+    long DELAY_TARGET_MS = NS_PER_MS; 
 
       public void run()
       {
+    while(true) {
+
+         long t0 = System.nanoTime(); 
+         while (System.nanoTime() < t0+DELAY_TARGET_MS) {
+           try {
+             Thread.sleep(0, 1000);
+           } catch(Exception e) {
+           }
+         }; 
+
         try {
 
           if( do_audio_encode!=0 && audio_buffer!=null && home_dir!=null) {
@@ -106,6 +118,7 @@ java.util.Timer utimer;
         } catch(Exception e) {
           e.printStackTrace();
         }
+    }
       }
   }
 
@@ -115,14 +128,15 @@ java.util.Timer utimer;
   public void init() {
 
     try {
-      utimer = new java.util.Timer();
-      utimer.schedule( new updateTask(), 100, 1);
 
       if(parent.audio_hiq.isSelected()) is_high_q=1;
         else is_high_q=0;
 
       mp3_time_format = new java.text.SimpleDateFormat( "HH:mm:ss" );
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
+
+      utimer = new java.util.Timer();
+      utimer.schedule( new updateTask(), 0, 1);
 
     } catch(Exception e) {
      e.printStackTrace();
