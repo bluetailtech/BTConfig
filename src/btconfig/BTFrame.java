@@ -783,7 +783,7 @@ class updateTask extends java.util.TimerTask
                     macid.setText("MAC: "+sys_mac_id);
 
                     String fs =  System.getProperty("file.separator");
-                    if(alias==null) alias = new Alias(parent, parent.sys_mac_id, home_dir);
+                    if(alias==null) alias = new Alias(parent, parent.sys_mac_id, document_dir);
 
                     break;
                   }
@@ -1193,6 +1193,7 @@ int is_phase2=0;
 int is_tdma_cc=0;
 long status_time;
 audio_archive aud_archive;
+String document_dir="";
 
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
@@ -1321,7 +1322,7 @@ audio_archive aud_archive;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202109171623");
-      release_date.setText("Release: 2021-09-17 20:49");
+      release_date.setText("Release: 2021-09-17 22:01");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5604,14 +5605,37 @@ public void do_meta() {
 
 
     if(metadata!=null && metadata.length()>0 && !metadata.contains("ctrl ") ) {
-      if(enable_mp3.isSelected()) {
+
+        String date = formatter_date.format(new java.util.Date() );
+
+        if( !date.equals(current_date) ) {
+
+          try {
+            if(fos_meta!=null) fos_meta.close();
+          } catch(Exception e) {
+            e.printStackTrace();
+          }
+
+          try {
+            String fs =  System.getProperty("file.separator");
+            meta_file = new File(document_dir+fs+sys_mac_id+fs+"p25rx_recmeta_"+current_date+".txt");
+            fos_meta = new FileOutputStream( meta_file, true ); 
+          } catch(Exception e) {
+            e.printStackTrace();
+          }
+
+        }
+
+
+        current_date=new String(date);  //date changed
+
         try {
           fos_meta.write(metadata.getBytes(),0,metadata.length());  //write int num records
           fos_meta.flush();
         } catch(Exception e) {
           e.printStackTrace();
         }
-      }
+
 
       try {
         //add meta info to log tab
@@ -5675,7 +5699,7 @@ public void open_audio_output_files() {
     String date = formatter_date.format(new java.util.Date() );
     current_date=new String(date);  //date changed
 
-    meta_file = new File(home_dir+fs+sys_mac_id+fs+"p25rx_recmeta_"+current_date+".txt");
+    meta_file = new File(document_dir+fs+sys_mac_id+fs+"p25rx_recmeta_"+current_date+".txt");
     String exe_path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath().toString();
     exe_path = exe_path.replace("BTConfig.exe", "");
     System.out.println("log file path: "+exe_path+"p25rx_conlog_"+current_date+".txt");
@@ -5760,6 +5784,8 @@ public void update_prefs() {
       String fs =  System.getProperty("file.separator");
       String home_dir_str = file.getAbsolutePath()+fs;
 
+      document_dir = home_dir_str+"p25rx";
+
 
       home_dir = prefs.get("p25rx_home_dir", home_dir_str+"p25rx");
       home_dir_label.setText(home_dir);
@@ -5767,6 +5793,13 @@ public void update_prefs() {
 
         try {
           Path path = Paths.get(new File(home_dir+fs+sys_mac_id).getAbsolutePath() );
+          Files.createDirectories(path);
+        } catch(Exception e) {
+          e.printStackTrace();
+        }
+
+        try {
+          Path path = Paths.get(new File(document_dir+fs+sys_mac_id).getAbsolutePath() );
           Files.createDirectories(path);
         } catch(Exception e) {
           e.printStackTrace();
@@ -5810,7 +5843,7 @@ String get_home_dir() {
     home_dir = home_dir_label.getText();
     prefs.put("p25rx_home_dir", home_dir); 
 
-    alias = new Alias(parent, parent.sys_mac_id, home_dir);
+    alias = new Alias(parent, parent.sys_mac_id, document_dir);
   }
 
   return home_dir_label.getText();
