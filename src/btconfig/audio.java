@@ -81,8 +81,8 @@ public class audio {
                 sourceDataLine.stop();
                 parent.audio_prog.setValue(0);
               }
-              else if(debug) {
-                System.out.println("abort stop.");
+              else {
+                if(debug) System.out.println("abort stop.");
                 stop_timer=100;
                 do_start=0;
               }

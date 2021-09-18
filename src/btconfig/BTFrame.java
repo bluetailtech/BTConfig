@@ -1322,7 +1322,7 @@ String document_dir="";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202109171623");
-      release_date.setText("Release: 2021-09-17 22:01");
+      release_date.setText("Release: 2021-09-17 22:20");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
