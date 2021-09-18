@@ -1322,7 +1322,7 @@ String document_dir="";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202109171623");
-      release_date.setText("Release: 2021-09-17 22:20");
+      release_date.setText("Release: 2021-09-18 01:56");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5607,8 +5607,9 @@ public void do_meta() {
     if(metadata!=null && metadata.length()>0 && !metadata.contains("ctrl ") ) {
 
         String date = formatter_date.format(new java.util.Date() );
+        current_date=new String(date);  //date changed
 
-        if( !date.equals(current_date) ) {
+        //if( !date.equals(current_date) ) {
 
           try {
             if(fos_meta!=null) fos_meta.close();
@@ -5624,14 +5625,14 @@ public void do_meta() {
             e.printStackTrace();
           }
 
-        }
+        //}
 
 
-        current_date=new String(date);  //date changed
 
         try {
           fos_meta.write(metadata.getBytes(),0,metadata.length());  //write int num records
           fos_meta.flush();
+          fos_meta.close();
         } catch(Exception e) {
           e.printStackTrace();
         }
