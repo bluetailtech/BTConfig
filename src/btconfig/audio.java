@@ -534,7 +534,7 @@ BTFrame parent;
           int bsize = sourceDataLine.getBufferSize();
           int bavail = sourceDataLine.available();
           //if(voice_count++>10) {
-          if( ((float) bavail / (float) bsize) < 0.75 ) { 
+          if( ((float) bavail / (float) bsize) < 0.5 ) { 
             voice_count=0;
 
             if(!sourceDataLine.isRunning()) {
