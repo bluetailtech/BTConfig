@@ -1,0 +1,45 @@
+package btconfig;
+
+import java.nio.*;
+import java.util.*;
+import java.io.ByteArrayInputStream;
+import java.io.*;
+import javax.swing.*;
+import java.util.concurrent.TimeUnit;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public class affiliation {
+
+FileOutputStream fos;
+BTFrame parent;
+boolean debug=false;
+
+
+  /////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////
+  public affiliation(BTFrame p) {
+    parent = p;
+  }
+
+  /////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////
+  public void write_log( String rec, String fname ) {
+    try {
+       File f = new File(fname);
+       boolean b = f.exists();
+       fos = new FileOutputStream(fname, true);
+       if(!b) {
+         String header = "OPCODE,TIME,TGroup,RADIO_ID";
+         fos.write( header.getBytes(), 0, header.getBytes().length );
+       }
+       fos.write( rec.getBytes(), 0, rec.getBytes().length );
+       fos.flush();
+       fos.close();
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+}
+

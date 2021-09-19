@@ -1194,6 +1194,7 @@ int is_tdma_cc=0;
 long status_time;
 audio_archive aud_archive;
 String document_dir="";
+affiliation affiliation_logger;
 
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
@@ -1205,6 +1206,8 @@ String document_dir="";
       String exe_path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath().toString();
       exe_path = exe_path.replace("BTConfig.exe", "");
       System.out.println("log file path: "+exe_path+"p25rx_conlog_"+fdate+".txt");
+
+      affiliation_logger = new affiliation(this);
 
       try {
         conlog_file = new File(exe_path+"p25rx_conlog_"+fdate+".txt");
@@ -1321,8 +1324,8 @@ String document_dir="";
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202109171623");
-      release_date.setText("Release: 2021-09-18 01:56");
+      fw_ver.setText("Latest Avail: FW Date: 202109191354");
+      release_date.setText("Release: 2021-09-19 13:54");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1686,6 +1689,33 @@ String document_dir="";
         src_uid=0;
         is_enc=0;
         current_nco_off=0.0f;
+      }
+
+      if( console_line.contains("$P25_AFFILIATION:") ) {
+        StringTokenizer st = new StringTokenizer(console_line," ,\r\n");
+        int cnt=0;
+        String st1="";
+
+        while(st!=null && st.hasMoreTokens() && cnt++<20) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.contains("P25_AFFILIATION:")) {
+            try {
+              String grp = st.nextToken().trim();
+              String src = st.nextToken().trim();
+              int ga = new Integer(grp).intValue();
+              int sa = new Integer(src).intValue();
+              String date = time_format.format(new java.util.Date() );
+              String rec = String.format("\r\nGRP_AFF_RESP(0x28),%s,%d,%d", date,ga, sa);
+              affiliation_ta.setText( affiliation_ta.getText().concat(rec) ); 
+
+              String fs =  System.getProperty("file.separator");
+              String hdir = document_dir+fs+sys_mac_id+fs+"p25rx_affiliation_"+current_date+".txt";
+              if( affiliation_logger!=null ) affiliation_logger.write_log( rec, hdir );
+              break;
+            } catch(Exception e) {
+            }
+          }
+        }
       }
 
       if( console_line.contains("$P25_GRP_UP grp1:") && console_line.contains("ch2:") ) {
@@ -2873,6 +2903,9 @@ String document_dir="";
         import_alias = new javax.swing.JButton();
         jLabel57 = new javax.swing.JLabel();
         rid_valid_cnt = new javax.swing.JTextField();
+        affiliation_panel = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        affiliation_ta = new javax.swing.JTextArea();
         advancedpanel = new javax.swing.JPanel();
         duid_enh = new javax.swing.JCheckBox();
         freq_correct_on_voice = new javax.swing.JCheckBox();
@@ -4537,6 +4570,19 @@ String document_dir="";
 
         jTabbedPane1.addTab("Alias", alias_panel);
 
+        affiliation_panel.setLayout(new java.awt.BorderLayout());
+
+        affiliation_ta.setBackground(new java.awt.Color(0, 0, 0));
+        affiliation_ta.setColumns(20);
+        affiliation_ta.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
+        affiliation_ta.setForeground(new java.awt.Color(255, 255, 255));
+        affiliation_ta.setRows(5);
+        jScrollPane4.setViewportView(affiliation_ta);
+
+        affiliation_panel.add(jScrollPane4, java.awt.BorderLayout.CENTER);
+
+        jTabbedPane1.addTab("Affiliation", affiliation_panel);
+
         advancedpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         duid_enh.setSelected(true);
@@ -5999,6 +6045,8 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox add_tdu_silence;
     private javax.swing.JButton adv_write_config;
     private javax.swing.JPanel advancedpanel;
+    private javax.swing.JPanel affiliation_panel;
+    private javax.swing.JTextArea affiliation_ta;
     public javax.swing.JComboBox<String> agc_kp;
     private javax.swing.JLabel agc_kp_lb;
     private javax.swing.JPanel alias_panel;
@@ -6249,6 +6297,7 @@ public void SLEEP(long val) {
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane7;
     public javax.swing.JScrollPane jScrollPane8;
