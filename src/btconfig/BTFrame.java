@@ -1324,8 +1324,8 @@ logger logger_out;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202109191708");
-      release_date.setText("Release: 2021-09-19 17:08");
+      fw_ver.setText("Latest Avail: FW Date: 202109201229");
+      release_date.setText("Release: 2021-09-20 12:29");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1700,12 +1700,15 @@ logger logger_out;
           st1 = st.nextToken();
           if(st1!=null && st1.contains("P25_EMERGENCY:")) {
             try {
+              String frq = st.nextToken().trim();
               String grp = st.nextToken().trim();
               String src = st.nextToken().trim();
+              double fr = new Double(frq).doubleValue();
               int ga = new Integer(grp).intValue();
               int sa = new Integer(src).intValue();
+
               String date = time_format.format(new java.util.Date() );
-              String rec = String.format("\r\nEMRG_RESP(0x27),%s,%d,%d", date,ga, sa);
+              String rec = String.format("\r\nEMRG_RESP(0x27),%s,%3.6f,%d,%d", date, fr, ga, sa);
 
               String fs =  System.getProperty("file.separator");
               String hdir = document_dir+fs+sys_mac_id+fs+"p25rx_emergency_"+current_date+".txt";
@@ -1726,12 +1729,14 @@ logger logger_out;
           st1 = st.nextToken();
           if(st1!=null && st1.contains("P25_AFFILIATION:")) {
             try {
+              String frq = st.nextToken().trim();
               String grp = st.nextToken().trim();
               String src = st.nextToken().trim();
+              double fr = new Double(frq).doubleValue();
               int ga = new Integer(grp).intValue();
               int sa = new Integer(src).intValue();
               String date = time_format.format(new java.util.Date() );
-              String rec = String.format("\r\nGRP_AFF_RESP(0x28),%s,%d,%d", date,ga, sa);
+              String rec = String.format("\r\nGRP_AFF_RESP(0x28),%s,%3.6f,%d,%d", date, fr, ga, sa);
 
               String fs =  System.getProperty("file.separator");
               String hdir = document_dir+fs+sys_mac_id+fs+"p25rx_affiliation_"+current_date+".txt";
