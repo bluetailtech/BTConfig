@@ -70,7 +70,7 @@ String hold_str="";
 
                 if(buffer!=null && buffer.length>0) {
                   try {
-                    if(tg==null || tg.length()==0) tg="000";
+                    if(tg==null || tg.length()==0) break; 
 
                     String ndate = formatter_date.format(new java.util.Date() );
 
@@ -94,7 +94,7 @@ String hold_str="";
               if( audio_buffer!=null ) {
 
                 try {
-                  if(tg==null || tg.length()==0) tg="000";
+                  if(tg==null || tg.length()==0) break; 
 
                   String ndate = formatter_date.format(new java.util.Date() );
 
@@ -159,6 +159,8 @@ String hold_str="";
   public void addAudio(byte[] pcm, String talkgroup, String home_dir) {
     if(do_audio_encode!=0) return; //shouldn't happen
     if(home_dir==null) return;
+    if( talkgroup==null ) return;
+
     this.home_dir = home_dir;
 
     if(audio_buffer==null || audio_buffer.length!=pcm.length) audio_buffer = new byte[pcm.length];
@@ -169,7 +171,6 @@ String hold_str="";
 
     tg = talkgroup;
 
-    if( talkgroup.equals("000") ) return;
   }
 
   /////////////////////////////////////////////////////////////////////////////////
