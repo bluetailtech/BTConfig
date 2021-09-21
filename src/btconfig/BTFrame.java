@@ -1325,7 +1325,7 @@ logger logger_out;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202109201229");
-      release_date.setText("Release: 2021-09-20 12:29");
+      release_date.setText("Release: 2021-09-20 20:07");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1952,18 +1952,28 @@ logger logger_out;
 
       if(console_line.contains("following talkgroup") ) {
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
-        if(st.countTokens()>=3) {
-          st.nextToken();
-          st.nextToken();
+        int cnt=0;
+        boolean follow=true;
+
+        while( st!=null && st.hasMoreTokens() && cnt++<15) { 
+          String st1 = st.nextToken();
+          
+          if(st1.contains("un-following")) follow=false;
+
+          if(st1.contains("talkgroup") && st.hasMoreTokens()) {
             try {
               tg_follow_blink = new Integer( st.nextToken() ).intValue();
             } catch(Exception e) {
               e.printStackTrace();
             }
+          }
         }
-        if(console_line.contains("un-following talkgroup")) {
+
+        if(!follow || console_line.contains("un-following") ) {
           tg_follow_blink = 0; 
         }
+
+        if(tg_follow_blink>0) aud_archive.set_follow( tg_follow_blink );
       } 
 
       if(console_line.contains("\r\ngrant 0x02") && (console_line.contains("tgroup") && console_line.contains("TDMA")) ) {
@@ -1985,40 +1995,8 @@ logger logger_out;
           }
         }
 
-        st = new StringTokenizer(console_line," \r\n");
-        st1 = ""; 
-        cnt=0;
-        while(st.hasMoreTokens() && cnt++<15) {
-          st1 = st.nextToken();
-          if(st1!=null && st1.contains("follow") && st.hasMoreTokens()) {
-            try {
-              tg_follow_blink = new Integer( st.nextToken() ).intValue();
-              break;
-            } catch(Exception e) {
-              e.printStackTrace();
-              break;
-            }
-          }
-        }
       }
 
-      if(console_line.contains("\r\n") && (console_line.contains("tgroup") && console_line.contains("rf_channel")) ) {
-        StringTokenizer st = new StringTokenizer(console_line," \r\n");
-        String st1 = ""; 
-        int cnt=0;
-        while(st.hasMoreTokens() && cnt++<15) {
-          st1 = st.nextToken();
-          if(st1!=null && st1.contains("follow") && st.hasMoreTokens()) {
-            try {
-              tg_follow_blink = new Integer( st.nextToken() ).intValue();
-              break;
-            } catch(Exception e) {
-              e.printStackTrace();
-              break;
-            }
-          }
-        }
-      }
       if(console_line.contains("\r\n") && (console_line.contains("supergroup") && console_line.contains("rf_channel")) ) {
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 

@@ -35,6 +35,9 @@ String home_dir;
 
 java.util.Timer utimer;
 
+int p25_follow=0;
+String hold_str="";
+
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   class updateTask extends java.util.TimerTask
@@ -72,10 +75,10 @@ java.util.Timer utimer;
                     String ndate = formatter_date.format(new java.util.Date() );
 
                     if(parent.mp3_separate_files.isSelected()) {
-                      fos_mp3 = new FileOutputStream( home_dir+"/TG-"+tg+"_"+ndate+".mp3", true );
+                      fos_mp3 = new FileOutputStream( home_dir+"/TG-"+tg+"_"+hold_str+ndate+".mp3", true );
                     }
                     else {
-                      fos_mp3 = new FileOutputStream( home_dir+"/p25rx_record"+"_"+ndate+".mp3", true );
+                      fos_mp3 = new FileOutputStream( home_dir+"/p25rx_record"+"_"+hold_str+ndate+".mp3", true );
                     }
                     fos_mp3.write(buffer,0,buffer.length);  //write Int num records
                     fos_mp3.flush();
@@ -96,12 +99,12 @@ java.util.Timer utimer;
                   String ndate = formatter_date.format(new java.util.Date() );
 
                   if(parent.mp3_separate_files.isSelected()) {
-                    String wfname = home_dir+"/TG-"+tg+"_"+ndate+".wav";
+                    String wfname = home_dir+"/TG-"+tg+"_"+hold_str+ndate+".wav";
                     check_wav_header(wfname);
                     fos_wav = new FileOutputStream( wfname, true );
                   }
                   else {
-                    String wfname = home_dir+"/p25rx_record"+"_"+ndate+".wav";
+                    String wfname = home_dir+"/p25rx_record"+"_"+hold_str+ndate+".wav";
                     check_wav_header(wfname);
                     fos_wav = new FileOutputStream( wfname, true );
                   }
@@ -122,6 +125,14 @@ java.util.Timer utimer;
       }
   }
 
+
+  /////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////
+  public void set_follow(int tg) {
+    this.p25_follow = tg;
+    if(p25_follow>0) hold_str="HOLD_EVENT_";
+      else hold_str="";
+  }
 
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
@@ -157,6 +168,8 @@ java.util.Timer utimer;
     do_audio_encode=1;
 
     tg = talkgroup;
+
+    if( talkgroup.equals("000") ) return;
   }
 
   /////////////////////////////////////////////////////////////////////////////////
