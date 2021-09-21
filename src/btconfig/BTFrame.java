@@ -1712,7 +1712,7 @@ logger logger_out;
 
               String fs =  System.getProperty("file.separator");
               String hdir = document_dir+fs+sys_mac_id+fs+"p25rx_emergency_"+current_date+".txt";
-              String header = "OPCODE,TIME,TGroup,RADIO_ID";
+              String header = "OPCODE,TIME,Frequency,TGroup,RADIO_ID";
               if( logger_out!=null ) logger_out.write_log( rec, hdir, header );
               break;
             } catch(Exception e) {
@@ -1740,7 +1740,7 @@ logger logger_out;
 
               String fs =  System.getProperty("file.separator");
               String hdir = document_dir+fs+sys_mac_id+fs+"p25rx_affiliation_"+current_date+".txt";
-              String header = "OPCODE,TIME,TGroup,RADIO_ID";
+              String header = "OPCODE,TIME,Frequency,TGroup,RADIO_ID";
               if( logger_out!=null ) logger_out.write_log( rec, hdir, header );
               break;
             } catch(Exception e) {
