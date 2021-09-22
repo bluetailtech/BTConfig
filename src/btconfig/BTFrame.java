@@ -1333,7 +1333,7 @@ logger logger_out;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202109201229");
-      release_date.setText("Release: 2021-09-21 18:59");
+      release_date.setText("Release: 2021-09-21 19:18");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1719,9 +1719,11 @@ logger logger_out;
               String rec = String.format("\r\nEMRG_RESP(0x27),%s,%3.6f,%d,%d", date, fr, ga, sa);
 
               String fs =  System.getProperty("file.separator");
-              String hdir = document_dir+fs+sys_mac_id+fs+"p25rx_emergency_"+current_date+".txt";
+              String wacn_out = String.format("%05X", current_wacn_id);
+              String sysid_out = String.format("%03X", current_sys_id);
+              String hdir = document_dir+fs+sys_mac_id+fs+"p25rx_emergency_"+current_date+"-"+wacn_out+"-"+sysid_out+".txt";
               String header = "OPCODE,TIME,Frequency,TGroup,RADIO_ID";
-              if( logger_out!=null ) logger_out.write_log( rec, hdir, header );
+              if( logger_out!=null && current_wacn_id!=0 && current_sys_id!=0) logger_out.write_log( rec, hdir, header );
               break;
             } catch(Exception e) {
             }
@@ -1747,9 +1749,11 @@ logger logger_out;
               String rec = String.format("\r\nGRP_AFF_RESP(0x28),%s,%3.6f,%d,%d", date, fr, ga, sa);
 
               String fs =  System.getProperty("file.separator");
-              String hdir = document_dir+fs+sys_mac_id+fs+"p25rx_affiliation_"+current_date+".txt";
+              String wacn_out = String.format("%05X", current_wacn_id);
+              String sysid_out = String.format("%03X", current_sys_id);
+              String hdir = document_dir+fs+sys_mac_id+fs+"p25rx_affiliation_"+current_date+"-"+wacn_out+"-"+sysid_out+".txt";
               String header = "OPCODE,TIME,Frequency,TGroup,RADIO_ID";
-              if( logger_out!=null ) logger_out.write_log( rec, hdir, header );
+              if( logger_out!=null && current_wacn_id!=0 && current_sys_id!=0) logger_out.write_log( rec, hdir, header );
               break;
             } catch(Exception e) {
             }
@@ -2247,6 +2251,7 @@ logger logger_out;
                 int sys_id = Integer.parseInt(sys_id_str.substring(2,sys_id_str.length()),16);
                 if(sys_id!=0) {
                   sysid.setText("SYS_ID: "+String.format("0x%03x", sys_id));
+                  current_sys_id = sys_id;
                 }
                 else {
                   sysid.setText("");
@@ -2264,6 +2269,7 @@ logger logger_out;
                 int t_current_wacn_id = Integer.parseInt(wacn_id.substring(2,wacn_id.length()),16);
                 if(t_current_wacn_id!=0) {
                   wacn.setText("WACN: "+wacn_id); 
+                  current_wacn_id = t_current_wacn_id;
                 }
                 else {
                   wacn.setText("");
