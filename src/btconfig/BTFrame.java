@@ -894,8 +894,16 @@ class updateTask extends java.util.TimerTask
 
                     if(enable_mp3.isSelected()) {
                       String fs =  System.getProperty("file.separator");
-                      if(aud_archive!=null) aud_archive.addAudio( pcm_bytes, current_talkgroup, home_dir+fs+sys_mac_id );
+                      try {
+                        if(aud_archive!=null) 
+                          aud_archive.addAudio( pcm_bytes, current_talkgroup, 
+                            home_dir+fs+sys_mac_id, current_wacn_id, current_sys_id );
+                      } catch(Exception e) {
+                        e.printStackTrace();
+                      }
                     }
+
+
                   }
 
                 }
@@ -1325,7 +1333,7 @@ logger logger_out;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202109201229");
-      release_date.setText("Release: 2021-09-20 20:28");
+      release_date.setText("Release: 2021-09-21 18:59");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1973,7 +1981,7 @@ logger logger_out;
           tg_follow_blink = 0; 
         }
 
-        if(tg_follow_blink>0) aud_archive.set_follow( tg_follow_blink );
+        aud_archive.set_follow( tg_follow_blink );
       } 
 
       if(console_line.contains("\r\ngrant 0x02") && (console_line.contains("tgroup") && console_line.contains("TDMA")) ) {

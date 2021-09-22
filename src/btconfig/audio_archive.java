@@ -32,6 +32,8 @@ BTFrame parent;
 boolean debug=false;
 String tg="";
 String home_dir;
+String wacn="";
+String sysid="";
 
 java.util.Timer utimer;
 
@@ -75,10 +77,10 @@ String hold_str="";
                     String ndate = formatter_date.format(new java.util.Date() );
 
                     if(parent.mp3_separate_files.isSelected()) {
-                      fos_mp3 = new FileOutputStream( home_dir+"/TG-"+tg+"_"+hold_str+ndate+".mp3", true );
+                      fos_mp3 = new FileOutputStream( home_dir+"/TG-"+tg+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".mp3", true );
                     }
                     else {
-                      fos_mp3 = new FileOutputStream( home_dir+"/p25rx_record"+"_"+hold_str+ndate+".mp3", true );
+                      fos_mp3 = new FileOutputStream( home_dir+"/p25rx_record"+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".mp3", true );
                     }
                     fos_mp3.write(buffer,0,buffer.length);  //write Int num records
                     fos_mp3.flush();
@@ -99,12 +101,12 @@ String hold_str="";
                   String ndate = formatter_date.format(new java.util.Date() );
 
                   if(parent.mp3_separate_files.isSelected()) {
-                    String wfname = home_dir+"/TG-"+tg+"_"+hold_str+ndate+".wav";
+                    String wfname = home_dir+"/TG-"+tg+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".wav";
                     check_wav_header(wfname);
                     fos_wav = new FileOutputStream( wfname, true );
                   }
                   else {
-                    String wfname = home_dir+"/p25rx_record"+"_"+hold_str+ndate+".wav";
+                    String wfname = home_dir+"/p25rx_record"+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".wav";
                     check_wav_header(wfname);
                     fos_wav = new FileOutputStream( wfname, true );
                   }
@@ -156,10 +158,12 @@ String hold_str="";
 
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
-  public void addAudio(byte[] pcm, String talkgroup, String home_dir) {
+  public void addAudio(byte[] pcm, String talkgroup, String home_dir, int wacn, int sysid) {
     if(do_audio_encode!=0) return; //shouldn't happen
     if(home_dir==null) return;
     if( talkgroup==null ) return;
+    if(wacn==0) return;
+    if(sysid==0) return;
 
     this.home_dir = home_dir;
 
@@ -170,6 +174,9 @@ String hold_str="";
     do_audio_encode=1;
 
     tg = talkgroup;
+
+    this.wacn = String.format("%05X", wacn);
+    this.sysid = String.format("%03X",sysid);
 
   }
 
