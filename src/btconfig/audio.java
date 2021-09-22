@@ -39,9 +39,21 @@ public class audio {
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   class updateTask extends java.util.TimerTask
   {
+    long NS_PER_MS = 1000000; 
+    long DELAY_TARGET_MS = NS_PER_MS; 
 
       public void run()
       {
+    while(true) {
+
+         long t0 = System.nanoTime(); 
+         while (System.nanoTime() < t0+DELAY_TARGET_MS) {
+           try {
+             Thread.sleep(0, 1000);
+           } catch(Exception e) {
+           }
+         }
+
         try {
 
           int blen = sourceDataLine.getBufferSize()-sourceDataLine.available();
@@ -113,6 +125,7 @@ public class audio {
         } catch(Exception e) {
         }
       }
+    }
   }
 
   int vc_timer;
