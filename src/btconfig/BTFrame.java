@@ -1333,7 +1333,7 @@ logger logger_out;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202109201229");
-      release_date.setText("Release: 2021-09-21 19:18");
+      release_date.setText("Release: 2021-09-21 19:59");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1988,7 +1988,7 @@ logger logger_out;
         aud_archive.set_follow( tg_follow_blink );
       } 
 
-      if(console_line.contains("\r\ngrant 0x02") && (console_line.contains("tgroup") && console_line.contains("TDMA")) ) {
+      if(console_line.contains("\r\ngrant") && console_line.contains("tgroup") ) {
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
         int cnt=0;
@@ -1998,6 +1998,7 @@ logger logger_out;
             try {
               int tg = new Integer( st.nextToken() ).intValue();
               String tg_str = new Integer(tg).toString();
+              current_talkgroup = tg_str;
 
               break;
             } catch(Exception e) {
