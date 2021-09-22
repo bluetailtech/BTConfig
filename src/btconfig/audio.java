@@ -99,6 +99,13 @@ public class audio {
               parent.audio_prog.setValue(0);
             }
           }
+          if(start_timer>0) {
+            start_timer--;
+            if(start_timer==0) {
+              if(debug) System.out.println("short start");
+              sourceDataLine.start();
+            }
+          }
 
 
         } catch(Exception e) {
@@ -112,6 +119,7 @@ public class audio {
   int do_drain=0;
   int do_start=0;
   int stop_timer=0;
+  int start_timer=0;
 
   Boolean initialized=false;
   AudioFormat af=null;
@@ -542,6 +550,9 @@ BTFrame parent;
               do_start=1;
               if(debug) System.out.println("source: Start");
             }
+          }
+          else {
+            start_timer=200;
           }
 
         }
