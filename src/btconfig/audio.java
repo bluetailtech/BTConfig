@@ -103,7 +103,9 @@ public class audio {
             start_timer--;
             if(start_timer==0) {
               if(debug) System.out.println("short start");
-              sourceDataLine.start();
+              if(!sourceDataLine.isRunning()) {
+                sourceDataLine.start();
+              }
             }
           }
 
@@ -547,12 +549,15 @@ BTFrame parent;
 
             if(!sourceDataLine.isRunning()) {
               sourceDataLine.start();
+              start_timer=0;
               do_start=1;
               if(debug) System.out.println("source: Start");
             }
           }
           else {
-            start_timer=200;
+            if(!sourceDataLine.isRunning()) {
+              start_timer=250;
+            }
           }
 
         }
