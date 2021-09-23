@@ -313,7 +313,7 @@ BTFrame parent;
               sourceDataLine = AudioSystem.getSourceDataLine( af, mixer_info );
 
               if(parent.is_linux==1) {
-                sourceDataLine.open(af, 48000*4);
+                sourceDataLine.open(af, 48000*8);
               }
               else {
                 sourceDataLine.open(af, 48000*4);

@@ -1333,7 +1333,7 @@ logger logger_out;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202109201229");
-      release_date.setText("Release: 2021-09-23 07:35");
+      release_date.setText("Release: 2021-09-23 11:27");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);

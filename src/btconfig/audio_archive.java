@@ -228,8 +228,9 @@ private void SLEEP(long val) {
     //////////////////////////////////////////////////////////////////////
     public byte[] encode_mp3(byte[] pcm) {
 
-      int len=0;
+      int len=320;
       byte[] b=null;
+      byte[] b2=null;
 
 
       try {
@@ -253,22 +254,39 @@ private void SLEEP(long val) {
 
         is_high_q = high_q;
 
-        len = encoder.encodeBuffer(pcm, 0, 320, mp3_buffer);
+        int nframes = pcm.length/320;
+        //System.out.println("nframes "+nframes);
 
-        if(len==0) return null;
+        len *= nframes;
 
-        b = new byte[len];
+        b = new byte[len*4];
+        //System.out.println("blen: "+b.length);
 
-        if(len>0) {
-          for(int i=0;i<len;i++) {
-            b[i] = mp3_buffer[i];
+        int idx=0;
+
+        for(int j=0;j<nframes;j++) {
+
+          int n = encoder.encodeBuffer(pcm, 0, 320, mp3_buffer);
+          if(n==0) continue;
+
+          for(int i=0;i<n;i++) {
+            b[idx++] = mp3_buffer[i];
           }
         }
+
+        b2 = new byte[idx];
+        //System.out.println("b2len: "+b2.length);
+
+        for(int i=0;i<idx;i++) {
+          b2[i] = b[i]; 
+        }
+
+        //System.out.println("mp3 encoded "+b2.length+" bytes");
       } catch(Exception e) {
         e.printStackTrace();
       }
 
-      return b;
+      return b2;
     }
 
 
