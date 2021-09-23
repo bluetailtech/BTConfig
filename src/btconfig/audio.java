@@ -103,13 +103,18 @@ public class audio {
             }
             else {
               */
-                int bsize = sourceDataLine.getBufferSize();
-                int bavail = sourceDataLine.available();
-                int kb = (int) ( (float) blen / (float) 1024 );
+                if(did_audio!=0) {
+                  did_audio--;
+                }
+                else {
+                  int bsize = sourceDataLine.getBufferSize();
+                  int bavail = sourceDataLine.available();
+                  int kb = (int) ( (float) blen / (float) 1024 );
 
-                if(sourceDataLine.isRunning() && kb < 50) {
-                  byte[] b = new byte[320];
-                  sourceDataLine.write(b, 0, 320);
+                  if(sourceDataLine.isRunning() && kb < 50) {
+                    byte[] b = new byte[3200*4];
+                    sourceDataLine.write(b, 0, 3200*4);
+                  }
                 }
             //}
           //}
@@ -149,6 +154,7 @@ public class audio {
   int do_start=0;
   int stop_timer=0;
   int start_timer=0;
+  int did_audio=0;
 
   Boolean initialized=false;
   AudioFormat af=null;
@@ -578,6 +584,7 @@ BTFrame parent;
           }
 
           sourceDataLine.write(outbytes, 0, idx);
+          did_audio=180;
 
           int bsize = sourceDataLine.getBufferSize();
           int bavail = sourceDataLine.available();
