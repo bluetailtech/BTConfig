@@ -955,6 +955,18 @@ class updateTask extends java.util.TimerTask
                         aud.playStop();
                       }
 
+                        int silent_time = new Integer( parent.end_call_silence.getText() ).intValue();
+                       //TDU silence
+                      if( silent_time > 0 ) { 
+                        try {
+                          if(aud_archive!=null ) {
+                            String fs =  System.getProperty("file.separator");
+                            aud_archive.addSilence( (10*20) , current_talkgroup, home_dir+fs+sys_mac_id, current_wacn_id, current_sys_id );
+                          }
+                        } catch(Exception e) {
+                        }
+                      }
+
                       rx_state=0;
                       skip_bytes=0;
                     }
