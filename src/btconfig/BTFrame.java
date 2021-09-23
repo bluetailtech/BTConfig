@@ -1333,7 +1333,7 @@ logger logger_out;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202109201229");
-      release_date.setText("Release: 2021-09-22 08:44");
+      release_date.setText("Release: 2021-09-22 18:17");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2106,6 +2106,7 @@ logger logger_out;
 
               if(is_dmr_mode==1) {
                 try {
+                  current_wacn_id=1;
                   current_sys_id = Integer.valueOf( dmr_sys_id.getText() ); 
                 } catch(Exception e) {
                   e.printStackTrace();

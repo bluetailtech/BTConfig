@@ -95,7 +95,7 @@ public class audio {
               }
               else {
                 if(debug) System.out.println("abort stop.");
-                stop_timer=100;
+                //stop_timer=100;
                 do_start=0;
               }
               voice_count=0;
@@ -168,7 +168,7 @@ BTFrame parent;
 
   int voice_count=0;
 
-  boolean debug=false;
+  boolean debug=true;
 
 
 
@@ -500,6 +500,8 @@ BTFrame parent;
 
     if(debug) System.out.println("drain");
     do_drain=1;
+    byte[] b = new byte[2560*2];
+    sourceDataLine.write(b, 0, 2560*2);
 
   }
   /////////////////////////////////////////////////////////////////////////////////
@@ -559,17 +561,17 @@ BTFrame parent;
           //if(voice_count++>10) {
           if( ((float) bavail / (float) bsize) < 0.5 ) { 
             voice_count=0;
+            start_timer=0;
 
             if(!sourceDataLine.isRunning()) {
               sourceDataLine.start();
-              start_timer=0;
               do_start=1;
               if(debug) System.out.println("source: Start");
             }
           }
           else {
             if(!sourceDataLine.isRunning()) {
-              start_timer=250;
+              start_timer=500;
             }
           }
 
