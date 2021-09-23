@@ -179,6 +179,33 @@ String hold_str="";
     this.sysid = String.format("%03X",sysid);
 
   }
+  /////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////
+  public void addSilence(int silent_time, String talkgroup, String home_dir, int wacn, int sysid) {
+
+    if(do_audio_encode!=0) return; //shouldn't happen
+    if(home_dir==null) return;
+    if( talkgroup==null ) return;
+    if(wacn==0) return;
+    if(sysid==0) return;
+
+    this.home_dir = home_dir;
+
+    int len = 320 * (silent_time/20);
+    if(len<=0) return;
+
+    if(audio_buffer==null|| audio_buffer.length!=len) audio_buffer = new byte[len];
+    for(int i=0;i<len;i++) {
+      audio_buffer[i]=0;
+    }
+    do_audio_encode=1;
+
+    tg = talkgroup;
+
+    this.wacn = String.format("%05X", wacn);
+    this.sysid = String.format("%03X",sysid);
+
+  }
 
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////

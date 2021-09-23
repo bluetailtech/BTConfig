@@ -1333,7 +1333,7 @@ logger logger_out;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202109201229");
-      release_date.setText("Release: 2021-09-22 18:17");
+      release_date.setText("Release: 2021-09-23 07:35");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1758,6 +1758,18 @@ logger logger_out;
             } catch(Exception e) {
             }
           }
+        }
+      }
+
+       //end of call silence
+      if( console_line.contains("link-control end call received") ) {
+        try {
+          int silent_time = new Integer( parent.end_call_silence.getText() ).intValue();
+          if(aud_archive!=null && silent_time>0) {
+            String fs =  System.getProperty("file.separator");
+            aud_archive.addSilence( silent_time, current_talkgroup, home_dir+fs+sys_mac_id, current_wacn_id, current_sys_id );
+          }
+        } catch(Exception e) {
         }
       }
 
@@ -2808,6 +2820,10 @@ logger logger_out;
         audio_hiq = new javax.swing.JRadioButton();
         audio_lowq = new javax.swing.JRadioButton();
         jLabel9 = new javax.swing.JLabel();
+        jPanel59 = new javax.swing.JPanel();
+        jLabel35 = new javax.swing.JLabel();
+        end_call_silence = new javax.swing.JTextField();
+        jLabel50 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         freqdb_panel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
@@ -3777,7 +3793,7 @@ logger logger_out;
                 enable_audioActionPerformed(evt);
             }
         });
-        jPanel11.add(enable_audio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, -1, -1));
+        jPanel11.add(enable_audio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, -1, -1));
 
         mp3_separate_files.setText("Generate separate files by talk group");
         mp3_separate_files.addActionListener(new java.awt.event.ActionListener() {
@@ -3882,6 +3898,18 @@ logger logger_out;
 
         jLabel9.setText("MP3 Quality");
         jPanel11.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(73, 270, 100, 20));
+
+        jLabel35.setText("End-Of-Call Silence");
+        jPanel59.add(jLabel35);
+
+        end_call_silence.setColumns(5);
+        end_call_silence.setText("0");
+        jPanel59.add(end_call_silence);
+
+        jLabel50.setText("ms");
+        jPanel59.add(jLabel50);
+
+        jPanel11.add(jPanel59, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 230, 40));
 
         audiopanel.add(jPanel11, java.awt.BorderLayout.CENTER);
 
@@ -5089,6 +5117,11 @@ logger logger_out;
           e.printStackTrace();
           }
 
+          try {
+            prefs.put("end_call_silence", end_call_silence.getText() ); 
+          } catch(Exception e) {
+            e.printStackTrace();
+          }
 
       save_position();
       if(alias!=null) alias.save_alias();
@@ -5817,6 +5850,7 @@ public void update_prefs() {
       zipcode.setText( prefs.get("sys_zipcode", "99352") );
       city.setText( prefs.get("sys_city", "Richland") );
       state.setText( prefs.get("sys_state", "Wa") );
+      end_call_silence.setText( prefs.get("end_call_silence", "0") );
 
       en_zero_rid.setSelected( prefs.getBoolean("en_zero_rid", true) );
 
@@ -6157,6 +6191,7 @@ public void SLEEP(long val) {
     private javax.swing.JButton enable_table_rows;
     private javax.swing.JRadioButton enable_voice_const;
     public javax.swing.JCheckBox enc_mode;
+    public javax.swing.JTextField end_call_silence;
     public javax.swing.JCheckBox eq_en;
     private javax.swing.JButton eq_reset;
     public javax.swing.JCheckBox eq_train;
@@ -6222,6 +6257,7 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
@@ -6238,6 +6274,7 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
@@ -6297,6 +6334,7 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel51;
     private javax.swing.JPanel jPanel52;
     private javax.swing.JPanel jPanel53;
+    private javax.swing.JPanel jPanel59;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
