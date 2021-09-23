@@ -1345,7 +1345,7 @@ logger logger_out;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202109201229");
-      release_date.setText("Release: 2021-09-23 11:27");
+      release_date.setText("Release: 2021-09-23 13:28");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1842,6 +1842,7 @@ logger logger_out;
               try {
                 current_nco_off = Float.parseFloat(s);
               } catch(Exception e) {
+                System.out.println("nco:");
                 e.printStackTrace();
               }
             }
@@ -1866,6 +1867,7 @@ logger logger_out;
                 try {
                   src_uid_d = Integer.parseInt(st.nextToken());
                 } catch(Exception e) {
+                  System.out.println("uid: ");
                   e.printStackTrace();
                 }
 
@@ -1874,14 +1876,16 @@ logger logger_out;
                 try {
                   rid_valid_n = new Integer( rid_valid_cnt.getText() ).intValue();
                 } catch(Exception e) {
-                    e.printStackTrace();
+                    //System.out.println("rid:");
+                    //e.printStackTrace();
                 }
                 String ridstr = new Integer(src_uid_d).toString();
                 try {
                   rid_cnt = new Integer( (String) rid_hash.get( ridstr ) ).intValue(); 
                   rid_hash.put( ridstr, new Integer( rid_cnt+1 ).toString() ); 
                 } catch(Exception e) {
-                  e.printStackTrace();
+                  //System.out.println("rid:");
+                  //e.printStackTrace();
                   rid_hash.put( ridstr, new Integer( "1" ).toString() ); 
                 }
 
@@ -1897,13 +1901,15 @@ logger logger_out;
                   String src_rid_str = new Integer(src_uid).toString();
                   if(alias!=null && src_uid!=0) alias.addRID(this, src_rid_str);
                 } catch(Exception e) {
-                  e.printStackTrace();
+                  //System.out.println("rid:");
+                  //e.printStackTrace();
                 }
 
                     String src_uid_str="";
                     try {
                       if(src_uid!=0) src_uid_str = new Integer(src_uid).toString();
                     } catch(Exception e) {
+                    System.out.println("uid:");
                       e.printStackTrace();
                     }
 

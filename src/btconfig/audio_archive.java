@@ -83,7 +83,7 @@ String hold_str="";
                       fos_mp3 = new FileOutputStream( home_dir+"/p25rx_record"+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".mp3", true );
                     }
                     fos_mp3.write(buffer,0,buffer.length);  //write Int num records
-                    fos_mp3.flush();
+                    //fos_mp3.flush();
                     fos_mp3.close();
                   } catch(Exception e) {
                     e.printStackTrace();
@@ -112,7 +112,7 @@ String hold_str="";
                   }
 
                   fos_wav.write(audio_buffer,0,audio_buffer.length);  //write Int num records
-                  fos_wav.flush();
+                  //fos_wav.flush();
                   fos_wav.close();
                 } catch(Exception e) {
                   e.printStackTrace();

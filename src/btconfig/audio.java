@@ -83,9 +83,10 @@ public class audio {
 
           //////////////////////
           //////////////////////
-          if(do_drain==1) {
-            do_drain=0;
+          //if(do_drain==1) {
+           // do_drain=0;
 
+            /*
             if(sourceDataLine.isRunning() && sourceDataLine.getBufferSize()!=sourceDataLine.available() ) {
               if(debug) System.out.println("stop");
               sourceDataLine.drain();
@@ -95,13 +96,25 @@ public class audio {
               }
               else {
                 if(debug) System.out.println("abort stop.");
-                //stop_timer=100;
+                stop_timer=500;
                 do_start=0;
               }
               voice_count=0;
             }
-          }
+            else {
+              */
+                int bsize = sourceDataLine.getBufferSize();
+                int bavail = sourceDataLine.available();
+                int kb = (int) ( (float) blen / (float) 1024 );
 
+                if(sourceDataLine.isRunning() && kb < 50) {
+                  byte[] b = new byte[320];
+                  sourceDataLine.write(b, 0, 320);
+                }
+            //}
+          //}
+
+              /*
           if(stop_timer>0) {
             stop_timer--;
             if(stop_timer==0) {
@@ -111,6 +124,7 @@ public class audio {
               parent.audio_prog.setValue(0);
             }
           }
+              */
           if(start_timer>0) {
             start_timer--;
             if(start_timer==0) {
@@ -313,7 +327,7 @@ BTFrame parent;
               sourceDataLine = AudioSystem.getSourceDataLine( af, mixer_info );
 
               if(parent.is_linux==1) {
-                sourceDataLine.open(af, 48000*5);
+                sourceDataLine.open(af, 48000*4);
               }
               else {
                 sourceDataLine.open(af, 48000*4);
@@ -499,9 +513,18 @@ BTFrame parent;
   public void playStop() {
 
     if(debug) System.out.println("drain");
-    do_drain=1;
-    byte[] b = new byte[2560*2];
-    sourceDataLine.write(b, 0, 2560*2);
+    //do_drain=1;
+    byte[] b = new byte[3200];
+    sourceDataLine.write(b, 0, 3200);
+
+    int bsize = sourceDataLine.getBufferSize();
+    int bavail = sourceDataLine.available();
+    if( ((float) bavail / (float) bsize) < 0.8 ) { 
+
+      if(!sourceDataLine.isRunning()) {
+        sourceDataLine.start();
+      }
+    }
 
   }
   /////////////////////////////////////////////////////////////////////////////////
@@ -559,11 +582,14 @@ BTFrame parent;
           int bsize = sourceDataLine.getBufferSize();
           int bavail = sourceDataLine.available();
           //if(voice_count++>10) {
-          if( ((float) bavail / (float) bsize) < 0.5 ) { 
+          if( ((float) bavail / (float) bsize) < 0.8 ) { 
             voice_count=0;
             start_timer=0;
 
             if(!sourceDataLine.isRunning()) {
+              byte[] b = new byte[3200*4];
+              sourceDataLine.write(b, 0, 3200*4);
+
               sourceDataLine.start();
               do_start=1;
               if(debug) System.out.println("source: Start");
@@ -571,7 +597,7 @@ BTFrame parent;
           }
           else {
             if(!sourceDataLine.isRunning()) {
-              start_timer=500;
+              start_timer=1000;
             }
           }
 
