@@ -67,7 +67,7 @@ public class audio {
             }
             System.out.print("\r\n");
             */
-            parent.audio_prog.setValue(kb);
+            //parent.audio_prog.setValue(kb);
           }
 
 

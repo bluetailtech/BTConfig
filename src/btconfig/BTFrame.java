@@ -960,7 +960,9 @@ class updateTask extends java.util.TimerTask
                         try {
                           if(aud_archive!=null ) {
                             String fs =  System.getProperty("file.separator");
-                            aud_archive.addSilence( (10*20) , current_talkgroup, home_dir+fs+sys_mac_id, current_wacn_id, current_sys_id );
+                            if(enable_mp3.isSelected()) {
+                              aud_archive.addSilence( (10*20) , current_talkgroup, home_dir+fs+sys_mac_id, current_wacn_id, current_sys_id );
+                            }
                           }
                         } catch(Exception e) {
                         }
@@ -1344,7 +1346,7 @@ logger logger_out;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202109201229");
-      release_date.setText("Release: 2021-09-23 13:28");
+      release_date.setText("Release: 2021-09-24 01:22");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
