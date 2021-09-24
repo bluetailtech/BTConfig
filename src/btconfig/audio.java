@@ -518,6 +518,7 @@ BTFrame parent;
   /////////////////////////////////////////////////////////////////////////////////
   public void playStop() {
 
+    /*
     if(debug) System.out.println("drain");
     //do_drain=1;
     byte[] b = new byte[3200];
@@ -531,6 +532,7 @@ BTFrame parent;
         sourceDataLine.start();
       }
     }
+    */
 
   }
   /////////////////////////////////////////////////////////////////////////////////
@@ -584,7 +586,7 @@ BTFrame parent;
           }
 
           sourceDataLine.write(outbytes, 0, idx);
-          did_audio=180;
+          did_audio=250;
 
           int bsize = sourceDataLine.getBufferSize();
           int bavail = sourceDataLine.available();
