@@ -596,8 +596,8 @@ BTFrame parent;
             start_timer=0;
 
             if(!sourceDataLine.isRunning()) {
-              byte[] b = new byte[3200*4];
-              sourceDataLine.write(b, 0, 3200*4);
+              byte[] b = new byte[3200*6];
+              sourceDataLine.write(b, 0, 3200*6);
 
               sourceDataLine.start();
               do_start=1;
