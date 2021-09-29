@@ -2154,7 +2154,7 @@ logger logger_out;
               is_enc=1;
             }
 
-            if(st1.equals("freq") && !console_line.contains("grant") ) {
+            if(st1.equals("freq") && !console_line.contains("grant") && console_line.contains("tsbk_ps") ) {
               freq_str = st.nextToken();
               if(freq_str!=null) {
                 try {
@@ -2307,7 +2307,7 @@ logger logger_out;
                   e.printStackTrace();
               }
 
-              freq.setText("Freq: "+freqval);
+              //freq.setText("Freq: "+freqval);
               freqval = " "+freqval+" MHz, ";
 
             }

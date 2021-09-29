@@ -809,7 +809,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
                           //if( parent.is_cc.isSelected() ) {
                             parent.frequency_tf1.setText( String.format("%3.8f", bb3.getDouble(0)) );
-                            parent.freq.setText( "Freq: "+String.format("%3.8f", bb3.getDouble(0)) );
+                            //parent.freq.setText( "Freq: "+String.format("%3.8f", bb3.getDouble(0)) );
                           //}
                           //else {
                            // parent.vfrequency_tf.setText( String.format("%3.8f", bb3.getDouble(0)) );
@@ -897,7 +897,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           String freq_to_use="";
                           double freq_d = 859.9625;
 
-                          parent.freq.setText( "Freq: "+parent.frequency_tf1.getText().trim() );
+                          //parent.freq.setText( "Freq: "+parent.frequency_tf1.getText().trim() );
                           freq_to_use=parent.frequency_tf1.getText().trim();
 
                           try {
