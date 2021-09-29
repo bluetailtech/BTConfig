@@ -1345,8 +1345,8 @@ logger logger_out;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202109201229");
-      release_date.setText("Release: 2021-09-25 11:15");
+      fw_ver.setText("Latest Avail: FW Date: 202109291625");
+      release_date.setText("Release: 2021-09-29 16:25");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1872,27 +1872,7 @@ logger logger_out;
                   e.printStackTrace();
                 }
 
-                int rid_cnt=0;
-                int rid_valid_n=3;
-                try {
-                  rid_valid_n = new Integer( rid_valid_cnt.getText() ).intValue();
-                } catch(Exception e) {
-                    //System.out.println("rid:");
-                    //e.printStackTrace();
-                }
                 String ridstr = new Integer(src_uid_d).toString();
-                try {
-                  rid_cnt = new Integer( (String) rid_hash.get( ridstr ) ).intValue(); 
-                  rid_hash.put( ridstr, new Integer( rid_cnt+1 ).toString() ); 
-                } catch(Exception e) {
-                  //System.out.println("rid:");
-                  //e.printStackTrace();
-                  rid_hash.put( ridstr, new Integer( "1" ).toString() ); 
-                }
-
-                //System.out.println(ridstr+" cnt: "+rid_cnt);
-
-                if( rid_cnt<rid_valid_n ) src_uid_d = 0; //invalidate until we confirm
 
                 if(did_metadata==1 && src_uid_d!=0 && src_uid_d != src_uid) {
                   did_metadata=0;
@@ -2961,8 +2941,6 @@ logger logger_out;
         alias_table = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         import_alias = new javax.swing.JButton();
-        jLabel57 = new javax.swing.JLabel();
-        rid_valid_cnt = new javax.swing.JTextField();
         advancedpanel = new javax.swing.JPanel();
         duid_enh = new javax.swing.JCheckBox();
         freq_correct_on_voice = new javax.swing.JCheckBox();
@@ -4628,13 +4606,6 @@ logger logger_out;
         });
         jPanel5.add(import_alias);
 
-        jLabel57.setText("RID Validation Count");
-        jPanel5.add(jLabel57);
-
-        rid_valid_cnt.setColumns(3);
-        rid_valid_cnt.setText("3");
-        jPanel5.add(rid_valid_cnt);
-
         alias_panel.add(jPanel5, java.awt.BorderLayout.SOUTH);
 
         jTabbedPane1.addTab("Alias", alias_panel);
@@ -5127,11 +5098,6 @@ logger logger_out;
           }
           try {
             prefs.put("sys_state", state.getText());
-          } catch(Exception e) {
-          e.printStackTrace();
-          }
-          try {
-            prefs.put("rid_valid_cnt", rid_valid_cnt.getText());
           } catch(Exception e) {
           e.printStackTrace();
           }
@@ -5865,7 +5831,6 @@ public void update_prefs() {
 
       system_alias.setText( prefs.get("system_alias", "") );
 
-      rid_valid_cnt.setText( prefs.get("rid_valid_cnt", "3") );
       zipcode.setText( prefs.get("sys_zipcode", "99352") );
       city.setText( prefs.get("sys_city", "Richland") );
       state.setText( prefs.get("sys_state", "Wa") );
@@ -6300,7 +6265,6 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
-    private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -6461,7 +6425,6 @@ public void SLEEP(long val) {
     private javax.swing.JButton restore_tg;
     public javax.swing.JLabel rfid;
     public javax.swing.JComboBox<String> rfmaxgain;
-    public javax.swing.JTextField rid_valid_cnt;
     public javax.swing.JCheckBox roaming;
     public javax.swing.JCheckBox roaming_ret_to_cc;
     private javax.swing.JTextField search_radius;
