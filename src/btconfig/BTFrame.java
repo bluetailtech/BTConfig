@@ -1345,8 +1345,8 @@ logger logger_out;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202109301053");
-      release_date.setText("Release: 2021-09-30 10:53");
+      fw_ver.setText("Latest Avail: FW Date: 202110010522");
+      release_date.setText("Release: 2021-10-01 05:22");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2823,6 +2823,7 @@ logger logger_out;
         jLabel35 = new javax.swing.JLabel();
         end_call_silence = new javax.swing.JTextField();
         jLabel50 = new javax.swing.JLabel();
+        add_tdu_silence1 = new javax.swing.JCheckBox();
         jPanel13 = new javax.swing.JPanel();
         freqdb_panel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
@@ -3907,6 +3908,10 @@ logger logger_out;
         jPanel59.add(jLabel50);
 
         jPanel11.add(jPanel59, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 230, 40));
+
+        add_tdu_silence1.setSelected(true);
+        add_tdu_silence1.setText("Add silent audio frame for each recevied TDU frame.");
+        jPanel11.add(add_tdu_silence1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, -1, -1));
 
         audiopanel.add(jPanel11, java.awt.BorderLayout.CENTER);
 
@@ -6070,6 +6075,7 @@ public void SLEEP(long val) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JCheckBox add_tdu_silence;
+    public javax.swing.JCheckBox add_tdu_silence1;
     private javax.swing.JButton adv_write_config;
     private javax.swing.JPanel advancedpanel;
     public javax.swing.JComboBox<String> agc_kp;
