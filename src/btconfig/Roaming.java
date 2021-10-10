@@ -804,7 +804,7 @@ public void send_roaming(BTFrame parent, SerialPort serial_port, int start_offse
                   double rfreq = 0.0;
                   try {
                     rfreq = new Double(freq).doubleValue();
-                    parent.freq_table.getModel().setValueAt(String.format("%3.8f",rfreq),rows[i],3);
+                    parent.freq_table.getModel().setValueAt(String.format("%3.6f",rfreq),rows[i],3);
 
                   } catch(Exception e) {
                   }
@@ -822,7 +822,7 @@ public void send_roaming(BTFrame parent, SerialPort serial_port, int start_offse
                     if(test_result.equals("NOSIG")) rec_result=3;
                     if(test_result.equals("P25CC")) rec_result=4;
 
-                    if(String.format("%3.8f",rfreq).equals(parent.frequency_tf1.getText()) ) {
+                    if(String.format("%3.6f",rfreq).equals(parent.frequency_tf1.getText()) ) {
                       parent.freq_table.getModel().setValueAt("PRIM",rows[i],4);
                       rec_result=5;
                     }
@@ -844,7 +844,7 @@ public void send_roaming(BTFrame parent, SerialPort serial_port, int start_offse
 
                     double lat = 0.0;
                     double lon = 0.0;
-                    Point2D.Double p2d = (Point2D.Double) parent.lat_lon_hash1.get( String.format("%3.8f",rfreq) );
+                    Point2D.Double p2d = (Point2D.Double) parent.lat_lon_hash1.get( String.format("%3.6f",rfreq) );
 
                     if(p2d!=null) {
                       for(int j=0;j<3;j++) {
@@ -919,14 +919,14 @@ public void send_roaming(BTFrame parent, SerialPort serial_port, int start_offse
                   ByteBuffer bb_freq = ByteBuffer.wrap(freq_test_rec);
                   bb_freq.order(ByteOrder.LITTLE_ENDIAN);
                   double freq_d = bb_freq.getDouble();
-                  if( append_hash.get( String.format("%3.8f", freq_d) ) != null) {
-                    System.out.println("redundant frequency skipping "+String.format("%3.8f",freq_d));
+                  if( append_hash.get( String.format("%3.6f", freq_d) ) != null) {
+                    System.out.println("redundant frequency skipping "+String.format("%3.6f",freq_d));
                     is_redundant=1;
                   }
                   else {
-                    System.out.println("writing frequency "+String.format("%3.8f",freq_d));
+                    System.out.println("writing frequency "+String.format("%3.6f",freq_d));
                     is_redundant=0;
-                    String freq_s = String.format("%3.8f",freq_d);
+                    String freq_s = String.format("%3.6f",freq_d);
                     append_hash.put(freq_s,freq_s);
                   }
                 }
@@ -1455,8 +1455,8 @@ public void read_roaming(BTFrame parent, SerialPort serial_port)
                     double lat = bb4.getDouble();
                     double lon = bb4.getDouble();
                     if(lat!=0.0 && lon!=0.0) {
-                      System.out.println("read freq "+String.format("%3.8f",freq) + ","+lat+","+lon); 
-                      String freq_s = String.format("%3.8f", freq);
+                      System.out.println("read freq "+String.format("%3.6f",freq) + ","+lat+","+lon); 
+                      String freq_s = String.format("%3.6f", freq);
                       append_hash.put(freq_s,freq_s);
 
                       rectype_hash.put(freq_s,new Byte(result));
@@ -1464,7 +1464,7 @@ public void read_roaming(BTFrame parent, SerialPort serial_port)
                       parent.lat_lon_hash2.put(freq_s, new Point2D.Double(lat,lon) );
                     }
                     else if(lat==0.0 && lon==0.0) {
-                      String freq_s = String.format("%3.8f", freq);
+                      String freq_s = String.format("%3.6f", freq);
                       parent.no_loc_freqs.put(freq_s,freq_s);
                     }
                   }
