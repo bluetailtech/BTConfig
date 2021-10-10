@@ -2476,17 +2476,6 @@
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                       </AuxValues>
                     </Component>
-                    <Component class="javax.swing.JButton" name="write_cc">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Write Selected To Roaming Flash"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="write_ccActionPerformed"/>
-                      </Events>
-                      <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-                      </AuxValues>
-                    </Component>
                     <Component class="javax.swing.JButton" name="append_cc">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Add Selected Frequencies To Roaming Flash"/>
@@ -2508,6 +2497,14 @@
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                       </AuxValues>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="gensysinfo">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Gen Sys Info"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="gensysinfoActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>

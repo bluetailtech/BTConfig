@@ -1216,10 +1216,11 @@ long status_time;
 audio_archive aud_archive;
 String document_dir="";
 logger logger_out;
-
+sysinfo si;
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
       initComponents();
+      si = new sysinfo();
 
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
       String ndate = formatter_date.format(new java.util.Date() );
@@ -1280,7 +1281,6 @@ logger logger_out;
 
       roaming_tests = new Roaming();
 
-      write_cc.setVisible(false);
       inc_p25.setVisible(false);
       macid.setVisible(false);
 
@@ -1346,7 +1346,7 @@ logger logger_out;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202110092005");
-      release_date.setText("Release: 2021-10-09 20:54");
+      release_date.setText("Release: 2021-10-10 07:40");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2883,9 +2883,9 @@ logger logger_out;
         jPanel19 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         testfreqs = new javax.swing.JButton();
-        write_cc = new javax.swing.JButton();
         append_cc = new javax.swing.JButton();
         use_freq_primary = new javax.swing.JButton();
+        gensysinfo = new javax.swing.JButton();
         jPanel20 = new javax.swing.JPanel();
         restore_roam = new javax.swing.JButton();
         backup_roam = new javax.swing.JButton();
@@ -4118,14 +4118,6 @@ logger logger_out;
         });
         jPanel15.add(testfreqs);
 
-        write_cc.setText("Write Selected To Roaming Flash");
-        write_cc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                write_ccActionPerformed(evt);
-            }
-        });
-        jPanel15.add(write_cc);
-
         append_cc.setText("Add Selected Frequencies To Roaming Flash");
         append_cc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -4141,6 +4133,14 @@ logger logger_out;
             }
         });
         jPanel15.add(use_freq_primary);
+
+        gensysinfo.setText("Gen Sys Info");
+        gensysinfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gensysinfoActionPerformed(evt);
+            }
+        });
+        jPanel15.add(gensysinfo);
 
         jPanel19.add(jPanel15);
 
@@ -5260,11 +5260,6 @@ logger logger_out;
       do_test_freqs=1;
     }//GEN-LAST:event_testfreqsActionPerformed
 
-    private void write_ccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_write_ccActionPerformed
-      if(is_connected==0) do_connect();
-      do_update_roaming=1;
-    }//GEN-LAST:event_write_ccActionPerformed
-
     private void append_ccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_append_ccActionPerformed
       if(is_connected==0) do_connect();
       do_append_roaming=1;
@@ -5641,6 +5636,13 @@ logger logger_out;
      if(prefs!=null) prefs.putBoolean("audio_lowq", audio_lowq.isSelected());
      if(prefs!=null) prefs.putBoolean("audio_hiq", !audio_lowq.isSelected());
     }//GEN-LAST:event_audio_lowqActionPerformed
+
+    private void gensysinfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gensysinfoActionPerformed
+      if( si !=null) {
+        si.setVisible(true);
+        si.addInfo(wacn.getText(), sysid.getText(), nac.getText(), siteid.getText(), rfid.getText(), roaming_tests.getSites());
+      }
+    }//GEN-LAST:event_gensysinfoActionPerformed
 
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
@@ -6238,6 +6240,7 @@ public void SLEEP(long val) {
     public javax.swing.JTextField frequency_tf1;
     public javax.swing.JLabel fw_installed;
     public javax.swing.JLabel fw_ver;
+    private javax.swing.JButton gensysinfo;
     public javax.swing.JLabel home_dir_label;
     private javax.swing.JButton import_alias;
     private javax.swing.JButton import_csv;
@@ -6512,7 +6515,6 @@ public void SLEEP(long val) {
     public javax.swing.JComboBox<String> vtimeout;
     private javax.swing.JLabel wacn;
     public javax.swing.JCheckBox wacn_en;
-    public javax.swing.JButton write_cc;
     private javax.swing.JButton write_config;
     public javax.swing.JTextField zipcode;
     // End of variables declaration//GEN-END:variables
