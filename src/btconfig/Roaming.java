@@ -84,7 +84,11 @@ public void addAdjacent(String freq) {
 
     for(int cnt=0;cnt<MAXRECS;cnt++) {
       String tfreq = (String) parent.freq_table.getModel().getValueAt( cnt, 3 );
-      if(tfreq!=null && tfreq.trim().equals(freq.trim())) return; 
+      if(tfreq!=null && tfreq.trim().equals(freq.trim())) {
+        parent.freq_table.getModel().setValueAt("Neighbor", cnt,1);
+        parent.freq_table.getModel().setValueAt(freq, cnt,3);
+        return; 
+      }
     }
 
     for(int cnt=0;cnt<MAXRECS;cnt++) {
@@ -106,7 +110,11 @@ public void addSecondary(String freq) {
 
     for(int cnt=0;cnt<MAXRECS;cnt++) {
       String tfreq = (String) parent.freq_table.getModel().getValueAt( cnt, 3 );
-      if(tfreq!=null && tfreq.trim().equals(freq.trim())) return; 
+      if(tfreq!=null && tfreq.trim().equals(freq.trim())) {
+        parent.freq_table.getModel().setValueAt("Secondary", cnt,1);
+        parent.freq_table.getModel().setValueAt(freq, cnt,3);
+        return; 
+      }
     }
 
     for(int cnt=0;cnt<MAXRECS;cnt++) {
@@ -127,7 +135,11 @@ public void addPrimary(String freq) {
 
     for(int cnt=0;cnt<MAXRECS;cnt++) {
       String tfreq = (String) parent.freq_table.getModel().getValueAt( cnt, 3 );
-      if(tfreq!=null && tfreq.trim().equals(freq.trim())) return; 
+      if(tfreq!=null && tfreq.trim().equals(freq.trim())) {
+        parent.freq_table.getModel().setValueAt("Primary", cnt,1);
+        parent.freq_table.getModel().setValueAt(freq, cnt,3);
+        return; 
+      }
     }
 
     for(int cnt=0;cnt<MAXRECS;cnt++) {
