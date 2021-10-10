@@ -156,7 +156,7 @@ class updateTask extends java.util.TimerTask
               double d = 0.0; 
               try {
                 d = new Double(freq_to_use).doubleValue();
-                freq_to_use = String.format("%3.8f", d);
+                freq_to_use = String.format("%3.6f", d);
 
                 if(freq_table.getModel().getValueAt(rows[0],1)==null) freq_table.getModel().setValueAt("",rows[0],1);
                 if(freq_table.getModel().getValueAt(rows[0],8)==null) freq_table.getModel().setValueAt("",rows[0],8);
@@ -2158,7 +2158,7 @@ logger logger_out;
                   String ff="";
                   try {
                     d = new Double(freq.getText().substring(6,15));
-                    ff = String.format("%3.8f", d);
+                    ff = String.format("%3.6f", d);
                   } catch(Exception e) {
                     e.printStackTrace();
                   }
@@ -2431,7 +2431,7 @@ logger logger_out;
                 String ff="";
                 try {
                   d = new Double(freq.getText().substring(6,15));
-                  ff = String.format("%3.8f", d);
+                  ff = String.format("%3.6f", d);
                 } catch(Exception e) {
                   e.printStackTrace();
                 }

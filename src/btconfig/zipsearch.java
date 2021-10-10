@@ -294,7 +294,7 @@ public class zipsearch
 
         Point2D.Double p2d=null;
         if(do_search3==1) {
-          p2d = (Point2D.Double) parent.lat_lon_hash2.get( String.format("%3.8f",freq_d) );
+          p2d = (Point2D.Double) parent.lat_lon_hash2.get( String.format("%3.6f",freq_d) );
           //if(p2d!=null) System.out.println("p2d not null");
         }
 
@@ -321,7 +321,7 @@ public class zipsearch
               continue;  //no records with the same freq as other records
             }
             else {
-              freq = String.format("%3.8f", f);
+              freq = String.format("%3.6f", f);
               freq_hash.put(freq,freq);
               parent.lat_lon_hash1.put(freq, new Point2D.Double(llat, llng) );
             }
@@ -365,7 +365,7 @@ public class zipsearch
               continue;  //no records with the same freq as other records
             }
             else {
-              freq = String.format("%3.8f", f);
+              freq = String.format("%3.6f", f);
               freq_hash.put(freq,freq);
               //System.out.println("adding freq "+freq);
               parent.lat_lon_hash1.put(freq, new Point2D.Double(llat, llng) );

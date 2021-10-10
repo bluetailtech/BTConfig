@@ -808,12 +808,12 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
 
                           //if( parent.is_cc.isSelected() ) {
-                            parent.frequency_tf1.setText( String.format("%3.8f", bb3.getDouble(0)) );
-                            //parent.freq.setText( "Freq: "+String.format("%3.8f", bb3.getDouble(0)) );
+                            parent.frequency_tf1.setText( String.format("%3.6f", bb3.getDouble(0)) );
+                            //parent.freq.setText( "Freq: "+String.format("%3.6f", bb3.getDouble(0)) );
                           //}
                           //else {
-                           // parent.vfrequency_tf.setText( String.format("%3.8f", bb3.getDouble(0)) );
-                            //parent.freq.setText( "Freq: "+String.format("%3.8f", bb3.getDouble(0)) );
+                           // parent.vfrequency_tf.setText( String.format("%3.6f", bb3.getDouble(0)) );
+                            //parent.freq.setText( "Freq: "+String.format("%3.6f", bb3.getDouble(0)) );
                           //}
 
                           int no_voice_secs = bb3.getInt(280);
