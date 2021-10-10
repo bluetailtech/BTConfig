@@ -79,6 +79,70 @@ Boolean is_valid_freq(double freq) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public void addAdjacent(String freq) {
+    if(!parent.add_neighbors.isSelected()) return;
+
+    for(int cnt=0;cnt<MAXRECS;cnt++) {
+      String tfreq = (String) parent.freq_table.getModel().getValueAt( cnt, 3 );
+      if(tfreq!=null && tfreq.trim().equals(freq.trim())) return; 
+    }
+
+    for(int cnt=0;cnt<MAXRECS;cnt++) {
+      String tfreq = (String) parent.freq_table.getModel().getValueAt( cnt, 3 );
+      if(tfreq!=null && tfreq.trim().equals(freq.trim())) return;
+
+      if(tfreq==null) {
+        parent.freq_table.getModel().setValueAt("Neighbor", cnt,1);
+        parent.freq_table.getModel().setValueAt(freq, cnt,3);
+        return;
+      }
+    }
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public void addSecondary(String freq) {
+    if(!parent.add_secondaries.isSelected()) return;
+
+    for(int cnt=0;cnt<MAXRECS;cnt++) {
+      String tfreq = (String) parent.freq_table.getModel().getValueAt( cnt, 3 );
+      if(tfreq!=null && tfreq.trim().equals(freq.trim())) return; 
+    }
+
+    for(int cnt=0;cnt<MAXRECS;cnt++) {
+      String tfreq = (String) parent.freq_table.getModel().getValueAt( cnt, 3 );
+      if(tfreq!=null && tfreq.trim().equals(freq.trim())) return;
+
+      if(tfreq==null) {
+        parent.freq_table.getModel().setValueAt("Secondary", cnt,1);
+        parent.freq_table.getModel().setValueAt(freq, cnt,3);
+        return;
+      }
+    }
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public void addPrimary(String freq) {
+    if(!parent.add_primary.isSelected()) return;
+
+    for(int cnt=0;cnt<MAXRECS;cnt++) {
+      String tfreq = (String) parent.freq_table.getModel().getValueAt( cnt, 3 );
+      if(tfreq!=null && tfreq.trim().equals(freq.trim())) return; 
+    }
+
+    for(int cnt=0;cnt<MAXRECS;cnt++) {
+      String tfreq = (String) parent.freq_table.getModel().getValueAt( cnt, 3 );
+      if(tfreq!=null && tfreq.trim().equals(freq.trim())) return;
+
+      if(tfreq==null) {
+        parent.freq_table.getModel().setValueAt("Primary", cnt,1);
+        parent.freq_table.getModel().setValueAt(freq, cnt,3);
+        return;
+      }
+    }
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 public void test_selected_freqs(BTFrame parent, SerialPort serial_port) {
   this.serial_port = serial_port;
 

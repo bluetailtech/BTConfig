@@ -1345,8 +1345,8 @@ logger logger_out;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202110010522");
-      release_date.setText("Release: 2021-10-01 05:22");
+      fw_ver.setText("Latest Avail: FW Date: 202110092005");
+      release_date.setText("Release: 2021-10-09 20:05");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1710,6 +1710,32 @@ logger logger_out;
         src_uid=0;
         is_enc=0;
         current_nco_off=0.0f;
+      }
+
+
+      if( console_line.contains("$P25_SITE") ) {
+        StringTokenizer st = new StringTokenizer(console_line," ,\r\n");
+        int cnt=0;
+        String st1="";
+
+        while(st!=null && st.hasMoreTokens() && cnt++<20) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.contains("ADJACENT")) {
+            st1 = st.nextToken();
+            if(st1!=null) roaming_tests.addAdjacent( st1 ); //frequency to add
+            //System.out.println("adding adjacent "+st1); 
+          }
+          if(st1!=null && st1.contains("SECONDARY")) {
+            st1 = st.nextToken();
+            if(st1!=null) roaming_tests.addSecondary( st1 ); //frequency to add
+            //System.out.println("adding secondary "+st1); 
+          }
+          if(st1!=null && st1.contains("PRIMARY")) {
+            st1 = st.nextToken();
+            if(st1!=null) roaming_tests.addPrimary( st1 ); //frequency to add
+            //System.out.println("adding primary "+st1); 
+          }
+        }
       }
 
       if( console_line.contains("$P25_EMERGENCY:") ) {
@@ -2865,6 +2891,9 @@ logger logger_out;
         backup_roam = new javax.swing.JButton();
         erase_roaming = new javax.swing.JButton();
         delete_roaming = new javax.swing.JButton();
+        add_primary = new javax.swing.JCheckBox();
+        add_secondaries = new javax.swing.JCheckBox();
+        add_neighbors = new javax.swing.JCheckBox();
         talkgroup_panel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -4148,6 +4177,15 @@ logger logger_out;
             }
         });
         jPanel20.add(delete_roaming);
+
+        add_primary.setText("Add Primary");
+        jPanel20.add(add_primary);
+
+        add_secondaries.setText("Add Secondaries");
+        jPanel20.add(add_secondaries);
+
+        add_neighbors.setText("Add Neighbors");
+        jPanel20.add(add_neighbors);
 
         jPanel19.add(jPanel20);
 
@@ -6074,6 +6112,9 @@ public void SLEEP(long val) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JCheckBox add_neighbors;
+    public javax.swing.JCheckBox add_primary;
+    public javax.swing.JCheckBox add_secondaries;
     public javax.swing.JCheckBox add_tdu_silence;
     public javax.swing.JCheckBox add_tdu_silence1;
     private javax.swing.JButton adv_write_config;
