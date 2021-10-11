@@ -512,7 +512,7 @@ class updateTask extends java.util.TimerTask
               cmd= new String("logging -999\r\n");
               serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
 
-            BufferedInputStream bis = new BufferedInputStream( getClass().getResourceAsStream("/btconfig/main.aes") );
+            BufferedInputStream bis = new BufferedInputStream( getClass().getResourceAsStream("/btconfig/p25rx-main.aes") );
             new firmware_update().send_firmware(parent, bis, serial_port);
             setProgress(-1);
             //firmware_checked=1;
@@ -1345,8 +1345,8 @@ sysinfo si;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202110092005");
-      release_date.setText("Release: 2021-10-10 07:40");
+      fw_ver.setText("Latest Avail: FW Date: 202110101057");
+      release_date.setText("Release: 2021-10-10 10:57");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
