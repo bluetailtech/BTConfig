@@ -1346,7 +1346,7 @@ sysinfo si;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202110130706");
-      release_date.setText("Release: 2021-10-13 07:06");
+      release_date.setText("Release: 2021-10-14 11:31");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);

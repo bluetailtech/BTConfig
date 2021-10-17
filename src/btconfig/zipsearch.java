@@ -317,11 +317,11 @@ public class zipsearch
             } catch(Exception e) {
             }
 
+              freq = String.format("%3.6f", f);
             if(f==0.0 || (freq_hash.get(freq)!=null && !parent.inc_dup_freq.isSelected()) ) {
               continue;  //no records with the same freq as other records
             }
             else {
-              freq = String.format("%3.6f", f);
               freq_hash.put(freq,freq);
               parent.lat_lon_hash1.put(freq, new Point2D.Double(llat, llng) );
             }
@@ -360,12 +360,12 @@ public class zipsearch
             } catch(Exception e) {
             }
 
+              freq = String.format("%3.6f", f);
             if(f==0.0 || (freq_hash.get(freq)!=null && !parent.inc_dup_freq.isSelected()) ) {
               //if( desc.toLowerCase().contains("solano") ) System.out.println("1:"+line);
               continue;  //no records with the same freq as other records
             }
             else {
-              freq = String.format("%3.6f", f);
               freq_hash.put(freq,freq);
               //System.out.println("adding freq "+freq);
               parent.lat_lon_hash1.put(freq, new Point2D.Double(llat, llng) );
