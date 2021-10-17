@@ -1345,8 +1345,8 @@ sysinfo si;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202110130706");
-      release_date.setText("Release: 2021-10-14 11:31");
+      fw_ver.setText("Latest Avail: FW Date: 202110161955");
+      release_date.setText("Release: 2021-10-16 19:55");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2891,6 +2891,7 @@ sysinfo si;
         backup_roam = new javax.swing.JButton();
         erase_roaming = new javax.swing.JButton();
         delete_roaming = new javax.swing.JButton();
+        jPanel50 = new javax.swing.JPanel();
         add_primary = new javax.swing.JCheckBox();
         add_secondaries = new javax.swing.JCheckBox();
         add_neighbors = new javax.swing.JCheckBox();
@@ -4178,14 +4179,18 @@ sysinfo si;
         });
         jPanel20.add(delete_roaming);
 
+        jPanel50.setBorder(javax.swing.BorderFactory.createTitledBorder("Only Active When Roaming Is Disabled"));
+
         add_primary.setText("Add Primary");
-        jPanel20.add(add_primary);
+        jPanel50.add(add_primary);
 
         add_secondaries.setText("Add Secondaries");
-        jPanel20.add(add_secondaries);
+        jPanel50.add(add_secondaries);
 
         add_neighbors.setText("Add Neighbors");
-        jPanel20.add(add_neighbors);
+        jPanel50.add(add_neighbors);
+
+        jPanel20.add(jPanel50);
 
         jPanel19.add(jPanel20);
 
@@ -6364,6 +6369,7 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel48;
     private javax.swing.JPanel jPanel49;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel50;
     private javax.swing.JPanel jPanel51;
     private javax.swing.JPanel jPanel52;
     private javax.swing.JPanel jPanel53;
