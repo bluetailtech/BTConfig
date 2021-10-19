@@ -1380,7 +1380,7 @@ String src_uid_str="";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202110161955");
-      release_date.setText("Release: 2021-10-16 19:55");
+      release_date.setText("Release: 2021-10-19 05:20");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
