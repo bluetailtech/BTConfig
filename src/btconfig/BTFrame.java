@@ -784,6 +784,8 @@ class updateTask extends java.util.TimerTask
                     String fs =  System.getProperty("file.separator");
                     if(alias==null) alias = new Alias(parent, parent.sys_mac_id, document_dir);
 
+                    edit_display_view.setEnabled(true);
+
                     break;
                   }
 
@@ -1217,9 +1219,41 @@ audio_archive aud_archive;
 String document_dir="";
 logger logger_out;
 sysinfo si;
+String freqval="";
+String rssi="";
+String talkgroup_name;
+
+BigText bt1;
+BigText bt2;
+BigText bt3;
+BigText bt4;
+BigText bt5;
+
+displayframe_edit dframe;
+
+String src_uid_str="";
+
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
       initComponents();
+
+      edit_display_view.setEnabled(false);
+
+      bt1 = new BigText(" ", 192, new Color(128,0,128) );
+      bt2 = new BigText(" ", 128, Color.white);
+      bt3 = new BigText(" ", 128, Color.red);
+      bt4 = new BigText(" ", 128, Color.cyan);
+      bt5 = new BigText(" ",128, Color.yellow);
+
+      dframe = new displayframe_edit(this, bt1,bt2,bt3,bt4,bt5);
+
+      display_frame.add(bt1);
+      display_frame.add(bt2);
+      display_frame.add(bt3);
+      display_frame.add(bt4);
+      display_frame.add(bt5);
+
+
       si = new sysinfo();
 
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
@@ -1698,7 +1732,7 @@ sysinfo si;
       }
 
       String talkgroup="";
-      String freqval="";
+      freqval="";
       String tsbk_ps="";
 
       if(console_line==null) console_line = new String("");
@@ -2353,7 +2387,7 @@ sysinfo si;
             }
 
             if(st1.contains("rssi:")) {
-              String rssi = st.nextToken();
+              rssi = st.nextToken();
               if(rssi!=null) {
                 try {
                   rssi = rssi.replace(","," ").trim();
@@ -2363,6 +2397,13 @@ sysinfo si;
                 }
                 sig_meter_timeout=20000;
                 if(l3.getText().contains("NO SIG")) l3.setText("");
+
+                try {
+                  //if(freqval!=null && freqval.length()>1) {
+                    dframe.update_colors();
+                  //}
+                } catch(Exception e) {
+                }
               }
             }
 
@@ -2507,6 +2548,8 @@ sysinfo si;
 
                   //String l3_line = freqval+st2.substring(0,st2.length()-2)+talkgroup;
                   freqval = freqval.substring(0,freqval.length()-2);
+                  talkgroup_name = st2.substring(0,st2.length()-2);
+
                   String l3_line = freqval+talkgroup+", "+st2.substring(0,st2.length()-2);
                   if(l3_line!=null && l3_line.length()>46) l3_line = l3_line.substring(0,45);
 
@@ -3021,6 +3064,10 @@ sysinfo si;
         jButton3 = new javax.swing.JButton();
         jLabel31 = new javax.swing.JLabel();
         jComboBox5 = new javax.swing.JComboBox<>();
+        dispview = new javax.swing.JPanel();
+        display_frame = new javax.swing.JPanel();
+        jPanel54 = new javax.swing.JPanel();
+        edit_display_view = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         logo_panel = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -3374,7 +3421,7 @@ sysinfo si;
         mcu_ver_t.setText("MCU:");
         p25rxconfigpanel.add(mcu_ver_t, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, -1, -1));
 
-        jTabbedPane1.addTab("P25RX Configuration", p25rxconfigpanel);
+        jTabbedPane1.addTab("P25RX Config", p25rxconfigpanel);
 
         jPanel25.setLayout(new java.awt.BorderLayout());
 
@@ -4196,7 +4243,7 @@ sysinfo si;
 
         freqdb_panel.add(jPanel19, java.awt.BorderLayout.SOUTH);
 
-        jTabbedPane1.addTab("Search DB For CC", freqdb_panel);
+        jTabbedPane1.addTab("Search DB", freqdb_panel);
 
         talkgroup_panel.setLayout(new java.awt.BorderLayout());
 
@@ -4335,7 +4382,7 @@ sysinfo si;
 
         talkgroup_panel.add(jPanel22, java.awt.BorderLayout.SOUTH);
 
-        jTabbedPane1.addTab("Talk Group Editor", talkgroup_panel);
+        jTabbedPane1.addTab("TG Editor", talkgroup_panel);
 
         consolePanel.setPreferredSize(new java.awt.Dimension(963, 500));
         consolePanel.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -4450,7 +4497,7 @@ sysinfo si;
 
         logpanel.add(jScrollPane7, java.awt.BorderLayout.CENTER);
 
-        jTabbedPane1.addTab("Talk Group Log", logpanel);
+        jTabbedPane1.addTab("TG Log", logpanel);
 
         buttong_config.setLayout(new java.awt.BorderLayout());
 
@@ -4915,6 +4962,28 @@ sysinfo si;
         signalinsightpanel.add(jPanel8);
 
         jTabbedPane1.addTab("Signal Insights", signalinsightpanel);
+
+        dispview.setLayout(new java.awt.BorderLayout());
+
+        display_frame.setBackground(new java.awt.Color(0, 0, 0));
+        display_frame.setLayout(new java.awt.GridLayout(5, 1));
+        dispview.add(display_frame, java.awt.BorderLayout.CENTER);
+
+        jPanel54.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel54.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        edit_display_view.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        edit_display_view.setText("EDIT");
+        edit_display_view.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edit_display_viewActionPerformed(evt);
+            }
+        });
+        jPanel54.add(edit_display_view);
+
+        dispview.add(jPanel54, java.awt.BorderLayout.PAGE_END);
+
+        jTabbedPane1.addTab("Display View", dispview);
 
         getContentPane().add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
@@ -5649,6 +5718,10 @@ sysinfo si;
       }
     }//GEN-LAST:event_gensysinfoActionPerformed
 
+    private void edit_display_viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_display_viewActionPerformed
+      dframe.setVisible(true);
+    }//GEN-LAST:event_edit_display_viewActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5870,6 +5943,12 @@ public void update_prefs() {
 
     if(prefs!=null) {
       int i = prefs.getInt("audio_buffer_system",1);
+
+
+      try {
+        if(dframe!=null) dframe.update_colors();
+      } catch(Exception e) {
+      }
 
       auto_flash_tg.setSelected( prefs.getBoolean("tg_auto_flash", false) );
       auto_pop_table.setSelected( prefs.getBoolean("tg_auto_pop_table", true) );
@@ -6181,6 +6260,8 @@ public void SLEEP(long val) {
     private javax.swing.JButton disable_table_rows;
     private javax.swing.JButton disconnect;
     private javax.swing.JButton discover;
+    private javax.swing.JPanel display_frame;
+    private javax.swing.JPanel dispview;
     private javax.swing.JButton dmr_backup;
     public javax.swing.JCheckBox dmr_cc_en1;
     public javax.swing.JCheckBox dmr_cc_en10;
@@ -6215,6 +6296,7 @@ public void SLEEP(long val) {
     public javax.swing.JRadioButton double_click_opt5;
     public javax.swing.JRadioButton double_click_opt6;
     public javax.swing.JCheckBox duid_enh;
+    private javax.swing.JButton edit_display_view;
     public javax.swing.JCheckBox en_bluetooth_cb;
     public javax.swing.JCheckBox en_encout;
     public javax.swing.JCheckBox en_p2_tones;
@@ -6373,6 +6455,7 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel51;
     private javax.swing.JPanel jPanel52;
     private javax.swing.JPanel jPanel53;
+    private javax.swing.JPanel jPanel54;
     private javax.swing.JPanel jPanel59;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -6454,7 +6537,7 @@ public void SLEEP(long val) {
     private javax.swing.JToggleButton minimize;
     public javax.swing.JCheckBox mp3_separate_files;
     public javax.swing.JToggleButton mute;
-    private javax.swing.JLabel nac;
+    public javax.swing.JLabel nac;
     public javax.swing.JPanel no_voice_panel;
     public javax.swing.JTextField no_voice_secs;
     public javax.swing.JComboBox<String> nsymbols;
@@ -6502,7 +6585,7 @@ public void SLEEP(long val) {
     public javax.swing.JTextField state;
     private javax.swing.JLabel status;
     private javax.swing.JPanel status_panel;
-    private javax.swing.JLabel sysid;
+    public javax.swing.JLabel sysid;
     public javax.swing.JTextField system_alias;
     private javax.swing.JPanel talkgroup_panel;
     public javax.swing.JButton testfreqs;
@@ -6519,7 +6602,7 @@ public void SLEEP(long val) {
     public javax.swing.JButton use_freq_primary;
     public javax.swing.JLabel volume_label;
     public javax.swing.JComboBox<String> vtimeout;
-    private javax.swing.JLabel wacn;
+    public javax.swing.JLabel wacn;
     public javax.swing.JCheckBox wacn_en;
     private javax.swing.JButton write_config;
     public javax.swing.JTextField zipcode;
