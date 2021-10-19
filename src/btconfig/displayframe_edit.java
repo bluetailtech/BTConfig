@@ -111,10 +111,12 @@ public class displayframe_edit extends javax.swing.JFrame {
         //System.out.println("freqval: "+f);
         f = f.replace(","," ");
         s2 = s2.replaceAll(Matcher.quoteReplacement("$FREQ$"), f );
+        s2 = s2.replaceAll(Matcher.quoteReplacement("$V_FREQ$"), f );
         if(s2==null) s2 = s1;
       }
       else {
         s2 = s2.replaceAll(Matcher.quoteReplacement("$FREQ$"), " " );
+        s2 = s2.replaceAll(Matcher.quoteReplacement("$V_FREQ$"), " " );
         if(s2==null) s2 = s1;
       }
 
@@ -148,6 +150,7 @@ public class displayframe_edit extends javax.swing.JFrame {
       String sysid = "";
       String nac = ""; 
       String siteid = ""; 
+      String cc_freq = ""; 
       String rfid = ""; 
       String rid = "";
       String rid_alias = "";
@@ -160,6 +163,7 @@ public class displayframe_edit extends javax.swing.JFrame {
       if(parent.nac.getText()!=null) nac = parent.nac.getText().trim();
       if(parent.siteid.getText()!=null) siteid = parent.siteid.getText().trim();
       if(parent.rfid.getText()!=null) rfid = parent.rfid.getText().trim();
+      if(parent.freq.getText()!=null) cc_freq = parent.freq.getText().trim();
 
       rid = parent.src_uid_str;
       rid_alias = parent.current_alias;
@@ -172,6 +176,7 @@ public class displayframe_edit extends javax.swing.JFrame {
       if( nac.contains("NAC:") && nac.length()>4) nac = nac.substring(4,nac.length());
       if( rfid.contains("RFSS ID:") && rfid.length()>8) rfid = rfid.substring(8,rfid.length());
       if( siteid.contains("SITE ID:") && siteid.length()>8) siteid = siteid.substring(8,siteid.length());
+      if( cc_freq.contains("Freq:") && cc_freq.length()>5) cc_freq = cc_freq.substring(5,cc_freq.length());
 
       s2 = s2.replaceAll(Matcher.quoteReplacement("$WACN$"), wacn );
         if(s2==null) s2 = s1;
@@ -182,6 +187,8 @@ public class displayframe_edit extends javax.swing.JFrame {
       s2 = s2.replaceAll(Matcher.quoteReplacement("$SITE_ID$"), siteid );
         if(s2==null) s2 = s1;
       s2 = s2.replaceAll(Matcher.quoteReplacement("$RFSS_ID$"), rfid );
+        if(s2==null) s2 = s1;
+      s2 = s2.replaceAll(Matcher.quoteReplacement("$CC_FREQ$"), cc_freq );
         if(s2==null) s2 = s1;
 
       s2 = s2.replaceAll(Matcher.quoteReplacement("$RID$"), rid );
@@ -198,13 +205,13 @@ public class displayframe_edit extends javax.swing.JFrame {
         if(s2==null) s2 = s1;
       }
 
-      //try {
-      //  evm_p = String.format("%3.0f", parent.current_evm_percent);
-      //} catch(Exception e) {
-      //}
+      try {
+        //evm_p = String.format("%3.0f", parent.current_evm_percent);
+      } catch(Exception e) {
+      }
 
-      //s2 = s2.replaceAll(Matcher.quoteReplacement("$EVM_P$"), evm_p );
-       // if(s2==null) s2 = s1;
+      s2 = s2.replaceAll(Matcher.quoteReplacement("$EVM_P$"), evm_p );
+        if(s2==null) s2 = s1;
 
       String sysname = parent.system_alias.getText();
       if(sysname==null || sysname.length()==0) sysname="SYS_NAME";
@@ -935,6 +942,7 @@ public class displayframe_edit extends javax.swing.JFrame {
     private void showkeywActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showkeywActionPerformed
       String kw="";
 
+      kw = kw.concat("\n$CC_FREQ$");
       kw = kw.concat("\n$EVM_P$");
       kw = kw.concat("\n$FREQ$");
       kw = kw.concat("\n$NAC$");
@@ -948,6 +956,7 @@ public class displayframe_edit extends javax.swing.JFrame {
       kw = kw.concat("\n$SYS_NAME$");
       kw = kw.concat("\n$TG_ID$");
       kw = kw.concat("\n$TG_NAME$");
+      kw = kw.concat("\n$V_FREQ$");
       kw = kw.concat("\n$WACN$");
       hf.setText(kw);
 
