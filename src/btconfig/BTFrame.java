@@ -1380,7 +1380,7 @@ String src_uid_str="";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202110161955");
-      release_date.setText("Release: 2021-10-20 07:01");
+      release_date.setText("Release: 2021-10-20 09:26");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -6154,8 +6154,12 @@ private void resizeColumns3() {
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 public void SLEEP(long val) {
   try {
+    /*
     if(is_windows==1 ) {
       Thread.sleep(val);
     }
@@ -6166,11 +6170,23 @@ public void SLEEP(long val) {
         start_time  = new java.util.Date().getTime();
       }
     }
+    */
+
+    long NS_PER_US = 1000; 
+    long DELAY_TARGET_US = 1000*val; 
+
+     long t0 = System.nanoTime(); 
+     while (System.nanoTime() < t0+DELAY_TARGET_US) {
+       try {
+         Thread.sleep(0, 1000);
+       } catch(Exception e) {
+       }
+     }
+
   } catch(Exception e) {
     e.printStackTrace();
   }
 }
-
     /**
      * @param args the command line arguments
      */

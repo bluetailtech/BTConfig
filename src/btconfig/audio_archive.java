@@ -44,15 +44,15 @@ String hold_str="";
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   class updateTask extends java.util.TimerTask
   {
-    long NS_PER_MS = 1000000; 
-    long DELAY_TARGET_MS = NS_PER_MS; 
+    long NS_PER_US = 1000; 
+    long DELAY_TARGET_US = NS_PER_US; 
 
       public void run()
       {
     while(true) {
 
          long t0 = System.nanoTime(); 
-         while (System.nanoTime() < t0+DELAY_TARGET_MS) {
+         while (System.nanoTime() < t0+DELAY_TARGET_US) {
            try {
              Thread.sleep(0, 1000);
            } catch(Exception e) {
