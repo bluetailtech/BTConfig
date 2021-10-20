@@ -158,7 +158,7 @@ public class displayframe_edit extends javax.swing.JFrame {
 
 
 
-      if(parent.wacn.getText()!=null) wacn = parent.wacn.getText().trim();
+      //if(parent.wacn.getText()!=null) wacn = parent.wacn.getText().trim();
       if(parent.sysid.getText()!=null) sysid = parent.sysid.getText().trim();
       if(parent.nac.getText()!=null) nac = parent.nac.getText().trim();
       if(parent.siteid.getText()!=null) siteid = parent.siteid.getText().trim();
@@ -171,12 +171,17 @@ public class displayframe_edit extends javax.swing.JFrame {
       if(rid==null) rid="";
       if(rid_alias==null) rid_alias="";
 
-      if( wacn.contains("WACN:") && wacn.length()>5) wacn = wacn.substring(5,wacn.length());
+      //if( wacn.contains("WACN:") && wacn.length()>5) wacn = wacn.substring(5,wacn.length());
       if( sysid.contains("SYS_ID:") && sysid.length()>7) sysid = sysid.substring(7,sysid.length());
       if( nac.contains("NAC:") && nac.length()>4) nac = nac.substring(4,nac.length());
       if( rfid.contains("RFSS ID:") && rfid.length()>8) rfid = rfid.substring(8,rfid.length());
       if( siteid.contains("SITE ID:") && siteid.length()>8) siteid = siteid.substring(8,siteid.length());
       if( cc_freq.contains("Freq:") && cc_freq.length()>5) cc_freq = cc_freq.substring(5,cc_freq.length());
+
+      try {
+        wacn = String.format("0x%05x", Integer.valueOf(parent.current_wacn_id).intValue());
+      } catch(Exception e) {
+      }
 
       s2 = s2.replaceAll(Matcher.quoteReplacement("$WACN$"), wacn );
         if(s2==null) s2 = s1;
