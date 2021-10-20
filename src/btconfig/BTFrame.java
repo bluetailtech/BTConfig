@@ -2409,6 +2409,9 @@ String src_uid_str="";
 
 
             if(st1.equals("tsbk_ps")) {
+              current_alias="";
+              src_uid_str="";
+
               did_metadata=0;
               meta_count=0;
               tsbk_ps = st.nextToken();
