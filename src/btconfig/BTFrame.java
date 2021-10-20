@@ -1925,6 +1925,8 @@ String src_uid_str="";
               try {
 
                 int src_uid_d=0;
+
+
                 try {
                   src_uid_d = Integer.parseInt(st.nextToken());
                 } catch(Exception e) {
@@ -1941,6 +1943,13 @@ String src_uid_str="";
                 try {
                   String src_rid_str = new Integer(src_uid).toString();
                   if(alias!=null && src_uid!=0) alias.addRID(this, src_rid_str);
+
+                  try {
+                      dframe.update_colors();
+                  } catch(Exception e) {
+                  }
+
+
                 } catch(Exception e) {
                   //System.out.println("rid:");
                   //e.printStackTrace();
@@ -2399,9 +2408,7 @@ String src_uid_str="";
                 if(l3.getText().contains("NO SIG")) l3.setText("");
 
                 try {
-                  //if(freqval!=null && freqval.length()>1) {
                     dframe.update_colors();
-                  //}
                 } catch(Exception e) {
                 }
               }
