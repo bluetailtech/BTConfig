@@ -391,6 +391,7 @@ public class displayframe_edit extends javax.swing.JFrame {
         dwidth = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         close = new javax.swing.JButton();
+        resettodefault = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         export_df = new javax.swing.JButton();
         import_df = new javax.swing.JButton();
@@ -665,6 +666,15 @@ public class displayframe_edit extends javax.swing.JFrame {
         });
         jPanel8.add(close);
 
+        resettodefault.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        resettodefault.setText("Reset To Defaults");
+        resettodefault.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resettodefaultActionPerformed(evt);
+            }
+        });
+        jPanel8.add(resettodefault);
+
         jPanel1.add(jPanel8);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -717,7 +727,7 @@ public class displayframe_edit extends javax.swing.JFrame {
 
         FileNameExtensionFilter filter = new FileNameExtensionFilter( "displayview file", "dvp");
         chooser.setFileFilter(filter);
-        int returnVal = chooser.showDialog(parent, "Export Display View Profile");
+        int returnVal = chooser.showDialog(parent, "Export Display View Profile .DVP file");
 
         ObjectOutputStream oos;
 
@@ -985,76 +995,96 @@ public class displayframe_edit extends javax.swing.JFrame {
 
         FileNameExtensionFilter filter = new FileNameExtensionFilter( "displayview file", "dvp");
         chooser.setFileFilter(filter);
-        int returnVal = chooser.showDialog(parent, "Import Display View Profile");
+        int returnVal = chooser.showDialog(parent, "Import Display View Profile .DVP File");
 
-        ObjectInputStream ois;
 
         if(returnVal == JFileChooser.APPROVE_OPTION) {
           File file = chooser.getSelectedFile();
-          ois = new ObjectInputStream( new FileInputStream(file) );
-
-          int version = ois.readInt(); //version
-
-          if(version==100 && parent.prefs!=null) {
-
-            parent.prefs.putInt( "dfcol1", ois.readInt() );
-            parent.prefs.putInt( "dfcol2", ois.readInt() );
-            parent.prefs.putInt( "dfcol3", ois.readInt() );
-            parent.prefs.putInt( "dfcol4", ois.readInt() );
-            parent.prefs.putInt( "dfcol5", ois.readInt() );
-
-            parent.prefs.putBoolean( "dfen1", ois.readBoolean() );
-            parent.prefs.putBoolean( "dfen2", ois.readBoolean() );
-            parent.prefs.putBoolean( "dfen3", ois.readBoolean() );
-            parent.prefs.putBoolean( "dfen4", ois.readBoolean() );
-            parent.prefs.putBoolean( "dfen5", ois.readBoolean() );
-
-            parent.prefs.put("df_font1", ois.readUTF() );
-            parent.prefs.put("df_font2", ois.readUTF() );
-            parent.prefs.put("df_font3", ois.readUTF() );
-            parent.prefs.put("df_font4", ois.readUTF() );
-            parent.prefs.put("df_font5", ois.readUTF() );
-
-            parent.prefs.putInt("df_font_size1", ois.readInt() );
-            parent.prefs.putInt("df_font_size2", ois.readInt() );
-            parent.prefs.putInt("df_font_size3", ois.readInt() );
-            parent.prefs.putInt("df_font_size4", ois.readInt() );
-            parent.prefs.putInt("df_font_size5", ois.readInt() );
-
-            parent.prefs.putInt("df_font_style1", ois.readInt() );
-            parent.prefs.putInt("df_font_style2", ois.readInt() );
-            parent.prefs.putInt("df_font_style3", ois.readInt() );
-            parent.prefs.putInt("df_font_style4", ois.readInt() );
-            parent.prefs.putInt("df_font_style5", ois.readInt() );
-
-            parent.prefs.put("dftok1", ois.readUTF() );
-            parent.prefs.put("dftok2", ois.readUTF() );
-            parent.prefs.put("dftok3", ois.readUTF() );
-            parent.prefs.put("dftok4", ois.readUTF() );
-            parent.prefs.put("dftok5", ois.readUTF() );
-
-            parent.prefs.putBoolean("clrnv1", ois.readBoolean() );
-            parent.prefs.putBoolean("clrnv2", ois.readBoolean() );
-            parent.prefs.putBoolean("clrnv3", ois.readBoolean() );
-            parent.prefs.putBoolean("clrnv4", ois.readBoolean() );
-            parent.prefs.putBoolean("clrnv5", ois.readBoolean() );
-
-            parent.prefs.putFloat("dwidth", ois.readFloat() );
-
-            ois.close();
-
-            did_init=false;
-          }
-          else {
-            System.out.println("import display file: wrong version");
-          }
-
+          FileInputStream fis = new FileInputStream(file);
+          ObjectInputStream ois = new ObjectInputStream(fis);
+          do_import(ois);
         }
 
       } catch(Exception e) {
         e.printStackTrace();
       }
     }//GEN-LAST:event_import_dfActionPerformed
+
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  public void reset_to_defaults() {
+    try {
+      ObjectInputStream ois = new ObjectInputStream( getClass().getResourceAsStream("/btconfig/default.dvp") );
+      do_import(ois);
+    } catch(Exception e) {
+    }
+  }
+
+  ///////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////
+  public void do_import(ObjectInputStream ois) {
+    try {
+
+
+      int version = ois.readInt(); //version
+
+      if(version==100 && parent.prefs!=null) {
+
+        parent.prefs.putInt( "dfcol1", ois.readInt() );
+        parent.prefs.putInt( "dfcol2", ois.readInt() );
+        parent.prefs.putInt( "dfcol3", ois.readInt() );
+        parent.prefs.putInt( "dfcol4", ois.readInt() );
+        parent.prefs.putInt( "dfcol5", ois.readInt() );
+
+        parent.prefs.putBoolean( "dfen1", ois.readBoolean() );
+        parent.prefs.putBoolean( "dfen2", ois.readBoolean() );
+        parent.prefs.putBoolean( "dfen3", ois.readBoolean() );
+        parent.prefs.putBoolean( "dfen4", ois.readBoolean() );
+        parent.prefs.putBoolean( "dfen5", ois.readBoolean() );
+
+        parent.prefs.put("df_font1", ois.readUTF() );
+        parent.prefs.put("df_font2", ois.readUTF() );
+        parent.prefs.put("df_font3", ois.readUTF() );
+        parent.prefs.put("df_font4", ois.readUTF() );
+        parent.prefs.put("df_font5", ois.readUTF() );
+
+        parent.prefs.putInt("df_font_size1", ois.readInt() );
+        parent.prefs.putInt("df_font_size2", ois.readInt() );
+        parent.prefs.putInt("df_font_size3", ois.readInt() );
+        parent.prefs.putInt("df_font_size4", ois.readInt() );
+        parent.prefs.putInt("df_font_size5", ois.readInt() );
+
+        parent.prefs.putInt("df_font_style1", ois.readInt() );
+        parent.prefs.putInt("df_font_style2", ois.readInt() );
+        parent.prefs.putInt("df_font_style3", ois.readInt() );
+        parent.prefs.putInt("df_font_style4", ois.readInt() );
+        parent.prefs.putInt("df_font_style5", ois.readInt() );
+
+        parent.prefs.put("dftok1", ois.readUTF() );
+        parent.prefs.put("dftok2", ois.readUTF() );
+        parent.prefs.put("dftok3", ois.readUTF() );
+        parent.prefs.put("dftok4", ois.readUTF() );
+        parent.prefs.put("dftok5", ois.readUTF() );
+
+        parent.prefs.putBoolean("clrnv1", ois.readBoolean() );
+        parent.prefs.putBoolean("clrnv2", ois.readBoolean() );
+        parent.prefs.putBoolean("clrnv3", ois.readBoolean() );
+        parent.prefs.putBoolean("clrnv4", ois.readBoolean() );
+        parent.prefs.putBoolean("clrnv5", ois.readBoolean() );
+
+        parent.prefs.putFloat("dwidth", ois.readFloat() );
+
+        ois.close();
+
+        did_init=false;
+      }
+      else {
+        System.out.println("import display file: wrong version");
+      }
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
+  }
 
     private void selfont1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selfont1ActionPerformed
 
@@ -1143,6 +1173,10 @@ public class displayframe_edit extends javax.swing.JFrame {
       update_colors();
     }//GEN-LAST:event_selfont5ActionPerformed
 
+    private void resettodefaultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resettodefaultActionPerformed
+      reset_to_defaults();
+    }//GEN-LAST:event_resettodefaultActionPerformed
+
   /*
     public static void main(String args[]) {
         try {
@@ -1201,6 +1235,7 @@ public class displayframe_edit extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JButton resettodefault;
     private javax.swing.JButton saveconfig;
     private javax.swing.JButton selfont1;
     private javax.swing.JButton selfont2;
