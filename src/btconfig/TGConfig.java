@@ -420,7 +420,7 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
 
                 if(offset%131072==0) {
                   try {
-                    SLEEP(1200);
+                    SLEEP(1500);
                   } catch(Exception e) {
                   }
                 }
@@ -438,7 +438,7 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
                         SLEEP(1);
                       } catch(Exception e) {
                       }
-                      if(count++>1200) break;
+                      if(count++>1500) break;
                     }
                   } catch(Exception e) {
                     e.printStackTrace();
@@ -711,7 +711,7 @@ public void import_DSD(BTFrame parent, LineNumberReader lnr, SerialPort serial_p
 
                 if(offset%131072==0) {
                   try {
-                    SLEEP(1200);
+                    SLEEP(1500);
                   } catch(Exception e) {
                   }
                 }
@@ -729,7 +729,7 @@ public void import_DSD(BTFrame parent, LineNumberReader lnr, SerialPort serial_p
                         SLEEP(1);
                       } catch(Exception e) {
                       }
-                      if(count++>1200) break;
+                      if(count++>1500) break;
                     }
                   } catch(Exception e) {
                     e.printStackTrace();
@@ -890,7 +890,7 @@ public void restore_talkgroups(BTFrame parent, BufferedInputStream bis, SerialPo
 
                 if(offset%131072==0) {
                   try {
-                    SLEEP(1200);
+                    SLEEP(1500);
                   } catch(Exception e) {
                   }
                 }
@@ -908,7 +908,7 @@ public void restore_talkgroups(BTFrame parent, BufferedInputStream bis, SerialPo
                         SLEEP(1);
                       } catch(Exception e) {
                       }
-                      if(count++>1200) break;
+                      if(count++>1500) break;
                     }
                   } catch(Exception e) {
                     e.printStackTrace();
@@ -1194,7 +1194,7 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
 
                 if(offset%131072==0) {
                   try {
-                    SLEEP(1200);
+                    SLEEP(1500);
                   } catch(Exception e) {
                   }
                 }
@@ -1212,7 +1212,7 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
                         SLEEP(1);
                       } catch(Exception e) {
                       }
-                      if(count++>1200) break;
+                      if(count++>1500) break;
                     }
                   } catch(Exception e) {
                     e.printStackTrace();
@@ -1380,7 +1380,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                         SLEEP(1);
                       } catch(Exception e) {
                       }
-                      if(count++>1200) break;
+                      if(count++>1500) break;
                     }
                   } catch(Exception e) {
                     e.printStackTrace();
@@ -1457,7 +1457,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                 serial_port.writeBytes( out_buffer, 48, 0); //16 + data len=0
                 if(offset%131072==0) {
                   try {
-                    SLEEP(1200);
+                    SLEEP(1500);
                   } catch(Exception e) {
                   }
                 }
@@ -1475,7 +1475,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                         //SLEEP(1);
                       } catch(Exception e) {
                       }
-                      if(count++>1200) break;
+                      if(count++>1500) break;
                     }
                   } catch(Exception e) {
                     e.printStackTrace();

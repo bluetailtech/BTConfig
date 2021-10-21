@@ -1380,7 +1380,7 @@ String src_uid_str="";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202110161955");
-      release_date.setText("Release: 2021-10-20 09:26");
+      release_date.setText("Release: 2021-10-20 18:57");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2353,15 +2353,11 @@ String src_uid_str="";
                   wacn.setText("WACN: "+wacn_id); 
                   current_wacn_id = t_current_wacn_id;
                 }
-                else {
-                  wacn.setText("");
-                }
 
                 is_dmr_mode=0;
               } catch(Exception e) {
                   System.out.println("wacn:");
                   e.printStackTrace();
-                  wacn.setText("");
                 //e.printStackTrace();
               }
             }
@@ -6173,7 +6169,7 @@ public void SLEEP(long val) {
     */
 
     long NS_PER_US = 1000; 
-    long DELAY_TARGET_US = 1000*val; 
+    long DELAY_TARGET_US = NS_PER_US*1000*val; 
 
      long t0 = System.nanoTime(); 
      while (System.nanoTime() < t0+DELAY_TARGET_US) {

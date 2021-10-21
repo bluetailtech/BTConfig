@@ -45,7 +45,7 @@ String hold_str="";
   class updateTask extends java.util.TimerTask
   {
     long NS_PER_US = 1000; 
-    long DELAY_TARGET_US = NS_PER_US; 
+    long DELAY_TARGET_US = NS_PER_US*100; 
 
       public void run()
       {

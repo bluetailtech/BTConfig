@@ -243,14 +243,23 @@ public class displayframe_edit extends javax.swing.JFrame {
 
         Boolean b = parent.prefs.getBoolean("dfen1",true); 
         if(!b) col1 = Color.black;
+        en1.setSelected(b);
+
         b = parent.prefs.getBoolean("dfen2",true); 
         if(!b) col2 = Color.black;
+        en2.setSelected(b);
+
         b = parent.prefs.getBoolean("dfen3",true); 
         if(!b) col3 = Color.black;
+        en3.setSelected(b);
+
         b = parent.prefs.getBoolean("dfen4",true); 
         if(!b) col4 = Color.black;
+        en4.setSelected(b);
+
         b = parent.prefs.getBoolean("dfen5",true); 
         if(!b) col5 = Color.black;
+        en5.setSelected(b);
 
 
         fname1 = parent.prefs.get("df_font1", "Serif"); 
@@ -897,12 +906,14 @@ public class displayframe_edit extends javax.swing.JFrame {
       }
 
       update_colors();
-      saveconfig.setEnabled(false);
+      parent.setStatus("Saved Config");
+      //saveconfig.setEnabled(false);
     }//GEN-LAST:event_saveconfigActionPerformed
 
     private void fs4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fs4KeyTyped
       //System.out.println("evt:"+evt);
-      saveconfig.setEnabled(true);
+      //saveconfig.setEnabled(true);
+      parent.setStatus("Saved Config");
     }//GEN-LAST:event_fs4KeyTyped
 
     private void clrnv1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clrnv1ActionPerformed
@@ -941,7 +952,8 @@ public class displayframe_edit extends javax.swing.JFrame {
     }//GEN-LAST:event_clrnv5ActionPerformed
 
     private void dwidthKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dwidthKeyReleased
-      saveconfig.setEnabled(true);
+      //saveconfig.setEnabled(true);
+      parent.setStatus("Saved Config");
     }//GEN-LAST:event_dwidthKeyReleased
 
     private void showkeywActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showkeywActionPerformed
