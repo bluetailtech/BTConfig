@@ -1380,7 +1380,7 @@ String src_uid_str="";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202110161955");
-      release_date.setText("Release: 2021-10-21 18:05");
+      release_date.setText("Release: 2021-10-22 09:10");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2938,6 +2938,7 @@ String src_uid_str="";
         append_cc = new javax.swing.JButton();
         use_freq_primary = new javax.swing.JButton();
         gensysinfo = new javax.swing.JButton();
+        readroaming = new javax.swing.JButton();
         jPanel20 = new javax.swing.JPanel();
         restore_roam = new javax.swing.JButton();
         backup_roam = new javax.swing.JButton();
@@ -4198,6 +4199,14 @@ String src_uid_str="";
             }
         });
         jPanel15.add(gensysinfo);
+
+        readroaming.setText("Read Roaming Flash");
+        readroaming.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                readroamingActionPerformed(evt);
+            }
+        });
+        jPanel15.add(readroaming);
 
         jPanel19.add(jPanel15);
 
@@ -5731,6 +5740,24 @@ String src_uid_str="";
       dframe.setVisible(true);
     }//GEN-LAST:event_edit_display_viewActionPerformed
 
+    private void readroamingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_readroamingActionPerformed
+      do_read_roaming=1;
+              for(int i=0;i<roaming_tests.MAXRECS;i++) {
+               freq_table.getModel().setValueAt( null, i, 0); 
+               freq_table.getModel().setValueAt( null, i, 1); 
+               freq_table.getModel().setValueAt( null, i, 2); 
+               freq_table.getModel().setValueAt( null, i, 3); 
+               freq_table.getModel().setValueAt( null, i, 4); 
+               freq_table.getModel().setValueAt( null, i, 5); 
+               freq_table.getModel().setValueAt( null, i, 6); 
+               freq_table.getModel().setValueAt( null, i, 7); 
+               freq_table.getModel().setValueAt( null, i, 8); 
+               freq_table.getModel().setValueAt( null, i, 9); 
+               freq_table.getModel().setValueAt( null, i, 10); 
+              }
+            freq_table.setRowSelectionInterval(0,0);
+    }//GEN-LAST:event_readroamingActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -6583,6 +6610,7 @@ public void SLEEP(long val) {
     public javax.swing.JRadioButton quad_click_opt6;
     private javax.swing.JButton read_config;
     private javax.swing.JButton read_tg;
+    private javax.swing.JButton readroaming;
     public javax.swing.JTextField ref_freq;
     private javax.swing.JLabel release_date;
     public javax.swing.JButton restore_roam;

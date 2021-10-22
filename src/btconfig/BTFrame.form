@@ -2506,6 +2506,14 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="gensysinfoActionPerformed"/>
                       </Events>
                     </Component>
+                    <Component class="javax.swing.JButton" name="readroaming">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Read Roaming Flash"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="readroamingActionPerformed"/>
+                      </Events>
+                    </Component>
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="jPanel20">
