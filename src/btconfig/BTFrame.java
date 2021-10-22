@@ -1380,7 +1380,7 @@ String src_uid_str="";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202110161955");
-      release_date.setText("Release: 2021-10-22 09:10");
+      release_date.setText("Release: 2021-10-22 12:32");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4269,7 +4269,7 @@ String src_uid_str="";
         jTable1.setEditingColumn(1);
         jTable1.setEditingRow(1);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object[4916][7],
+            new Object[6554][7],
             new String [] {
                 "Enabled", "SYS_ID(HEX)", "Priority", "TGRP", "AlphaTag", "Description", "WACN(HEX)"
             }
