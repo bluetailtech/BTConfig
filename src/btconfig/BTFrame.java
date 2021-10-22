@@ -1380,7 +1380,7 @@ String src_uid_str="";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202110161955");
-      release_date.setText("Release: 2021-10-20 22:45");
+      release_date.setText("Release: 2021-10-21 18:05");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1732,7 +1732,7 @@ String src_uid_str="";
       }
 
       String talkgroup="";
-      freqval="";
+      //freqval="";
       String tsbk_ps="";
 
       if(console_line==null) console_line = new String("");
@@ -2449,6 +2449,7 @@ String src_uid_str="";
                 }
                 else {
                   l3.setText("  DMR BLKS_PER_SEC "+tsbk_ps);
+                  freqval="";
                   reset_session=1;
                 }
               }
@@ -2459,9 +2460,11 @@ String src_uid_str="";
                 else {
                   if( is_tdma_cc==1 ) {
                     l3.setText("  P25P2 CONTROL CHANNEL BLKS_PER_SEC "+tsbk_ps);
+                    freqval="";
                   }
                   else {
                     l3.setText("  P25P1 CONTROL CHANNEL BLKS_PER_SEC "+tsbk_ps);
+                    freqval="";
                   }
                   reset_session=1;
                   if(system_alias.getText()!=null && system_alias.getText().length()>0 ) {

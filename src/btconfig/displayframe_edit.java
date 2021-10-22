@@ -313,11 +313,14 @@ public class displayframe_edit extends javax.swing.JFrame {
       String tts4 = do_subs(ts4);
       String tts5 = do_subs(ts5);
 
-      if(clrnv1.isSelected() && parent.freqval!=null && parent.freqval.length()==0) tts1=" ";
-      if(clrnv2.isSelected() && parent.freqval!=null && parent.freqval.length()==0) tts2=" ";
-      if(clrnv3.isSelected() && parent.freqval!=null && parent.freqval.length()==0) tts3=" ";
-      if(clrnv4.isSelected() && parent.freqval!=null && parent.freqval.length()==0) tts4=" ";
-      if(clrnv5.isSelected() && parent.freqval!=null && parent.freqval.length()==0) tts5=" ";
+      try {
+        if(clrnv1.isSelected() && parent.freqval!=null && parent.freqval.length()==0) tts1=" ";
+        if(clrnv2.isSelected() && parent.freqval!=null && parent.freqval.length()==0) tts2=" ";
+        if(clrnv3.isSelected() && parent.freqval!=null && parent.freqval.length()==0) tts3=" ";
+        if(clrnv4.isSelected() && parent.freqval!=null && parent.freqval.length()==0) tts4=" ";
+        if(clrnv5.isSelected() && parent.freqval!=null && parent.freqval.length()==0) tts5=" ";
+      } catch(Exception e) {
+      }
 
       bt1.setText(tts1);
       bt2.setText(tts2);
