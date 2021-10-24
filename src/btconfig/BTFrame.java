@@ -1380,7 +1380,7 @@ String src_uid_str="";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202110230159");
-      release_date.setText("Release: 2021-10-23 01:59");
+      release_date.setText("Release: 2021-10-23 23:10");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2042,7 +2042,12 @@ String src_uid_str="";
         sq_indicator.setBackground( java.awt.Color.black );
       }
 
+      if(console_line.contains("skipping talkgroup") ) {
+        setStatus("skipping TG");
+      }
+
       if(console_line.contains("following talkgroup") ) {
+        setStatus("following TG");
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         int cnt=0;
         boolean follow=true;
@@ -2062,6 +2067,7 @@ String src_uid_str="";
         }
 
         if(!follow || console_line.contains("un-following") ) {
+          setStatus("un-following TG");
           tg_follow_blink = 0; 
         }
 
@@ -3077,6 +3083,8 @@ String src_uid_str="";
         dispview = new javax.swing.JPanel();
         display_frame = new javax.swing.JPanel();
         jPanel54 = new javax.swing.JPanel();
+        hold = new javax.swing.JButton();
+        skip = new javax.swing.JButton();
         edit_display_view = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         logo_panel = new javax.swing.JPanel();
@@ -4990,6 +4998,24 @@ String src_uid_str="";
         jPanel54.setBackground(new java.awt.Color(0, 0, 0));
         jPanel54.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
+        hold.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        hold.setText("H");
+        hold.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                holdActionPerformed(evt);
+            }
+        });
+        jPanel54.add(hold);
+
+        skip.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        skip.setText("S");
+        skip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                skipActionPerformed(evt);
+            }
+        });
+        jPanel54.add(skip);
+
         edit_display_view.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         edit_display_view.setText("EDIT");
         edit_display_view.addActionListener(new java.awt.event.ActionListener() {
@@ -5758,6 +5784,38 @@ String src_uid_str="";
             freq_table.setRowSelectionInterval(0,0);
     }//GEN-LAST:event_readroamingActionPerformed
 
+    private void holdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_holdActionPerformed
+      do_follow();
+      setStatus("following current TG");
+    }//GEN-LAST:event_holdActionPerformed
+
+    private void skipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skipActionPerformed
+      do_skip();
+      setStatus("skipping current TG");
+    }//GEN-LAST:event_skipActionPerformed
+
+
+    ///////////////////////////////////////
+    ///////////////////////////////////////
+    public void do_follow() {
+      try {
+        String cmd= new String("f \r\n");
+        serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+    }
+    ///////////////////////////////////////
+    ///////////////////////////////////////
+    public void do_skip() {
+      try {
+        String cmd= new String("s \r\n");
+        serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+    }
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -6380,6 +6438,7 @@ public void SLEEP(long val) {
     public javax.swing.JLabel fw_installed;
     public javax.swing.JLabel fw_ver;
     private javax.swing.JButton gensysinfo;
+    private javax.swing.JButton hold;
     public javax.swing.JLabel home_dir_label;
     private javax.swing.JButton import_alias;
     private javax.swing.JButton import_csv;
@@ -6631,6 +6690,7 @@ public void SLEEP(long val) {
     public javax.swing.JRadioButton single_click_opt5;
     public javax.swing.JRadioButton single_click_opt6;
     public javax.swing.JLabel siteid;
+    private javax.swing.JButton skip;
     private javax.swing.JButton skip_tg;
     public javax.swing.JTextField skip_tg_to;
     private javax.swing.JToggleButton sq_indicator;
