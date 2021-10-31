@@ -106,45 +106,6 @@ public class displayframe_edit extends javax.swing.JFrame {
       String f = parent.freqval;
 
 
-      if(f!=null) {
-        f = f.trim();
-        //System.out.println("freqval: "+f);
-        f = f.replace(","," ");
-        s2 = s2.replaceAll(Matcher.quoteReplacement("$FREQ$"), f );
-        s2 = s2.replaceAll(Matcher.quoteReplacement("$V_FREQ$"), f );
-        if(s2==null) s2 = s1;
-      }
-      else {
-        s2 = s2.replaceAll(Matcher.quoteReplacement("$FREQ$"), " " );
-        s2 = s2.replaceAll(Matcher.quoteReplacement("$V_FREQ$"), " " );
-        if(s2==null) s2 = s1;
-      }
-
-      if(parent.talkgroup_name!=null && f!=null) {
-        s2 = s2.replaceAll(Matcher.quoteReplacement("$TG_NAME$"), parent.talkgroup_name.trim() );
-        if(s2==null) s2 = s1;
-      }
-      else {
-        s2 = s2.replaceAll(Matcher.quoteReplacement("$TG_NAME$"), " " );
-        if(s2==null) s2 = s1;
-      }
-
-      if(parent.current_talkgroup!=null && f!=null) {
-        s2 = s2.replaceAll(Matcher.quoteReplacement("$TG_ID$"), parent.current_talkgroup.trim() );
-        if(s2==null) s2 = s1;
-      }
-      else {
-        s2 = s2.replaceAll(Matcher.quoteReplacement("$TG_ID$"), " " );
-        if(s2==null) s2 = s1;
-      }
-
-      if(parent.rssi!=null) {
-        String rssi_d = String.format( "%-3d", Integer.valueOf(parent.rssi) );
-        if(rssi_d.length()==3) rssi_d = rssi_d+" ";
-        s2 = s2.replaceAll(Matcher.quoteReplacement("$RSSI$"), rssi_d);
-        if(s2==null) s2 = s1;
-      }
-
 
       String wacn = "";
       String sysid = "";
@@ -183,6 +144,8 @@ public class displayframe_edit extends javax.swing.JFrame {
       } catch(Exception e) {
       }
 
+      s2 = s2.replaceAll(Matcher.quoteReplacement("$LCN$"), parent.rf_channel );
+        if(s2==null) s2 = s1;
       s2 = s2.replaceAll(Matcher.quoteReplacement("$WACN$"), wacn );
         if(s2==null) s2 = s1;
       s2 = s2.replaceAll(Matcher.quoteReplacement("$SYS_ID$"), sysid );
@@ -222,6 +185,55 @@ public class displayframe_edit extends javax.swing.JFrame {
       if(sysname==null || sysname.length()==0) sysname="SYS_NAME";
       s2 = s2.replaceAll(Matcher.quoteReplacement("$SYS_NAME$"), sysname );
         if(s2==null) s2 = s1;
+
+      if(f!=null) {
+        f = f.trim();
+        //System.out.println("freqval: "+f);
+        f = f.replace(","," ");
+
+        if(f.length()>0) {
+          s2 = s2.replaceAll(Matcher.quoteReplacement("$FREQ$"), f );
+          s2 = s2.replaceAll(Matcher.quoteReplacement("$V_FREQ$"), f );
+          if(s2==null) s2 = s1;
+        }
+        else {
+          s2 = s2.replaceAll(Matcher.quoteReplacement("$FREQ$"), cc_freq );
+          if(s2==null) s2 = s1;
+        }
+      }
+      else {
+        s2 = s2.replaceAll(Matcher.quoteReplacement("$FREQ$"), cc_freq );
+        if(s2==null) s2 = s1;
+      }
+
+      if(parent.talkgroup_name!=null && f!=null) {
+        s2 = s2.replaceAll(Matcher.quoteReplacement("$TG_NAME$"), parent.talkgroup_name.trim() );
+        if(s2==null) s2 = s1;
+      }
+      else {
+        s2 = s2.replaceAll(Matcher.quoteReplacement("$TG_NAME$"), " " );
+        if(s2==null) s2 = s1;
+      }
+
+      if(parent.current_talkgroup!=null && f!=null) {
+        s2 = s2.replaceAll(Matcher.quoteReplacement("$TG_ID$"), parent.current_talkgroup.trim() );
+        if(s2==null) s2 = s1;
+      }
+      else {
+        s2 = s2.replaceAll(Matcher.quoteReplacement("$TG_ID$"), " " );
+        if(s2==null) s2 = s1;
+      }
+
+      if(parent.rssi!=null) {
+        String rssi_d = String.format( "%-3d", Integer.valueOf(parent.rssi) );
+        if(rssi_d.length()==3) rssi_d = rssi_d+" ";
+        s2 = s2.replaceAll(Matcher.quoteReplacement("$RSSI$"), rssi_d);
+        if(s2==null) s2 = s1;
+      }
+
+
+
+
     } catch(Exception e) {
       e.printStackTrace();
     }
@@ -975,6 +987,7 @@ public class displayframe_edit extends javax.swing.JFrame {
       kw = kw.concat("\n$CC_FREQ$");
       kw = kw.concat("\n$EVM_P$");
       kw = kw.concat("\n$FREQ$");
+      kw = kw.concat("\n$LCN$");
       kw = kw.concat("\n$NAC$");
       kw = kw.concat("\n$P25_MODE$");
       kw = kw.concat("\n$RFSS_ID$");

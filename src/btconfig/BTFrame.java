@@ -1232,6 +1232,7 @@ BigText bt5;
 displayframe_edit dframe;
 
 String src_uid_str="";
+String rf_channel="";
 
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
@@ -1380,7 +1381,7 @@ String src_uid_str="";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202110230159");
-      release_date.setText("Release: 2021-10-23 23:10");
+      release_date.setText("Release: 2021-10-31 15:23");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2094,6 +2095,23 @@ String src_uid_str="";
           }
         }
 
+      }
+      if(console_line.contains("rf_channel") && console_line.contains("follow:") ) {
+        StringTokenizer st = new StringTokenizer(console_line," ");
+        String st1 = ""; 
+        int cnt=0;
+        while(st.hasMoreTokens() && cnt++<15) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.contains("rf_channel") && st.hasMoreTokens()) {
+            try {
+              rf_channel = st.nextToken();
+              break;
+            } catch(Exception e) {
+              e.printStackTrace();
+              break;
+            }
+          }
+        }
       }
 
       if(console_line.contains("\r\n") && (console_line.contains("supergroup") && console_line.contains("rf_channel")) ) {
@@ -6178,6 +6196,10 @@ public void restore_position() {
     int y = prefs.getInt("form_y",50);
     int width = prefs.getInt("form_width", 1054);
     int height = prefs.getInt("form_height",750);
+    if(width < 512) width = 1054;
+    if(height < 320) height = 750;
+    if(x>1600) x = 50;
+    if(y>1600) y = 50;
       //setSize(1054,750);
     Rectangle r = new Rectangle(x,y,width,height);
     setBounds(r);
