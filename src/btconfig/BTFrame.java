@@ -1230,6 +1230,7 @@ BigText bt4;
 BigText bt5;
 
 displayframe_edit dframe;
+displayframe_popout dvout;
 
 String src_uid_str="";
 String rf_channel="";
@@ -3098,12 +3099,13 @@ String rf_channel="";
         jButton3 = new javax.swing.JButton();
         jLabel31 = new javax.swing.JLabel();
         jComboBox5 = new javax.swing.JComboBox<>();
-        dispview = new javax.swing.JPanel();
+        displayviewmain_border = new javax.swing.JPanel();
         display_frame = new javax.swing.JPanel();
-        jPanel54 = new javax.swing.JPanel();
+        jPanel60 = new javax.swing.JPanel();
         hold = new javax.swing.JButton();
         skip = new javax.swing.JButton();
         edit_display_view = new javax.swing.JButton();
+        dvpopout = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         logo_panel = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -5007,14 +5009,14 @@ String rf_channel="";
 
         jTabbedPane1.addTab("Signal Insights", signalinsightpanel);
 
-        dispview.setLayout(new java.awt.BorderLayout());
+        displayviewmain_border.setLayout(new java.awt.BorderLayout());
 
         display_frame.setBackground(new java.awt.Color(0, 0, 0));
         display_frame.setLayout(new java.awt.GridLayout(5, 1));
-        dispview.add(display_frame, java.awt.BorderLayout.CENTER);
+        displayviewmain_border.add(display_frame, java.awt.BorderLayout.CENTER);
 
-        jPanel54.setBackground(new java.awt.Color(0, 0, 0));
-        jPanel54.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jPanel60.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel60.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         hold.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         hold.setText("H");
@@ -5023,7 +5025,7 @@ String rf_channel="";
                 holdActionPerformed(evt);
             }
         });
-        jPanel54.add(hold);
+        jPanel60.add(hold);
 
         skip.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         skip.setText("S");
@@ -5032,7 +5034,7 @@ String rf_channel="";
                 skipActionPerformed(evt);
             }
         });
-        jPanel54.add(skip);
+        jPanel60.add(skip);
 
         edit_display_view.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         edit_display_view.setText("EDIT");
@@ -5041,16 +5043,27 @@ String rf_channel="";
                 edit_display_viewActionPerformed(evt);
             }
         });
-        jPanel54.add(edit_display_view);
+        jPanel60.add(edit_display_view);
 
-        dispview.add(jPanel54, java.awt.BorderLayout.PAGE_END);
+        dvpopout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/btconfig/images/rightarrow.png"))); // NOI18N
+        dvpopout.setText(" ");
+        dvpopout.setBorderPainted(false);
+        dvpopout.setContentAreaFilled(false);
+        dvpopout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dvpopoutActionPerformed(evt);
+            }
+        });
+        jPanel60.add(dvpopout);
 
-        jTabbedPane1.addTab("Display View", dispview);
+        displayviewmain_border.add(jPanel60, java.awt.BorderLayout.PAGE_END);
+
+        jTabbedPane1.addTab("Display View", displayviewmain_border);
 
         getContentPane().add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel10.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 0, 0));
+        jPanel10.setLayout(new java.awt.BorderLayout());
 
         logo_panel.setBackground(new java.awt.Color(255, 255, 255));
         logo_panel.setMinimumSize(new java.awt.Dimension(877, 10));
@@ -5133,7 +5146,7 @@ String rf_channel="";
         ser_dev.setText("PORT:");
         logo_panel.add(ser_dev, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
 
-        jPanel10.add(logo_panel);
+        jPanel10.add(logo_panel, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPanel10, java.awt.BorderLayout.NORTH);
 
@@ -5834,6 +5847,17 @@ String rf_channel="";
       }
     }
 
+    private void dvpopoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dvpopoutActionPerformed
+        // TODO add your handling code here:
+        if(dvout==null) {
+          displayviewmain_border.remove(display_frame);
+          dvout = new displayframe_popout(this);
+          dvout.add(display_frame, java.awt.BorderLayout.CENTER);
+          displayviewmain_border.repaint();
+        }
+        dvout.setVisible(true);
+    }//GEN-LAST:event_dvpopoutActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -6392,8 +6416,8 @@ public void SLEEP(long val) {
     private javax.swing.JButton disable_table_rows;
     private javax.swing.JButton disconnect;
     private javax.swing.JButton discover;
-    private javax.swing.JPanel display_frame;
-    private javax.swing.JPanel dispview;
+    public javax.swing.JPanel display_frame;
+    public javax.swing.JPanel displayviewmain_border;
     private javax.swing.JButton dmr_backup;
     public javax.swing.JCheckBox dmr_cc_en1;
     public javax.swing.JCheckBox dmr_cc_en10;
@@ -6428,6 +6452,7 @@ public void SLEEP(long val) {
     public javax.swing.JRadioButton double_click_opt5;
     public javax.swing.JRadioButton double_click_opt6;
     public javax.swing.JCheckBox duid_enh;
+    private javax.swing.JButton dvpopout;
     private javax.swing.JButton edit_display_view;
     public javax.swing.JCheckBox en_bluetooth_cb;
     public javax.swing.JCheckBox en_encout;
@@ -6588,9 +6613,9 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel51;
     private javax.swing.JPanel jPanel52;
     private javax.swing.JPanel jPanel53;
-    private javax.swing.JPanel jPanel54;
     private javax.swing.JPanel jPanel59;
     private javax.swing.JPanel jPanel6;
+    public javax.swing.JPanel jPanel60;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
