@@ -1382,7 +1382,7 @@ String rf_channel="";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202110230159");
-      release_date.setText("Release: 2021-10-31 15:23");
+      release_date.setText("Release: 2021-11-01 16:25");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
