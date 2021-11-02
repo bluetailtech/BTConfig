@@ -1393,7 +1393,7 @@ public Color tg_font_color;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202110230159");
-      release_date.setText("Release: 2021-11-01 16:25");
+      release_date.setText("Release: 2021-11-01 18:04");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
