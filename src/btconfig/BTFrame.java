@@ -3013,7 +3013,7 @@ public Color tg_font_color;
         follow_tg = new javax.swing.JButton();
         skip_tg = new javax.swing.JButton();
         logpanel = new javax.swing.JPanel();
-        jScrollPane7 = new javax.swing.JScrollPane();
+        tg_scroll_pane = new javax.swing.JScrollPane();
         log_ta = new javax.swing.JTextArea();
         tgfontpanel = new javax.swing.JPanel();
         tglog_font = new javax.swing.JButton();
@@ -4553,9 +4553,9 @@ public Color tg_font_color;
                 log_taKeyTyped(evt);
             }
         });
-        jScrollPane7.setViewportView(log_ta);
+        tg_scroll_pane.setViewportView(log_ta);
 
-        logpanel.add(jScrollPane7, java.awt.BorderLayout.CENTER);
+        logpanel.add(tg_scroll_pane, java.awt.BorderLayout.CENTER);
 
         tgfontpanel.setBackground(new java.awt.Color(0, 0, 0));
         tgfontpanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
@@ -5887,10 +5887,16 @@ public Color tg_font_color;
     private void dvpopoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dvpopoutActionPerformed
         // TODO add your handling code here:
         if(dvout==null) {
-          displayviewmain_border.remove(display_frame);
           dvout = new displayframe_popout(this);
-          dvout.add(display_frame, java.awt.BorderLayout.CENTER);
+
+          displayviewmain_border.remove(display_frame);
+          dvout.split_top.add(display_frame, java.awt.BorderLayout.CENTER);
           displayviewmain_border.repaint();
+
+          logpanel.remove(tg_scroll_pane);
+          dvout.split_bottom.add(tg_scroll_pane, java.awt.BorderLayout.CENTER);
+
+
         }
         dvout.setVisible(true);
     }//GEN-LAST:event_dvpopoutActionPerformed
@@ -6700,7 +6706,6 @@ public void SLEEP(long val) {
     public javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane7;
     public javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator10;
@@ -6764,7 +6769,7 @@ public void SLEEP(long val) {
     public javax.swing.JSlider lineout_vol_slider;
     private javax.swing.JTextArea log_ta;
     private javax.swing.JPanel logo_panel;
-    private javax.swing.JPanel logpanel;
+    public javax.swing.JPanel logpanel;
     public javax.swing.JLabel macid;
     public javax.swing.JComboBox<String> mcu_speed;
     public javax.swing.JLabel mcu_ver_t;
@@ -6829,6 +6834,7 @@ public void SLEEP(long val) {
     private javax.swing.JButton tg_edit_del;
     private javax.swing.JToggleButton tg_indicator;
     private javax.swing.JLabel tg_lb;
+    public javax.swing.JScrollPane tg_scroll_pane;
     private javax.swing.JPanel tgfontpanel;
     private javax.swing.JButton tglog_color;
     private javax.swing.JButton tglog_font;

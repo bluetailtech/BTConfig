@@ -33,6 +33,10 @@ BTFrame parent;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jSplitPane1 = new javax.swing.JSplitPane();
+        split_top = new javax.swing.JPanel();
+        split_bottom = new javax.swing.JPanel();
+
         setTitle("Display View Popout");
         setBackground(new java.awt.Color(0, 0, 0));
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -46,6 +50,17 @@ BTFrame parent;
             }
         });
 
+        jSplitPane1.setDividerLocation(500);
+        jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        split_top.setLayout(new java.awt.BorderLayout());
+        jSplitPane1.setTopComponent(split_top);
+
+        split_bottom.setLayout(new java.awt.BorderLayout());
+        jSplitPane1.setRightComponent(split_bottom);
+
+        getContentPane().add(jSplitPane1, java.awt.BorderLayout.CENTER);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -56,6 +71,10 @@ BTFrame parent;
         // TODO add your handling code here:
       this.remove(parent.display_frame);
       parent.displayviewmain_border.add(parent.display_frame, java.awt.BorderLayout.CENTER);
+
+      this.remove(parent.tg_scroll_pane);
+      parent.logpanel.add(parent.tg_scroll_pane, java.awt.BorderLayout.CENTER);
+
       parent.dvout = null;
     }//GEN-LAST:event_formComponentHidden
 
@@ -96,5 +115,8 @@ BTFrame parent;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JSplitPane jSplitPane1;
+    public javax.swing.JPanel split_bottom;
+    public javax.swing.JPanel split_top;
     // End of variables declaration//GEN-END:variables
 }
