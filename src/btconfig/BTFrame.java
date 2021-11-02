@@ -27,6 +27,7 @@ import java.awt.*;
 import javax.swing.filechooser.*;
 import java.util.*;
 import javax.swing.*;
+import javax.swing.text.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 import java.nio.file.Files;
@@ -38,6 +39,8 @@ import com.fazecast.jSerialComm.*;
 
 import java.util.prefs.Preferences;
 
+import javax.swing.JColorChooser;
+import java.awt.Color;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1235,10 +1238,18 @@ displayframe_popout dvout;
 String src_uid_str="";
 String rf_channel="";
 
+JFontChooser jfc;
+int tg_font_size=14;
+int tg_font_style = Font.PLAIN;
+String tg_font_name="Monospaced";
+public Color tg_font_color;
+
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
       initComponents();
 
+      jfc = new JFontChooser();
+      jfc.setSize(1024,768);
       edit_display_view.setEnabled(false);
 
       bt1 = new BigText(" ", 192, new Color(128,0,128) );
@@ -3004,6 +3015,9 @@ String rf_channel="";
         logpanel = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         log_ta = new javax.swing.JTextArea();
+        tgfontpanel = new javax.swing.JPanel();
+        tglog_font = new javax.swing.JButton();
+        tglog_color = new javax.swing.JButton();
         buttong_config = new javax.swing.JPanel();
         jPanel21 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
@@ -4543,6 +4557,29 @@ String rf_channel="";
 
         logpanel.add(jScrollPane7, java.awt.BorderLayout.CENTER);
 
+        tgfontpanel.setBackground(new java.awt.Color(0, 0, 0));
+        tgfontpanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        tglog_font.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        tglog_font.setText("Font");
+        tglog_font.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tglog_fontActionPerformed(evt);
+            }
+        });
+        tgfontpanel.add(tglog_font);
+
+        tglog_color.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        tglog_color.setText("Color");
+        tglog_color.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tglog_colorActionPerformed(evt);
+            }
+        });
+        tgfontpanel.add(tglog_color);
+
+        logpanel.add(tgfontpanel, java.awt.BorderLayout.PAGE_END);
+
         jTabbedPane1.addTab("TG Log", logpanel);
 
         buttong_config.setLayout(new java.awt.BorderLayout());
@@ -5858,6 +5895,38 @@ String rf_channel="";
         dvout.setVisible(true);
     }//GEN-LAST:event_dvpopoutActionPerformed
 
+    private void tglog_colorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tglog_colorActionPerformed
+      Color color = JColorChooser.showDialog(parent, "TG Font Color", tg_font_color); 
+      if(color!=null) tg_font_color=color;
+      if( parent.prefs!=null && color!=null) {
+        parent.prefs.putInt("tg_font_color",  tg_font_color.getRGB() );
+        log_ta.setForeground(color);
+      }
+    }//GEN-LAST:event_tglog_colorActionPerformed
+
+    private void tglog_fontActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tglog_fontActionPerformed
+
+      jfc.setSelectedFontFamily(tg_font_name);
+      jfc.setSelectedFontSize(tg_font_size);
+      jfc.setSelectedFontStyle(tg_font_style);
+
+
+      int result = jfc.showDialog(this);
+      if( result == JFontChooser.OK_OPTION ) {
+        tg_font_name = jfc.getSelectedFontFamily();
+        tg_font_style = jfc.getSelectedFontStyle();
+        tg_font_size = jfc.getSelectedFontSize();
+        log_ta.setFont(new java.awt.Font(tg_font_name, tg_font_style, tg_font_size)); 
+      }
+      if(parent.prefs!=null) {
+        parent.prefs.put("tg_font_name", jfc.getSelectedFontFamily() );
+        parent.prefs.putInt("tg_font_style", jfc.getSelectedFontStyle() );
+        parent.prefs.putInt("tg_font_size", jfc.getSelectedFontSize() );
+      }
+
+
+    }//GEN-LAST:event_tglog_fontActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5972,7 +6041,7 @@ public void do_meta() {
 
       try {
         //add meta info to log tab
-        String text = log_ta.getText();
+        String text = log_ta.getText().trim();
 
         StringTokenizer st = new StringTokenizer(metadata,",");
         String str1 = "";
@@ -5997,11 +6066,11 @@ public void do_meta() {
           str1 = str1.concat(" (TG PRI)");
         }
 
-        log_ta.setText(text.concat( new String(str1.getBytes()) ));
+        log_ta.setText(text.concat( new String(str1.getBytes()) )+"\n");
 
         if( log_ta.getText().length() > 16000*4 ) {
           String new_text = text.substring(8000*4,text.length()-1);
-          log_ta.setText(new_text);
+          log_ta.setText(new_text+"\n");
         }
 
         log_ta.setCaretPosition(log_ta.getText().length());
@@ -6146,6 +6215,14 @@ public void update_prefs() {
 
       restore_position();
 
+
+      tg_font_name = parent.prefs.get("tg_font_name", "Monospaced" );
+      tg_font_style = parent.prefs.getInt("tg_font_style", Font.PLAIN );
+      tg_font_size = parent.prefs.getInt("tg_font_size", 14 );
+      log_ta.setFont(new java.awt.Font(tg_font_name, tg_font_style, tg_font_size)); 
+
+      tg_font_color = new Color( parent.prefs.getInt("tg_font_color", new Color(255,255,255).getRGB() ) );
+      log_ta.setForeground( tg_font_color ); 
 
   } catch(Exception e) {
     e.printStackTrace();
@@ -6752,6 +6829,9 @@ public void SLEEP(long val) {
     private javax.swing.JButton tg_edit_del;
     private javax.swing.JToggleButton tg_indicator;
     private javax.swing.JLabel tg_lb;
+    private javax.swing.JPanel tgfontpanel;
+    private javax.swing.JButton tglog_color;
+    private javax.swing.JButton tglog_font;
     private javax.swing.JPanel tiny_const;
     public javax.swing.JRadioButton triple_click_opt1;
     public javax.swing.JRadioButton triple_click_opt2;
