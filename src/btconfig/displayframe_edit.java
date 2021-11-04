@@ -20,6 +20,8 @@ public class displayframe_edit extends javax.swing.JFrame {
 
   JFontChooser jfc;
   JFileChooser chooser;
+java.text.SimpleDateFormat formatter_date;
+java.text.SimpleDateFormat time_format;
 
 
   helpFrame hf;
@@ -70,6 +72,9 @@ public class displayframe_edit extends javax.swing.JFrame {
       initComponents();
       parent = p;
 
+      formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
+      time_format = new java.text.SimpleDateFormat( "HH:mm:ss" );
+
       hf = new helpFrame();
 
       cs = new colorSelect();
@@ -101,11 +106,15 @@ public class displayframe_edit extends javax.swing.JFrame {
     String s2 = s1; 
 
     try {
+      java.util.Date now = new java.util.Date();
+      String cdate = formatter_date.format(now);
+      String ctime = time_format.format(now);
 
+      s2 = s2.replaceAll(Matcher.quoteReplacement("$DATE$"), cdate.trim() );
+      s2 = s2.replaceAll(Matcher.quoteReplacement("$TIME$"), ctime.trim() );
+        if(s2==null) s2 = s1;
 
       String f = parent.freqval;
-
-
 
       String wacn = "";
       String sysid = "";
@@ -176,14 +185,15 @@ public class displayframe_edit extends javax.swing.JFrame {
       try {
         //evm_p = String.format("%3.0f", parent.current_evm_percent);
       } catch(Exception e) {
+        evm_p="";
       }
 
-      s2 = s2.replaceAll(Matcher.quoteReplacement("$EVM_P$"), evm_p );
+      s2 = s2.replaceAll(Matcher.quoteReplacement("$EVM_P$"), evm_p.trim() );
         if(s2==null) s2 = s1;
 
       String sysname = parent.system_alias.getText();
       if(sysname==null || sysname.length()==0) sysname="SYS_NAME";
-      s2 = s2.replaceAll(Matcher.quoteReplacement("$SYS_NAME$"), sysname );
+      s2 = s2.replaceAll(Matcher.quoteReplacement("$SYS_NAME$"), sysname.trim() );
         if(s2==null) s2 = s1;
 
       if(f!=null) {
@@ -216,7 +226,7 @@ public class displayframe_edit extends javax.swing.JFrame {
       }
 
       if(parent.current_talkgroup!=null && f!=null) {
-        s2 = s2.replaceAll(Matcher.quoteReplacement("$TG_ID$"), parent.current_talkgroup.trim() );
+        s2 = s2.replaceAll(Matcher.quoteReplacement("$TG_ID$"), parent.current_talkgroup.trim().trim() );
         if(s2==null) s2 = s1;
       }
       else {
@@ -981,10 +991,11 @@ public class displayframe_edit extends javax.swing.JFrame {
       parent.setStatus("Saved Config");
     }//GEN-LAST:event_dwidthKeyReleased
 
-    private void showkeywActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showkeywActionPerformed
+    public void show_help() {
       String kw="";
 
       kw = kw.concat("\n$CC_FREQ$");
+      kw = kw.concat("\n$DATE$");
       kw = kw.concat("\n$EVM_P$");
       kw = kw.concat("\n$FREQ$");
       kw = kw.concat("\n$LCN$");
@@ -999,11 +1010,16 @@ public class displayframe_edit extends javax.swing.JFrame {
       kw = kw.concat("\n$SYS_NAME$");
       kw = kw.concat("\n$TG_ID$");
       kw = kw.concat("\n$TG_NAME$");
+      kw = kw.concat("\n$TIME$");
       kw = kw.concat("\n$V_FREQ$");
       kw = kw.concat("\n$WACN$");
       hf.setText(kw);
 
       hf.setVisible(true);
+    }
+
+    private void showkeywActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showkeywActionPerformed
+      show_help();
     }//GEN-LAST:event_showkeywActionPerformed
 
     private void import_dfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_import_dfActionPerformed

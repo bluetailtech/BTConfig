@@ -1243,6 +1243,7 @@ int tg_font_size=14;
 int tg_font_style = Font.PLAIN;
 String tg_font_name="Monospaced";
 public Color tg_font_color;
+tglog_editor tglog_e;
 
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
@@ -1931,7 +1932,7 @@ public Color tg_font_color;
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
         int cnt=0;
-        while(st.hasMoreTokens() && cnt++<15) {
+        while(st.hasMoreTokens() && cnt++<25) {
           st1 = st.nextToken();
           if(st1!=null && st1.equals("SRC_RID:")) {
             if( st.hasMoreTokens() ) {
@@ -3018,6 +3019,7 @@ public Color tg_font_color;
         tgfontpanel = new javax.swing.JPanel();
         tglog_font = new javax.swing.JButton();
         tglog_color = new javax.swing.JButton();
+        tglog_edit = new javax.swing.JButton();
         buttong_config = new javax.swing.JPanel();
         jPanel21 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
@@ -4578,6 +4580,15 @@ public Color tg_font_color;
         });
         tgfontpanel.add(tglog_color);
 
+        tglog_edit.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        tglog_edit.setText("Edit");
+        tglog_edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tglog_editActionPerformed(evt);
+            }
+        });
+        tgfontpanel.add(tglog_edit);
+
         logpanel.add(tgfontpanel, java.awt.BorderLayout.PAGE_END);
 
         jTabbedPane1.addTab("TG Log", logpanel);
@@ -5933,6 +5944,10 @@ public Color tg_font_color;
 
     }//GEN-LAST:event_tglog_fontActionPerformed
 
+    private void tglog_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tglog_editActionPerformed
+      if(tglog_e!=null) tglog_e.setVisible(true);
+    }//GEN-LAST:event_tglog_editActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -5955,144 +5970,66 @@ public void update_dmr_lcn1_label() {
     dmr_lcn1_label.setText("LCN1 Frequency");
   }
 }
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 public void do_meta() {
 
+  if(did_metadata==1) return;
 
   if( is_dmr_mode==0 && src_uid==0 && !en_zero_rid.isSelected() ) {
     did_metadata=1;
     return;
   }
 
-  if( did_metadata==0 ) meta_count++;
+    try {
+        if(l3.getText().contains("CC BLKS")) return; 
+        if(l3.getText().contains("DMR BLKS_PER_SEC")) return; 
+        if(l3.getText().contains("NO SIG")) return; 
+        if(l3.getText().contains("TG 0")) return; 
 
-  if(l3!=null & did_metadata==0 && meta_count>9 && l3.getText().trim().length()>0) {
+        String log_format = tglog_e.getFormat();
 
-    if(l3.getText().contains("CONTROL CHANNEL BLKS")) return; 
-    if(l3.getText().contains("DMR BLKS_PER_SEC")) return; 
-    if(l3.getText().contains("NO SIG")) return; 
-    if(l3.getText().contains("TG 0")) return; 
-
-    if( is_dmr_mode==1 ) freq_str = freq.getText();
-
-
-    String src_uid_str = "";
-    String is_enc_str = "";
-    String alias_str = "";
-    String phase_str="";
-
-    if(is_phase1==1) phase_str="P1";
-    if(is_phase2==1) phase_str="P2";
-
-    if(current_alias!=null && src_uid!=0 && current_alias.length()>0) alias_str = current_alias+",";
-      current_alias="";
-
-    src_uid_str = "RID "+new Integer(src_uid).toString()+",";
-
-    if(is_enc!=0) is_enc_str = "(ENC),";
-
-    is_enc=0;
-
-    //meta String
-    String metadata =""; 
-    //if(enable_mp3.isSelected()) {
-     // metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+mp3_file.length()+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str + alias_str + ","+phase_str;
-    //}
-    //else {
-      metadata = "\r\n"+l3.getText()+","+time_format.format(new java.util.Date())+","+rssim1.getValue()+" dbm,"+"0"+", cc_freq "+freq_str+" mhz,"+src_uid_str+is_enc_str + alias_str + ","+phase_str;
-    //}
-
-    if(tg_pri>0) {
-      metadata = metadata.concat(" (TG PRI)");
-    }
-
-    if(freq_str==null || freq_str.trim().length()==0) freq_str = frequency_tf1.getText();
-    if(freq_str.length()==0) metadata=null;
-
-
-    if(metadata!=null && metadata.length()>0 && !metadata.contains("ctrl ") ) {
-
-        String date = formatter_date.format(new java.util.Date() );
-        current_date=new String(date);  //date changed
-
-        //if( !date.equals(current_date) ) {
-
-          try {
-            if(fos_meta!=null) fos_meta.close();
-          } catch(Exception e) {
-            e.printStackTrace();
-          }
-
-          try {
-            String fs =  System.getProperty("file.separator");
-            meta_file = new File(document_dir+fs+sys_mac_id+fs+"p25rx_recmeta_"+current_date+".txt");
-            fos_meta = new FileOutputStream( meta_file, true ); 
-          } catch(Exception e) {
-            e.printStackTrace();
-          }
-
-        //}
-
-
+        String log_str = "\r\n"+dframe.do_subs(log_format);
 
         try {
-          fos_meta.write(metadata.getBytes(),0,metadata.length());  //write int num records
-          fos_meta.flush();
-          fos_meta.close();
+          if(fos_meta!=null) fos_meta.close();
+        } catch(Exception e) {
+          e.printStackTrace();
+        }
+
+        try {
+          String fs =  System.getProperty("file.separator");
+          meta_file = new File(document_dir+fs+sys_mac_id+fs+"p25rx_recmeta_"+current_date+".txt");
+          fos_meta = new FileOutputStream( meta_file, true ); 
         } catch(Exception e) {
           e.printStackTrace();
         }
 
 
       try {
-        //add meta info to log tab
-        String text = log_ta.getText().trim();
-
-        StringTokenizer st = new StringTokenizer(metadata,",");
-        String str1 = "";
-        if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
-        if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
-        if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
-        if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
-        if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
-        if(st.hasMoreTokens()) st.nextToken(); //mp3 file len
-        if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
-
-        //src uid
-        if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
-        //(ENC)
-        if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
-        //current alias
-        if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
-        //phase
-        if(st.hasMoreTokens()) str1 = str1.concat(st.nextToken()+", ");
-
-        if(tg_pri>0) {
-          str1 = str1.concat(" (TG PRI)");
-        }
-
-        log_ta.setText(text.concat( new String(str1.getBytes()) )+"\n");
-
-        if( log_ta.getText().length() > 16000*4 ) {
-          String new_text = text.substring(8000*4,text.length()-1);
-          log_ta.setText(new_text+"\n");
-        }
-
-        log_ta.setCaretPosition(log_ta.getText().length());
-        log_ta.getCaret().setVisible(true);
-        log_ta.getCaret().setBlinkRate(250);
-
+        fos_meta.write(log_str.getBytes(),0,log_str.length());  //write int num records
+        fos_meta.flush();
+        fos_meta.close();
       } catch(Exception e) {
-          e.printStackTrace();
-        //e.printstacktrace();
+        e.printStackTrace();
       }
-    }
-    did_metadata=1;
-    tg_pri=0;
-  }
-}
 
+      String text = log_ta.getText().trim();
+
+      log_ta.setText(text.concat( new String(log_str.getBytes()) ).trim()+"\n");
+
+      if( log_ta.getText().length() > 16000 ) {
+        String new_text = text.substring(8000,text.length()-1);
+        log_ta.setText(new_text.trim()+"\n");
+      }
+
+      did_metadata=1;
+      tg_pri=0;
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
+}
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 public void open_audio_output_files() {
@@ -6158,6 +6095,10 @@ public void update_prefs() {
 
       try {
         if(dframe!=null) dframe.update_colors();
+      } catch(Exception e) {
+      }
+      try {
+        tglog_e = new tglog_editor(this);
       } catch(Exception e) {
       }
 
@@ -6837,6 +6778,7 @@ public void SLEEP(long val) {
     public javax.swing.JScrollPane tg_scroll_pane;
     private javax.swing.JPanel tgfontpanel;
     private javax.swing.JButton tglog_color;
+    private javax.swing.JButton tglog_edit;
     private javax.swing.JButton tglog_font;
     private javax.swing.JPanel tiny_const;
     public javax.swing.JRadioButton triple_click_opt1;
