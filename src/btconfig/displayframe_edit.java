@@ -228,7 +228,7 @@ java.text.SimpleDateFormat time_format;
       s2 = s2.replaceAll(Matcher.quoteReplacement("$SYS_NAME$"), sysname.trim() );
         if(s2==null) s2 = s1;
 
-      s2 = s2.replaceAll(Matcher.quoteReplacement("$V_FREQ$"), String.format("3.6f", parent.v_freq) );
+      s2 = s2.replaceAll(Matcher.quoteReplacement("$V_FREQ$"), String.format("%3.6f", parent.v_freq) );
         if(s2==null) s2 = s1;
 
       if(f!=null) {

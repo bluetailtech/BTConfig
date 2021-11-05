@@ -1399,7 +1399,7 @@ float v_freq=0.0f;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202111050501");
-      release_date.setText("Release: 2021-11-05 08:53");
+      release_date.setText("Release: 2021-11-05 09:40");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2108,7 +2108,15 @@ float v_freq=0.0f;
               e.printStackTrace();
             }
           }
-          if(st1!=null && st1.contains("freq") && st.hasMoreTokens()) {
+        }
+      }
+      if(console_line.contains("->(VOICE)") && console_line.contains("$") ) {
+        StringTokenizer st = new StringTokenizer(console_line," ,");
+        String st1 = ""; 
+        int cnt=0;
+        while(st.hasMoreTokens() && cnt++<25) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.contains("freq:") && st.hasMoreTokens()) {
             try {
               v_freq = new Float( st.nextToken() ).floatValue();
             } catch(Exception e) {
@@ -2116,7 +2124,6 @@ float v_freq=0.0f;
             }
           }
         }
-
       }
       if(console_line.contains("rf_channel") && console_line.contains("follow:") ) {
         StringTokenizer st = new StringTokenizer(console_line," ");
@@ -2131,6 +2138,21 @@ float v_freq=0.0f;
             } catch(Exception e) {
               e.printStackTrace();
               break;
+            }
+          }
+        }
+      }
+      if(console_line.contains("P25_PII_CC:") && console_line.contains("grp=") ) {
+        StringTokenizer st = new StringTokenizer(console_line," =");
+        String st1 = ""; 
+        int cnt=0;
+        while(st.hasMoreTokens() && cnt++<25) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.contains("freq") && st.hasMoreTokens()) {
+            try {
+              v_freq = new Float( st.nextToken() ).floatValue();
+            } catch(Exception e) {
+              e.printStackTrace();
             }
           }
         }
