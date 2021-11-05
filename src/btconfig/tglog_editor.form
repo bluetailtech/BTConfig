@@ -102,6 +102,22 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JButton" name="te_import">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Import"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="te_importActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="te_export">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Export"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="te_exportActionPerformed"/>
+          </Events>
+        </Component>
         <Component class="javax.swing.JButton" name="help">
           <Properties>
             <Property name="text" type="java.lang.String" value="Show Keywords"/>

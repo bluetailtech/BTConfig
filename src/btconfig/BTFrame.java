@@ -1394,7 +1394,7 @@ tglog_editor tglog_e;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202110230159");
-      release_date.setText("Release: 2021-11-03 21:32");
+      release_date.setText("Release: 2021-11-05 03:07");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);

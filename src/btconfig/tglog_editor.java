@@ -4,19 +4,29 @@
  * and open the template in the editor.
  */
 package btconfig;
+import javax.swing.JColorChooser;
+import javax.swing.*;
+import javax.swing.filechooser.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.util.prefs.Preferences;
+import java.util.regex.Matcher;
 
+import java.io.*;
 /**
  *
  * @author radioactive
  */
 public class tglog_editor extends javax.swing.JFrame {
 BTFrame parent;
+JFileChooser chooser;
     /**
      * Creates new form tglog_editor
      */
     public tglog_editor(BTFrame p) {
       initComponents();
       parent = p;
+      chooser = new JFileChooser();
 
       //would be better defaults
       //$DATE$ $TIME$, $TG_NAME$, TG_$TG_ID$, RID $RID$, $RID_ALIAS$, RSSI $RSSI$, VFREQ $V_FREQ$, CCFREQ $CC_FREQ$, SYS $WACN$-$SYS_ID$, NAC $NAC$, SITE $SITE_ID$, RFSS $RFSS_ID$, ERR_RATE $ERR_RATE$
@@ -47,6 +57,8 @@ BTFrame parent;
         tigger_rid = new javax.swing.JRadioButton();
         trigger_grant = new javax.swing.JRadioButton();
         trigger_voice = new javax.swing.JRadioButton();
+        te_import = new javax.swing.JButton();
+        te_export = new javax.swing.JButton();
         help = new javax.swing.JButton();
         reset = new javax.swing.JButton();
         close = new javax.swing.JButton();
@@ -87,6 +99,22 @@ BTFrame parent;
         jPanel4.add(trigger_voice);
 
         jPanel2.add(jPanel4);
+
+        te_import.setText("Import");
+        te_import.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                te_importActionPerformed(evt);
+            }
+        });
+        jPanel2.add(te_import);
+
+        te_export.setText("Export");
+        te_export.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                te_exportActionPerformed(evt);
+            }
+        });
+        jPanel2.add(te_export);
 
         help.setText("Show Keywords");
         help.addActionListener(new java.awt.event.ActionListener() {
@@ -152,6 +180,59 @@ BTFrame parent;
         log_format.setText("$P25_MODE$ $V_FREQ$ MHz,  TG $TG_ID$ ,  $TG_NAME$, $DATE$-$TIME$, $RSSI$ dbm,  cc_freq $CC_FREQ$ mhz, RID $RID$, $P25_MODE$, EVM  $EVM_P$%, ");
     }//GEN-LAST:event_resetActionPerformed
 
+    private void te_importActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_te_importActionPerformed
+      try {
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter( "TG log format file", "fmt");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showDialog(parent, "Import TG log fomrat file (.fmt) file");
+
+
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+          File file = chooser.getSelectedFile();
+          FileInputStream fis = new FileInputStream(file);
+          ObjectInputStream ois = new ObjectInputStream(fis);
+          log_format.setText( ois.readUTF() );
+
+          if( parent.prefs!=null) {
+            parent.prefs.put("tglog_format", getFormat());
+          }
+          parent.setStatus("TG log format imported.");
+
+        }
+
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+    }//GEN-LAST:event_te_importActionPerformed
+
+    private void te_exportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_te_exportActionPerformed
+      try {
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter( "tg format file", "fmt");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showDialog(parent, "Export TG Format Export .fmt file");
+
+        ObjectOutputStream oos;
+
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+          File file = chooser.getSelectedFile();
+          oos = new ObjectOutputStream( new FileOutputStream(file) );
+
+          oos.writeUTF(log_format.getText());
+
+          oos.flush();
+          oos.close();
+
+          parent.setStatus("TG log format exported.");
+
+        }
+
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+    }//GEN-LAST:event_te_exportActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -199,6 +280,8 @@ BTFrame parent;
     private javax.swing.JTextField log_format;
     private javax.swing.JButton reset;
     private javax.swing.JButton save;
+    private javax.swing.JButton te_export;
+    private javax.swing.JButton te_import;
     public javax.swing.JRadioButton tigger_rid;
     public javax.swing.JRadioButton trigger_grant;
     private javax.swing.JRadioButton trigger_voice;
