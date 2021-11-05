@@ -128,7 +128,6 @@ java.text.SimpleDateFormat time_format;
 
 
 
-      //if(parent.wacn.getText()!=null) wacn = parent.wacn.getText().trim();
       if(parent.sysid.getText()!=null) sysid = parent.sysid.getText().trim();
       if(parent.nac.getText()!=null) nac = parent.nac.getText().trim();
       if(parent.siteid.getText()!=null) siteid = parent.siteid.getText().trim();
@@ -136,12 +135,9 @@ java.text.SimpleDateFormat time_format;
       if(parent.freq.getText()!=null) cc_freq = parent.freq.getText().trim();
 
       rid = parent.src_uid_str;
-      rid_alias = parent.current_alias;
 
       if(rid==null) rid="";
-      if(rid_alias==null) rid_alias="";
 
-      //if( wacn.contains("WACN:") && wacn.length()>5) wacn = wacn.substring(5,wacn.length());
       if( sysid.contains("SYS_ID:") && sysid.length()>7) sysid = sysid.substring(7,sysid.length());
       if( nac.contains("NAC:") && nac.length()>4) nac = nac.substring(4,nac.length());
       if( rfid.contains("RFSS ID:") && rfid.length()>8) rfid = rfid.substring(8,rfid.length());
@@ -149,41 +145,77 @@ java.text.SimpleDateFormat time_format;
       if( cc_freq.contains("Freq:") && cc_freq.length()>5) cc_freq = cc_freq.substring(5,cc_freq.length());
 
       try {
-        wacn = String.format("0x%05x", Integer.valueOf(parent.current_wacn_id).intValue());
+        wacn = String.format("0x%05X", Integer.valueOf(parent.current_wacn_id).intValue());
       } catch(Exception e) {
       }
 
-      s2 = s2.replaceAll(Matcher.quoteReplacement("$LCN$"), parent.rf_channel );
+      s2 = s2.replaceAll(Matcher.quoteReplacement("$WACN$"), wacn.trim() );
         if(s2==null) s2 = s1;
-      s2 = s2.replaceAll(Matcher.quoteReplacement("$WACN$"), wacn );
+      s2 = s2.replaceAll(Matcher.quoteReplacement("$SYS_ID$"), sysid.trim() );
         if(s2==null) s2 = s1;
-      s2 = s2.replaceAll(Matcher.quoteReplacement("$SYS_ID$"), sysid );
+      s2 = s2.replaceAll(Matcher.quoteReplacement("$NAC$"), nac.trim() );
         if(s2==null) s2 = s1;
-      s2 = s2.replaceAll(Matcher.quoteReplacement("$NAC$"), nac );
+      s2 = s2.replaceAll(Matcher.quoteReplacement("$SITE_ID$"), siteid.trim() );
         if(s2==null) s2 = s1;
-      s2 = s2.replaceAll(Matcher.quoteReplacement("$SITE_ID$"), siteid );
+      s2 = s2.replaceAll(Matcher.quoteReplacement("$RFSS_ID$"), rfid.trim() );
         if(s2==null) s2 = s1;
-      s2 = s2.replaceAll(Matcher.quoteReplacement("$RFSS_ID$"), rfid );
-        if(s2==null) s2 = s1;
-      s2 = s2.replaceAll(Matcher.quoteReplacement("$CC_FREQ$"), cc_freq );
+      s2 = s2.replaceAll(Matcher.quoteReplacement("$CC_FREQ$"), cc_freq.trim() );
         if(s2==null) s2 = s1;
 
-      s2 = s2.replaceAll(Matcher.quoteReplacement("$RID$"), rid );
+
+      try {
+        if(parent.src_uid!=0) {
+
+          rid_alias = parent.current_alias;
+          if(rid_alias==null) rid_alias="";
+
+          rid = String.format("%d", parent.src_uid);
+
+          s2 = s2.replaceAll(Matcher.quoteReplacement("$RID$"), rid.trim() );
+            if(s2==null) s2 = s1;
+        }
+        else {
+          rid = "";
+          s2 = s2.replaceAll(Matcher.quoteReplacement("$RID$"), "" );
+            if(s2==null) s2 = s1;
+        }
+      } catch(Exception e) {
+      }
+
+      s2 = s2.replaceAll(Matcher.quoteReplacement("$RID_ALIAS$"), rid_alias.trim() );
         if(s2==null) s2 = s1;
-      s2 = s2.replaceAll(Matcher.quoteReplacement("$RID_ALIAS$"), rid_alias );
+
+      try {
+        s2 = s2.replaceAll(Matcher.quoteReplacement("$ERR_RATE$"), String.format("%3.3f", parent.erate) );
         if(s2==null) s2 = s1;
+      } catch(Exception e) {
+      }
+
+      /*
+      try {
+        if(parent.edit_alias!=null) {
+          if(rid!=null && rid.length()>0 && Integer.valueOf(rid).intValue()!=0) {
+            parent.edit_alias.setEnabled(true);
+          }
+          else {
+            parent.edit_alias.setEnabled(false);
+          }
+        }
+      } catch(Exception e) {
+      }
+      */
 
       if(parent.is_phase1==1) {
       s2 = s2.replaceAll(Matcher.quoteReplacement("$P25_MODE$"), "P25-P1" );
         if(s2==null) s2 = s1;
       }
-      if(parent.is_phase2==1) {
+      else if( parent.is_phase2==1) {
       s2 = s2.replaceAll(Matcher.quoteReplacement("$P25_MODE$"), "P25-P2" );
         if(s2==null) s2 = s1;
       }
 
       try {
-        //evm_p = String.format("%3.0f", parent.current_evm_percent);
+        evm_p = String.format("%3.0f", parent.current_evm_percent);
       } catch(Exception e) {
         evm_p="";
       }
@@ -198,21 +230,27 @@ java.text.SimpleDateFormat time_format;
 
       if(f!=null) {
         f = f.trim();
+        if( f.contains("MHz") ) f = f.substring(0,f.length()-4);
         //System.out.println("freqval: "+f);
         f = f.replace(","," ");
 
         if(f.length()>0) {
-          s2 = s2.replaceAll(Matcher.quoteReplacement("$FREQ$"), f );
-          s2 = s2.replaceAll(Matcher.quoteReplacement("$V_FREQ$"), f );
+          s2 = s2.replaceAll(Matcher.quoteReplacement("$FREQ$"), f.trim() );
+          s2 = s2.replaceAll(Matcher.quoteReplacement("$V_FREQ$"), f.trim() );
+          s2 = s2.replaceAll(Matcher.quoteReplacement("$LCN$"), parent.rf_channel.trim() );
           if(s2==null) s2 = s1;
         }
         else {
-          s2 = s2.replaceAll(Matcher.quoteReplacement("$FREQ$"), cc_freq );
+          s2 = s2.replaceAll(Matcher.quoteReplacement("$FREQ$"), cc_freq.trim() );
+          try {
+            s2 = s2.replaceAll(Matcher.quoteReplacement("$LCN$"), new Integer(parent.cc_lcn).toString().trim() );
+          } catch(Exception e) {
+          }
           if(s2==null) s2 = s1;
         }
       }
       else {
-        s2 = s2.replaceAll(Matcher.quoteReplacement("$FREQ$"), cc_freq );
+        s2 = s2.replaceAll(Matcher.quoteReplacement("$FREQ$"), cc_freq.trim() );
         if(s2==null) s2 = s1;
       }
 
@@ -237,10 +275,13 @@ java.text.SimpleDateFormat time_format;
       if(parent.rssi!=null) {
         String rssi_d = String.format( "%-3d", Integer.valueOf(parent.rssi) );
         if(rssi_d.length()==3) rssi_d = rssi_d+" ";
-        s2 = s2.replaceAll(Matcher.quoteReplacement("$RSSI$"), rssi_d);
+        s2 = s2.replaceAll(Matcher.quoteReplacement("$RSSI$"), rssi_d.trim());
         if(s2==null) s2 = s1;
       }
 
+      String tdma_slot_d = String.format( "%d", Integer.valueOf(parent.tdma_slot) );
+      s2 = s2.replaceAll(Matcher.quoteReplacement("$TDMA_SLOT$"), tdma_slot_d.trim());
+      if(s2==null) s2 = s1;
 
 
 
@@ -941,14 +982,13 @@ java.text.SimpleDateFormat time_format;
       }
 
       update_colors();
-      parent.setStatus("Saved Config");
-      //saveconfig.setEnabled(false);
+      saveconfig.setEnabled(true);
+      parent.setStatus("display view config saved.");
     }//GEN-LAST:event_saveconfigActionPerformed
 
     private void fs4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fs4KeyTyped
       //System.out.println("evt:"+evt);
-      //saveconfig.setEnabled(true);
-      parent.setStatus("Saved Config");
+      saveconfig.setEnabled(true);
     }//GEN-LAST:event_fs4KeyTyped
 
     private void clrnv1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clrnv1ActionPerformed
@@ -987,8 +1027,7 @@ java.text.SimpleDateFormat time_format;
     }//GEN-LAST:event_clrnv5ActionPerformed
 
     private void dwidthKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dwidthKeyReleased
-      //saveconfig.setEnabled(true);
-      parent.setStatus("Saved Config");
+      saveconfig.setEnabled(true);
     }//GEN-LAST:event_dwidthKeyReleased
 
     public void show_help() {
@@ -997,6 +1036,7 @@ java.text.SimpleDateFormat time_format;
       kw = kw.concat("\n$CC_FREQ$");
       kw = kw.concat("\n$DATE$");
       kw = kw.concat("\n$EVM_P$");
+      kw = kw.concat("\n$ERR_RATE$");
       kw = kw.concat("\n$FREQ$");
       kw = kw.concat("\n$LCN$");
       kw = kw.concat("\n$NAC$");
@@ -1008,6 +1048,7 @@ java.text.SimpleDateFormat time_format;
       kw = kw.concat("\n$SITE_ID$");
       kw = kw.concat("\n$SYS_ID$");
       kw = kw.concat("\n$SYS_NAME$");
+      kw = kw.concat("\n$TDMA_SLOT$");
       kw = kw.concat("\n$TG_ID$");
       kw = kw.concat("\n$TG_NAME$");
       kw = kw.concat("\n$TIME$");
@@ -1027,7 +1068,7 @@ java.text.SimpleDateFormat time_format;
 
         FileNameExtensionFilter filter = new FileNameExtensionFilter( "displayview file", "dvp");
         chooser.setFileFilter(filter);
-        int returnVal = chooser.showDialog(parent, "Import Display View Profile .DVP File");
+        int returnVal = chooser.showDialog(parent, "Import Display View Profile .DVP file");
 
 
         if(returnVal == JFileChooser.APPROVE_OPTION) {

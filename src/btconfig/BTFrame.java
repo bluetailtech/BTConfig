@@ -1245,6 +1245,10 @@ String tg_font_name="Monospaced";
 public Color tg_font_color;
 tglog_editor tglog_e;
 
+int cc_lcn=0;
+int tdma_slot=0;
+float erate=0.0f;
+float current_evm_percent=0.0f;
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
       initComponents();
@@ -1393,8 +1397,8 @@ tglog_editor tglog_e;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202110230159");
-      release_date.setText("Release: 2021-11-05 03:30");
+      fw_ver.setText("Latest Avail: FW Date: 202111050453");
+      release_date.setText("Release: 2021-11-05 04:53");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2612,6 +2616,38 @@ tglog_editor tglog_e;
 
             }
           }
+
+      if(console_line.contains("Con+ Voice Grant:") && console_line.contains("burst_type") ) {
+
+        st = new StringTokenizer(console_line," ,=");
+        String st1 = ""; 
+        cnt=0;
+        while(st.hasMoreTokens() && cnt++<25) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.contains("slot") && st.hasMoreTokens()) {
+            try {
+              tdma_slot = new Integer( st.nextToken() ).intValue();
+            } catch(Exception e) {
+              e.printStackTrace();
+            }
+          }
+          if(st1!=null && st1.contains("LCN") && st.hasMoreTokens()) {
+            try {
+              cc_lcn = new Integer( st.nextToken() ).intValue();
+              rf_channel = new Integer(cc_lcn).toString(); 
+            } catch(Exception e) {
+              e.printStackTrace();
+            }
+          }
+          if(st1!=null && st1.contains("radio_id") && st.hasMoreTokens()) {
+            try {
+               parent.src_uid = new Integer( st.nextToken() ).intValue();
+            } catch(Exception e) {
+              e.printStackTrace();
+            }
+          }
+        }
+      }
 
             if(console_line.contains("vqg")) { 
               sq_indicator.setForeground( java.awt.Color.green );
