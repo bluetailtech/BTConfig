@@ -1397,8 +1397,8 @@ float current_evm_percent=0.0f;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202111050453");
-      release_date.setText("Release: 2021-11-05 04:53");
+      fw_ver.setText("Latest Avail: FW Date: 202111050501");
+      release_date.setText("Release: 2021-11-05 05:01");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2647,6 +2647,7 @@ float current_evm_percent=0.0f;
             }
           }
         }
+        do_meta();
       }
 
             if(console_line.contains("vqg")) { 
@@ -6019,10 +6020,12 @@ public void do_meta() {
   }
 
     try {
-        if(l3.getText().contains("CC BLKS")) return; 
-        if(l3.getText().contains("DMR BLKS_PER_SEC")) return; 
-        if(l3.getText().contains("NO SIG")) return; 
-        if(l3.getText().contains("TG 0")) return; 
+        if(is_dmr_mode==0) {
+          if(l3.getText().contains("CC BLKS")) return; 
+          if(l3.getText().contains("DMR BLKS_PER_SEC")) return; 
+          if(l3.getText().contains("NO SIG")) return; 
+          if(l3.getText().contains("TG 0")) return; 
+        }
 
         String log_format = tglog_e.getFormat();
 
