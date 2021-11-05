@@ -2650,6 +2650,43 @@ float current_evm_percent=0.0f;
         do_meta();
       }
 
+      if(console_line.contains("\r\n") && console_line.contains("erate:") ) {
+
+        st = new StringTokenizer(console_line," ");
+        String st1 = ""; 
+        cnt=0;
+        while(st.hasMoreTokens() && cnt++<25) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.contains("erate") && st.hasMoreTokens()) {
+            try {
+              erate = new Float( st.nextToken() ).floatValue();
+              break;
+            } catch(Exception e) {
+              e.printStackTrace();
+              break;
+            }
+          }
+        }
+      }
+      if(console_line.contains("\r\n") && console_line.contains("Return To Control") ) {
+
+        st = new StringTokenizer(console_line," ");
+        String st1 = ""; 
+        cnt=0;
+        while(st.hasMoreTokens() && cnt++<25) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.contains("cc_lcn") && st.hasMoreTokens()) {
+            try {
+              cc_lcn = new Integer( st.nextToken() ).intValue();
+              break;
+            } catch(Exception e) {
+              e.printStackTrace();
+              break;
+            }
+          }
+        }
+      }
+
             if(console_line.contains("vqg")) { 
               sq_indicator.setForeground( java.awt.Color.green );
               sq_indicator.setBackground( java.awt.Color.green );
