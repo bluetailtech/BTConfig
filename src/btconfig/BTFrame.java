@@ -1399,7 +1399,7 @@ double v_freq=0.0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202111050501");
-      release_date.setText("Release: 2021-11-05 09:40");
+      release_date.setText("Release: 2021-11-05 15:11");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -6118,9 +6118,6 @@ public void do_meta() {
         e.printStackTrace();
       }
 
-      int js_max = tg_scroll_pane.getVerticalScrollBar().getMaximum();
-      int cval = tg_scroll_pane.getVerticalScrollBar().getValue();
-
       String text = log_ta.getText().trim();
 
       log_ta.setText(text.concat( new String(log_str.getBytes()) ).trim()+"\n");
@@ -6130,10 +6127,12 @@ public void do_meta() {
         log_ta.setText(new_text.trim()+"\n");
       }
 
-      if(js_max==cval) {
-        js_max = tg_scroll_pane.getVerticalScrollBar().getMaximum();
-        tg_scroll_pane.getVerticalScrollBar().setValue(js_max);
-      }
+      log_ta.setCaretPosition(log_ta.getText().length());
+      log_ta.getCaret().setVisible(true);
+      log_ta.getCaret().setBlinkRate(250);
+
+      tg_scroll_pane.getHorizontalScrollBar().setValue(0);
+
 
       did_metadata=1;
       tg_pri=0;
