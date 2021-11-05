@@ -1249,6 +1249,7 @@ int cc_lcn=0;
 int tdma_slot=0;
 float erate=0.0f;
 float current_evm_percent=0.0f;
+float v_freq=0.0f;
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
       initComponents();
@@ -1398,7 +1399,7 @@ float current_evm_percent=0.0f;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202111050501");
-      release_date.setText("Release: 2021-11-05 05:01");
+      release_date.setText("Release: 2021-11-05 08:53");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2092,22 +2093,26 @@ float current_evm_percent=0.0f;
         aud_archive.set_follow( tg_follow_blink );
       } 
 
-      if(console_line.contains("\r\ngrant") && console_line.contains("tgroup") ) {
+      if(console_line.contains("\r\ngrant") && console_line.contains("follow:") ) {
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
         int cnt=0;
-        while(st.hasMoreTokens() && cnt++<15) {
+        while(st.hasMoreTokens() && cnt++<25) {
           st1 = st.nextToken();
           if(st1!=null && st1.contains("tgroup") && st.hasMoreTokens()) {
             try {
               int tg = new Integer( st.nextToken() ).intValue();
               String tg_str = new Integer(tg).toString();
               current_talkgroup = tg_str;
-
-              break;
             } catch(Exception e) {
               e.printStackTrace();
-              break;
+            }
+          }
+          if(st1!=null && st1.contains("freq") && st.hasMoreTokens()) {
+            try {
+              v_freq = new Float( st.nextToken() ).floatValue();
+            } catch(Exception e) {
+              e.printStackTrace();
             }
           }
         }
@@ -6091,6 +6096,9 @@ public void do_meta() {
         e.printStackTrace();
       }
 
+      int js_max = tg_scroll_pane.getVerticalScrollBar().getMaximum();
+      int cval = tg_scroll_pane.getVerticalScrollBar().getValue();
+
       String text = log_ta.getText().trim();
 
       log_ta.setText(text.concat( new String(log_str.getBytes()) ).trim()+"\n");
@@ -6100,8 +6108,10 @@ public void do_meta() {
         log_ta.setText(new_text.trim()+"\n");
       }
 
-      int js_max = tg_scroll_pane.getVerticalScrollBar().getMaximum();
-      tg_scroll_pane.getVerticalScrollBar().setValue(js_max);
+      if(js_max==cval) {
+        js_max = tg_scroll_pane.getVerticalScrollBar().getMaximum();
+        tg_scroll_pane.getVerticalScrollBar().setValue(js_max);
+      }
 
       did_metadata=1;
       tg_pri=0;
