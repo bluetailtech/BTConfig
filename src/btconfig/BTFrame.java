@@ -1249,7 +1249,7 @@ int cc_lcn=0;
 int tdma_slot=0;
 float erate=0.0f;
 float current_evm_percent=0.0f;
-float v_freq=0.0f;
+double v_freq=0.0;
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
       initComponents();
@@ -2118,7 +2118,7 @@ float v_freq=0.0f;
           st1 = st.nextToken();
           if(st1!=null && st1.contains("freq:") && st.hasMoreTokens()) {
             try {
-              v_freq = new Float( st.nextToken() ).floatValue();
+              v_freq = new Double( st.nextToken() ).doubleValue();
             } catch(Exception e) {
               e.printStackTrace();
             }
@@ -2150,7 +2150,7 @@ float v_freq=0.0f;
           st1 = st.nextToken();
           if(st1!=null && st1.contains("freq") && st.hasMoreTokens()) {
             try {
-              v_freq = new Float( st.nextToken() ).floatValue();
+              v_freq = new Double( st.nextToken() ).doubleValue();
             } catch(Exception e) {
               e.printStackTrace();
             }
