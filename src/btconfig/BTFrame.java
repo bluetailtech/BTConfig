@@ -1394,7 +1394,7 @@ tglog_editor tglog_e;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202110230159");
-      release_date.setText("Release: 2021-11-05 03:07");
+      release_date.setText("Release: 2021-11-05 03:30");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -6023,6 +6023,9 @@ public void do_meta() {
         String new_text = text.substring(8000,text.length()-1);
         log_ta.setText(new_text.trim()+"\n");
       }
+
+      int js_max = tg_scroll_pane.getVerticalScrollBar().getMaximum();
+      tg_scroll_pane.getVerticalScrollBar().setValue(js_max);
 
       did_metadata=1;
       tg_pri=0;
