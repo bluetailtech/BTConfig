@@ -1756,7 +1756,7 @@ double v_freq=0.0;
       if(console_line==null) console_line = new String("");
       console_line = console_line.concat(str);
 
-      if( console_line.contains("$SYS_INFO") && !console_line.contains("nac 0x") ) {
+      if( console_line.contains("SYS_INFO") && !console_line.contains("nac 0x") && console_line.contains("$") ) {
         if(sys_info_count++<1) return;
         sys_info_count=0; 
         src_uid=0;
@@ -1765,7 +1765,7 @@ double v_freq=0.0;
       }
 
 
-      if( console_line.contains("$P25_SITE") ) {
+      if( console_line.contains("P25_SITE") && console_line.contains("$") ) {
         StringTokenizer st = new StringTokenizer(console_line," ,\r\n");
         int cnt=0;
         String st1="";
@@ -1790,7 +1790,7 @@ double v_freq=0.0;
         }
       }
 
-      if( console_line.contains("$P25_EMERGENCY:") ) {
+      if( console_line.contains("P25_EMERGENCY:") && console_line.contains("$") ) {
         StringTokenizer st = new StringTokenizer(console_line," ,\r\n");
         int cnt=0;
         String st1="";
@@ -1821,7 +1821,7 @@ double v_freq=0.0;
           }
         }
       }
-      if( console_line.contains("$P25_AFFILIATION:") ) {
+      if( console_line.contains("P25_AFFILIATION:") && console_line.contains("$") ) {
         StringTokenizer st = new StringTokenizer(console_line," ,\r\n");
         int cnt=0;
         String st1="";
@@ -1864,7 +1864,7 @@ double v_freq=0.0;
         }
       }
 
-      if( console_line.contains("$P25_GRP_UP grp1:") && console_line.contains("ch2:") ) {
+      if( console_line.contains("P25_GRP_UP grp1:") && console_line.contains("ch2:") && console_line.contains("$") ) {
         StringTokenizer st = new StringTokenizer(console_line," ,\r\n");
         String st1 = ""; 
         String active_tg="Adjacent Active Talk Groups: ";
@@ -1884,7 +1884,7 @@ double v_freq=0.0;
         }
       }
 
-      if( console_line.contains("$P25_GRP_EXP_UP grp") && console_line.contains("rx:") ) {
+      if( console_line.contains("P25_GRP_EXP_UP grp") && console_line.contains("rx:") && console_line.contains("$") ) {
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
         String active_tg="Adjacent Active Talk Groups: ";
@@ -1899,7 +1899,7 @@ double v_freq=0.0;
         }
       }
 
-      if( console_line.contains("$SYS_INFO") && console_line.contains("nac 0x") ) {
+      if( console_line.contains("$SYS_INFO") && console_line.contains("nac 0x") && console_line.contains("$") ) {
         src_uid=0;
         is_enc=0;
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
