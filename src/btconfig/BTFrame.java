@@ -877,7 +877,6 @@ class updateTask extends java.util.TimerTask
                   if(pcm_idx<320) pcm_bytes[pcm_idx++] = b[i];
 
                   if(skip_bytes==0) {
-                    do_meta();
                     //System.out.println("read voice");
                     try {
                       start_time = new java.util.Date().getTime();
