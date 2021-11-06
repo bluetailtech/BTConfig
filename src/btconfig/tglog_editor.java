@@ -34,6 +34,18 @@ JFileChooser chooser;
       if( parent.prefs!=null) {
         log_format.setText( parent.prefs.get("tglog_format", "$P25_MODE$ $V_FREQ$ MHz,  TG $TG_ID$ ,  $TG_NAME$, $DATE$-$TIME$, $RSSI$ dbm,  cc_freq $CC_FREQ$ mhz, RID $RID$, $P25_MODE$, EVM  $EVM_P$%, ") );
       }
+      if( parent.prefs!=null) {
+        tg_trig_vgrant.setSelected(parent.prefs.getBoolean("tg_trig_vgrant", false)); 
+      }
+      if( parent.prefs!=null) {
+        tg_trig_vaudio.setSelected(parent.prefs.getBoolean("tg_trig_vaudio", false)); 
+      }
+      if( parent.prefs!=null) {
+        tg_trig_nzrid.setSelected(parent.prefs.getBoolean("tg_trig_nzrid", false)); 
+      }
+      if( parent.prefs!=null) {
+        tg_trig_anyrid.setSelected(parent.prefs.getBoolean("tg_trig_anyrid", true)); 
+      }
     }
 
     public String getFormat() {
@@ -54,9 +66,10 @@ JFileChooser chooser;
         log_format = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        tigger_rid = new javax.swing.JRadioButton();
-        trigger_grant = new javax.swing.JRadioButton();
-        trigger_voice = new javax.swing.JRadioButton();
+        tg_trig_vgrant = new javax.swing.JCheckBox();
+        tg_trig_vaudio = new javax.swing.JCheckBox();
+        tg_trig_nzrid = new javax.swing.JCheckBox();
+        tg_trig_anyrid = new javax.swing.JCheckBox();
         te_import = new javax.swing.JButton();
         te_export = new javax.swing.JButton();
         help = new javax.swing.JButton();
@@ -83,20 +96,41 @@ JFileChooser chooser;
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Log Trigger"));
 
-        buttonGroup1.add(tigger_rid);
-        tigger_rid.setText("Voice Grant");
-        tigger_rid.setEnabled(false);
-        jPanel4.add(tigger_rid);
+        tg_trig_vgrant.setSelected(true);
+        tg_trig_vgrant.setText("V Grant");
+        tg_trig_vgrant.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tg_trig_vgrantActionPerformed(evt);
+            }
+        });
+        jPanel4.add(tg_trig_vgrant);
 
-        buttonGroup1.add(trigger_grant);
-        trigger_grant.setSelected(true);
-        trigger_grant.setText("RID Update");
-        trigger_grant.setEnabled(false);
-        jPanel4.add(trigger_grant);
+        tg_trig_vaudio.setSelected(true);
+        tg_trig_vaudio.setText("V Audio");
+        tg_trig_vaudio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tg_trig_vaudioActionPerformed(evt);
+            }
+        });
+        jPanel4.add(tg_trig_vaudio);
 
-        trigger_voice.setText("Voice Audio");
-        trigger_voice.setEnabled(false);
-        jPanel4.add(trigger_voice);
+        tg_trig_nzrid.setSelected(true);
+        tg_trig_nzrid.setText("Non-Zero RID");
+        tg_trig_nzrid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tg_trig_nzridActionPerformed(evt);
+            }
+        });
+        jPanel4.add(tg_trig_nzrid);
+
+        tg_trig_anyrid.setSelected(true);
+        tg_trig_anyrid.setText("Any RID");
+        tg_trig_anyrid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tg_trig_anyridActionPerformed(evt);
+            }
+        });
+        jPanel4.add(tg_trig_anyrid);
 
         jPanel2.add(jPanel4);
 
@@ -233,6 +267,30 @@ JFileChooser chooser;
       }
     }//GEN-LAST:event_te_exportActionPerformed
 
+    private void tg_trig_vgrantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tg_trig_vgrantActionPerformed
+      if( parent.prefs!=null) {
+        parent.prefs.putBoolean("tg_trig_vgrant", tg_trig_vgrant.isSelected());
+      }
+    }//GEN-LAST:event_tg_trig_vgrantActionPerformed
+
+    private void tg_trig_vaudioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tg_trig_vaudioActionPerformed
+      if( parent.prefs!=null) {
+        parent.prefs.putBoolean("tg_trig_vaudio", tg_trig_vaudio.isSelected());
+      }
+    }//GEN-LAST:event_tg_trig_vaudioActionPerformed
+
+    private void tg_trig_nzridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tg_trig_nzridActionPerformed
+      if( parent.prefs!=null) {
+        parent.prefs.putBoolean("tg_trig_nzrid", tg_trig_nzrid.isSelected());
+      }
+    }//GEN-LAST:event_tg_trig_nzridActionPerformed
+
+    private void tg_trig_anyridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tg_trig_anyridActionPerformed
+      if( parent.prefs!=null) {
+        parent.prefs.putBoolean("tg_trig_anyrid", tg_trig_anyrid.isSelected());
+      }
+    }//GEN-LAST:event_tg_trig_anyridActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -282,8 +340,9 @@ JFileChooser chooser;
     private javax.swing.JButton save;
     private javax.swing.JButton te_export;
     private javax.swing.JButton te_import;
-    public javax.swing.JRadioButton tigger_rid;
-    public javax.swing.JRadioButton trigger_grant;
-    private javax.swing.JRadioButton trigger_voice;
+    public javax.swing.JCheckBox tg_trig_anyrid;
+    public javax.swing.JCheckBox tg_trig_nzrid;
+    public javax.swing.JCheckBox tg_trig_vaudio;
+    public javax.swing.JCheckBox tg_trig_vgrant;
     // End of variables declaration//GEN-END:variables
 }

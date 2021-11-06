@@ -1976,6 +1976,7 @@ double v_freq=0.0;
                     src_uid_str="";
                     try {
                       if(src_uid!=0) src_uid_str = new Integer(src_uid).toString();
+                      if(tglog_e!=null && tglog_e.tg_trig_nzrid.isSelected()) do_meta();
                     } catch(Exception e) {
                     System.out.println("uid:");
                       e.printStackTrace();
@@ -1991,7 +1992,7 @@ double v_freq=0.0;
                       status.setText(system_alias.getText());
                     }
 
-                    do_meta();
+                    if(tglog_e!=null && tglog_e.tg_trig_anyrid.isSelected()) do_meta();
 
               } catch(Exception e) {
                 System.out.println("error: RID");
@@ -2175,6 +2176,7 @@ double v_freq=0.0;
             }
           }
         }
+        if(tglog_e!=null && tglog_e.tg_trig_vgrant.isSelected()) do_meta();
       }
 
 
@@ -2711,6 +2713,7 @@ double v_freq=0.0;
             }
           }
         }
+        if(tglog_e!=null && tglog_e.tg_trig_vgrant.isSelected()) do_meta();
       }
 
             if(console_line.contains("vqg")) { 
