@@ -1399,7 +1399,7 @@ double v_freq=0.0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202111050501");
-      release_date.setText("Release: 2021-11-05 15:11");
+      release_date.setText("Release: 2021-11-05 22:27");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -6094,6 +6094,9 @@ public void do_meta() {
         String log_format = tglog_e.getFormat();
 
         String log_str = "\r\n"+dframe.do_subs(log_format);
+
+        String date = formatter_date.format(new java.util.Date() );
+        current_date=new String(date);  //date changed
 
         try {
           if(fos_meta!=null) fos_meta.close();
