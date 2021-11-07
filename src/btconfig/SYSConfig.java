@@ -529,6 +529,14 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           System.out.println("clk_speed "+clkspeed);
                           parent.mcu_speed.setSelectedIndex(clkspeed);
 
+                          int v_rep = bb3.getInt(288);
+                          try {
+                            parent.vrep.setText( Integer.valueOf(v_rep).toString() );
+                          } catch(Exception e) {
+                          }
+
+
+
                           int en_tg_pri_int = bb3.getInt(568);
                           if(en_tg_pri_int==1) parent.allow_tg_pri_int.setSelected(true);
                             else parent.allow_tg_pri_int.setSelected(false);
@@ -1342,6 +1350,14 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           b = parent.enable_leds.isSelected();
                           if(b) cmd = "led_mode 1\r\n";
                             else cmd = "led_mode 0\r\n"; 
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          SLEEP(10);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
+
+                          result=new byte[64];
+                          cmd = "vrep "+parent.vrep.getText()+"\r\n"; 
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           SLEEP(10);
                           rlen=serial_port.readBytes( result, 64);

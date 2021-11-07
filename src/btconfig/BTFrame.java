@@ -1397,8 +1397,8 @@ double v_freq=0.0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202111061138");
-      release_date.setText("Release: 2021-11-06 11:38");
+      fw_ver.setText("Latest Avail: FW Date: 202111070629");
+      release_date.setText("Release: 2021-11-07 06:29");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3196,6 +3196,9 @@ double v_freq=0.0;
         en_tg_int_tone = new javax.swing.JCheckBox();
         jLabel23 = new javax.swing.JLabel();
         mcu_speed = new javax.swing.JComboBox<>();
+        jPanel61 = new javax.swing.JPanel();
+        jLabel64 = new javax.swing.JLabel();
+        vrep = new javax.swing.JTextField();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
@@ -5047,6 +5050,15 @@ double v_freq=0.0;
         mcu_speed.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "400 MHz (default)", "408 MHz", "432 MHz", "440 MHz", "456 MHz", "480 MHz" }));
         advancedpanel.add(mcu_speed, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 260, -1, -1));
 
+        jLabel64.setText("Max V-Frame Repeats = 3 + ");
+        jPanel61.add(jLabel64);
+
+        vrep.setColumns(3);
+        vrep.setText("2");
+        jPanel61.add(vrep);
+
+        advancedpanel.add(jPanel61, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 350, 260, 40));
+
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
         signalinsightpanel.setLayout(new javax.swing.BoxLayout(signalinsightpanel, javax.swing.BoxLayout.X_AXIS));
@@ -6700,6 +6712,7 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -6755,6 +6768,7 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel59;
     private javax.swing.JPanel jPanel6;
     public javax.swing.JPanel jPanel60;
+    private javax.swing.JPanel jPanel61;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
@@ -6904,6 +6918,7 @@ public void SLEEP(long val) {
     public javax.swing.JRadioButton triple_click_opt6;
     public javax.swing.JButton use_freq_primary;
     public javax.swing.JLabel volume_label;
+    public javax.swing.JTextField vrep;
     public javax.swing.JComboBox<String> vtimeout;
     public javax.swing.JLabel wacn;
     public javax.swing.JCheckBox wacn_en;
