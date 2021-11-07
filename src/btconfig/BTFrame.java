@@ -1398,7 +1398,7 @@ double v_freq=0.0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202111070629");
-      release_date.setText("Release: 2021-11-07 06:29");
+      release_date.setText("Release: 2021-11-07 07:22");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2142,6 +2142,39 @@ double v_freq=0.0;
           }
         }
       }
+      if(console_line.contains("TDMA Phase II sync") && console_line.contains("freq") && console_line.contains("$") ) {
+        StringTokenizer st = new StringTokenizer(console_line," ,");
+        String st1 = ""; 
+        int cnt=0;
+        while(st.hasMoreTokens() && cnt++<25) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.contains("freq:") && st.hasMoreTokens()) {
+            try {
+              v_freq = new Double( st.nextToken() ).doubleValue();
+            } catch(Exception e) {
+              e.printStackTrace();
+            }
+          }
+        }
+      }
+
+      if(console_line.contains("TDMA VOICE GRANT") && console_line.contains("freq") ) {
+        StringTokenizer st = new StringTokenizer(console_line," ,");
+        String st1 = ""; 
+        int cnt=0;
+        while(st.hasMoreTokens() && cnt++<25) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.contains("freq") && st.hasMoreTokens()) {
+            try {
+              v_freq = new Double( st.nextToken() ).doubleValue();
+            } catch(Exception e) {
+              e.printStackTrace();
+            }
+          }
+        }
+      }
+
+
       if(console_line.contains("P25_PII_CC:") && console_line.contains("freq=") ) {
         StringTokenizer st = new StringTokenizer(console_line," =,");
         String st1 = ""; 
