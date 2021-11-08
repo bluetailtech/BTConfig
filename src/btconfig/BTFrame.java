@@ -1397,8 +1397,8 @@ double v_freq=0.0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202111070629");
-      release_date.setText("Release: 2021-11-07 07:22");
+      fw_ver.setText("Latest Avail: FW Date: 202111081043");
+      release_date.setText("Release: 2021-11-08 12:03");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2255,7 +2255,7 @@ double v_freq=0.0;
           while(st.hasMoreTokens() && cnt++<15) {
             String st1 = st.nextToken();
 
-            if(st1.equals("TGroup:") && st.hasMoreTokens()) {
+            if(st1.equals("TGroup:") && console_line.contains("$") && st.hasMoreTokens()) {
               String tg_id = st.nextToken();
 
 
