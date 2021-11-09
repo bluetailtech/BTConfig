@@ -877,6 +877,7 @@ class updateTask extends java.util.TimerTask
                   if(pcm_idx<320) pcm_bytes[pcm_idx++] = b[i];
 
                   if(skip_bytes==0) {
+                    if(tglog_e!=null && tglog_e.tg_trig_vaudio.isSelected()) do_meta();
                     //System.out.println("read voice");
                     try {
                       start_time = new java.util.Date().getTime();
@@ -1204,6 +1205,7 @@ long wdog_time=0;
 int did_freq_tests=0;
 int sys_info_count=0;
 int src_uid=0;
+int prev_uid=0;
 int is_enc=0;
 Alias alias;
 String current_alias;
@@ -1398,7 +1400,7 @@ double v_freq=0.0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202111091238");
-      release_date.setText("Release: 2021-11-09 12:38");
+      release_date.setText("Release: 2021-11-09 15:18");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1759,8 +1761,10 @@ double v_freq=0.0;
       if( console_line.contains("SYS_INFO") && !console_line.contains("nac 0x") && console_line.contains("$") ) {
         if(sys_info_count++<1) return;
         sys_info_count=0; 
+        did_metadata=0;
         src_uid=0;
         is_enc=0;
+        did_metadata=0;
         current_nco_off=0.0f;
       }
 
@@ -1900,6 +1904,7 @@ double v_freq=0.0;
       }
 
       if( console_line.contains("$SYS_INFO") && console_line.contains("nac 0x") && console_line.contains("$") ) {
+        did_metadata=0;
         src_uid=0;
         is_enc=0;
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
@@ -1954,7 +1959,7 @@ double v_freq=0.0;
 
                 String ridstr = new Integer(src_uid_d).toString();
 
-                if(did_metadata==1 && src_uid_d!=0 && src_uid_d != src_uid) {
+                if(src_uid_d!=0 && src_uid_d != prev_uid) {
                   did_metadata=0;
                 }
                 src_uid = src_uid_d;
@@ -1976,7 +1981,7 @@ double v_freq=0.0;
                     src_uid_str="";
                     try {
                       if(src_uid!=0) src_uid_str = new Integer(src_uid).toString();
-                      if(tglog_e!=null && tglog_e.tg_trig_nzrid.isSelected()) do_meta();
+                      if(tglog_e!=null && tglog_e.tg_trig_nzrid.isSelected() && src_uid!=0) do_meta();
                     } catch(Exception e) {
                     System.out.println("uid:");
                       e.printStackTrace();
@@ -2104,6 +2109,7 @@ double v_freq=0.0;
               int tg = new Integer( st.nextToken() ).intValue();
               String tg_str = new Integer(tg).toString();
               current_talkgroup = tg_str;
+              if(tglog_e!=null && tglog_e.tg_trig_vgrant.isSelected()) do_meta();
             } catch(Exception e) {
               e.printStackTrace();
             }
@@ -2151,6 +2157,7 @@ double v_freq=0.0;
           if(st1!=null && st1.contains("freq:") && st.hasMoreTokens()) {
             try {
               v_freq = new Double( st.nextToken() ).doubleValue();
+              if(tglog_e!=null && tglog_e.tg_trig_vgrant.isSelected()) do_meta();
             } catch(Exception e) {
               e.printStackTrace();
             }
@@ -2167,6 +2174,7 @@ double v_freq=0.0;
           if(st1!=null && st1.contains("freq") && st.hasMoreTokens()) {
             try {
               v_freq = new Double( st.nextToken() ).doubleValue();
+              if(tglog_e!=null && tglog_e.tg_trig_vgrant.isSelected()) do_meta();
             } catch(Exception e) {
               e.printStackTrace();
             }
@@ -2739,6 +2747,7 @@ double v_freq=0.0;
           if(st1!=null && st1.contains("cc_lcn") && st.hasMoreTokens()) {
             try {
               cc_lcn = new Integer( st.nextToken() ).intValue();
+              if(tglog_e!=null && tglog_e.tg_trig_vgrant.isSelected()) do_meta();
               break;
             } catch(Exception e) {
               e.printStackTrace();
@@ -2746,7 +2755,6 @@ double v_freq=0.0;
             }
           }
         }
-        if(tglog_e!=null && tglog_e.tg_trig_vgrant.isSelected()) do_meta();
       }
 
             if(console_line.contains("vqg")) { 
@@ -6185,6 +6193,9 @@ public void do_meta() {
 
       did_metadata=1;
       tg_pri=0;
+
+      prev_uid=src_uid;
+      src_uid=0;
     } catch(Exception e) {
       e.printStackTrace();
     }
