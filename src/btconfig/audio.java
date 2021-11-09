@@ -69,8 +69,8 @@ public class audio {
                   int bavail = sourceDataLine.available();
                   int kb = (int) ( (float) blen / (float) 1024 );
                   if(sourceDataLine.isRunning() && kb < 30) {
-                    byte[] b = new byte[3200];
-                    sourceDataLine.write(b, 0, 3200);
+                    byte[] b = new byte[6400];
+                    sourceDataLine.write(b, 0, 6400);
                   }
                 }
                 else {

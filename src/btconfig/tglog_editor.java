@@ -38,7 +38,7 @@ JFileChooser chooser;
         tg_trig_vgrant.setSelected(parent.prefs.getBoolean("tg_trig_vgrant", false)); 
       }
       if( parent.prefs!=null) {
-        tg_trig_vaudio.setSelected(parent.prefs.getBoolean("tg_trig_vaudio", false)); 
+        tg_trig_vaudio.setSelected(parent.prefs.getBoolean("tg_trig_vaudio_v2", true)); 
       }
       if( parent.prefs!=null) {
         tg_trig_nzrid.setSelected(parent.prefs.getBoolean("tg_trig_nzrid", false)); 
@@ -275,7 +275,7 @@ JFileChooser chooser;
 
     private void tg_trig_vaudioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tg_trig_vaudioActionPerformed
       if( parent.prefs!=null) {
-        parent.prefs.putBoolean("tg_trig_vaudio", tg_trig_vaudio.isSelected());
+        parent.prefs.putBoolean("tg_trig_vaudio_v2", tg_trig_vaudio.isSelected());
       }
     }//GEN-LAST:event_tg_trig_vaudioActionPerformed
 
