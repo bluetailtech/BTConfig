@@ -1397,8 +1397,8 @@ double v_freq=0.0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202111081648");
-      release_date.setText("Release: 2021-11-08 22:14");
+      fw_ver.setText("Latest Avail: FW Date: 202111090441");
+      release_date.setText("Release: 2021-11-09 04:41");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3232,6 +3232,7 @@ double v_freq=0.0;
         jPanel61 = new javax.swing.JPanel();
         jLabel64 = new javax.swing.JLabel();
         vrep = new javax.swing.JTextField();
+        jLabel57 = new javax.swing.JLabel();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
@@ -5090,7 +5091,10 @@ double v_freq=0.0;
         vrep.setText("2");
         jPanel61.add(vrep);
 
-        advancedpanel.add(jPanel61, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 350, 260, 40));
+        jLabel57.setText("(-3 to disable)");
+        jPanel61.add(jLabel57);
+
+        advancedpanel.add(jPanel61, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 350, 370, 40));
 
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
@@ -6744,6 +6748,7 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
+    private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel7;
