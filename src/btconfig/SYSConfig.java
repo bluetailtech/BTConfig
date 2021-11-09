@@ -530,8 +530,11 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           parent.mcu_speed.setSelectedIndex(clkspeed);
 
                           int v_rep = bb3.getInt(288);
+                          v_rep += 3;
+                          if(v_rep<0) v_rep=0;
+                          if(v_rep>6) v_rep=6;
                           try {
-                            parent.vrep.setText( Integer.valueOf(v_rep).toString() );
+                            parent.vrep.setSelectedIndex(v_rep);
                           } catch(Exception e) {
                           }
 
@@ -1355,9 +1358,11 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
 
+                          int vrep_i = parent.vrep.getSelectedIndex();
+                          vrep_i -=3;
 
                           result=new byte[64];
-                          cmd = "vrep "+parent.vrep.getText()+"\r\n"; 
+                          cmd = "vrep "+vrep_i+"\r\n"; 
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           SLEEP(10);
                           rlen=serial_port.readBytes( result, 64);

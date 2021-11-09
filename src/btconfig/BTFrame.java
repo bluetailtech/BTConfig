@@ -1397,8 +1397,8 @@ double v_freq=0.0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202111090441");
-      release_date.setText("Release: 2021-11-09 04:41");
+      fw_ver.setText("Latest Avail: FW Date: 202111090808");
+      release_date.setText("Release: 2021-11-09 08:08");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3231,8 +3231,7 @@ double v_freq=0.0;
         mcu_speed = new javax.swing.JComboBox<>();
         jPanel61 = new javax.swing.JPanel();
         jLabel64 = new javax.swing.JLabel();
-        vrep = new javax.swing.JTextField();
-        jLabel57 = new javax.swing.JLabel();
+        vrep = new javax.swing.JComboBox<>();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
@@ -5084,15 +5083,11 @@ double v_freq=0.0;
         mcu_speed.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "400 MHz (default)", "408 MHz", "432 MHz", "440 MHz", "456 MHz", "480 MHz" }));
         advancedpanel.add(mcu_speed, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 260, -1, -1));
 
-        jLabel64.setText("Max V-Frame Repeats = 3 + ");
+        jLabel64.setText("Max V-Frame Repeats =  ");
         jPanel61.add(jLabel64);
 
-        vrep.setColumns(3);
-        vrep.setText("2");
+        vrep.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0 (disabled)", "1", "2", "3", "4", "5", "6" }));
         jPanel61.add(vrep);
-
-        jLabel57.setText("(-3 to disable)");
-        jPanel61.add(jLabel57);
 
         advancedpanel.add(jPanel61, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 350, 370, 40));
 
@@ -6748,7 +6743,6 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
-    private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel7;
@@ -6956,7 +6950,7 @@ public void SLEEP(long val) {
     public javax.swing.JRadioButton triple_click_opt6;
     public javax.swing.JButton use_freq_primary;
     public javax.swing.JLabel volume_label;
-    public javax.swing.JTextField vrep;
+    public javax.swing.JComboBox<String> vrep;
     public javax.swing.JComboBox<String> vtimeout;
     public javax.swing.JLabel wacn;
     public javax.swing.JCheckBox wacn_en;
