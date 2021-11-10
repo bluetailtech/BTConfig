@@ -1400,8 +1400,8 @@ double v_freq=0.0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202111101407");
-      release_date.setText("Release: 2021-11-10 14:07");
+      fw_ver.setText("Latest Avail: FW Date: 202111101424");
+      release_date.setText("Release: 2021-11-10 14:31");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2673,11 +2673,13 @@ double v_freq=0.0;
                   String l3_line = freqval+talkgroup+", "+st2.substring(0,st2.length()-2);
                   if(l3_line!=null && l3_line.length()>46) l3_line = l3_line.substring(0,45);
 
-                  if( is_phase1==1 ) {
-                    l3.setText("P25P1"+l3_line);
-                  }
-                  else if( is_phase2==1 ) {
-                    l3.setText("P25P2"+l3_line);
+                  if(is_dmr_mode==0) {
+                    if( is_phase1==1 ) {
+                      l3.setText("P25P1"+l3_line);
+                    }
+                    else if( is_phase2==1 ) {
+                      l3.setText("P25P2"+l3_line);
+                    }
                   }
                   p25_status_timeout=6000;
                   break;
