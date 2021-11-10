@@ -100,9 +100,9 @@ java.text.SimpleDateFormat time_format;
 
     }
 
-  ////////////////////////////////////////
-  ////////////////////////////////////////
-  String do_subs(String s1) {
+  ///////////////////////////////////////////////////
+  ///////////////////////////////////////////////////
+  String do_subs(String s1, boolean is_tg_log) {
     String s2 = s1; 
 
     try {
@@ -162,17 +162,30 @@ java.text.SimpleDateFormat time_format;
       s2 = s2.replaceAll(Matcher.quoteReplacement("$CC_FREQ$"), cc_freq.trim() );
         if(s2==null) s2 = s1;
 
-
       try {
-        if(parent.src_uid!=0) {
+        if(parent.src_uid!=0 || !is_tg_log) {
 
+          //rid_alias = parent.alias.getAlias(parent.src_uid);
           rid_alias = parent.current_alias;
+
           if(rid_alias==null) rid_alias="";
 
-          rid = String.format("%d", parent.src_uid);
+          if(!is_tg_log && parent.src_uid==0) {
+            rid = String.format("%d", parent.prev_uid);
+          }
+          else {
+            rid = String.format("%d", parent.src_uid);
+          }
 
-          s2 = s2.replaceAll(Matcher.quoteReplacement("$RID$"), rid.trim() );
-            if(s2==null) s2 = s1;
+          if(!rid.equals("0")) {
+            s2 = s2.replaceAll(Matcher.quoteReplacement("$RID$"), rid.trim() );
+              if(s2==null) s2 = s1;
+          }
+          else {
+            rid = "";
+            s2 = s2.replaceAll(Matcher.quoteReplacement("$RID$"), "" );
+              if(s2==null) s2 = s1;
+          }
         }
         else {
           rid = "";
@@ -372,11 +385,11 @@ java.text.SimpleDateFormat time_format;
         dwidth.setText( String.format("%3.2f", dw) );
       }
 
-      String tts1 = do_subs(ts1);
-      String tts2 = do_subs(ts2);
-      String tts3 = do_subs(ts3);
-      String tts4 = do_subs(ts4);
-      String tts5 = do_subs(ts5);
+      String tts1 = do_subs(ts1,false);
+      String tts2 = do_subs(ts2,false);
+      String tts3 = do_subs(ts3,false);
+      String tts4 = do_subs(ts4,false);
+      String tts5 = do_subs(ts5,false);
 
       try {
         if(clrnv1.isSelected() && parent.freqval!=null && parent.freqval.length()==0) tts1=" ";
