@@ -1226,6 +1226,7 @@ sysinfo si;
 String freqval="";
 String rssi="";
 String talkgroup_name;
+String tsbk_ps="";
 
 BigText bt1;
 BigText bt2;
@@ -1399,8 +1400,8 @@ double v_freq=0.0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202111100702");
-      release_date.setText("Release: 2021-11-10 07:02");
+      fw_ver.setText("Latest Avail: FW Date: 202111101007");
+      release_date.setText("Release: 2021-11-10 10:07");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1753,7 +1754,7 @@ double v_freq=0.0;
 
       String talkgroup="";
       //freqval="";
-      String tsbk_ps="";
+      //tsbk_ps="";
 
       if(console_line==null) console_line = new String("");
       console_line = console_line.concat(str);
@@ -2521,7 +2522,7 @@ double v_freq=0.0;
             }
 
 
-            if(st1.equals("tsbk_ps")) {
+            if(st1.equals("tsbk_ps") && st.hasMoreTokens()) {
               current_alias="";
               src_uid_str="";
 
