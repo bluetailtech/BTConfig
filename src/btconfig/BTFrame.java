@@ -1400,8 +1400,8 @@ double v_freq=0.0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202111101007");
-      release_date.setText("Release: 2021-11-10 10:07");
+      fw_ver.setText("Latest Avail: FW Date: 202111101407");
+      release_date.setText("Release: 2021-11-10 14:07");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1754,7 +1754,7 @@ double v_freq=0.0;
 
       String talkgroup="";
       //freqval="";
-      //tsbk_ps="";
+      tsbk_ps="";
 
       if(console_line==null) console_line = new String("");
       console_line = console_line.concat(str);
@@ -2687,7 +2687,8 @@ double v_freq=0.0;
             }
           }
 
-      if(console_line.contains("Con+ Voice Grant:") && console_line.contains("burst_type") ) {
+
+      if(console_line.contains("Con+ Voice Grant:") && console_line.contains("$") ) {
 
         st = new StringTokenizer(console_line," ,=");
         String st1 = ""; 
@@ -2705,6 +2706,7 @@ double v_freq=0.0;
             try {
               cc_lcn = new Integer( st.nextToken() ).intValue();
               rf_channel = new Integer(cc_lcn).toString(); 
+              if(tglog_e!=null && tglog_e.tg_trig_vgrant.isSelected()) do_meta();
             } catch(Exception e) {
               e.printStackTrace();
             }
@@ -2716,10 +2718,17 @@ double v_freq=0.0;
               e.printStackTrace();
             }
           }
-        }
-        do_meta();
-      }
+          if(st1!=null && st1.contains("group_id") && st.hasMoreTokens()) {
+            try {
+               current_talkgroup = st.nextToken(); 
+               l3.setText("TG "+current_talkgroup+", RID "+src_uid);
 
+            } catch(Exception e) {
+              e.printStackTrace();
+            }
+          }
+        }
+      }
       if(console_line.contains("\r\n") && console_line.contains("erate:") ) {
 
         st = new StringTokenizer(console_line," ");
