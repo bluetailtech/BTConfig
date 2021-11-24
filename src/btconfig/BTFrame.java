@@ -831,6 +831,8 @@ class updateTask extends java.util.TimerTask
 
               if(len>256000) len = 256000;
 
+              do_print=1;
+
               for(int i=0;i<len;i++) {
 
                 if(skip_bytes>0 && rx_state==6) {
@@ -987,8 +989,14 @@ class updateTask extends java.util.TimerTask
                     if(rx_state==0 && skip_bytes==0 ) {
                       int isprint=1;
 
-                      if( b[i]>=(byte) 0x00 && b[i]<=(byte)0x1f && b[i]!=(byte)0x0a && b[i]!=(byte)0x0d) isprint=0;
-                      if( b[i]>(byte)'z') isprint=0;
+                      if( b[i]>=(byte) 0x00 && b[i]<=(byte)0x1f && b[i]!=(byte)0x0a && b[i]!=(byte)0x0d) {
+                        isprint=0;
+                        do_print=0;
+                      }
+                      if((byte)b[i]<0) {
+                        isprint=0;
+                        do_print=0;
+                      }
 
                       if(isprint==1) str_b[str_idx++] = b[i];
                     }
@@ -996,7 +1004,7 @@ class updateTask extends java.util.TimerTask
                 }
               }
 
-              if(str_idx>0) {
+              if(str_idx>0 && do_print==1) {
                 addTextConsole( new String(str_b,0,str_idx) );
                 str_idx=0;
               }
@@ -1116,6 +1124,7 @@ int sig_meter_timeout=1;
 javax.swing.JLabel l1;
 javax.swing.JLabel l2;
 javax.swing.JLabel l3;
+int do_print=0;
 int do_restore_tg=0;
 int do_restore_tg_csv=0;
 int did_tg_backup=1;  //don't do backup on startup
@@ -1176,7 +1185,6 @@ int do_append_roaming=0;
 int do_console_output=0;
 int do_write_roaming_flash_only=0;
 int did_read_talkgroups=0;
-int sleep_factor=0;
 int is_mac_osx=0;
 int is_linux=0;
 int is_windows=0;
@@ -1215,6 +1223,7 @@ int do_alias_export=0;
 byte[] b;
 byte[] str_b;
 int str_idx=0;
+int sleep_factor=0;
 int avail=0;
 int is_phase1=1;
 int is_phase2=0;
@@ -1253,6 +1262,7 @@ int tdma_slot=0;
 float erate=0.0f;
 float current_evm_percent=0.0f;
 double v_freq=0.0;
+String con_str="";
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
       initComponents();
@@ -1402,7 +1412,7 @@ double v_freq=0.0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202111162326");
-      release_date.setText("Release: 2021-11-16 23:26");
+      release_date.setText("Release: 2021-11-23 19:33");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1737,6 +1747,15 @@ double v_freq=0.0;
 
      try {
 
+      con_str = con_str+str;
+
+      if( !con_str.contains("\r\n") || !con_str.contains("$") ) {
+        return;
+      }
+
+      str = con_str;
+      con_str="";
+
       if(str!=null && do_console_output==1) System.out.println(str.trim());
 
       if( enable_conlog.isSelected() ) {
@@ -1769,6 +1788,59 @@ double v_freq=0.0;
         did_metadata=0;
         current_nco_off=0.0f;
       }
+
+      if( console_line.contains("P25_GRP_UP grp1:") && console_line.contains("ch2:") && console_line.contains("$") ) {
+        StringTokenizer st = new StringTokenizer(console_line," ,\r\n");
+        String st1 = ""; 
+        String active_tg="Adjacent Active Talk Groups: ";
+        int cnt=0;
+
+        while(st.hasMoreTokens() && cnt++<15) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.equals("grp1:")) {
+            String grp1 = st.nextToken().trim();
+            active_tg = active_tg.concat(grp1+", ");
+          }
+          if(st1!=null && st1.equals("grp2:")) {
+            String grp2 = st.nextToken().trim();
+            active_tg = active_tg.concat(grp2);
+            parent.setStatus(active_tg);
+          }
+        }
+      }
+
+
+      if( console_line.contains("signal found") || console_line.contains("FOUND P25") || console_line.contains("FOUND DMR") ) {
+        StringTokenizer st = new StringTokenizer(console_line,"\r\n");
+        String st1 = ""; 
+
+        int cnt=0;
+        while(st.hasMoreTokens() && cnt++<15) {
+          st1 = st.nextToken().trim();
+          if(st1.startsWith("signal found") || st1.contains("FOUND") ) {
+            try {
+              String date = time_format.format(new java.util.Date() );
+              String rec = ""; 
+              if(st1.startsWith("signal found")) {
+                rec = "\r\n"+date+","+st1; 
+              }
+              else {
+                rec = " "+st1; 
+              }
+              String fs =  System.getProperty("file.separator");
+              String wacn_out = String.format("%05X", current_wacn_id);
+              String sysid_out = String.format("%03X", current_sys_id);
+              String hdir = document_dir+fs+sys_mac_id+fs+"p25rx_cc_scan_"+current_date+".txt";
+              String header = "\r\n#cc_search output";
+              if( logger_out!=null ) logger_out.write_log( rec, hdir, header );
+              console_line = "";
+              break;
+            } catch(Exception e) {
+            }
+          }
+        }
+      }
+
 
 
       if( console_line.contains("P25_SITE") && console_line.contains("$") ) {
@@ -1803,7 +1875,7 @@ double v_freq=0.0;
 
         while(st!=null && st.hasMoreTokens() && cnt++<20) {
           st1 = st.nextToken();
-          if(st1!=null && st1.contains("P25_EMERGENCY:")) {
+          if(st1!=null && st1.contains("P25_EMERGENCY:") && st1.contains("$") ) {
             try {
               String frq = st.nextToken().trim();
               String grp = st.nextToken().trim();
@@ -1870,26 +1942,6 @@ double v_freq=0.0;
         }
       }
 
-      if( console_line.contains("P25_GRP_UP grp1:") && console_line.contains("ch2:") && console_line.contains("$") ) {
-        StringTokenizer st = new StringTokenizer(console_line," ,\r\n");
-        String st1 = ""; 
-        String active_tg="Adjacent Active Talk Groups: ";
-        int cnt=0;
-
-        while(st.hasMoreTokens() && cnt++<15) {
-          st1 = st.nextToken();
-          if(st1!=null && st1.equals("grp1:")) {
-            String grp1 = st.nextToken().trim();
-            active_tg = active_tg.concat(grp1+", ");
-          }
-          if(st1!=null && st1.equals("grp2:")) {
-            String grp2 = st.nextToken().trim();
-            active_tg = active_tg.concat(grp2);
-            parent.setStatus(active_tg);
-          }
-        }
-      }
-
       if( console_line.contains("P25_GRP_EXP_UP grp") && console_line.contains("rx:") && console_line.contains("$") ) {
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
         String st1 = ""; 
@@ -1905,8 +1957,7 @@ double v_freq=0.0;
         }
       }
 
-      if( console_line.contains("$SYS_INFO") && console_line.contains("nac 0x") && console_line.contains("$") ) {
-        did_metadata=0;
+      if( console_line.contains("SYS_INFO") && console_line.contains("nac 0x") && console_line.contains("$") ) {
         src_uid=0;
         is_enc=0;
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
@@ -1914,30 +1965,25 @@ double v_freq=0.0;
         int cnt=0;
         while(st.hasMoreTokens() && cnt++<15) {
           st1 = st.nextToken();
-          try {
-            if(st1!=null && st1.equals("wacn")) {
-              String w = st.nextToken().trim();
-              current_wacn_id = Integer.parseInt(w.substring(2,w.length()),16);
+          if(st1!=null && st1.equals("wacn")) {
+            String w = st.nextToken().trim();
+            current_wacn_id = Integer.parseInt(w.substring(2,w.length()),16);
+          }
+          if(st1!=null && st1.equals("sys_id")) {
+            String s = st.nextToken().trim();
+            current_sys_id = Integer.parseInt(s.substring(2,s.length()),16);
+          }
+          if(st1!=null && st1.equals("nco_off")) {
+            String s = st.nextToken().trim();
+            try {
+              current_nco_off = Float.parseFloat(s);
+            } catch(Exception e) {
+              //e.printStackTrace();
             }
-            if(st1!=null && st1.equals("sys_id")) {
-              String s = st.nextToken().trim();
-              current_sys_id = Integer.parseInt(s.substring(2,s.length()),16);
-            }
-            if(st1!=null && st1.equals("nco_off")) {
-              String s = st.nextToken().trim();
-              try {
-                current_nco_off = Float.parseFloat(s);
-              } catch(Exception e) {
-                System.out.println("nco:");
-                e.printStackTrace();
-              }
-            }
-          } catch(Exception e) {
-            System.out.println("error: sys_info");
-            e.printStackTrace();
           }
         }
       }
+
 
       if( (console_line.contains("P25_P1: SRC_RID: ") || console_line.contains("P25_PII: SRC_RID: ")) && console_line.contains("$") && console_line.contains("GRP") ) {
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
@@ -2011,10 +2057,122 @@ double v_freq=0.0;
         }
       }
 
+      if(console_line.contains("Con+ Voice Grant:") && console_line.contains("$") ) {
+
+        StringTokenizer st = new StringTokenizer(console_line," ,=");
+        String st1 = ""; 
+        int cnt=0;
+        while(st.hasMoreTokens() && cnt++<25) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.contains("slot") && st.hasMoreTokens()) {
+            try {
+              tdma_slot = new Integer( st.nextToken() ).intValue();
+            } catch(Exception e) {
+              e.printStackTrace();
+            }
+          }
+          if(st1!=null && st1.contains("LCN") && st.hasMoreTokens()) {
+            try {
+              cc_lcn = new Integer( st.nextToken() ).intValue();
+              rf_channel = new Integer(cc_lcn).toString(); 
+              if(tglog_e!=null && tglog_e.tg_trig_vgrant.isSelected()) do_meta();
+            } catch(Exception e) {
+              e.printStackTrace();
+            }
+          }
+          if(st1!=null && st1.contains("radio_id") && st.hasMoreTokens()) {
+            try {
+               parent.src_uid = new Integer( st.nextToken() ).intValue();
+            } catch(Exception e) {
+              e.printStackTrace();
+            }
+          }
+          if(st1!=null && st1.contains("group_id") && st.hasMoreTokens()) {
+            try {
+               current_talkgroup = st.nextToken(); 
+               l3.setText("TG "+current_talkgroup+", RID "+src_uid);
+
+            } catch(Exception e) {
+              e.printStackTrace();
+            }
+          }
+        }
+      }
+
       int do_add=1;
 
-      if(console_line.contains("\r\n") && console_line.contains("Return To Control") ) {
+      if(console_line.contains("\r\n") && console_line.contains("TDMA VOICE GRANT") ) {
         start_time = new java.util.Date().getTime();
+
+        StringTokenizer st = new StringTokenizer(console_line," ");
+        String st1 = ""; 
+        int cnt=0;
+        while(st.hasMoreTokens() && cnt++<25) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.contains("slot:") && st.hasMoreTokens()) {
+            try {
+              tdma_slot = new Integer( st.nextToken() ).intValue();
+              if(tglog_e!=null && tglog_e.tg_trig_vgrant.isSelected()) do_meta();
+              break;
+            } catch(Exception e) {
+              e.printStackTrace();
+              break;
+            }
+          }
+        }
+      }
+      if(console_line.contains("\r\n") && console_line.contains("erate:") ) {
+
+        StringTokenizer st = new StringTokenizer(console_line," ");
+        String st1 = ""; 
+        int cnt=0;
+        while(st.hasMoreTokens() && cnt++<25) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.contains("erate") && st.hasMoreTokens()) {
+            try {
+              erate = new Float( st.nextToken() ).floatValue();
+              break;
+            } catch(Exception e) {
+              e.printStackTrace();
+              break;
+            }
+          }
+        }
+      }
+      if(console_line.contains("\r\n") && console_line.contains("Return To Control") ) {
+
+        StringTokenizer st = new StringTokenizer(console_line," ");
+        String st1 = ""; 
+        int cnt=0;
+        while(st.hasMoreTokens() && cnt++<25) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.contains("cc_lcn") && st.hasMoreTokens()) {
+            try {
+              cc_lcn = new Integer( st.nextToken() ).intValue();
+              break;
+            } catch(Exception e) {
+              e.printStackTrace();
+              break;
+            }
+          }
+        }
+      }
+      if(console_line.contains("rf_channel") && console_line.contains("follow:") ) {
+        StringTokenizer st = new StringTokenizer(console_line," ");
+        String st1 = ""; 
+        int cnt=0;
+        while(st.hasMoreTokens() && cnt++<25) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.contains("rf_channel") && st.hasMoreTokens()) {
+            try {
+              rf_channel = st.nextToken();
+              break;
+            } catch(Exception e) {
+              e.printStackTrace();
+              break;
+            }
+          }
+        }
       }
 
       try {
@@ -2068,37 +2226,23 @@ double v_freq=0.0;
         sq_indicator.setBackground( java.awt.Color.black );
       }
 
-      if(console_line.contains("skipping talkgroup") ) {
-        setStatus("skipping TG");
-      }
-
-      if(console_line.contains("following talkgroup") ) {
-        setStatus("following TG");
+      if(console_line.contains("\r\ngrant") && console_line.contains("follow:") ) {
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
+        String st1 = ""; 
         int cnt=0;
-        boolean follow=true;
-
-        while( st!=null && st.hasMoreTokens() && cnt++<15) { 
-          String st1 = st.nextToken();
-          
-          if(st1.contains("un-following")) follow=false;
-
-          if(st1.contains("talkgroup") && st.hasMoreTokens()) {
+        while(st.hasMoreTokens() && cnt++<25) {
+          st1 = st.nextToken();
+          if(st1!=null && st1.contains("tgroup") && st.hasMoreTokens()) {
             try {
-              tg_follow_blink = new Integer( st.nextToken() ).intValue();
+              int tg = new Integer( st.nextToken() ).intValue();
+              String tg_str = new Integer(tg).toString();
+              current_talkgroup = tg_str;
             } catch(Exception e) {
               e.printStackTrace();
             }
           }
         }
-
-        if(!follow || console_line.contains("un-following") ) {
-          setStatus("un-following TG");
-          tg_follow_blink = 0; 
-        }
-
-        aud_archive.set_follow( tg_follow_blink );
-      } 
+      }
 
       if(console_line.contains("\r\ngrant") && console_line.contains("follow:") ) {
         StringTokenizer st = new StringTokenizer(console_line," \r\n");
@@ -2132,34 +2276,36 @@ double v_freq=0.0;
             }
           }
         }
+        if(tglog_e!=null && tglog_e.tg_trig_vgrant.isSelected()) do_meta();
       }
-      if(console_line.contains("rf_channel") && console_line.contains("follow:") ) {
-        StringTokenizer st = new StringTokenizer(console_line," ");
+
+      if(console_line.contains("P25_PII_CC:") && console_line.contains("freq=") ) {
+        StringTokenizer st = new StringTokenizer(console_line," =,");
         String st1 = ""; 
         int cnt=0;
-        while(st.hasMoreTokens() && cnt++<15) {
+        while(st.hasMoreTokens() && cnt++<25) {
           st1 = st.nextToken();
-          if(st1!=null && st1.contains("rf_channel") && st.hasMoreTokens()) {
+          if(st1!=null && st1.contains("freq") && st.hasMoreTokens()) {
             try {
-              rf_channel = st.nextToken();
-              break;
+              v_freq = new Double( st.nextToken() ).doubleValue();
+              if(tglog_e!=null && tglog_e.tg_trig_vgrant.isSelected()) do_meta();
             } catch(Exception e) {
               e.printStackTrace();
-              break;
             }
           }
         }
       }
+
+
       if(console_line.contains("TDMA Phase II sync") && console_line.contains("freq") && console_line.contains("$") ) {
         StringTokenizer st = new StringTokenizer(console_line," ,");
         String st1 = ""; 
         int cnt=0;
         while(st.hasMoreTokens() && cnt++<25) {
           st1 = st.nextToken();
-          if(st1!=null && st1.contains("freq:") && st.hasMoreTokens()) {
+          if(st1!=null && st1.contains("freq") && st.hasMoreTokens()) {
             try {
               v_freq = new Double( st.nextToken() ).doubleValue();
-              if(tglog_e!=null && tglog_e.tg_trig_vgrant.isSelected()) do_meta();
             } catch(Exception e) {
               e.printStackTrace();
             }
@@ -2184,21 +2330,36 @@ double v_freq=0.0;
         }
       }
 
+      if(console_line.contains("skipping") ) {
+        //setStatus("skipping TG");
+      }
 
-      if(console_line.contains("P25_PII_CC:") && console_line.contains("freq=") ) {
-        StringTokenizer st = new StringTokenizer(console_line," =,");
-        String st1 = ""; 
+      if(console_line.contains("following talkgroup") ) {
+        setStatus("following TG");
+        StringTokenizer st = new StringTokenizer(console_line," \r\n");
         int cnt=0;
-        while(st.hasMoreTokens() && cnt++<25) {
-          st1 = st.nextToken();
-          if(st1!=null && st1.contains("freq") && st.hasMoreTokens()) {
+        boolean follow=true;
+
+        while( st!=null && st.hasMoreTokens() && cnt++<15) { 
+          String st1 = st.nextToken();
+          
+          if(st1.contains("un-following")) follow=false;
+
+          if(st1.contains("talkgroup") && st.hasMoreTokens()) {
             try {
-              v_freq = new Double( st.nextToken() ).doubleValue();
+              tg_follow_blink = new Integer( st.nextToken() ).intValue();
             } catch(Exception e) {
               e.printStackTrace();
             }
           }
         }
+
+        if(!follow || console_line.contains("un-following") ) {
+          setStatus("un-following TG");
+          tg_follow_blink = 0; 
+        }
+
+        aud_archive.set_follow( tg_follow_blink );
       }
 
       if(console_line.contains("\r\n") && (console_line.contains("supergroup") && console_line.contains("rf_channel")) ) {
@@ -2219,11 +2380,10 @@ double v_freq=0.0;
             }
           }
         }
-        if(tglog_e!=null && tglog_e.tg_trig_vgrant.isSelected()) do_meta();
       }
 
 
-      if( (console_line.contains("DMR")) || (console_line.contains("rssi:") || console_line.contains("\r\n  ->(VOICE)")) && console_line.contains("$") ) {
+      //if( (console_line.contains("DMR")) || (console_line.contains("rssi:") || console_line.contains("\r\n  ->(VOICE)")) && console_line.contains("$") ) {
 
         try {
 
@@ -2232,7 +2392,7 @@ double v_freq=0.0;
               is_phase2=0;
             }
 
-            if(console_line.contains("VOICE") || console_line.contains("rssi:") ) {
+            if(console_line.contains("VOICE") && console_line.contains("rssi:") ) {
               p25_status_timeout=6000;
             }
 
@@ -2265,7 +2425,7 @@ double v_freq=0.0;
           while(st.hasMoreTokens() && cnt++<15) {
             String st1 = st.nextToken();
 
-            if(st1.equals("TGroup:") && console_line.contains("$") && st.hasMoreTokens()) {
+            if(st1.equals("TGroup:") && st.hasMoreTokens()) {
               String tg_id = st.nextToken();
 
 
@@ -2343,7 +2503,7 @@ double v_freq=0.0;
                   try {
                     current_freq = Double.valueOf(freq_str)*1e6;
                   } catch(Exception e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                   }
 
                   if(fval!=0) {
@@ -2353,7 +2513,7 @@ double v_freq=0.0;
                     freq.setText("");
                   }
                 } catch(Exception e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                     freq.setText("");
                 }
               }
@@ -2387,8 +2547,7 @@ double v_freq=0.0;
                   siteid.setText("");
                 }
               } catch(Exception e) {
-                  System.out.println("site_id:");
-                  e.printStackTrace();
+                    e.printStackTrace();
                   siteid.setText("");
               }
             }
@@ -2404,8 +2563,7 @@ double v_freq=0.0;
                   rfid.setText("");
                 }
               } catch(Exception e) {
-                  System.out.println("rf_id:");
-                  e.printStackTrace();
+                    e.printStackTrace();
                   rfid.setText("");
               }
             }
@@ -2415,14 +2573,13 @@ double v_freq=0.0;
               try {
                 int nacval = Integer.parseInt(nac_str.substring(2,nac_str.length()),16);
                 if(nacval!=0 && nac_str.startsWith("0x") ) {
-                  nac.setText("NAC: "+String.format("0x%03x", nacval));
+                  nac.setText("NAC: "+String.format("0x%03X", nacval));
                 }
                 else {
                   if(nacval==0) nac.setText("");
                 }
               } catch(Exception e) {
-                  System.out.println("nac:");
-                  e.printStackTrace();
+                    e.printStackTrace();
                   nac.setText("");
               }
             }
@@ -2444,15 +2601,13 @@ double v_freq=0.0;
               try {
                 int sys_id = Integer.parseInt(sys_id_str.substring(2,sys_id_str.length()),16);
                 if(sys_id!=0) {
-                  sysid.setText("SYS_ID: "+String.format("0x%03x", sys_id));
-                  current_sys_id = sys_id;
+                  sysid.setText("SYS_ID: "+String.format("0x%03X", sys_id));
                 }
                 else {
                   sysid.setText("");
                 }
               } catch(Exception e) {
-                  System.out.println("sys_id:");
-                  e.printStackTrace();
+                    e.printStackTrace();
                   sysid.setText("");
               }
             }
@@ -2462,14 +2617,13 @@ double v_freq=0.0;
               try {
                 int t_current_wacn_id = Integer.parseInt(wacn_id.substring(2,wacn_id.length()),16);
                 if(t_current_wacn_id!=0) {
-                  wacn.setText("WACN: "+wacn_id); 
+                  wacn.setText("WACN: "+String.format("0x%05X", t_current_wacn_id)); 
                   current_wacn_id = t_current_wacn_id;
                 }
 
                 is_dmr_mode=0;
               } catch(Exception e) {
-                  System.out.println("wacn:");
-                  e.printStackTrace();
+                    e.printStackTrace();
                 //e.printStackTrace();
               }
             }
@@ -2481,10 +2635,10 @@ double v_freq=0.0;
               try {
                 current_freq = Double.valueOf(freqval)*1e6;
               } catch(Exception e) {
-                  e.printStackTrace();
+                    //e.printStackTrace();
               }
 
-              //freq.setText("Freq: "+freqval);
+              //if(!console_line.contains("TDMA")) freq.setText("Freq: "+freqval);
               freqval = " "+freqval+" MHz, ";
 
             }
@@ -2499,7 +2653,7 @@ double v_freq=0.0;
                 fos_meta.write(phase2_str.getBytes(),0,phase2_str.length());  //write Int num records
                 fos_meta.flush();
               } catch(Exception e) {
-                  e.printStackTrace();
+                    e.printStackTrace();
               }
             }
 
@@ -2519,6 +2673,39 @@ double v_freq=0.0;
                     dframe.update_colors();
                 } catch(Exception e) {
                 }
+
+                /*
+                try {
+                  if(freqval.length()>1) {
+                    bt1.setText( talkgroup_name.trim() );
+                    int tg_pad = 8-current_talkgroup.length();
+                    if(tg_pad < 0) tg_pad=0;
+                    String pad = "";
+                    for(int i=0;i<tg_pad;i++) {
+                      pad = pad.concat(" ");
+                    }
+                    bt2.setText( "TG "+current_talkgroup+pad );
+                    String f = freqval.trim();
+                    f = f.replace(","," ");
+                    bt3.setText( f );
+                  }
+                  else {
+                    bt1.setText( " " );
+                    bt2.setText( " " );
+                    bt3.setText( " " );
+                  }
+                  String sysalias = system_alias.getText();
+                  if(sysalias!=null && sysalias.length()>0) {
+                    bt4.setText( sysalias );
+                  }
+                  else {
+                    bt4.setText( " "+sysid.getText() );
+                  }
+                  bt5.setText( " "+wacn.getText()+"   "+sysid.getText()+"   "+nac.getText());
+                } catch(Exception e) {
+                }
+                */
+
               }
             }
 
@@ -2534,7 +2721,7 @@ double v_freq=0.0;
               String sys_id_str="";
                 sys_id_str = new Integer(current_sys_id).toString();
                 sys_id_str = "SYS_ID: "+sys_id_str;
-                String hex_nac = String.format("0x%03x", current_sys_id);
+                String hex_nac = String.format("0x%03X", current_sys_id);
                 sys_id_str = sys_id_str.concat(" ("+hex_nac+" hex)");
               if(is_dmr_mode==0 && current_sys_id==0) {
                 //sys_id_str = new Integer(current_sys_id).toString();
@@ -2560,6 +2747,7 @@ double v_freq=0.0;
                   l3.setText("NO SIG");
                 }
                 else {
+                  //l3.setText("  DMR BLKS_PER_SEC "+tsbk_ps+String.format("  EVM %2.0f", current_evm_percent)+"%");
                   l3.setText("  DMR BLKS_PER_SEC "+tsbk_ps);
                   freqval="";
                   reset_session=1;
@@ -2571,11 +2759,13 @@ double v_freq=0.0;
                 }
                 else {
                   if( is_tdma_cc==1 ) {
-                    l3.setText("  P25P2 CONTROL CHANNEL BLKS_PER_SEC "+tsbk_ps);
+                    //l3.setText("  P25P2 CC BLKS_PER_SEC "+tsbk_ps+String.format("  EVM %2.0f", current_evm_percent)+"%");
+                    l3.setText("  P25P2 CC BLKS_PER_SEC "+tsbk_ps);
                     freqval="";
                   }
                   else {
-                    l3.setText("  P25P1 CONTROL CHANNEL BLKS_PER_SEC "+tsbk_ps);
+                    //l3.setText("  P25P1 CC BLKS_PER_SEC "+tsbk_ps+String.format("  EVM %2.0f", current_evm_percent)+"%");
+                    l3.setText("  P25P1 CC BLKS_PER_SEC "+tsbk_ps);
                     freqval="";
                   }
                   reset_session=1;
@@ -2595,7 +2785,7 @@ double v_freq=0.0;
                   d = new Double(freq.getText().substring(6,15));
                   ff = String.format("%3.6f", d);
                 } catch(Exception e) {
-                  e.printStackTrace();
+                    //e.printStackTrace();
                 }
 
                 if(prefs!=null) city = prefs.get("city_state_"+ff, "unknown");
@@ -2608,7 +2798,7 @@ double v_freq=0.0;
                   p25_status_timeout=6000;
                 }
               } catch(Exception e) {
-                  e.printStackTrace();
+                    e.printStackTrace();
               }
 
               try {
@@ -2651,8 +2841,8 @@ double v_freq=0.0;
                  }
 
                 } catch(Exception e) {
-                  e.printStackTrace();
                   //e.printStackTrace();
+                    e.printStackTrace();
                 }
             }
 
@@ -2671,16 +2861,14 @@ double v_freq=0.0;
                   freqval = freqval.substring(0,freqval.length()-2);
                   talkgroup_name = st2.substring(0,st2.length()-2);
 
-                  String l3_line = freqval+talkgroup+", "+st2.substring(0,st2.length()-2);
+                  String l3_line = freqval+talkgroup+", "+talkgroup_name;
                   if(l3_line!=null && l3_line.length()>46) l3_line = l3_line.substring(0,45);
 
-                  if(is_dmr_mode==0) {
-                    if( is_phase1==1 ) {
-                      l3.setText("P25P1"+l3_line);
-                    }
-                    else if( is_phase2==1 ) {
-                      l3.setText("P25P2"+l3_line);
-                    }
+                  if( is_phase1==1 && is_dmr_mode==0 ) {
+                    l3.setText("P25P1"+l3_line);
+                  }
+                  else if( is_phase2==1 && is_dmr_mode==0) {
+                    l3.setText("P25P2"+l3_line);
                   }
                   p25_status_timeout=6000;
                   break;
@@ -2689,86 +2877,6 @@ double v_freq=0.0;
 
             }
           }
-
-
-      if(console_line.contains("Con+ Voice Grant:") && console_line.contains("$") ) {
-
-        st = new StringTokenizer(console_line," ,=");
-        String st1 = ""; 
-        cnt=0;
-        while(st.hasMoreTokens() && cnt++<25) {
-          st1 = st.nextToken();
-          if(st1!=null && st1.contains("slot") && st.hasMoreTokens()) {
-            try {
-              tdma_slot = new Integer( st.nextToken() ).intValue();
-            } catch(Exception e) {
-              e.printStackTrace();
-            }
-          }
-          if(st1!=null && st1.contains("LCN") && st.hasMoreTokens()) {
-            try {
-              cc_lcn = new Integer( st.nextToken() ).intValue();
-              rf_channel = new Integer(cc_lcn).toString(); 
-              if(tglog_e!=null && tglog_e.tg_trig_vgrant.isSelected()) do_meta();
-            } catch(Exception e) {
-              e.printStackTrace();
-            }
-          }
-          if(st1!=null && st1.contains("radio_id") && st.hasMoreTokens()) {
-            try {
-               parent.src_uid = new Integer( st.nextToken() ).intValue();
-            } catch(Exception e) {
-              e.printStackTrace();
-            }
-          }
-          if(st1!=null && st1.contains("group_id") && st.hasMoreTokens()) {
-            try {
-               current_talkgroup = st.nextToken(); 
-               l3.setText("TG "+current_talkgroup+", RID "+src_uid);
-
-            } catch(Exception e) {
-              e.printStackTrace();
-            }
-          }
-        }
-      }
-      if(console_line.contains("\r\n") && console_line.contains("erate:") ) {
-
-        st = new StringTokenizer(console_line," ");
-        String st1 = ""; 
-        cnt=0;
-        while(st.hasMoreTokens() && cnt++<25) {
-          st1 = st.nextToken();
-          if(st1!=null && st1.contains("erate") && st.hasMoreTokens()) {
-            try {
-              erate = new Float( st.nextToken() ).floatValue();
-              break;
-            } catch(Exception e) {
-              e.printStackTrace();
-              break;
-            }
-          }
-        }
-      }
-      if(console_line.contains("\r\n") && console_line.contains("Return To Control") ) {
-
-        st = new StringTokenizer(console_line," ");
-        String st1 = ""; 
-        cnt=0;
-        while(st.hasMoreTokens() && cnt++<25) {
-          st1 = st.nextToken();
-          if(st1!=null && st1.contains("cc_lcn") && st.hasMoreTokens()) {
-            try {
-              cc_lcn = new Integer( st.nextToken() ).intValue();
-              if(tglog_e!=null && tglog_e.tg_trig_vgrant.isSelected()) do_meta();
-              break;
-            } catch(Exception e) {
-              e.printStackTrace();
-              break;
-            }
-          }
-        }
-      }
 
             if(console_line.contains("vqg")) { 
               sq_indicator.setForeground( java.awt.Color.green );
@@ -2808,11 +2916,11 @@ double v_freq=0.0;
 
           console_line = new String("");
         } catch(Exception e) {
-          e.printStackTrace();
+            e.printStackTrace();
           console_line = new String("");
           //e.printStackTrace();
         }
-      }
+      //}
 
       if( jTextArea1.getText().length() > 128000 ) {
         String text = jTextArea1.getText();
