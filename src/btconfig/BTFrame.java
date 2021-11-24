@@ -1176,6 +1176,7 @@ int do_append_roaming=0;
 int do_console_output=0;
 int do_write_roaming_flash_only=0;
 int did_read_talkgroups=0;
+int sleep_factor=0;
 int is_mac_osx=0;
 int is_linux=0;
 int is_windows=0;
@@ -6488,31 +6489,33 @@ private void resizeColumns3() {
     column.setPreferredWidth(pWidth);
   }
 }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 public void SLEEP(long val) {
   try {
-    /*
-    if(is_windows==1 ) {
-      Thread.sleep(val);
-    }
-    else {
-      long start_time  = new java.util.Date().getTime();
-      long end_time=start_time+val;
-      while(end_time>start_time) {
-        start_time  = new java.util.Date().getTime();
-      }
-    }
-    */
 
     long NS_PER_US = 1000; 
-    long DELAY_TARGET_US = NS_PER_US*1000*val; 
+    long DELAY_TARGET_MS;
+
+    if(sleep_factor<100) sleep_factor=200;
+    if(is_mac_osx==1) sleep_factor=1000;
+
+    if(is_linux==1) {
+      DELAY_TARGET_MS = NS_PER_US*sleep_factor*(val); 
+    }
+    else if(is_windows==1) {
+      DELAY_TARGET_MS = NS_PER_US*sleep_factor*(val); 
+    }
+    else if(is_mac_osx==1) {
+      DELAY_TARGET_MS = NS_PER_US*sleep_factor*(val); 
+    }
+    else {
+      DELAY_TARGET_MS = NS_PER_US*sleep_factor*(val); 
+    }
 
      long t0 = System.nanoTime(); 
-     while (System.nanoTime() < t0+DELAY_TARGET_US) {
+     while (System.nanoTime() < t0+DELAY_TARGET_MS) {
        try {
          Thread.sleep(0, 1000);
        } catch(Exception e) {
