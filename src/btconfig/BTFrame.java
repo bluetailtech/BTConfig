@@ -1412,7 +1412,7 @@ String con_str="";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202111162326");
-      release_date.setText("Release: 2021-11-23 19:33");
+      release_date.setText("Release: 2021-11-23 20:38");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2431,7 +2431,7 @@ String con_str="";
 
               int has_comma=0;
 
-              if(tg_id!=null) {
+              if(tg_id!=null && tg_id.contains(",") ) {
                 current_talkgroup = tg_id;
 
                 talkgroup = ", TG "+tg_id;
