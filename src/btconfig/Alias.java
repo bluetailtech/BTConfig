@@ -52,6 +52,7 @@ String sys_mac_id;
 TableRowSorter trs;
 java.util.Timer utimer;
 private int do_save_alias=0;
+boolean did_import=false;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,6 +64,9 @@ private int do_save_alias=0;
         try {
           if( do_save_alias==1 ) {
               do_save_alias=0;
+
+              if(NRECS<1 || !did_import) return;
+              
               try {
 
                 String fs =  System.getProperty("file.separator");
@@ -165,6 +169,8 @@ private void read_alias() {
 
 
     import_alias_csv(parent, lnr);
+
+    did_import=true;
 
   } catch(Exception e) {
     e.printStackTrace();
@@ -416,6 +422,7 @@ private void do_import_from_prefs() {
     }
 }
 public void save_alias() {
+  if(NRECS<1 || !did_import) return;
   do_save_alias=1;
 }
 

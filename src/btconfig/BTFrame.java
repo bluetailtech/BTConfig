@@ -1412,7 +1412,7 @@ String con_str="";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202111162326");
-      release_date.setText("Release: 2021-11-23 20:38");
+      release_date.setText("Release: 2021-11-29 17:32");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
