@@ -1412,7 +1412,7 @@ String con_str="";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202111162326");
-      release_date.setText("Release: 2021-11-29 17:32");
+      release_date.setText("Release: 2021-12-01 05:36");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5625,7 +5625,10 @@ String con_str="";
           }
 
       save_position();
-      if(alias!=null) alias.save_alias();
+      if(alias!=null) {
+        alias.save_alias();
+        while(alias.do_save_alias==1);
+      }
 
     }//GEN-LAST:event_formWindowClosing
 
