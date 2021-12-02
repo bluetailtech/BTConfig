@@ -63,7 +63,6 @@ boolean did_import=false;
       {
         try {
           if( do_save_alias==1 ) {
-              do_save_alias=0;
 
               if(NRECS<1 || !did_import) return;
               
@@ -107,6 +106,8 @@ boolean did_import=false;
             } catch(Exception e) {
               e.printStackTrace();
             }
+
+            do_save_alias=0;
           }
         } catch(Exception e) {
           e.printStackTrace();
