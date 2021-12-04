@@ -64,7 +64,10 @@ boolean did_import=false;
         try {
           if( do_save_alias==1 ) {
 
-              if(NRECS<1 || !did_import) return;
+              if(NRECS<1 || !did_import) {
+                do_save_alias=0;
+                return;
+              }
               
               try {
 
