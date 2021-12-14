@@ -540,9 +540,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                               break;
                           }
 
-                          int duid_enh = bb3.getInt(156);
-                          int freq_correct_on_voice = bb3.getInt(160);
-                          int add_tdu_silence = bb3.getInt(164);
                           int enc_mode = bb3.getInt(564);
                           int clkspeed = bb3.getInt(580);
 
@@ -561,15 +558,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           if(en_tg_int_tone==1) parent.en_tg_int_tone.setSelected(true);
                             else parent.en_tg_int_tone.setSelected(false);
 
-
-                          if(duid_enh==1) parent.duid_enh.setSelected(true);
-                            else parent.duid_enh.setSelected(false);
-
-                          if(freq_correct_on_voice==1) parent.freq_correct_on_voice.setSelected(true);
-                            else parent.freq_correct_on_voice.setSelected(false);
-
-                          if(add_tdu_silence==1) parent.add_tdu_silence.setSelected(true);
-                            else parent.add_tdu_silence.setSelected(false);
 
                           if(enc_mode==1) parent.enc_mode.setSelected(true);
                             else parent.enc_mode.setSelected(false);
@@ -633,13 +621,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           else if( but4_cfg == 4 ) parent.quad_click_opt5.setSelected(true);
                           else if( but4_cfg == 5 ) parent.quad_click_opt6.setSelected(true);
                           else parent.quad_click_opt6.setSelected(true); //default
-
-
-                          int is_wacn_en=0;
-                          is_wacn_en = bb3.getInt(184);
-
-                          if(is_wacn_en==1) parent.wacn_en.setSelected(true);
-                              else parent.wacn_en.setSelected(false);
 
 
                           int iscontrol = bb3.getInt(36);
@@ -1236,46 +1217,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           System.out.println("result: "+new String(result) );
 
 
-                          //if(duid_enh==1) parent.duid_enh.setSelected(true);
-                          //  else parent.duid_enh.setSelected(false);
-
-                          //if(freq_correct_on_voice==1) parent.freq_correct_on_voice.setSelected(true);
-                           // else parent.freq_correct_on_voice.setSelected(false);
-
-                          //if(add_tdu_silence==1) parent.add_tdu_silence.setSelected(true);
-                           // else parent.add_tdu_silence.setSelected(false);
-
-                          int duid_enh=0;
-                          int freq_correct_on_voice=0;
-                          int add_tdu_silence=0;
-
-                          if( parent.duid_enh.isSelected() ) duid_enh=1;
-                          if( parent.freq_correct_on_voice.isSelected() ) freq_correct_on_voice=1;
-                          if( parent.add_tdu_silence.isSelected() ) add_tdu_silence=1;
-
-
-                          result=new byte[64];
-                          cmd = "duid_enh "+duid_enh+"\r\n";  
-                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-                          SLEEP(readback_sleep);
-                          rlen=serial_port.readBytes( result, 64);
-                          System.out.println("result: "+new String(result) );
-
-                          result=new byte[64];
-                          cmd = "freq_corr_on_voice "+freq_correct_on_voice+"\r\n";  
-                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-                          SLEEP(readback_sleep);
-                          rlen=serial_port.readBytes( result, 64);
-                          System.out.println("result: "+new String(result) );
-
-                          result=new byte[64];
-                          cmd = "add_tdu_silence "+add_tdu_silence+"\r\n";  
-                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-                          SLEEP(readback_sleep);
-                          rlen=serial_port.readBytes( result, 64);
-                          System.out.println("result: "+new String(result) );
-
-
 
                           //cmd = "bt_reset "+parent.bluetooth_reset.getText()+"\r\n";
                           cmd = "bt_reset 0"+"\r\n";  //always disabled for now
@@ -1296,18 +1237,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
 
-
-
-                          result=new byte[64];
-
-                          b = parent.wacn_en.isSelected();
-                          if(b) cmd = "wacn_en 1\r\n";
-                            else cmd = "wacn_en 0\r\n"; 
-
-                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-                          SLEEP(50);
-                          rlen=serial_port.readBytes( result, 64);
-                          System.out.println("result: "+new String(result) );
 
 
                           result=new byte[64];

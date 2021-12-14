@@ -1263,9 +1263,15 @@ float erate=0.0f;
 float current_evm_percent=0.0f;
 double v_freq=0.0;
 String con_str="";
+
+FileOutputStream fos_iq;
+JFileChooser chooser;
+
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
       initComponents();
+
+      chooser = new JFileChooser();
 
       jfc = new JFontChooser();
       jfc.setSize(1024,768);
@@ -1411,8 +1417,8 @@ String con_str="";
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202112140004");
-      release_date.setText("Release: 2021-12-14 00:04");
+      fw_ver.setText("Latest Avail: FW Date: 202112140314");
+      release_date.setText("Release: 2021-12-14 03:14");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3331,11 +3337,7 @@ String con_str="";
         jPanel5 = new javax.swing.JPanel();
         import_alias = new javax.swing.JButton();
         advancedpanel = new javax.swing.JPanel();
-        duid_enh = new javax.swing.JCheckBox();
-        freq_correct_on_voice = new javax.swing.JCheckBox();
-        add_tdu_silence = new javax.swing.JCheckBox();
         adv_write_config = new javax.swing.JButton();
-        wacn_en = new javax.swing.JCheckBox();
         en_encout = new javax.swing.JCheckBox();
         en_p2_tones = new javax.swing.JCheckBox();
         p25_tone_vol = new javax.swing.JTextField();
@@ -4134,7 +4136,6 @@ String con_str="";
         jPanel25.add(jPanel26, java.awt.BorderLayout.CENTER);
 
         dmr_backup.setText("Backup To File");
-        dmr_backup.setEnabled(false);
         dmr_backup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dmr_backupActionPerformed(evt);
@@ -4146,7 +4147,6 @@ String con_str="";
         jPanel30.add(jSeparator34);
 
         dmr_restore.setText("Restore From File");
-        dmr_restore.setEnabled(false);
         dmr_restore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dmr_restoreActionPerformed(evt);
@@ -5069,33 +5069,6 @@ String con_str="";
 
         advancedpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        duid_enh.setSelected(true);
-        duid_enh.setText("DUID Enhancements (default on)  Recommended for VHF systems");
-        duid_enh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                duid_enhActionPerformed(evt);
-            }
-        });
-        advancedpanel.add(duid_enh, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, -1, -1));
-
-        freq_correct_on_voice.setText("Correct Frequency On Trunked Voice Channels (default off)");
-        freq_correct_on_voice.setEnabled(false);
-        freq_correct_on_voice.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                freq_correct_on_voiceActionPerformed(evt);
-            }
-        });
-        advancedpanel.add(freq_correct_on_voice, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
-
-        add_tdu_silence.setSelected(true);
-        add_tdu_silence.setText("Add Silent Period To Audio Buffer On Phase 1 TDU / TDULC (default off)");
-        add_tdu_silence.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                add_tdu_silenceActionPerformed(evt);
-            }
-        });
-        advancedpanel.add(add_tdu_silence, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, -1, -1));
-
         adv_write_config.setText("Write Config");
         adv_write_config.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -5103,14 +5076,6 @@ String con_str="";
             }
         });
         advancedpanel.add(adv_write_config, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 470, -1, -1));
-
-        wacn_en.setText("Include The WACN field in talk group lookup");
-        wacn_en.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                wacn_enActionPerformed(evt);
-            }
-        });
-        advancedpanel.add(wacn_en, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
 
         en_encout.setText("Enable Encrypted Audio Output");
         advancedpanel.add(en_encout, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
@@ -5843,11 +5808,145 @@ String con_str="";
     }//GEN-LAST:event_enable_conlogActionPerformed
 
     private void dmr_backupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dmr_backupActionPerformed
-        // TODO add your handling code here:
+      try {
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter( "dmr backup file", "dmr");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showDialog(parent, "Export DMR Backup .dmr file");
+
+        ObjectOutputStream oos;
+
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+          File file = chooser.getSelectedFile();
+          oos = new ObjectOutputStream( new FileOutputStream(file) );
+
+          oos.writeUTF(lcn1_freq.getText());
+          oos.writeUTF(lcn2_freq.getText());
+          oos.writeUTF(lcn3_freq.getText());
+          oos.writeUTF(lcn4_freq.getText());
+          oos.writeUTF(lcn5_freq.getText());
+          oos.writeUTF(lcn6_freq.getText());
+          oos.writeUTF(lcn7_freq.getText());
+          oos.writeUTF(lcn8_freq.getText());
+          oos.writeUTF(lcn9_freq.getText());
+          oos.writeUTF(lcn10_freq.getText());
+          oos.writeUTF(lcn11_freq.getText());
+          oos.writeUTF(lcn12_freq.getText());
+          oos.writeUTF(lcn13_freq.getText());
+          oos.writeUTF(lcn14_freq.getText());
+          oos.writeUTF(lcn15_freq.getText());
+
+          oos.writeBoolean(dmr_cc_en1.isSelected());
+          oos.writeBoolean(dmr_cc_en2.isSelected());
+          oos.writeBoolean(dmr_cc_en3.isSelected());
+          oos.writeBoolean(dmr_cc_en4.isSelected());
+          oos.writeBoolean(dmr_cc_en5.isSelected());
+          oos.writeBoolean(dmr_cc_en6.isSelected());
+          oos.writeBoolean(dmr_cc_en7.isSelected());
+          oos.writeBoolean(dmr_cc_en8.isSelected());
+          oos.writeBoolean(dmr_cc_en9.isSelected());
+          oos.writeBoolean(dmr_cc_en10.isSelected());
+          oos.writeBoolean(dmr_cc_en11.isSelected());
+          oos.writeBoolean(dmr_cc_en12.isSelected());
+          oos.writeBoolean(dmr_cc_en13.isSelected());
+          oos.writeBoolean(dmr_cc_en14.isSelected());
+          oos.writeBoolean(dmr_cc_en15.isSelected());
+
+          oos.writeBoolean(dmr_conplus.isSelected());
+          oos.writeBoolean(dmr_conventional.isSelected());
+
+          oos.writeBoolean(dmr_slot1.isSelected());
+          oos.writeBoolean(dmr_slot2.isSelected());
+
+          oos.writeUTF(dmr_sys_id.getText());
+
+          oos.flush();
+          oos.close();
+
+          parent.setStatus("DMR backup completed.");
+
+        }
+
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
     }//GEN-LAST:event_dmr_backupActionPerformed
 
     private void dmr_restoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dmr_restoreActionPerformed
-        // TODO add your handling code here:
+      try {
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter( "DMR restore backup file", "dmr");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showDialog(parent, "DMR restore backup file (.dmr) file");
+
+
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+          File file = chooser.getSelectedFile();
+          FileInputStream fis = new FileInputStream(file);
+          ObjectInputStream ois = new ObjectInputStream(fis);
+
+          lcn1_freq.setText( ois.readUTF() );
+          lcn2_freq.setText( ois.readUTF() );
+          lcn3_freq.setText( ois.readUTF() );
+          lcn4_freq.setText( ois.readUTF() );
+          lcn5_freq.setText( ois.readUTF() );
+          lcn6_freq.setText( ois.readUTF() );
+          lcn7_freq.setText( ois.readUTF() );
+          lcn8_freq.setText( ois.readUTF() );
+          lcn9_freq.setText( ois.readUTF() );
+          lcn10_freq.setText( ois.readUTF() );
+          lcn11_freq.setText( ois.readUTF() );
+          lcn12_freq.setText( ois.readUTF() );
+          lcn13_freq.setText( ois.readUTF() );
+          lcn14_freq.setText( ois.readUTF() );
+          lcn15_freq.setText( ois.readUTF() );
+
+          dmr_cc_en1.setSelected( ois.readBoolean() );
+          dmr_cc_en2.setSelected( ois.readBoolean() );
+          dmr_cc_en3.setSelected( ois.readBoolean() );
+          dmr_cc_en4.setSelected( ois.readBoolean() );
+          dmr_cc_en5.setSelected( ois.readBoolean() );
+          dmr_cc_en6.setSelected( ois.readBoolean() );
+          dmr_cc_en7.setSelected( ois.readBoolean() );
+          dmr_cc_en8.setSelected( ois.readBoolean() );
+          dmr_cc_en9.setSelected( ois.readBoolean() );
+          dmr_cc_en10.setSelected( ois.readBoolean() );
+          dmr_cc_en11.setSelected( ois.readBoolean() );
+          dmr_cc_en12.setSelected( ois.readBoolean() );
+          dmr_cc_en13.setSelected( ois.readBoolean() );
+          dmr_cc_en14.setSelected( ois.readBoolean() );
+          dmr_cc_en15.setSelected( ois.readBoolean() );
+
+          dmr_conplus.setSelected( ois.readBoolean() );
+          dmr_conventional.setSelected( ois.readBoolean() );
+
+          dmr_slot1.setSelected( ois.readBoolean() );
+          dmr_slot2.setSelected( ois.readBoolean() );
+
+          dmr_sys_id.setText( ois.readUTF() );
+
+          parent.setStatus("DMR Backup imported.");
+
+          //initiate write config
+            do_read_config=1;
+            do_write_config=1;
+
+            op_mode.setSelectedIndex(1);
+
+            cpanel.reset_ref_est();
+
+
+            current_sys_id = 0;
+            current_wacn_id = 0; 
+            wacn.setText("");
+            sysid.setText("");
+            nac.setText("");
+
+        }
+
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
     }//GEN-LAST:event_dmr_restoreActionPerformed
 
     private void dmr_write_configActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dmr_write_configActionPerformed
@@ -5951,9 +6050,6 @@ String con_str="";
       update_dmr_lcn1_label();
     }//GEN-LAST:event_dmr_conventionalActionPerformed
 
-    private void freq_correct_on_voiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_freq_correct_on_voiceActionPerformed
-    }//GEN-LAST:event_freq_correct_on_voiceActionPerformed
-
     private void adv_write_configActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adv_write_configActionPerformed
       do_read_config=1;
       do_write_config=1;
@@ -5970,9 +6066,6 @@ String con_str="";
       if(is_connected==0) do_connect();
       do_restore_tg_csv=1;
     }//GEN-LAST:event_import_csvActionPerformed
-
-    private void wacn_enActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wacn_enActionPerformed
-    }//GEN-LAST:event_wacn_enActionPerformed
 
     private void mp3_separate_filesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mp3_separate_filesActionPerformed
      if(prefs!=null) prefs.putBoolean("mp3_separate_files", mp3_separate_files.isSelected());
@@ -5993,12 +6086,6 @@ String con_str="";
     private void select_homeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_select_homeActionPerformed
       get_home_dir();
     }//GEN-LAST:event_select_homeActionPerformed
-
-    private void add_tdu_silenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_tdu_silenceActionPerformed
-    }//GEN-LAST:event_add_tdu_silenceActionPerformed
-
-    private void duid_enhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_duid_enhActionPerformed
-    }//GEN-LAST:event_duid_enhActionPerformed
 
     private void formComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentMoved
       save_position();
@@ -6702,7 +6789,6 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox add_neighbors;
     public javax.swing.JCheckBox add_primary;
     public javax.swing.JCheckBox add_secondaries;
-    public javax.swing.JCheckBox add_tdu_silence;
     private javax.swing.JButton adv_write_config;
     private javax.swing.JPanel advancedpanel;
     public javax.swing.JComboBox<String> agc_kp;
@@ -6795,7 +6881,6 @@ public void SLEEP(long val) {
     public javax.swing.JRadioButton double_click_opt4;
     public javax.swing.JRadioButton double_click_opt5;
     public javax.swing.JRadioButton double_click_opt6;
-    public javax.swing.JCheckBox duid_enh;
     private javax.swing.JButton dvpopout;
     private javax.swing.JButton edit_display_view;
     public javax.swing.JCheckBox en_bluetooth_cb;
@@ -6816,7 +6901,6 @@ public void SLEEP(long val) {
     public javax.swing.JButton erase_roaming;
     private javax.swing.JButton follow_tg;
     public javax.swing.JLabel freq;
-    public javax.swing.JCheckBox freq_correct_on_voice;
     public javax.swing.JLabel freq_label;
     private javax.swing.JButton freq_search;
     private javax.swing.JButton freq_search2;
@@ -7119,7 +7203,6 @@ public void SLEEP(long val) {
     public javax.swing.JLabel volume_label;
     public javax.swing.JComboBox<String> vtimeout;
     public javax.swing.JLabel wacn;
-    public javax.swing.JCheckBox wacn_en;
     private javax.swing.JButton write_config;
     public javax.swing.JTextField zipcode;
     // End of variables declaration//GEN-END:variables
