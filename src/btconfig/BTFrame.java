@@ -5624,6 +5624,7 @@ JFileChooser chooser;
       wacn.setText("");
       sysid.setText("");
       nac.setText("");
+      freq.setText("Freq: ");
 
       if(prefs!=null) prefs.put( "system_alias", system_alias.getText() );
     }//GEN-LAST:event_write_configActionPerformed

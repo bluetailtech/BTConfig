@@ -631,8 +631,8 @@ public class ConstPlotPanel extends JPanel {
 
 
      if( data_init!=0 ) {
-       g2d.drawString(String.format("Error Vector Mag (EVM): %02.0f dB", evm_db), text_xoff,175);
-       g2d.drawString(String.format("Error Vector Mag (EVM): %01.0f", evm_percent)+" %", text_xoff,200);
+       g2d.drawString(String.format("Error Vector Mag (EVM): %02.0f dB", evm_db), text_xoff,200);
+       g2d.drawString(String.format("Error Vector Mag (EVM): %01.0f", evm_percent)+" %", text_xoff,225);
      }
 
 
