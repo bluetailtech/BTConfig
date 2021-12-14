@@ -321,6 +321,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                         parent.do_update_firmware=1;
                         parent.do_update_firmware2=1;
                         parent.do_read_talkgroups=0;
+                        parent.did_read_talkgroups=1;
                         parent.do_read_config=0;
                           //int result2 = JOptionPane.showConfirmDialog(parent, "Would you like to erase talk group and roaming frequency flash?", "Erase Config Areas?", JOptionPane.YES_NO_OPTION);
                           //if(result2==JOptionPane.YES_OPTION) {
@@ -376,7 +377,13 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                         int result = JOptionPane.showConfirmDialog(parent, "Proceed With Firmware Update?  Cancel To Exit Application.", "Update Firmware?", JOptionPane.OK_CANCEL_OPTION);
                         if(result==JOptionPane.OK_OPTION) {
                           parent.do_update_firmware2=1;
+                          parent.did_read_talkgroups=1;
                           did_warning=1;
+                          parent.do_update_firmware=1;
+                          parent.do_update_firmware2=1;
+                          parent.do_read_talkgroups=0;
+                          parent.did_read_talkgroups=1;
+                          parent.do_read_config=0;
                         }
                         else {
                           System.exit(0);
@@ -384,6 +391,12 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                       }
                       else if( did_warning==1 && !parent.fw_ver.getText().contains(fw_ver) ) {
                           parent.do_update_firmware2=1;
+                          parent.did_read_talkgroups=1;
+                          parent.do_update_firmware=1;
+                          parent.do_update_firmware2=1;
+                          parent.do_read_talkgroups=0;
+                          parent.did_read_talkgroups=1;
+                          parent.do_read_config=0;
                       }
 
 

@@ -1411,8 +1411,8 @@ String con_str="";
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202112132020");
-      release_date.setText("Release: 2021-12-13 21:26");
+      fw_ver.setText("Latest Avail: FW Date: 202112140004");
+      release_date.setText("Release: 2021-12-14 00:04");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -6591,6 +6591,41 @@ private void resizeColumns3() {
   }
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public void SLEEP_US(long val) {
+  try {
+
+    long NS_PER_US = 1; 
+    long DELAY_TARGET_MS;
+
+    sleep_factor=100;
+
+    if(is_linux==1) {
+      DELAY_TARGET_MS = NS_PER_US*sleep_factor*(val); 
+    }
+    else if(is_windows==1) {
+      DELAY_TARGET_MS = NS_PER_US*sleep_factor*(val); 
+    }
+    else if(is_mac_osx==1) {
+      DELAY_TARGET_MS = NS_PER_US*sleep_factor*(val); 
+    }
+    else {
+      DELAY_TARGET_MS = NS_PER_US*sleep_factor*(val); 
+    }
+
+     long t0 = System.nanoTime(); 
+     while (System.nanoTime() < t0+DELAY_TARGET_MS) {
+       try {
+         Thread.sleep(0, 1000);
+       } catch(Exception e) {
+       }
+     }
+
+  } catch(Exception e) {
+    e.printStackTrace();
+  }
+}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 public void SLEEP(long val) {
