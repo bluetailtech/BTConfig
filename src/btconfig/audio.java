@@ -65,6 +65,7 @@ public class audio {
 
                 if(did_audio!=0) {
                   did_audio--;
+                  /*
                   int bsize = sourceDataLine.getBufferSize();
                   int bavail = sourceDataLine.available();
                   int kb = (int) ( (float) blen / (float) 1024 );
@@ -72,16 +73,17 @@ public class audio {
                     byte[] b = new byte[6400];
                     sourceDataLine.write(b, 0, 6400);
                   }
+                  */
                 }
                 else {
                   int bsize = sourceDataLine.getBufferSize();
                   int bavail = sourceDataLine.available();
                   int kb = (int) ( (float) blen / (float) 1024 );
 
-                  if(sourceDataLine.isRunning() && kb < 50) {
-                    byte[] b = new byte[3200*4];
-                    sourceDataLine.write(b, 0, 3200*4);
-                  }
+                  //if(sourceDataLine.isRunning() && kb < 25) {
+                   // byte[] b = new byte[3200*4];
+                    //sourceDataLine.write(b, 0, 3200*4);
+                  //}
                 }
 
           if(start_timer>0) {
@@ -543,7 +545,7 @@ BTFrame parent;
           }
 
           sourceDataLine.write(outbytes, 0, idx);
-          did_audio=250;
+          did_audio=150;
 
           int bsize = sourceDataLine.getBufferSize();
           int bavail = sourceDataLine.available();
@@ -553,8 +555,8 @@ BTFrame parent;
             start_timer=0;
 
             if(!sourceDataLine.isRunning()) {
-              //byte[] b = new byte[3200*6];
-              //sourceDataLine.write(b, 0, 3200*6);
+              //byte[] b = new byte[3200*2];
+              //sourceDataLine.write(b, 0, 3200*2);
 
               sourceDataLine.start();
               do_start=1;

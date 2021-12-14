@@ -1411,8 +1411,8 @@ String con_str="";
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202112090713");
-      release_date.setText("Release: 2021-12-09 07:13");
+      fw_ver.setText("Latest Avail: FW Date: 202112132020");
+      release_date.setText("Release: 2021-12-13 20:20");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3203,7 +3203,6 @@ String con_str="";
         jLabel35 = new javax.swing.JLabel();
         end_call_silence = new javax.swing.JTextField();
         jLabel50 = new javax.swing.JLabel();
-        add_tdu_silence1 = new javax.swing.JCheckBox();
         jPanel13 = new javax.swing.JPanel();
         freqdb_panel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
@@ -3358,17 +3357,22 @@ String con_str="";
         en_tg_int_tone = new javax.swing.JCheckBox();
         jLabel23 = new javax.swing.JLabel();
         mcu_speed = new javax.swing.JComboBox<>();
-        jPanel61 = new javax.swing.JPanel();
-        jLabel64 = new javax.swing.JLabel();
-        vrep = new javax.swing.JComboBox<>();
+        jPanel54 = new javax.swing.JPanel();
+        jLabel57 = new javax.swing.JLabel();
+        rxmodel = new javax.swing.JComboBox<>();
+        jPanel64 = new javax.swing.JPanel();
+        jLabel58 = new javax.swing.JLabel();
+        p1_sync_thresh = new javax.swing.JTextField();
+        jLabel65 = new javax.swing.JLabel();
+        jPanel65 = new javax.swing.JPanel();
+        jLabel59 = new javax.swing.JLabel();
+        p2_sync_thresh = new javax.swing.JTextField();
+        jLabel66 = new javax.swing.JLabel();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
         autoscale_const = new javax.swing.JCheckBox();
         nsymbols = new javax.swing.JComboBox<>();
-        eq_en = new javax.swing.JCheckBox();
-        eq_train = new javax.swing.JCheckBox();
-        eq_reset = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -4308,10 +4312,6 @@ String con_str="";
 
         jPanel11.add(jPanel59, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 230, 40));
 
-        add_tdu_silence1.setSelected(true);
-        add_tdu_silence1.setText("Add silent audio frame for each recevied TDU frame.");
-        jPanel11.add(add_tdu_silence1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, -1, -1));
-
         audiopanel.add(jPanel11, java.awt.BorderLayout.CENTER);
 
         jPanel13.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
@@ -5212,13 +5212,41 @@ String con_str="";
         mcu_speed.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "400 MHz (default)", "408 MHz", "432 MHz", "440 MHz", "456 MHz", "480 MHz" }));
         advancedpanel.add(mcu_speed, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 260, -1, -1));
 
-        jLabel64.setText("Max V-Frame Repeats =  ");
-        jPanel61.add(jLabel64);
+        jLabel57.setText("RX Model");
+        jPanel54.add(jLabel57);
 
-        vrep.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0 (disabled)", "1", "2", "3", "4", "5", "6" }));
-        jPanel61.add(vrep);
+        rxmodel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "RX Model 0", "RX Model 1", "RX Model 2", "RX Model 3" }));
+        jPanel54.add(rxmodel);
 
-        advancedpanel.add(jPanel61, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 350, 370, 40));
+        advancedpanel.add(jPanel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 300, 260, 40));
+
+        jPanel64.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel58.setText("P1 Sync Thresh");
+        jPanel64.add(jLabel58);
+
+        p1_sync_thresh.setColumns(3);
+        p1_sync_thresh.setText("2");
+        jPanel64.add(p1_sync_thresh);
+
+        jLabel65.setText("default=2, (max err allowed)");
+        jPanel64.add(jLabel65);
+
+        advancedpanel.add(jPanel64, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 350, -1, -1));
+
+        jPanel65.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel59.setText("P2 Sync Thresh");
+        jPanel65.add(jLabel59);
+
+        p2_sync_thresh.setColumns(3);
+        p2_sync_thresh.setText("0");
+        jPanel65.add(p2_sync_thresh);
+
+        jLabel66.setText("default=0 (max err allowed)");
+        jPanel65.add(jLabel66);
+
+        advancedpanel.add(jPanel65, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 380, -1, -1));
 
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
@@ -5248,30 +5276,6 @@ String con_str="";
             }
         });
         jPanel24.add(nsymbols);
-
-        eq_en.setText("EQ Enable");
-        eq_en.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eq_enActionPerformed(evt);
-            }
-        });
-        jPanel24.add(eq_en);
-
-        eq_train.setText("EQ Train");
-        eq_train.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eq_trainActionPerformed(evt);
-            }
-        });
-        jPanel24.add(eq_train);
-
-        eq_reset.setText("EQ Reset");
-        eq_reset.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eq_resetActionPerformed(evt);
-            }
-        });
-        jPanel24.add(eq_reset);
 
         const_panel.add(jPanel24, java.awt.BorderLayout.NORTH);
 
@@ -6070,25 +6074,6 @@ String con_str="";
       delete_talkgroup_rows();
     }//GEN-LAST:event_tg_edit_delActionPerformed
 
-    private void eq_enActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eq_enActionPerformed
-      String cmd= "";
-      if(eq_en.isSelected()) cmd = new String("eq_en 1\r\n");
-      if(!eq_en.isSelected()) cmd = new String("eq_en 0\r\n");
-      serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-    }//GEN-LAST:event_eq_enActionPerformed
-
-    private void eq_trainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eq_trainActionPerformed
-      String cmd= "";
-      if(eq_train.isSelected()) cmd = new String("eq_learn 1\r\n");
-      if(!eq_train.isSelected()) cmd = new String("eq_learn 0\r\n");
-      serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-    }//GEN-LAST:event_eq_trainActionPerformed
-
-    private void eq_resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eq_resetActionPerformed
-      String cmd = new String("eqr\r\n");
-      serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-    }//GEN-LAST:event_eq_resetActionPerformed
-
     private void do_mp3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_do_mp3ActionPerformed
         // TODO add your handling code here:
      if(prefs!=null) prefs.putBoolean("do_mp3", do_mp3.isSelected());
@@ -6678,7 +6663,6 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox add_primary;
     public javax.swing.JCheckBox add_secondaries;
     public javax.swing.JCheckBox add_tdu_silence;
-    public javax.swing.JCheckBox add_tdu_silence1;
     private javax.swing.JButton adv_write_config;
     private javax.swing.JPanel advancedpanel;
     public javax.swing.JComboBox<String> agc_kp;
@@ -6789,9 +6773,6 @@ public void SLEEP(long val) {
     private javax.swing.JRadioButton enable_voice_const;
     public javax.swing.JCheckBox enc_mode;
     public javax.swing.JTextField end_call_silence;
-    public javax.swing.JCheckBox eq_en;
-    private javax.swing.JButton eq_reset;
-    public javax.swing.JCheckBox eq_train;
     public javax.swing.JButton erase_roaming;
     private javax.swing.JButton follow_tg;
     public javax.swing.JLabel freq;
@@ -6880,8 +6861,12 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
+    private javax.swing.JLabel jLabel57;
+    private javax.swing.JLabel jLabel58;
+    private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel64;
+    private javax.swing.JLabel jLabel65;
+    private javax.swing.JLabel jLabel66;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -6934,10 +6919,12 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel51;
     private javax.swing.JPanel jPanel52;
     private javax.swing.JPanel jPanel53;
+    private javax.swing.JPanel jPanel54;
     private javax.swing.JPanel jPanel59;
     private javax.swing.JPanel jPanel6;
     public javax.swing.JPanel jPanel60;
-    private javax.swing.JPanel jPanel61;
+    private javax.swing.JPanel jPanel64;
+    private javax.swing.JPanel jPanel65;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
@@ -7023,9 +7010,11 @@ public void SLEEP(long val) {
     public javax.swing.JComboBox<String> op_mode;
     private javax.swing.JLabel os_string;
     public javax.swing.JComboBox<String> p1_ch_bw;
+    public javax.swing.JTextField p1_sync_thresh;
     public javax.swing.JTextField p25_tone_vol;
     private javax.swing.JPanel p25rxconfigpanel;
     public javax.swing.JComboBox<String> p2_ch_bw;
+    public javax.swing.JTextField p2_sync_thresh;
     public javax.swing.JCheckBox process_rid_alias;
     private javax.swing.JProgressBar progbar;
     private javax.swing.JLabel progress_label;
@@ -7046,6 +7035,7 @@ public void SLEEP(long val) {
     public javax.swing.JComboBox<String> rfmaxgain;
     public javax.swing.JCheckBox roaming;
     public javax.swing.JCheckBox roaming_ret_to_cc;
+    public javax.swing.JComboBox<String> rxmodel;
     private javax.swing.JTextField search_radius;
     public javax.swing.JButton select_home;
     private javax.swing.JButton send_tg;
@@ -7087,7 +7077,6 @@ public void SLEEP(long val) {
     public javax.swing.JRadioButton triple_click_opt6;
     public javax.swing.JButton use_freq_primary;
     public javax.swing.JLabel volume_label;
-    public javax.swing.JComboBox<String> vrep;
     public javax.swing.JComboBox<String> vtimeout;
     public javax.swing.JLabel wacn;
     public javax.swing.JCheckBox wacn_en;
