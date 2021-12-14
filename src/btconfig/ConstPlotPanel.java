@@ -41,6 +41,11 @@ public class ConstPlotPanel extends JPanel {
    double peak_mag=0.0;
    double scale=1.0;
 
+   float evm_db=0.0f;
+   float evm_percent=0.0f;
+
+   int data_init=0;
+
    int gains_idx;
    static float[] gains = new float[256*3];
 
@@ -76,11 +81,18 @@ public class ConstPlotPanel extends JPanel {
    double audio_out[];
    boolean did_draw_audio_fft=true;
 
-
+   int evms_idx;
+   static float[] evms = new float[256*3];
+   static float[] evms_ideal = new float[256*3];
    ///////////////////////////////////////////////////////////////////////////////////////
    ///////////////////////////////////////////////////////////////////////////////////////
    public ConstPlotPanel(BTFrame parent) {
      this.parent = parent;
+
+     for(int i=0;i<256*3;i++) {
+       evms[i] = -30; 
+       evms_ideal[i] = -30; 
+     }
 
      fft = new FastFourierTransform(256);
      audio_in = new double[256];
@@ -142,6 +154,8 @@ public class ConstPlotPanel extends JPanel {
    ///////////////////////////////////////////////////////////////////////////////////////
    public void addData( byte[] data , boolean do_synced) {
      if(!parent.en_visuals.isSelected()) return;
+
+     data_init=1;
 
      int j=0;
      //System.out.println("add data");
@@ -263,6 +277,20 @@ public class ConstPlotPanel extends JPanel {
 
        last_sync_state=synced;
 
+       evm_db = bb.getFloat(320);
+
+       //System.out.println("evm_db "+evm_db);
+
+       try {
+         evm_percent = (float) java.lang.Math.pow( 10.0f, (evm_db/20.0f) ) * 100.0f;
+         parent.current_evm_percent= evm_percent;
+       } catch(Exception e) {
+       }
+
+       evms[evms_idx++] = evm_db;
+       if(evms_idx==256*3) evms_idx=0;
+     
+
        if(draw_mod++%1==0) {
          repaint();
          parent.jPanel24.repaint();
@@ -349,6 +377,10 @@ public class ConstPlotPanel extends JPanel {
      g2d.drawString("I/Q Symbol Plot", 150,24);
      g2d.drawString("RF AGC Gain", 10,350);
      g2d.drawString("Sync Status", 10,380);
+
+     g2d.drawString("EVM", 10,410);
+     g2d.setColor( new Color(96,96,96) ); 
+     g2d.drawString("REF30", 30,420);
 
      //draw x/y plot
      g2d.setColor( Color.yellow ); 
@@ -568,6 +600,42 @@ public class ConstPlotPanel extends JPanel {
          g2d.drawString(sync_state+" (No Signal)", text_xoff,100);
        }
      }
+
+     j=0;
+     for(int i=0;i<256*3;i++) {
+        float e_g = evms[i];
+        if(e_g > -18.0f) {
+           g2d.setColor( Color.red ); 
+        }
+        else if(e_g > -20.0f) {
+           g2d.setColor( Color.yellow ); 
+        }
+        else { 
+           g2d.setColor( Color.green ); 
+        }
+       g2d.drawRoundRect(i+xoff2, (int) (yoff2 + 525 + evms[i]),1, 1, 1, 1);
+
+       g2d.setColor( new Color(96,96,96) ); 
+       g2d.drawRoundRect(i+xoff2, (int) (yoff2 + 525 + evms_ideal[i]),1, 1, 1, 1);
+     }
+
+      if(evm_db > -16.0f) {
+         g2d.setColor( Color.red ); 
+      }
+      else if(evm_db > -18.0f) {
+         g2d.setColor( Color.yellow ); 
+      }
+      else { 
+         g2d.setColor( Color.green ); 
+      }
+
+
+     if( data_init!=0 ) {
+       g2d.drawString(String.format("Error Vector Mag (EVM): %02.0f dB", evm_db), text_xoff,175);
+       g2d.drawString(String.format("Error Vector Mag (EVM): %01.0f", evm_percent)+" %", text_xoff,200);
+     }
+
+
 
    }
 

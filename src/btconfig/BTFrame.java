@@ -854,7 +854,7 @@ class updateTask extends java.util.TimerTask
                 else if(skip_bytes>0 && rx_state==5) {
                   skip_bytes--;
 
-                  if(const_idx<320) constellation_bytes[const_idx++] = b[i];
+                  if(const_idx<324) constellation_bytes[const_idx++] = b[i];
 
                     //System.out.println("constellation "+skip_bytes);
                   //constellation data
@@ -939,7 +939,7 @@ class updateTask extends java.util.TimerTask
                       //System.out.println("do voice");
                     }
                     else if(b[i]==(byte) 0xe4) {
-                      skip_bytes=320+1;
+                      skip_bytes=324+1;
                       rx_state=5;
                       //System.out.println("do const");
                     }
@@ -1366,7 +1366,7 @@ JFileChooser chooser;
       fw_installed.setVisible(false);
 
       pcm_bytes = new byte[320];
-      constellation_bytes = new byte[320];
+      constellation_bytes = new byte[324];
       tdma_bytes = new byte[256];
 
       write_config.setEnabled(false);
@@ -1417,8 +1417,8 @@ JFileChooser chooser;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202112140314");
-      release_date.setText("Release: 2021-12-14 03:14");
+      fw_ver.setText("Latest Avail: FW Date: 202112140545");
+      release_date.setText("Release: 2021-12-14 05:45");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
