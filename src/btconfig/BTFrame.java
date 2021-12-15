@@ -1417,8 +1417,8 @@ JFileChooser chooser;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202112140545");
-      release_date.setText("Release: 2021-12-14 05:45");
+      fw_ver.setText("Latest Avail: FW Date: 202112141804");
+      release_date.setText("Release: 2021-12-14 18:04");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1755,7 +1755,7 @@ JFileChooser chooser;
 
       con_str = con_str+str;
 
-      if( !con_str.contains("\r\n") || !con_str.contains("$") ) {
+      if( (!con_str.contains("\r\n") || !con_str.contains("$")) && !con_str.contains("FLEX") && !con_str.contains("RX_IDX") && !con_str.contains("POCSAG") ) {
         return;
       }
 
