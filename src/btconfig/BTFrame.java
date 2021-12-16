@@ -831,6 +831,21 @@ class updateTask extends java.util.TimerTask
 
               if(len>256000) len = 256000;
 
+              if(save_iq_len>0 && len>0 ) {
+                try {
+                  fos_iq.write(b,0,len);
+                  save_iq_len-=len;
+                  iq_out+=len;
+                  setStatus("Wrote "+iq_out+" to IQ file");
+                  len=0;
+                  str_idx=0;
+                  if(save_iq_len==0) {
+                    fos_iq.close();
+                  }
+                } catch(Exception e) {
+                }
+              }
+
               do_print=1;
 
               for(int i=0;i<len;i++) {
@@ -1267,6 +1282,8 @@ String con_str="";
 FileOutputStream fos_iq;
 JFileChooser chooser;
 
+int save_iq_len=0;
+int iq_out=0;
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
       initComponents();
@@ -1417,8 +1434,8 @@ JFileChooser chooser;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202112141804");
-      release_date.setText("Release: 2021-12-14 18:04");
+      fw_ver.setText("Latest Avail: FW Date: 202112151638");
+      release_date.setText("Release: 2021-12-15 16:38");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3370,6 +3387,7 @@ JFileChooser chooser;
         jLabel59 = new javax.swing.JLabel();
         p2_sync_thresh = new javax.swing.JTextField();
         jLabel66 = new javax.swing.JLabel();
+        record_iq_file = new javax.swing.JButton();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
@@ -5213,6 +5231,14 @@ JFileChooser chooser;
 
         advancedpanel.add(jPanel65, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 380, -1, -1));
 
+        record_iq_file.setText("Record IQ Sample File");
+        record_iq_file.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                record_iq_fileActionPerformed(evt);
+            }
+        });
+        advancedpanel.add(record_iq_file, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, -1, -1));
+
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
         signalinsightpanel.setLayout(new javax.swing.BoxLayout(signalinsightpanel, javax.swing.BoxLayout.X_AXIS));
@@ -6305,6 +6331,34 @@ JFileChooser chooser;
       if(tglog_e!=null) tglog_e.setVisible(true);
     }//GEN-LAST:event_tglog_editActionPerformed
 
+    private void record_iq_fileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_record_iq_fileActionPerformed
+      try {
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter( "BTT IQ file", "biq");
+        chooser.setFileFilter(filter);
+        int returnVal = chooser.showDialog(parent, "Save BTT .iq file");
+
+
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+          File file = chooser.getSelectedFile();
+          fos_iq = new FileOutputStream(file);
+          save_iq_len = 5242880;
+          iq_out=0;
+
+          int avail = serial_port.bytesAvailable();
+          byte[] b = new byte[avail];
+          int len = serial_port.readBytes(b, avail);
+
+          String cmd= new String("send_iq 29\r\n");
+          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+          setStatus("Saving IQ File For 29 Seconds");
+        }
+
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+    }//GEN-LAST:event_record_iq_fileActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -7152,6 +7206,7 @@ public void SLEEP(long val) {
     private javax.swing.JButton read_config;
     private javax.swing.JButton read_tg;
     private javax.swing.JButton readroaming;
+    private javax.swing.JButton record_iq_file;
     public javax.swing.JTextField ref_freq;
     private javax.swing.JLabel release_date;
     public javax.swing.JButton restore_roam;
