@@ -318,8 +318,10 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                     int config_crc = bb3.getInt(CONFIG_SIZE-4);  //1024-4
 
                       if(crc==0 || config_crc == 0xffffffff) {
-                        parent.do_update_firmware=1;
-                        parent.do_update_firmware2=1;
+                        if(parent.fw_completed==0) {
+                          parent.do_update_firmware=1;
+                          parent.do_update_firmware2=1;
+                        }
                         parent.do_read_talkgroups=0;
                         parent.did_read_talkgroups=1;
                         parent.do_read_config=0;
@@ -376,11 +378,12 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                       if( did_warning==0 && !parent.fw_ver.getText().contains(fw_ver) ) {
                         int result = JOptionPane.showConfirmDialog(parent, "Proceed With Firmware Update?  Cancel To Exit Application.", "Update Firmware?", JOptionPane.OK_CANCEL_OPTION);
                         if(result==JOptionPane.OK_OPTION) {
-                          parent.do_update_firmware2=1;
                           parent.did_read_talkgroups=1;
                           did_warning=1;
-                          parent.do_update_firmware=1;
-                          parent.do_update_firmware2=1;
+                          if(parent.fw_completed==0) {
+                            parent.do_update_firmware=1;
+                            parent.do_update_firmware2=1;
+                          }
                           parent.do_read_talkgroups=0;
                           parent.did_read_talkgroups=1;
                           parent.do_read_config=0;
@@ -390,10 +393,11 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                         }
                       }
                       else if( did_warning==1 && !parent.fw_ver.getText().contains(fw_ver) ) {
-                          parent.do_update_firmware2=1;
                           parent.did_read_talkgroups=1;
-                          parent.do_update_firmware=1;
-                          parent.do_update_firmware2=1;
+                          if(parent.fw_completed==0) {
+                            parent.do_update_firmware=1;
+                            parent.do_update_firmware2=1;
+                          }
                           parent.do_read_talkgroups=0;
                           parent.did_read_talkgroups=1;
                           parent.do_read_config=0;

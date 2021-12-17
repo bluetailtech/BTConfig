@@ -1284,6 +1284,7 @@ JFileChooser chooser;
 
 int save_iq_len=0;
 int iq_out=0;
+int fw_completed=0;
   ///////////////////////////////////////////////////////////////////
     public BTFrame(String[] args) {
       initComponents();
@@ -1434,8 +1435,8 @@ int iq_out=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202112170713");
-      release_date.setText("Release: 2021-12-17 07:13");
+      fw_ver.setText("Latest Avail: FW Date: 202112171421");
+      release_date.setText("Release: 2021-12-17 14:21");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);

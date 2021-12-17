@@ -29,9 +29,58 @@ import com.fazecast.jSerialComm.*;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class MessageListener implements SerialPortMessageListener
+{
+   @Override
+      //data written only works on Windows, so we don't use
+   public int getListeningEvents() { return SerialPort.LISTENING_EVENT_DATA_RECEIVED | SerialPort.LISTENING_EVENT_DATA_WRITTEN; }
+   //public int getListeningEvents() { return SerialPort.LISTENING_EVENT_DATA_RECEIVED ; }
+
+   @Override
+   public byte[] getMessageDelimiter() { return new byte[] { (byte)0xa6, (byte)0x67, (byte)0x54, (byte)0xd3 }; }
+   //public byte[] getMessageDelimiter() { return new byte[] { (byte)0xd3, (byte)0x54, (byte)0x67, (byte)0xa6 }; }
+
+   @Override
+   public boolean delimiterIndicatesEndOfMessage() { return false; }
+
+   @Override
+   public void serialEvent(SerialPortEvent event)
+   {
+       if(event.getEventType() == SerialPort.LISTENING_EVENT_DATA_RECEIVED) {
+          byte[] newData = event.getReceivedData();
+
+         if(newData.length>=48) {
+            System.out.print("\r\nPDATA: ");
+            for (int i = 0; i < 16; ++i)
+               System.out.print(String.format("0x%02x, ", (byte)newData[i]));
+                System.out.print("\r\n");
+
+              firmware_update.pdata = new byte[ newData.length-4];
+
+              for (int i = 0; i < newData.length-4; ++i) {
+                firmware_update.pdata[i] = newData[i];
+              }
+              firmware_update.have_data=1;
+          }
+         return;
+       }
+       if(event.getEventType() == SerialPort.LISTENING_EVENT_DATA_WRITTEN) {
+         System.out.println("data written event");
+         return;
+       }
+   }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class firmware_update
 {
 
+volatile static int have_data=0;
+volatile static byte[] pdata;
+volatile static MessageListener listener; 
+
+int check_mod=0;
 String new_firmware_crc = "";
 java.util.Timer utimer;
 BTFrame parent;
@@ -51,6 +100,7 @@ int did_save=0;
     for( int i=0; i< 128 * 1024 *6; i++) {
       image_buffer[i] = (byte) 0xff;
     }
+
 
     int firmware_len = 0;
 
@@ -86,6 +136,11 @@ int did_save=0;
             if(serial_port!=null && serial_port.isOpen()) {
               state=0;
             } 
+            else {
+              parent.is_connected=0;
+              parent.do_connect=1;
+              return;
+            }
           }
 
 
@@ -138,6 +193,16 @@ int did_save=0;
                   state=1;
                   app_crc_valid=1;
                   parent.setProgress(100);
+                  parent.do_update_firmware=0;
+                  parent.do_update_firmware2=0;
+                  parent.fw_completed=1;
+
+                  if(did_save==0) {
+                    send_cmd("save\r\n", 1000); //flush new changes from global_post_read() to flash memory
+                    did_save=1;
+                  }
+                  SLEEP(1000);
+
                   break;
                 }
                 else if(app_crc != crc) {
@@ -207,10 +272,12 @@ int did_save=0;
               }
 
               parent.setStatus("\r\nresetting device");
-              send_cmd("system_reset\r\n", 100);
+              String cmd = "system_reset\r\n";
+              serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+              SLEEP(10);
 
               try {
-                SLEEP(5000);
+                SLEEP(2000);
               } catch(Exception e) {
               }
               //serial_port.closePort();
@@ -277,6 +344,10 @@ int did_save=0;
 
           //state switch to application mode
           if(state==2 && is_bl==1) {
+              if( listener==null ) {
+                listener = new MessageListener();
+                this.serial_port.addDataListener(listener);
+              }
 
               try {
                 SLEEP(500);
@@ -313,10 +384,12 @@ int did_save=0;
 
               parent.setProgress(90);
               parent.setStatus("\r\nresetting device");
-              send_cmd("system_reset\r\n", 10);
+              String cmd = "system_reset\r\n";
+              serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+              SLEEP(10);
 
               try {
-                SLEEP(7000);
+                SLEEP(2000);
               } catch(Exception e) {
               }
               //serial_port.closePort();
@@ -338,71 +411,54 @@ int did_save=0;
                 byte[] out_buffer = new byte[16+32]; //size of bl_op
                 ByteBuffer bb = ByteBuffer.wrap(out_buffer);
                 bb.order(ByteOrder.LITTLE_ENDIAN);
-                //uint32_t magic;
-                //uint32_t op;
-                //uint32_t addr;
-                //uint32_t len;
-                //uint8_t  data[32]; 
-
-                bb.putInt( (int) Long.parseLong("d35467A6", 16) );  //magic
-                //bb.putInt( (int) Long.parseLong("3", 10) ); //write flash cmd   (3 could be used to flash unencrypted binary
-                                                              //starting at 0x0804000
+                bb.putInt( (int) Long.parseLong("d35467a6", 16) );  //magic
                 bb.putInt( (int) Long.parseLong("6", 10) ); //write encrypted flash cmd (same as "3", but decryption first) 
                 bb.putInt( (int) new Long((long) 0x08040000 + offset).longValue() );
                 bb.putInt( (int) Long.parseLong("32", 10) );  //data len
 
                 for(int i=0;i<32;i++) {
-                  //if(i+offset<firmware_len) bb.put( image_buffer[i+offset] ); 
-                   // else bb.put((byte) 255);
                   bb.put( image_buffer[i+offset] ); 
                 }
 
+                have_data=0;
 
+                serial_port.writeBytes( out_buffer, 48, 0);
 
-                byte[] input_buffer = new byte[48];
-                int rlen = 0;
-                int ack_timeout=0;
-
-                while(rlen!=48) {
-                  serial_port.writeBytes( out_buffer, 16+32, 0);
-
-                  try {
-                    int count=0;
-                    while(serial_port.bytesAvailable()<48) {
-                      SLEEP(1);
-                      if(count++>5000) break;
-                    }
-                  } catch(Exception e) {
-                    e.printStackTrace();
-                  }
-
-                  rlen=serial_port.readBytes( input_buffer, 48);
-
-                  if(rlen==48) {
-                    ack_timeout=0;
+                int count=0;
+                if(offset%131072==0) SLEEP(3000);
+                while(have_data==0) {
+                  if(count++>500) {
+                    System.out.println("timeout");
                     break;
                   }
-
-
+                  parent.SLEEP_US(5);
                 }
 
-                //for(int i=0;i<48;i++) {
-                //  if(i==0) System.out.print(String.format("\r\n%02x,",input_buffer[i]));
-                 //   else System.out.print(String.format("%02x,",input_buffer[i]));
-                //}
-                //if(input_buffer[4]==4) parent.setStatus("ack");
+                int did_write=0;
 
-                if(input_buffer[4]==5) {
-                  state=-1;
-                  parent.setStatus("NACK");
-                  break;
+                if(have_data==1) {
+                  ByteBuffer bb_verify = ByteBuffer.wrap(pdata);
+                  bb_verify.order(ByteOrder.LITTLE_ENDIAN);
+                  if( bb_verify.getInt()== 0xd35467a6) {//magic
+                    int op = bb_verify.getInt();  //op
+                    System.out.println("op "+op);
+                    if( op==4 && bb_verify.getInt()==0x8040000+offset) { //address
+                      did_write=1;
+                    }
+                  }
+                  have_data=0;
+                }
+                else {
+                  System.out.println("no data");
                 }
 
-                offset+=32;
-                if(offset%8192==0) System.out.print("\rsent "+offset+"        ");
+                if(did_write==1) {
+                  offset+=32;
+                  if(offset%8192==0) System.out.print("\rsent "+offset+"        ");
 
-                int pcomplete = (int)  (((float) offset/(float) firmware_len)*80.0);
-                parent.setProgress((int) pcomplete);
+                  int pcomplete = (int)  (((float) offset/(float) firmware_len)*80.0);
+                  parent.setProgress((int) pcomplete);
+                }
               }
                 System.out.print("\rsent "+offset+"        ");
 
@@ -415,20 +471,19 @@ int did_save=0;
               }
 
               parent.setStatus("\r\nresetting device");
-
-              Boolean isWindows = System.getProperty("os.name").startsWith("Windows");
-              if(isWindows || parent.is_mac_osx==1) {
-                send_cmd("system_reset\r\n", 10);
-              }
-              else {
-                //send_cmd("system_reset\r\n", 1000);
-                send_cmd("system_reset\r\n", 10);
-              }
+              String cmd = "system_reset\r\n";
+              serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+              SLEEP(10);
 
               try {
-                SLEEP(5000);
+                SLEEP(2000);
               } catch(Exception e) {
               }
+
+              if(listener!=null) this.serial_port.removeDataListener();
+              listener = null; 
+
+
               //serial_port.closePort();
               parent.is_connected=0;
               parent.do_connect=1;
@@ -457,6 +512,8 @@ int did_save=0;
             //parent.is_connected=1;
 
             parent.do_update_firmware=0;
+            parent.do_update_firmware2=0;
+            parent.fw_completed=1;
 
             //System.exit(0);
             return;
@@ -465,6 +522,8 @@ int did_save=0;
         } //while(true) 
     } catch (Exception e) {
       e.printStackTrace();
+      if(listener!=null) this.serial_port.removeDataListener();
+      listener = null; 
     }
   }
 
@@ -475,62 +534,46 @@ int did_save=0;
 
     byte[] data_cmd = cmd.getBytes();
     int len = serial_port.writeBytes( data_cmd, data_cmd.length, 0);
+
     byte[] data_buffer = new byte[2048];
     int i=0;
 
+    int retry=0;
+    int avail=0;
+
+    while(true) {
       try {
         SLEEP(timeout);
       } catch(Exception e) {
         e.printStackTrace();
       }
 
-      len = serial_port.readBytes( data_buffer, 512, timeout);
+      avail = serial_port.bytesAvailable();
+      if(avail==0) return "";
 
-      if(len>=3) { 
-        return new String(data_buffer);
+      if(avail>0) break;
+
+      if(retry++>5) break;
+    }
+
+
+      data_buffer = new byte[avail];
+
+      try {
+        len = serial_port.readBytes( data_buffer, avail);
+      } catch(Exception e) {
+      }
+
+      //System.out.println("avail: "+avail+" String: "+new String(data_buffer,0,len)+" cmd:"+cmd);
+      System.out.println("cmd: "+cmd);
+
+      if(len>0) { 
+        return new String(data_buffer,0,len);
       }
 
     return "";
   }
 
-  //////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////
-  public int waitPrompt()
-  {
-    byte[] data_cmd = new String("\r\n").getBytes();
-    int len = serial_port.writeBytes( data_cmd, data_cmd.length, 0);
-    byte[] data_buffer = new byte[2048];
-    int i=0;
-
-      try {
-        SLEEP(5);
-      } catch(Exception e) {
-        e.printStackTrace();
-      }
-
-    while(i++<10) {
-      len = serial_port.readBytes( data_buffer, 255, 5);
-
-      //look for prompt 
-      if(len>=3 && new String(data_buffer).contains("~$ ") ) {
-        //parent.setStatus("\r\nfound prompt");
-        return 1;
-      }
-      else if(len>0) {
-        parent.setStatus(":"+new String(data_buffer)+":");
-      }
-
-      try {
-        SLEEP(5);
-      } catch(Exception e) {
-        e.printStackTrace();
-      }
-
-      serial_port.writeBytes( data_cmd, data_cmd.length, 0);
-    }
-    return 0;
-  }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 private void SLEEP(long val) {
   try {
