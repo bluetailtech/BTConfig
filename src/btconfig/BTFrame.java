@@ -1434,8 +1434,8 @@ int iq_out=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202112151638");
-      release_date.setText("Release: 2021-12-15 16:38");
+      fw_ver.setText("Latest Avail: FW Date: 202112170713");
+      release_date.setText("Release: 2021-12-17 07:13");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -6776,7 +6776,7 @@ public void SLEEP(long val) {
     long NS_PER_US = 1000; 
     long DELAY_TARGET_MS;
 
-    if(sleep_factor<100) sleep_factor=200;
+    if(sleep_factor<100) sleep_factor=1000;
     if(is_mac_osx==1) sleep_factor=1000;
 
     if(is_linux==1) {
