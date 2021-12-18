@@ -6433,6 +6433,7 @@ public void do_meta() {
         e.printStackTrace();
       }
 
+      log_str = "\r\n"+log_str.trim();
       String text = log_ta.getText().trim();
 
       log_ta.setText(text.concat( new String(log_str.getBytes()) ).trim()+"\n");
