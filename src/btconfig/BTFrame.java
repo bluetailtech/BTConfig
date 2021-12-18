@@ -1435,8 +1435,8 @@ int fw_completed=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202112171421");
-      release_date.setText("Release: 2021-12-17 14:21");
+      fw_ver.setText("Latest Avail: FW Date: 202112181132");
+      release_date.setText("Release: 2021-12-18 11:52");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -6425,6 +6425,7 @@ public void do_meta() {
 
 
       try {
+        log_str = log_str.trim()+"\r\n";
         fos_meta.write(log_str.getBytes(),0,log_str.length());  //write int num records
         fos_meta.flush();
         fos_meta.close();
