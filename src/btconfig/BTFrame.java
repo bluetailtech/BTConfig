@@ -481,8 +481,6 @@ class updateTask extends java.util.TimerTask
             rssim2.setValue(-130,false);
             p25_status_timeout=3000;
             sig_meter_timeout=1000;
-            //l3.setText("Desc:                          ");
-            //l3.setText("");
           }
           else {
           }
@@ -1282,6 +1280,7 @@ String con_str="";
 FileOutputStream fos_iq;
 JFileChooser chooser;
 
+int blks_per_sec=0;
 int save_iq_len=0;
 int iq_out=0;
 int fw_completed=0;
@@ -1292,7 +1291,7 @@ int fw_completed=0;
       chooser = new JFileChooser();
 
       jfc = new JFontChooser();
-      jfc.setSize(1024,768);
+      jfc.setSize(1200,768);
       edit_display_view.setEnabled(false);
 
       bt1 = new BigText(" ", 192, new Color(128,0,128) );
@@ -1336,8 +1335,6 @@ int fw_completed=0;
       supergroup_hash = new Hashtable();
       rid_hash = new Hashtable();
 
-      agc_kp.setVisible(false);
-      agc_kp_lb.setVisible(false);
 
       //jPanel25.remove(const_panel);
       cpanel = new ConstPlotPanel(this);
@@ -1415,8 +1412,6 @@ int fw_completed=0;
 
       read_config.setVisible(false);  //read config button
 
-      jLabel32.setVisible(false);
-      rfmaxgain.setVisible(false);
 
       check_firmware.setEnabled(false);
       check_firmware.setVisible(false);
@@ -1472,7 +1467,6 @@ int fw_completed=0;
       l3.setForeground(java.awt.Color.white);
       l3.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
 
-      //l3.setText("");
       l3.setText("NO SIG");
       desc_panel.add(l3);
 
@@ -1578,9 +1572,6 @@ int fw_completed=0;
 
         //jTabbedPane1.remove( buttong_config);
 
-        btreset1.setVisible(false);
-        btreset2.setVisible(false);
-        bluetooth_reset.setVisible(false);
 
       InputMap inputMap = jTable1.getInputMap(javax.swing.JComponent.WHEN_FOCUSED);
       ActionMap actionMap = jTable1.getActionMap();
@@ -1614,7 +1605,7 @@ int fw_completed=0;
       //do this last
       utimer = new java.util.Timer();
       utimer.schedule( new updateTask(), 100, 1);
-      setSize(1054,750);
+      setSize(1200,750);
     }
   //////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////
@@ -2114,7 +2105,11 @@ int fw_completed=0;
           if(st1!=null && st1.contains("group_id") && st.hasMoreTokens()) {
             try {
                current_talkgroup = st.nextToken(); 
-               l3.setText("TG "+current_talkgroup+", RID "+src_uid);
+
+                //FORMAT ON VOICE
+                String fmt = status_format_voice.getText(); 
+                String voice_str = dframe.do_subs(fmt,false);
+                l3.setText(voice_str);
 
             } catch(Exception e) {
               e.printStackTrace();
@@ -2298,6 +2293,10 @@ int fw_completed=0;
             } catch(Exception e) {
               e.printStackTrace();
             }
+            //FORMAT ON VOICE
+            String fmt = status_format_voice.getText(); 
+            String voice_str = dframe.do_subs(fmt,false);
+            l3.setText(voice_str);
           }
         }
         if(tglog_e!=null && tglog_e.tg_trig_vgrant.isSelected()) do_meta();
@@ -2333,6 +2332,10 @@ int fw_completed=0;
             } catch(Exception e) {
               e.printStackTrace();
             }
+            //FORMAT ON VOICE
+            String fmt = status_format_voice.getText(); 
+            String voice_str = dframe.do_subs(fmt,false);
+            l3.setText(voice_str);
           }
         }
       }
@@ -2759,7 +2762,6 @@ int fw_completed=0;
                 do_update_talkgroups=1;
               }
 
-              int blks_per_sec=0;
               try {
                 blks_per_sec = Integer.valueOf(tsbk_ps);
               } catch(Exception e) {
@@ -2771,8 +2773,11 @@ int fw_completed=0;
                   l3.setText("NO SIG");
                 }
                 else {
-                  //l3.setText("  DMR BLKS_PER_SEC "+tsbk_ps+String.format("  EVM %2.0f", current_evm_percent)+"%");
-                  l3.setText("  DMR BLKS_PER_SEC "+tsbk_ps);
+                  //FORMAT ON CC 
+                  String fmt = status_format_cc.getText(); 
+                  String cc_str = dframe.do_subs(fmt,false);
+                  l3.setText(cc_str);
+
                   freqval="";
                   reset_session=1;
                 }
@@ -2782,16 +2787,12 @@ int fw_completed=0;
                   l3.setText("NO SIG");
                 }
                 else {
-                  if( is_tdma_cc==1 ) {
-                    //l3.setText("  P25P2 CC BLKS_PER_SEC "+tsbk_ps+String.format("  EVM %2.0f", current_evm_percent)+"%");
-                    l3.setText("  P25P2 CC BLKS_PER_SEC "+tsbk_ps);
-                    freqval="";
-                  }
-                  else {
-                    //l3.setText("  P25P1 CC BLKS_PER_SEC "+tsbk_ps+String.format("  EVM %2.0f", current_evm_percent)+"%");
-                    l3.setText("  P25P1 CC BLKS_PER_SEC "+tsbk_ps);
-                    freqval="";
-                  }
+                  //FORMAT ON CC 
+                  String fmt = status_format_cc.getText(); 
+                  String cc_str = dframe.do_subs(fmt,false);
+                  l3.setText(cc_str);
+
+                  freqval="";
                   reset_session=1;
                   if(system_alias.getText()!=null && system_alias.getText().length()>0 ) {
 
@@ -2888,12 +2889,10 @@ int fw_completed=0;
                   String l3_line = freqval+talkgroup+", "+talkgroup_name;
                   if(l3_line!=null && l3_line.length()>46) l3_line = l3_line.substring(0,45);
 
-                  if( is_phase1==1 && is_dmr_mode==0 ) {
-                    l3.setText("P25P1"+l3_line);
-                  }
-                  else if( is_phase2==1 && is_dmr_mode==0) {
-                    l3.setText("P25P2"+l3_line);
-                  }
+                  //FORMAT ON VOICE 
+                  String fmt = status_format_voice.getText(); 
+                  String voice_str = dframe.do_subs(fmt,false);
+                  l3.setText(voice_str);
                   p25_status_timeout=6000;
                   break;
                 }
@@ -3069,9 +3068,6 @@ int fw_completed=0;
         allow_unknown_tg_cb = new javax.swing.JCheckBox();
         volume_label = new javax.swing.JLabel();
         enable_leds = new javax.swing.JCheckBox();
-        btreset1 = new javax.swing.JLabel();
-        bluetooth_reset = new javax.swing.JTextField();
-        btreset2 = new javax.swing.JLabel();
         frequency_tf1 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -3081,12 +3077,8 @@ int fw_completed=0;
         jLabel24 = new javax.swing.JLabel();
         roaming = new javax.swing.JCheckBox();
         freq_label = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
-        rfmaxgain = new javax.swing.JComboBox<>();
         vtimeout = new javax.swing.JComboBox<>();
         jLabel34 = new javax.swing.JLabel();
-        agc_kp_lb = new javax.swing.JLabel();
-        agc_kp = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         op_mode = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
@@ -3097,6 +3089,11 @@ int fw_completed=0;
         jLabel11 = new javax.swing.JLabel();
         system_alias = new javax.swing.JTextField();
         mcu_ver_t = new javax.swing.JLabel();
+        jPanel61 = new javax.swing.JPanel();
+        status_format_cc = new javax.swing.JTextField();
+        jPanel66 = new javax.swing.JPanel();
+        status_format_voice = new javax.swing.JTextField();
+        show_help = new javax.swing.JButton();
         jPanel25 = new javax.swing.JPanel();
         jPanel26 = new javax.swing.JPanel();
         jPanel29 = new javax.swing.JPanel();
@@ -3689,15 +3686,6 @@ int fw_completed=0;
         enable_leds.setText("Enable Status LEDS");
         p25rxconfigpanel.add(enable_leds, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, -1, -1));
 
-        btreset1.setText("Reset Bluetooth Link Every ");
-        p25rxconfigpanel.add(btreset1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, -1, -1));
-
-        bluetooth_reset.setColumns(5);
-        p25rxconfigpanel.add(bluetooth_reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, -1, -1));
-
-        btreset2.setText("Minutes.  [ 5 - xxxxx, 0=no BT reset (default)  ]");
-        p25rxconfigpanel.add(btreset2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 250, -1, -1));
-
         frequency_tf1.setColumns(10);
         frequency_tf1.setToolTipText("Optionally, Use The <Search DB For Nearby Control Channels> Tab To Configure The Primary Control Channel.");
         p25rxconfigpanel.add(frequency_tf1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 40, -1, 30));
@@ -3732,24 +3720,12 @@ int fw_completed=0;
         freq_label.setText("Control Channel Frequency");
         p25rxconfigpanel.add(freq_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
 
-        jLabel32.setText("RF Max Gain");
-        p25rxconfigpanel.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 280, -1, -1));
-
-        rfmaxgain.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "47 dB (max sensitivity)", "44 dB", "41 dB", "38 dB", "35 dB", "32 dB (default)", "29 dB", "26 dB", "23 dB", "20 dB", "14 dB", "8 dB (max linearity)", " " }));
-        p25rxconfigpanel.add(rfmaxgain, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 270, -1, 30));
-
         vtimeout.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "100ms", "250ms", "500ms", "1sec", "1.5sec", "2sec", "3sec", "5sec", "10sec", "30sec" }));
         vtimeout.setToolTipText("The time since the last activity on a talk group before the receiver will follow a different talk group.");
         p25rxconfigpanel.add(vtimeout, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 120, -1, -1));
 
         jLabel34.setText("Talk Group Timeout");
         p25rxconfigpanel.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 125, -1, -1));
-
-        agc_kp_lb.setText("AGC Kp");
-        p25rxconfigpanel.add(agc_kp_lb, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 180, -1, -1));
-
-        agc_kp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Low (optimized for fixed location)", "Med", "High (optimized for mobile)" }));
-        p25rxconfigpanel.add(agc_kp, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 170, -1, -1));
 
         jLabel6.setText("Power-on Mode");
         p25rxconfigpanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, -1));
@@ -3801,6 +3777,30 @@ int fw_completed=0;
 
         mcu_ver_t.setText("MCU:");
         p25rxconfigpanel.add(mcu_ver_t, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, -1, -1));
+
+        jPanel61.setBorder(javax.swing.BorderFactory.createTitledBorder("Status Format On CC"));
+
+        status_format_cc.setColumns(50);
+        status_format_cc.setText("$P25_MODE$ CC BLKS_SEC $BLKS_SEC$");
+        jPanel61.add(status_format_cc);
+
+        p25rxconfigpanel.add(jPanel61, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 160, 610, 80));
+
+        jPanel66.setBorder(javax.swing.BorderFactory.createTitledBorder("Status Format Voice"));
+
+        status_format_voice.setColumns(50);
+        status_format_voice.setText("$P25_MODE$ $V_FREQ$ MHz, TG $TG_ID$, $TG_NAME$");
+        jPanel66.add(status_format_voice);
+
+        p25rxconfigpanel.add(jPanel66, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 260, 610, 80));
+
+        show_help.setText("Show KeyWords");
+        show_help.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                show_helpActionPerformed(evt);
+            }
+        });
+        p25rxconfigpanel.add(show_help, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 350, -1, -1));
 
         jTabbedPane1.addTab("P25RX Config", p25rxconfigpanel);
 
@@ -5595,14 +5595,14 @@ int fw_completed=0;
     private void minimizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimizeActionPerformed
       if(minimize.isSelected()) {
         if(isWindows ) {
-          setSize(1020,200+14);
+          setSize(1200,200+14);
         }
         else  {
-          setSize(1020,185+14);  //linux and Mac
+          setSize(1200,185+14);  //linux and Mac
         }
       }
       else {
-        setSize(1054,750);
+        setSize(1200,750);
         //parentSize = Toolkit.getDefaultToolkit().getScreenSize();
         //setSize(new Dimension((int) (parentSize.width * 0.75), (int) (parentSize.height * 0.8)));
       }
@@ -5654,6 +5654,18 @@ int fw_completed=0;
           SLEEP(10);
           cnt++;
         }
+      }
+
+      try {
+        parent.prefs.put("status_format_cc", status_format_cc.getText() ); 
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+
+      try {
+        parent.prefs.put("status_format_voice", status_format_voice.getText() ); 
+      } catch(Exception e) {
+        e.printStackTrace();
       }
 
     }//GEN-LAST:event_formWindowClosing
@@ -6395,6 +6407,10 @@ int fw_completed=0;
       setStatus("skipping current TG");
     }//GEN-LAST:event_skip1ActionPerformed
 
+    private void show_helpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_show_helpActionPerformed
+      dframe.show_help();
+    }//GEN-LAST:event_show_helpActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -6626,7 +6642,8 @@ public void update_prefs() {
 
       restore_position();
 
-
+      status_format_cc.setText( parent.prefs.get("status_format_cc", "$P25_MODE$ CC BLKS_SEC $BLKS_SEC$") );
+      status_format_voice.setText( parent.prefs.get("status_format_voice", "$P25_MODE$ $V_FREQ$ MHz, TG $TG_ID$, $TG_NAME$") );
       tg_font_name = parent.prefs.get("tg_font_name", "Monospaced" );
       tg_font_style = parent.prefs.getInt("tg_font_style", Font.PLAIN );
       tg_font_size = parent.prefs.getInt("tg_font_size", 14 );
@@ -6884,8 +6901,6 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox add_secondaries;
     private javax.swing.JButton adv_write_config;
     private javax.swing.JPanel advancedpanel;
-    public javax.swing.JComboBox<String> agc_kp;
-    private javax.swing.JLabel agc_kp_lb;
     private javax.swing.JPanel alias_panel;
     public javax.swing.JTable alias_table;
     public javax.swing.JCheckBox allow_tg_pri_int;
@@ -6903,12 +6918,9 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox autoscale_const;
     public javax.swing.JButton backup_roam;
     private javax.swing.JButton backup_tg;
-    public javax.swing.JTextField bluetooth_reset;
     private javax.swing.JPanel bottom_panel;
     private javax.swing.JToggleButton bt_indicator;
     private javax.swing.JLabel bt_lb;
-    private javax.swing.JLabel btreset1;
-    private javax.swing.JLabel btreset2;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup10;
     private javax.swing.ButtonGroup buttonGroup11;
@@ -7052,7 +7064,6 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
@@ -7142,8 +7153,10 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel59;
     private javax.swing.JPanel jPanel6;
     public javax.swing.JPanel jPanel60;
+    private javax.swing.JPanel jPanel61;
     private javax.swing.JPanel jPanel64;
     private javax.swing.JPanel jPanel65;
+    private javax.swing.JPanel jPanel66;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
@@ -7252,7 +7265,6 @@ public void SLEEP(long val) {
     public javax.swing.JButton restore_roam;
     private javax.swing.JButton restore_tg;
     public javax.swing.JLabel rfid;
-    public javax.swing.JComboBox<String> rfmaxgain;
     public javax.swing.JCheckBox roaming;
     public javax.swing.JCheckBox roaming_ret_to_cc;
     public javax.swing.JComboBox<String> rxmodel;
@@ -7260,6 +7272,7 @@ public void SLEEP(long val) {
     public javax.swing.JButton select_home;
     private javax.swing.JButton send_tg;
     private javax.swing.JLabel ser_dev;
+    private javax.swing.JButton show_help;
     private javax.swing.JPanel signalinsightpanel;
     public javax.swing.JRadioButton single_click_opt1;
     public javax.swing.JRadioButton single_click_opt2;
@@ -7276,6 +7289,8 @@ public void SLEEP(long val) {
     private javax.swing.JLabel sq_lb;
     public javax.swing.JTextField state;
     private javax.swing.JLabel status;
+    private javax.swing.JTextField status_format_cc;
+    private javax.swing.JTextField status_format_voice;
     private javax.swing.JPanel status_panel;
     public javax.swing.JLabel sysid;
     public javax.swing.JTextField system_alias;

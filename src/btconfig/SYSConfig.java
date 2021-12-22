@@ -719,10 +719,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           parent.en_p2_tones.setSelected(b); 
 
 
-                          int bt_reset = bb3.getInt(260)/60;
-                          if(bt_reset>0 && bt_reset<5) bt_reset=10;
-                          parent.bluetooth_reset.setText( String.format("%d", bt_reset) );
-
 
                           parent.lcn1_freq.setText( String.format("%3.6f", bb3.getDouble(384)) );
                           parent.lcn2_freq.setText( String.format("%3.6f", bb3.getDouble(392)) );
@@ -795,20 +791,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           }
 
 
-                          float kp = bb3.getFloat(292);
-
-                          if(kp == 0.0001f) {
-                            parent.agc_kp.setSelectedIndex(0);
-                          }
-                          else if(kp == 0.00025f) {
-                            parent.agc_kp.setSelectedIndex(1);
-                          }
-                          else if(kp == 0.0005f) {
-                            parent.agc_kp.setSelectedIndex(2);
-                          }
-                          else {
-                            parent.agc_kp.setSelectedIndex(2);
-                          }
 
                           //int rfmg = bb3.getInt(296)-4;
                           //if(rfmg<0) rfmg=0;
@@ -1001,37 +983,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           } catch(Exception e) {
                             e.printStackTrace();
                           }
-
-
-                          int agckp = parent.agc_kp.getSelectedIndex();
-                          float kp = 0.0005f;
-
-                          switch(agckp) {
-                            case  0  :
-                              kp = 0.0001f;
-                            break;
-                            case  1  :
-                              kp = 0.00025f;
-                            break;
-                            case  2  :
-                              kp = 0.0005f;
-                            break;
-
-                            default :
-                              kp = 0.0005f;
-                              parent.agc_kp.setSelectedIndex(2);
-                            break;
-                          }
-
-                          //fixed value of "high"
-                          kp = 0.0005f;
-
-                          result=new byte[64];
-                          cmd = "quad_agc_bw "+kp+"\r\n";  
-                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-                          SLEEP(readback_sleep);
-                          rlen=serial_port.readBytes( result, 64);
-                          System.out.println("result: "+new String(result) );
 
 
                           int vt = parent.vtimeout.getSelectedIndex();

@@ -269,6 +269,11 @@ java.text.SimpleDateFormat time_format;
         if(s2==null) s2 = s1;
       }
 
+      try {
+        s2 = s2.replaceAll(Matcher.quoteReplacement("$BLKS_SEC$"), new Integer(parent.blks_per_sec).toString().trim() );
+      } catch(Exception e) {
+      }
+
       if(parent.talkgroup_name!=null && f!=null) {
         s2 = s2.replaceAll(Matcher.quoteReplacement("$TG_NAME$"), parent.talkgroup_name.trim() );
         if(s2==null) s2 = s1;
