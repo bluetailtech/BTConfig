@@ -1435,8 +1435,8 @@ int fw_completed=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202112182009");
-      release_date.setText("Release: 2021-12-18 20:09");
+      fw_ver.setText("Latest Avail: FW Date: 202112210538");
+      release_date.setText("Release: 2021-12-21 18:06");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3032,6 +3032,10 @@ int fw_completed=0;
         status_panel = new javax.swing.JPanel();
         status = new javax.swing.JLabel();
         tiny_const = new javax.swing.JPanel();
+        jPanel55 = new javax.swing.JPanel();
+        hold1 = new javax.swing.JButton();
+        skip1 = new javax.swing.JButton();
+        mute = new javax.swing.JToggleButton();
         jPanel2 = new javax.swing.JPanel();
         progress_label = new javax.swing.JLabel();
         progbar = new javax.swing.JProgressBar();
@@ -3429,7 +3433,6 @@ int fw_completed=0;
         macid = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         minimize = new javax.swing.JToggleButton();
-        mute = new javax.swing.JToggleButton();
         release_date = new javax.swing.JLabel();
         ser_dev = new javax.swing.JLabel();
 
@@ -3469,6 +3472,37 @@ int fw_completed=0;
         tiny_const.setPreferredSize(new java.awt.Dimension(33, 33));
         tiny_const.setRequestFocusEnabled(false);
         jPanel9.add(tiny_const, java.awt.BorderLayout.EAST);
+
+        jPanel55.setBackground(new java.awt.Color(0, 0, 0));
+
+        hold1.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        hold1.setText("H");
+        hold1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hold1ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(hold1);
+
+        skip1.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        skip1.setText("S");
+        skip1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                skip1ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(skip1);
+
+        mute.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        mute.setText("MUTE");
+        mute.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                muteActionPerformed(evt);
+            }
+        });
+        jPanel55.add(mute);
+
+        jPanel9.add(jPanel55, java.awt.BorderLayout.EAST);
 
         bottom_panel.add(jPanel9);
 
@@ -5448,15 +5482,6 @@ int fw_completed=0;
         });
         jPanel4.add(minimize);
 
-        mute.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
-        mute.setText("MUTE");
-        mute.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                muteActionPerformed(evt);
-            }
-        });
-        jPanel4.add(mute);
-
         release_date.setText("V: ");
         jPanel4.add(release_date);
 
@@ -6360,6 +6385,16 @@ int fw_completed=0;
       }
     }//GEN-LAST:event_record_iq_fileActionPerformed
 
+    private void hold1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hold1ActionPerformed
+      do_follow();
+      setStatus("following current TG");
+    }//GEN-LAST:event_hold1ActionPerformed
+
+    private void skip1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skip1ActionPerformed
+      do_skip();
+      setStatus("skipping current TG");
+    }//GEN-LAST:event_skip1ActionPerformed
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -6969,6 +7004,7 @@ public void SLEEP(long val) {
     public javax.swing.JLabel fw_ver;
     private javax.swing.JButton gensysinfo;
     private javax.swing.JButton hold;
+    private javax.swing.JButton hold1;
     public javax.swing.JLabel home_dir_label;
     private javax.swing.JButton import_alias;
     private javax.swing.JButton import_csv;
@@ -7102,6 +7138,7 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel52;
     private javax.swing.JPanel jPanel53;
     private javax.swing.JPanel jPanel54;
+    private javax.swing.JPanel jPanel55;
     private javax.swing.JPanel jPanel59;
     private javax.swing.JPanel jPanel6;
     public javax.swing.JPanel jPanel60;
@@ -7232,6 +7269,7 @@ public void SLEEP(long val) {
     public javax.swing.JRadioButton single_click_opt6;
     public javax.swing.JLabel siteid;
     private javax.swing.JButton skip;
+    private javax.swing.JButton skip1;
     private javax.swing.JButton skip_tg;
     public javax.swing.JTextField skip_tg_to;
     private javax.swing.JToggleButton sq_indicator;
