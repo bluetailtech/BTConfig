@@ -1053,6 +1053,7 @@ java.text.SimpleDateFormat time_format;
     public void show_help() {
       String kw="";
 
+      kw = kw.concat("\n$BLKS_SEC$");
       kw = kw.concat("\n$CC_FREQ$");
       kw = kw.concat("\n$DATE$");
       kw = kw.concat("\n$EVM_P$");
