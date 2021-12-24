@@ -1426,12 +1426,12 @@ int fw_completed=0;
 
 
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
-      time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd-HH:mm:ss" );
+      time_format = new java.text.SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202112221622");
-      release_date.setText("Release: 2021-12-22 16:22");
+      fw_ver.setText("Latest Avail: FW Date: 202112240803");
+      release_date.setText("Release: 2021-12-24 08:03");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
