@@ -1430,8 +1430,8 @@ int fw_completed=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202112240803");
-      release_date.setText("Release: 2021-12-24 08:03");
+      fw_ver.setText("Latest Avail: FW Date: 202112301349");
+      release_date.setText("Release: 2021-12-30 13:49");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3094,6 +3094,10 @@ int fw_completed=0;
         jPanel66 = new javax.swing.JPanel();
         status_format_voice = new javax.swing.JTextField();
         show_help = new javax.swing.JButton();
+        jPanel67 = new javax.swing.JPanel();
+        jLabel60 = new javax.swing.JLabel();
+        audio_agc_max = new javax.swing.JTextField();
+        jLabel61 = new javax.swing.JLabel();
         jPanel25 = new javax.swing.JPanel();
         jPanel26 = new javax.swing.JPanel();
         jPanel29 = new javax.swing.JPanel();
@@ -3801,6 +3805,20 @@ int fw_completed=0;
             }
         });
         p25rxconfigpanel.add(show_help, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 350, -1, -1));
+
+        jPanel67.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel60.setText("Audio AGC Max Gain");
+        jPanel67.add(jLabel60);
+
+        audio_agc_max.setColumns(5);
+        audio_agc_max.setText("0.7");
+        jPanel67.add(audio_agc_max);
+
+        jLabel61.setText("(default 0.7)");
+        jPanel67.add(jLabel61);
+
+        p25rxconfigpanel.add(jPanel67, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 380, 40));
 
         jTabbedPane1.addTab("P25RX Config", p25rxconfigpanel);
 
@@ -6906,6 +6924,7 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox allow_tg_pri_int;
     public javax.swing.JCheckBox allow_unknown_tg_cb;
     public javax.swing.JButton append_cc;
+    public javax.swing.JTextField audio_agc_max;
     public javax.swing.JRadioButton audio_dev_all;
     public javax.swing.JList<String> audio_dev_list;
     public javax.swing.JRadioButton audio_dev_play;
@@ -7094,6 +7113,8 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel60;
+    private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel65;
     private javax.swing.JLabel jLabel66;
     private javax.swing.JLabel jLabel7;
@@ -7157,6 +7178,7 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel64;
     private javax.swing.JPanel jPanel65;
     private javax.swing.JPanel jPanel66;
+    private javax.swing.JPanel jPanel67;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;

@@ -553,6 +553,11 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           parent.mcu_speed.setSelectedIndex(clkspeed);
 
 
+                          float agc_max_gain = bb3.getFloat(168);
+                          try {
+                            parent.audio_agc_max.setText( String.format("%3.2f", agc_max_gain) );
+                          } catch(Exception e) {
+                          }
 
                           int en_tg_pri_int = bb3.getInt(568);
                           if(en_tg_pri_int==1) parent.allow_tg_pri_int.setSelected(true);
@@ -924,6 +929,13 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           }
 
                           result=new byte[64];
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          SLEEP(readback_sleep);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
+                          result=new byte[64];
+                          cmd = "agc_max_gain "+parent.audio_agc_max.getText()+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           SLEEP(readback_sleep);
                           rlen=serial_port.readBytes( result, 64);
