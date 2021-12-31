@@ -71,6 +71,9 @@ public class ConstPlotPanel extends JPanel {
 
    boolean do_display_ref_est=true;
 
+   int repaint_amod=2;
+   int repaint_vmod=4;
+
    short[] audio_bytes;
 
    int paint_audio;
@@ -126,7 +129,6 @@ public class ConstPlotPanel extends JPanel {
    ///////////////////////////////////////////////////////////////////////////////////////
    ///////////////////////////////////////////////////////////////////////////////////////
    public void addAudio(byte[] pcm) {
-     if(!parent.en_visuals.isSelected()) return;
      try {
        bb = ByteBuffer.wrap(pcm);
        bb.order(ByteOrder.LITTLE_ENDIAN);
@@ -145,7 +147,7 @@ public class ConstPlotPanel extends JPanel {
 
        paint_audio=15;
        audio_frame_count++;
-       if(audio_frame_count%2==0) repaint();
+       if(audio_frame_count%repaint_amod==0) repaint();
      } catch(Exception e) {
      }
    }
@@ -153,7 +155,6 @@ public class ConstPlotPanel extends JPanel {
    ///////////////////////////////////////////////////////////////////////////////////////
    ///////////////////////////////////////////////////////////////////////////////////////
    public void addData( byte[] data , boolean do_synced) {
-     if(!parent.en_visuals.isSelected()) return;
 
      data_init=1;
 
@@ -291,7 +292,7 @@ public class ConstPlotPanel extends JPanel {
        if(evms_idx==256*3) evms_idx=0;
      
 
-       if(draw_mod++%1==0) {
+       if(draw_mod++%repaint_vmod==0) {
          repaint();
          parent.jPanel24.repaint();
        }
@@ -310,6 +311,30 @@ public class ConstPlotPanel extends JPanel {
    public void paint(Graphics g){
      //super.paint(g);
      Graphics2D g2d = (Graphics2D) g;
+
+
+     if( parent.si_cpu_high.isSelected()) {
+       repaint_amod=1;
+       repaint_vmod=1;
+     }
+     else if( parent.si_cpu_normal.isSelected()) {
+       repaint_amod=2;
+       repaint_vmod=4;
+     }
+     else if( parent.si_cpu_low.isSelected()) {
+       repaint_amod=8;
+       repaint_vmod=16;
+     }
+     else if( parent.si_cpu_battery_saving.isSelected()) {
+       repaint_amod=32;
+       repaint_vmod=64;
+     }
+     else if( parent.si_cpu_off.isSelected()) {
+       repaint_amod=9999999;
+       repaint_vmod=9999999;
+     }
+
+
 
      //Rectangle r = g2d.getClipBounds();
      Rectangle r = getBounds(); 

@@ -1342,7 +1342,6 @@ int fw_completed=0;
       //jPanel25.add(cpanel);
       //
 
-      signalinsightpanel.remove(jPanel8);
 
       if(zs==null) zs = new zipsearch(this);
 
@@ -1431,7 +1430,7 @@ int fw_completed=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202112301349");
-      release_date.setText("Release: 2021-12-30 13:49");
+      release_date.setText("Release: 2021-12-31 03:10");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3026,6 +3025,7 @@ int fw_completed=0;
         buttonGroup14 = new javax.swing.ButtonGroup();
         buttonGroup15 = new javax.swing.ButtonGroup();
         buttonGroup16 = new javax.swing.ButtonGroup();
+        buttonGroup17 = new javax.swing.ButtonGroup();
         bottom_panel = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         status_panel = new javax.swing.JPanel();
@@ -3369,7 +3369,6 @@ int fw_completed=0;
         en_zero_rid = new javax.swing.JCheckBox();
         enc_mode = new javax.swing.JCheckBox();
         allow_tg_pri_int = new javax.swing.JCheckBox();
-        en_visuals = new javax.swing.JCheckBox();
         process_rid_alias = new javax.swing.JCheckBox();
         p1_ch_bw = new javax.swing.JComboBox<>();
         jLabel51 = new javax.swing.JLabel();
@@ -3399,20 +3398,12 @@ int fw_completed=0;
         jPanel24 = new javax.swing.JPanel();
         autoscale_const = new javax.swing.JCheckBox();
         nsymbols = new javax.swing.JComboBox<>();
-        jPanel8 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
-        jLabel29 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jLabel30 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
-        jButton3 = new javax.swing.JButton();
-        jLabel31 = new javax.swing.JLabel();
-        jComboBox5 = new javax.swing.JComboBox<>();
+        jPanel56 = new javax.swing.JPanel();
+        si_cpu_high = new javax.swing.JRadioButton();
+        si_cpu_normal = new javax.swing.JRadioButton();
+        si_cpu_low = new javax.swing.JRadioButton();
+        si_cpu_battery_saving = new javax.swing.JRadioButton();
+        si_cpu_off = new javax.swing.JRadioButton();
         displayviewmain_border = new javax.swing.JPanel();
         display_frame = new javax.swing.JPanel();
         jPanel60 = new javax.swing.JPanel();
@@ -5196,15 +5187,6 @@ int fw_completed=0;
         });
         advancedpanel.add(allow_tg_pri_int, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, -1, -1));
 
-        en_visuals.setSelected(true);
-        en_visuals.setText("Enable Visuals In Signal Insights Tab  (disable for system with over-taxed CPU) (no need to write config)");
-        en_visuals.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                en_visualsActionPerformed(evt);
-            }
-        });
-        advancedpanel.add(en_visuals, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 420, -1, -1));
-
         process_rid_alias.setSelected(true);
         process_rid_alias.setText("Process RID / Alias (no need to write config)");
         process_rid_alias.addActionListener(new java.awt.event.ActionListener() {
@@ -5321,63 +5303,59 @@ int fw_completed=0;
         });
         jPanel24.add(nsymbols);
 
+        jPanel56.setBorder(javax.swing.BorderFactory.createTitledBorder("CPU Usage"));
+
+        buttonGroup17.add(si_cpu_high);
+        si_cpu_high.setText("High");
+        si_cpu_high.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                si_cpu_highActionPerformed(evt);
+            }
+        });
+        jPanel56.add(si_cpu_high);
+
+        buttonGroup17.add(si_cpu_normal);
+        si_cpu_normal.setSelected(true);
+        si_cpu_normal.setText("Normal");
+        si_cpu_normal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                si_cpu_normalActionPerformed(evt);
+            }
+        });
+        jPanel56.add(si_cpu_normal);
+
+        buttonGroup17.add(si_cpu_low);
+        si_cpu_low.setText("Low");
+        si_cpu_low.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                si_cpu_lowActionPerformed(evt);
+            }
+        });
+        jPanel56.add(si_cpu_low);
+
+        buttonGroup17.add(si_cpu_battery_saving);
+        si_cpu_battery_saving.setText("Battery Saving");
+        si_cpu_battery_saving.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                si_cpu_battery_savingActionPerformed(evt);
+            }
+        });
+        jPanel56.add(si_cpu_battery_saving);
+
+        buttonGroup17.add(si_cpu_off);
+        si_cpu_off.setText("Off");
+        si_cpu_off.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                si_cpu_offActionPerformed(evt);
+            }
+        });
+        jPanel56.add(si_cpu_off);
+
+        jPanel24.add(jPanel56);
+
         const_panel.add(jPanel24, java.awt.BorderLayout.NORTH);
 
         signalinsightpanel.add(const_panel);
-
-        jPanel8.setMaximumSize(new java.awt.Dimension(1512, 2147483647));
-        jPanel8.setPreferredSize(new java.awt.Dimension(512, 1065));
-        jPanel8.setLayout(new java.awt.BorderLayout());
-
-        jPanel7.setEnabled(false);
-        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.setEnabled(false);
-        jPanel7.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, -1, -1));
-
-        jLabel27.setText("Max RF Gain");
-        jPanel7.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 95, -1, 20));
-
-        jLabel28.setText("AGC Hysteresis");
-        jPanel7.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, -1, -1));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox2.setEnabled(false);
-        jPanel7.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, -1, -1));
-
-        jButton2.setText("Test Changes");
-        jButton2.setEnabled(false);
-        jPanel7.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 440, -1, -1));
-
-        jLabel29.setText("SOFT AGC BW");
-        jPanel7.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, -1, -1));
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox3.setEnabled(false);
-        jPanel7.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, -1, -1));
-
-        jLabel30.setText("HW AGC REF");
-        jPanel7.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, -1, -1));
-
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox4.setEnabled(false);
-        jPanel7.add(jComboBox4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, -1, -1));
-
-        jButton3.setText("Reset To Defaults");
-        jButton3.setEnabled(false);
-        jPanel7.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 440, -1, -1));
-
-        jLabel31.setText("DVGA GAIN");
-        jPanel7.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, -1, -1));
-
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox5.setEnabled(false);
-        jPanel7.add(jComboBox5, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, -1, -1));
-
-        jPanel8.add(jPanel7, java.awt.BorderLayout.CENTER);
-
-        signalinsightpanel.add(jPanel8);
 
         jTabbedPane1.addTab("Signal Insights", signalinsightpanel);
 
@@ -6224,10 +6202,6 @@ int fw_completed=0;
         // TODO add your handling code here:
     }//GEN-LAST:event_allow_tg_pri_intActionPerformed
 
-    private void en_visualsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_en_visualsActionPerformed
-      if(prefs!=null) prefs.putBoolean( "en_visuals", en_visuals.isSelected());
-    }//GEN-LAST:event_en_visualsActionPerformed
-
     private void muteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_muteActionPerformed
       if(mute.isSelected()) {
         mute.setBackground(java.awt.Color.green);
@@ -6429,6 +6403,27 @@ int fw_completed=0;
       dframe.show_help();
     }//GEN-LAST:event_show_helpActionPerformed
 
+    private void si_cpu_normalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_si_cpu_normalActionPerformed
+      if(prefs!=null) prefs.put("si_cpu", "normal"); 
+    }//GEN-LAST:event_si_cpu_normalActionPerformed
+
+    private void si_cpu_highActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_si_cpu_highActionPerformed
+      if(prefs!=null) prefs.put("si_cpu", "high"); 
+    }//GEN-LAST:event_si_cpu_highActionPerformed
+
+    private void si_cpu_lowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_si_cpu_lowActionPerformed
+      if(prefs!=null) prefs.put("si_cpu", "low"); 
+    }//GEN-LAST:event_si_cpu_lowActionPerformed
+
+    private void si_cpu_battery_savingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_si_cpu_battery_savingActionPerformed
+      if(prefs!=null) prefs.put("si_cpu", "battery"); 
+    }//GEN-LAST:event_si_cpu_battery_savingActionPerformed
+
+    private void si_cpu_offActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_si_cpu_offActionPerformed
+      if(prefs!=null) prefs.put("si_cpu", "off"); 
+    }//GEN-LAST:event_si_cpu_offActionPerformed
+
+
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
       roaming.setSelected(false);
@@ -6606,7 +6601,6 @@ public void update_prefs() {
       autoscale_const.setSelected( prefs.getBoolean("autoscale_const", true) );
       nsymbols.setSelectedIndex( prefs.getInt("nsymbols", 0) );
 
-      en_visuals.setSelected( prefs.getBoolean("en_visuals", true) );
 
       system_alias.setText( prefs.get("system_alias", "") );
 
@@ -6669,6 +6663,15 @@ public void update_prefs() {
 
       tg_font_color = new Color( parent.prefs.getInt("tg_font_color", new Color(255,255,255).getRGB() ) );
       log_ta.setForeground( tg_font_color ); 
+
+      if(prefs!=null) {
+        String sicpu = prefs.get("si_cpu", "normal");
+        if(sicpu.equals("normal")) si_cpu_normal.setSelected(true);
+        if(sicpu.equals("high")) si_cpu_high.setSelected(true);
+        if(sicpu.equals("low")) si_cpu_low.setSelected(true);
+        if(sicpu.equals("battery")) si_cpu_battery_saving.setSelected(true);
+        if(sicpu.equals("off")) si_cpu_off.setSelected(true);
+      }
 
   } catch(Exception e) {
     e.printStackTrace();
@@ -6948,6 +6951,7 @@ public void SLEEP(long val) {
     private javax.swing.ButtonGroup buttonGroup14;
     private javax.swing.ButtonGroup buttonGroup15;
     private javax.swing.ButtonGroup buttonGroup16;
+    private javax.swing.ButtonGroup buttonGroup17;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.ButtonGroup buttonGroup4;
@@ -7011,7 +7015,6 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox en_encout;
     public javax.swing.JCheckBox en_p2_tones;
     public javax.swing.JCheckBox en_tg_int_tone;
-    public javax.swing.JCheckBox en_visuals;
     public javax.swing.JCheckBox en_zero_rid;
     public javax.swing.JCheckBox enable_audio;
     private javax.swing.JRadioButton enable_commands;
@@ -7051,13 +7054,6 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox inc_trunked_only;
     public javax.swing.JCheckBox inc_vhf;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -7077,12 +7073,7 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
@@ -7171,6 +7162,7 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel53;
     private javax.swing.JPanel jPanel54;
     private javax.swing.JPanel jPanel55;
+    private javax.swing.JPanel jPanel56;
     private javax.swing.JPanel jPanel59;
     private javax.swing.JPanel jPanel6;
     public javax.swing.JPanel jPanel60;
@@ -7179,8 +7171,6 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel65;
     private javax.swing.JPanel jPanel66;
     private javax.swing.JPanel jPanel67;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JScrollPane jScrollPane2;
@@ -7295,6 +7285,11 @@ public void SLEEP(long val) {
     private javax.swing.JButton send_tg;
     private javax.swing.JLabel ser_dev;
     private javax.swing.JButton show_help;
+    public javax.swing.JRadioButton si_cpu_battery_saving;
+    public javax.swing.JRadioButton si_cpu_high;
+    public javax.swing.JRadioButton si_cpu_low;
+    public javax.swing.JRadioButton si_cpu_normal;
+    public javax.swing.JRadioButton si_cpu_off;
     private javax.swing.JPanel signalinsightpanel;
     public javax.swing.JRadioButton single_click_opt1;
     public javax.swing.JRadioButton single_click_opt2;
