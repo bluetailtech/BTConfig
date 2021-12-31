@@ -1429,8 +1429,8 @@ int fw_completed=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202112310615");
-      release_date.setText("Release: 2021-12-31 06:15");
+      fw_ver.setText("Latest Avail: FW Date: 202112310702");
+      release_date.setText("Release: 2021-12-31 07:02");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
