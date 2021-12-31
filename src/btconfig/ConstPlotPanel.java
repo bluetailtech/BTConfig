@@ -180,7 +180,7 @@ public class ConstPlotPanel extends JPanel {
          if(plot_idx>=DATA_SIZE) {
            plot_idx=0;
            //System.out.println("rollover");
-           DATA_SIZE = (int) java.lang.Math.pow( 2.0, parent.nsymbols.getSelectedIndex()+8 ); 
+           DATA_SIZE = (int) java.lang.Math.pow( 2.0, 8 ); 
          }
        }
 
@@ -301,7 +301,7 @@ public class ConstPlotPanel extends JPanel {
        plot_idx=0;
        gains_idx=0;
        sync_idx=0;
-       DATA_SIZE = (int) java.lang.Math.pow( 2.0, parent.nsymbols.getSelectedIndex()+8 ); 
+       DATA_SIZE = (int) java.lang.Math.pow( 2.0, 8 ); 
        e.printStackTrace();
      }
    }
@@ -369,11 +369,6 @@ public class ConstPlotPanel extends JPanel {
      }
 
      scale = 100.0 * (1.0 / peak_mag);
-
-     if(!parent.autoscale_const.isSelected()) scale=0.125;
-     parent.autoscale_const.setSelected(true);
-     parent.autoscale_const.setEnabled(false);
-
 
      j=0;
      int j2=0;

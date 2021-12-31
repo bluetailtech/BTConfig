@@ -3396,8 +3396,6 @@ int fw_completed=0;
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
-        autoscale_const = new javax.swing.JCheckBox();
-        nsymbols = new javax.swing.JComboBox<>();
         jPanel56 = new javax.swing.JPanel();
         si_cpu_high = new javax.swing.JRadioButton();
         si_cpu_normal = new javax.swing.JRadioButton();
@@ -5286,23 +5284,6 @@ int fw_completed=0;
 
         jPanel24.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        autoscale_const.setSelected(true);
-        autoscale_const.setText("Auto Scale");
-        autoscale_const.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                autoscale_constActionPerformed(evt);
-            }
-        });
-        jPanel24.add(autoscale_const);
-
-        nsymbols.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "256 Symbols", "512 Symbols", "1024 Symbols", "2048 Symbols", "4096 Symbols", "8192 Symbols" }));
-        nsymbols.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nsymbolsActionPerformed(evt);
-            }
-        });
-        jPanel24.add(nsymbols);
-
         jPanel56.setBorder(javax.swing.BorderFactory.createTitledBorder("CPU Usage"));
 
         buttonGroup17.add(si_cpu_high);
@@ -5855,14 +5836,6 @@ int fw_completed=0;
       serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
       if(jTabbedPane1.getSelectedIndex()==5) jTextArea1.requestFocus();
     }//GEN-LAST:event_enable_commandsActionPerformed
-
-    private void autoscale_constActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoscale_constActionPerformed
-      if(prefs!=null) prefs.putBoolean("autoscale_const", autoscale_const.isSelected());
-    }//GEN-LAST:event_autoscale_constActionPerformed
-
-    private void nsymbolsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nsymbolsActionPerformed
-       if(prefs!=null) prefs.putInt("nsymbols", nsymbols.getSelectedIndex());
-    }//GEN-LAST:event_nsymbolsActionPerformed
 
     private void enable_conlogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enable_conlogActionPerformed
         // TODO add your handling code here:
@@ -6598,8 +6571,6 @@ public void update_prefs() {
       auto_flash_tg.setSelected( prefs.getBoolean("tg_auto_flash", false) );
       auto_pop_table.setSelected( prefs.getBoolean("tg_auto_pop_table", true) );
       disable_encrypted.setSelected( prefs.getBoolean("enc_auto_flash", false) );
-      autoscale_const.setSelected( prefs.getBoolean("autoscale_const", true) );
-      nsymbols.setSelectedIndex( prefs.getInt("nsymbols", 0) );
 
 
       system_alias.setText( prefs.get("system_alias", "") );
@@ -6937,7 +6908,6 @@ public void SLEEP(long val) {
     private javax.swing.JPanel audiopanel;
     public javax.swing.JCheckBox auto_flash_tg;
     public javax.swing.JCheckBox auto_pop_table;
-    public javax.swing.JCheckBox autoscale_const;
     public javax.swing.JButton backup_roam;
     private javax.swing.JButton backup_tg;
     private javax.swing.JPanel bottom_panel;
@@ -7250,7 +7220,6 @@ public void SLEEP(long val) {
     public javax.swing.JLabel nac;
     public javax.swing.JPanel no_voice_panel;
     public javax.swing.JTextField no_voice_secs;
-    public javax.swing.JComboBox<String> nsymbols;
     public javax.swing.JComboBox<String> op_mode;
     private javax.swing.JLabel os_string;
     public javax.swing.JComboBox<String> p1_ch_bw;
