@@ -153,6 +153,7 @@ public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String 
         parent.addTableObject( new String(talkgroup+"_unknown"), idx, 4);
         parent.addTableObject( city, idx, 5);
         parent.addTableObject( new String(wacn_hex), idx, 6);
+        parent.addTableObject( new Integer("1"), idx, 7);
 
         if(parent.did_read_talkgroups==1 && parent.auto_flash_tg.isSelected()) parent.tg_update_pending=1;  //write them to flash
 
@@ -288,6 +289,7 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
           String str5="";
           String str6="";
           String str7="";
+          String str8="";
 
           if(strs[0]!=null) str1 = strs[0];  
           if(strs[1]!=null) str2 = strs[1]; 
@@ -296,14 +298,17 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
           if(strs[4]!=null) str5 = strs[4]; 
           if(strs[5]!=null) str6 = strs[5]; 
           if(strs[6]!=null) str7 = strs[6]; 
+          if(strs.length>7 && strs[7]!=null) str8 = strs[7]; 
 
-          System.out.println(":"+str1+":"+str2+":"+str3+":"+str4+":"+str5+":"+str6+":"+str7+":");
+          System.out.println(":"+str1+":"+str2+":"+str3+":"+str4+":"+str5+":"+str6+":"+str7+":"+str8+":");
 
           if(str7!=null && str7.length()>0 && str7.length()>7) {
             str7 = str7.substring(0,7);
           }
 
           int en = 0;
+
+          if(str8.length()==0) str8="1";
 
           if( str1.trim().equals("1") || str1.toUpperCase().equals("TRUE") ) en=1;
             else en=0;
@@ -323,6 +328,7 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
 
           int priority = Integer.parseInt( str3 );
           int talkgroup = Integer.parseInt( str4 );
+          int zone = Integer.parseInt( str8 );
 
           byte[] dbytes = str5.getBytes();  //alpha
           byte[] lbytes = str6.getBytes();  //description
@@ -340,11 +346,14 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
             bb_csv.put(b[j]);
           }
           //desc
-          for(int j=0;j<32;j++) {
+          for(int j=0;j<31;j++) {
             if(j<lbytes.length) b[j] = lbytes[j];
               else b[j]=0;
             bb_csv.put(b[j]);
           }
+
+
+        bb_csv.put((byte) (zone&0xff));
 
         number_of_records++;
       }
@@ -631,11 +640,13 @@ public void import_DSD(BTFrame parent, LineNumberReader lnr, SerialPort serial_p
             bb_csv.put(b[j]);
           }
           //desc
-          for(int j=0;j<32;j++) {
+          for(int j=0;j<31;j++) {
             if(j<lbytes.length) b[j] = lbytes[j];
               else b[j]=0;
             bb_csv.put(b[j]);
           }
+
+          bb_csv.put((byte)1);  //default tg zone of 1
 
         number_of_records++;
       }
@@ -1034,6 +1045,7 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
                 String desc = (String) parent.getTableObject(i,4);
                 String loc = (String) parent.getTableObject(i,5);
                 String wacn = (String) parent.getTableObject(i,6);
+                Integer tgzone = (Integer) parent.getTableObject(i,7);
                 //String wacn = (String) parent.getTableObject(i,6);
 
                 /*
@@ -1064,6 +1076,7 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
               parent.addTableObject( new Integer(1), i, 3);
               parent.addTableObject( new String("alpha").trim(), i, 4);
               parent.addTableObject( new String("desc").trim(), i, 5);
+              parent.addTableObject( new Integer("1"), i, 7);
 
               parent.addTableObject( "0x456", i, 6);
               nrecs++;
@@ -1092,6 +1105,7 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
                 Integer talkgroup = (Integer) parent.getTableObject(i, 3);
                 String desc = (String) parent.getTableObject(i,4);
                 String loc = (String) parent.getTableObject(i,5);
+                Integer zone = (Integer) parent.getTableObject(i,7);
 
 
                 String sys_id_str = (String) parent.getTableObject(i,1);
@@ -1140,11 +1154,14 @@ public void send_talkgroups(BTFrame parent, SerialPort serial_port)
                       else b[j]=0;
                     bb_image.put(b[j]);
                   }
-                  for(int j=0;j<32;j++) {
+                  for(int j=0;j<31;j++) {
                     if(j<lbytes.length) b[j] = lbytes[j];
                       else b[j]=0;
                     bb_image.put(b[j]);
                   }
+
+                  int tgzone = (byte) (zone.intValue()&0xff); 
+                  bb_image.put((byte)tgzone);
 
                   config_length+=80;  //length of record
                   nrecs_w++;
@@ -1568,9 +1585,11 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                       for(int j=0;j<32;j++) {
                         desc[j] = bb3.get();
                       }
-                      for(int j=0;j<32;j++) {
+                      for(int j=0;j<31;j++) {
                         loc[j] = bb3.get();
                       }
+
+                      int zone = (int) bb3.get();
 
                       //System.out.println("\r\n\r\n");
                       //System.out.println("enabled: "+enabled);
@@ -1593,6 +1612,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                       parent.addTableObject( new String(loc).trim(), i, 5);
 
                       parent.addTableObject( "0x"+Integer.toString(wacn,16) , i, 6);
+                      parent.addTableObject( new Integer(zone), i, 7);
 
                     }
 
@@ -1606,6 +1626,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                         parent.addTableObject(  null,i, 4);
                         parent.addTableObject(  null,i, 5);
                         parent.addTableObject(  null,i, 6);
+                        parent.addTableObject(  null,i, 7);
 
                       }
                     }
@@ -1707,7 +1728,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                             file = new File(file_path+".csv");
                             fos = new FileOutputStream(file);
 
-                            String header_line = "ENABLED,SYS_ID_HEX,PRIORITY,TGRP,ALPHATAG,DESCRIPTION,WACN_HEX\r\n";
+                            String header_line = "ENABLED,SYS_ID_HEX,PRIORITY,TGRP,ALPHATAG,DESCRIPTION,WACN_HEX,ZONE\r\n";
                             fos.write( header_line.getBytes() );
 
                             bb = ByteBuffer.wrap(image_buffer);
@@ -1729,9 +1750,10 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                               for(int j=0;j<32;j++) {
                                 desc[j] = bb.get();
                               }
-                              for(int j=0;j<32;j++) {
+                              for(int j=0;j<31;j++) {
                                 loc[j] = bb.get();
                               }
+                              int zone = (int) bb.get();
 
                               String alpha_str = new String(desc).trim();
                               String desc_str = new String(loc).trim();
@@ -1741,7 +1763,7 @@ public void read_talkgroups(BTFrame parent, SerialPort serial_port)
                               String record_out = enabled+","+"0x"+Integer.toString(sys_id,16)+","+priority+","+talkgroup+","+
                                                   alpha_str+","+
                                                   desc_str+","+
-                                                  "0x"+Integer.toString(wacn,16)+"\r\n";
+                                                  "0x"+Integer.toString(wacn,16)+","+zone+"\r\n";
                               fos.write( record_out.getBytes() );
                             }
 

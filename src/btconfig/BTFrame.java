@@ -1242,6 +1242,7 @@ int is_phase1=1;
 int is_phase2=0;
 int is_tdma_cc=0;
 long status_time;
+int current_tgzone=0;
 audio_archive aud_archive;
 String document_dir="";
 logger logger_out;
@@ -1429,8 +1430,8 @@ int fw_completed=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202112311845");
-      release_date.setText("Release: 2021-12-31 18:45");
+      fw_ver.setText("Latest Avail: FW Date: 202201021045");
+      release_date.setText("Release: 2022-01-02 10:45");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3032,6 +3033,14 @@ int fw_completed=0;
         status = new javax.swing.JLabel();
         tiny_const = new javax.swing.JPanel();
         jPanel55 = new javax.swing.JPanel();
+        z1 = new javax.swing.JToggleButton();
+        z2 = new javax.swing.JToggleButton();
+        z3 = new javax.swing.JToggleButton();
+        z4 = new javax.swing.JToggleButton();
+        z5 = new javax.swing.JToggleButton();
+        z6 = new javax.swing.JToggleButton();
+        z7 = new javax.swing.JToggleButton();
+        z8 = new javax.swing.JToggleButton();
         hold1 = new javax.swing.JButton();
         skip1 = new javax.swing.JButton();
         mute = new javax.swing.JToggleButton();
@@ -3295,6 +3304,16 @@ int fw_completed=0;
         auto_flash_tg = new javax.swing.JCheckBox();
         disable_encrypted = new javax.swing.JCheckBox();
         auto_pop_table = new javax.swing.JCheckBox();
+        jPanel69 = new javax.swing.JPanel();
+        zone1 = new javax.swing.JCheckBox();
+        zone2 = new javax.swing.JCheckBox();
+        zone3 = new javax.swing.JCheckBox();
+        zone4 = new javax.swing.JCheckBox();
+        zone5 = new javax.swing.JCheckBox();
+        zone6 = new javax.swing.JCheckBox();
+        zone7 = new javax.swing.JCheckBox();
+        zone8 = new javax.swing.JCheckBox();
+        tg_write_config = new javax.swing.JButton();
         consolePanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -3464,6 +3483,86 @@ int fw_completed=0;
         jPanel9.add(tiny_const, java.awt.BorderLayout.EAST);
 
         jPanel55.setBackground(new java.awt.Color(0, 0, 0));
+
+        z1.setBackground(new java.awt.Color(204, 204, 204));
+        z1.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        z1.setText("1");
+        z1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                z1ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(z1);
+
+        z2.setBackground(new java.awt.Color(204, 204, 204));
+        z2.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        z2.setText("2");
+        z2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                z2ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(z2);
+
+        z3.setBackground(new java.awt.Color(204, 204, 204));
+        z3.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        z3.setText("3");
+        z3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                z3ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(z3);
+
+        z4.setBackground(new java.awt.Color(204, 204, 204));
+        z4.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        z4.setText("4");
+        z4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                z4ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(z4);
+
+        z5.setBackground(new java.awt.Color(204, 204, 204));
+        z5.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        z5.setText("5");
+        z5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                z5ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(z5);
+
+        z6.setBackground(new java.awt.Color(204, 204, 204));
+        z6.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        z6.setText("6");
+        z6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                z6ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(z6);
+
+        z7.setBackground(new java.awt.Color(204, 204, 204));
+        z7.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        z7.setText("7");
+        z7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                z7ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(z7);
+
+        z8.setBackground(new java.awt.Color(204, 204, 204));
+        z8.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        z8.setText("8");
+        z8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                z8ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(z8);
 
         hold1.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         hold1.setText("H");
@@ -4641,13 +4740,13 @@ int fw_completed=0;
         jTable1.setEditingColumn(1);
         jTable1.setEditingRow(1);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object[6554][7],
+            new Object[6554][8],
             new String [] {
-                "Enabled", "SYS_ID(HEX)", "Priority", "TGRP", "AlphaTag", "Description", "WACN(HEX)"
+                "Enabled", "SYS_ID(HEX)", "Priority", "TGRP", "AlphaTag", "Description", "WACN(HEX)", "Zone"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Boolean.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -4769,6 +4868,107 @@ int fw_completed=0;
         jPanel23.add(auto_pop_table);
 
         jPanel22.add(jPanel23);
+
+        jPanel69.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel69.setForeground(new java.awt.Color(255, 255, 255));
+
+        zone1.setBackground(new java.awt.Color(0, 0, 0));
+        zone1.setForeground(new java.awt.Color(255, 255, 255));
+        zone1.setSelected(true);
+        zone1.setText("Zone 1");
+        zone1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zone1ActionPerformed(evt);
+            }
+        });
+        jPanel69.add(zone1);
+
+        zone2.setBackground(new java.awt.Color(0, 0, 0));
+        zone2.setForeground(new java.awt.Color(255, 255, 255));
+        zone2.setSelected(true);
+        zone2.setText("Zone 2");
+        zone2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zone2ActionPerformed(evt);
+            }
+        });
+        jPanel69.add(zone2);
+
+        zone3.setBackground(new java.awt.Color(0, 0, 0));
+        zone3.setForeground(new java.awt.Color(255, 255, 255));
+        zone3.setSelected(true);
+        zone3.setText("Zone 3");
+        zone3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zone3ActionPerformed(evt);
+            }
+        });
+        jPanel69.add(zone3);
+
+        zone4.setBackground(new java.awt.Color(0, 0, 0));
+        zone4.setForeground(new java.awt.Color(255, 255, 255));
+        zone4.setSelected(true);
+        zone4.setText("Zone 4");
+        zone4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zone4ActionPerformed(evt);
+            }
+        });
+        jPanel69.add(zone4);
+
+        zone5.setBackground(new java.awt.Color(0, 0, 0));
+        zone5.setForeground(new java.awt.Color(255, 255, 255));
+        zone5.setSelected(true);
+        zone5.setText("Zone 5");
+        zone5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zone5ActionPerformed(evt);
+            }
+        });
+        jPanel69.add(zone5);
+
+        zone6.setBackground(new java.awt.Color(0, 0, 0));
+        zone6.setForeground(new java.awt.Color(255, 255, 255));
+        zone6.setSelected(true);
+        zone6.setText("Zone 6");
+        zone6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zone6ActionPerformed(evt);
+            }
+        });
+        jPanel69.add(zone6);
+
+        zone7.setBackground(new java.awt.Color(0, 0, 0));
+        zone7.setForeground(new java.awt.Color(255, 255, 255));
+        zone7.setSelected(true);
+        zone7.setText("Zone 7");
+        zone7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zone7ActionPerformed(evt);
+            }
+        });
+        jPanel69.add(zone7);
+
+        zone8.setBackground(new java.awt.Color(0, 0, 0));
+        zone8.setForeground(new java.awt.Color(255, 255, 255));
+        zone8.setSelected(true);
+        zone8.setText("Zone 8");
+        zone8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zone8ActionPerformed(evt);
+            }
+        });
+        jPanel69.add(zone8);
+
+        tg_write_config.setText("Write Zone Enable");
+        tg_write_config.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tg_write_configActionPerformed(evt);
+            }
+        });
+        jPanel69.add(tg_write_config);
+
+        jPanel22.add(jPanel69);
 
         talkgroup_panel.add(jPanel22, java.awt.BorderLayout.SOUTH);
 
@@ -6396,6 +6596,185 @@ int fw_completed=0;
       if(prefs!=null) prefs.put("si_cpu", "off"); 
     }//GEN-LAST:event_si_cpu_offActionPerformed
 
+    public void update_zones() {
+      if( (current_tgzone&0x01)>0) z1.setSelected(true);
+        else z1.setSelected(false);
+      if( (current_tgzone&0x02)>0) z2.setSelected(true);
+        else z2.setSelected(false);
+      if( (current_tgzone&0x04)>0) z3.setSelected(true);
+        else z3.setSelected(false);
+      if( (current_tgzone&0x08)>0) z4.setSelected(true);
+        else z4.setSelected(false);
+      if( (current_tgzone&0x10)>0) z5.setSelected(true);
+        else z5.setSelected(false);
+      if( (current_tgzone&0x20)>0) z6.setSelected(true);
+        else z6.setSelected(false);
+      if( (current_tgzone&0x40)>0) z7.setSelected(true);
+        else z7.setSelected(false);
+      if( (current_tgzone&0x80)>0) z8.setSelected(true);
+        else z8.setSelected(false);
+
+      if(z1.isSelected()) {
+        z1.setBackground(java.awt.Color.green);
+      }
+      else {
+        z1.setBackground(java.awt.Color.gray);
+      }
+      if(z2.isSelected()) {
+        z2.setBackground(java.awt.Color.green);
+      }
+      else {
+        z2.setBackground(java.awt.Color.gray);
+      }
+      if(z3.isSelected()) {
+        z3.setBackground(java.awt.Color.green);
+      }
+      else {
+        z3.setBackground(java.awt.Color.gray);
+      }
+      if(z4.isSelected()) {
+        z4.setBackground(java.awt.Color.green);
+      }
+      else {
+        z4.setBackground(java.awt.Color.gray);
+      }
+      if(z5.isSelected()) {
+        z5.setBackground(java.awt.Color.green);
+      }
+      else {
+        z5.setBackground(java.awt.Color.gray);
+      }
+      if(z6.isSelected()) {
+        z6.setBackground(java.awt.Color.green);
+      }
+      else {
+        z6.setBackground(java.awt.Color.gray);
+      }
+      if(z7.isSelected()) {
+        z7.setBackground(java.awt.Color.green);
+      }
+      else {
+        z7.setBackground(java.awt.Color.gray);
+      }
+      if(z8.isSelected()) {
+        z8.setBackground(java.awt.Color.green);
+      }
+      else {
+        z8.setBackground(java.awt.Color.gray);
+      }
+    }
+
+    private void z1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_z1ActionPerformed
+        if(z1.isSelected()) current_tgzone |= 0x01;
+        else current_tgzone &= (byte) (255-0x01)&0xff;
+
+        String cmd= "tgzone "+current_tgzone+"\r\n";
+        serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+
+        update_zones();
+    }//GEN-LAST:event_z1ActionPerformed
+
+    private void z2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_z2ActionPerformed
+        if(z2.isSelected()) current_tgzone |= 0x02;
+        else current_tgzone &= (byte) (255-0x02)&0xff;
+
+        String cmd= "tgzone "+current_tgzone+"\r\n";
+        serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+        update_zones();
+    }//GEN-LAST:event_z2ActionPerformed
+
+    private void z3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_z3ActionPerformed
+        if(z3.isSelected()) current_tgzone |= 0x04;
+        else current_tgzone &= (byte) (255-0x04)&0xff;
+        String cmd= "tgzone "+current_tgzone+"\r\n";
+        serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+        update_zones();
+    }//GEN-LAST:event_z3ActionPerformed
+
+    private void z4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_z4ActionPerformed
+        if(z4.isSelected()) current_tgzone |= 0x08;
+        else current_tgzone &= (byte) (255-0x08)&0xff;
+        String cmd= "tgzone "+current_tgzone+"\r\n";
+        serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+        update_zones();
+    }//GEN-LAST:event_z4ActionPerformed
+
+    private void z5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_z5ActionPerformed
+        if(z5.isSelected()) current_tgzone |= 0x10;
+        else current_tgzone &= (byte) (255-0x10)&0xff;
+        String cmd= "tgzone "+current_tgzone+"\r\n";
+        serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+        update_zones();
+    }//GEN-LAST:event_z5ActionPerformed
+
+    private void z6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_z6ActionPerformed
+        if(z6.isSelected()) current_tgzone |= 0x20;
+        else current_tgzone &= (byte) (255-0x20)&0xff;
+        String cmd= "tgzone "+current_tgzone+"\r\n";
+        serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+        update_zones();
+    }//GEN-LAST:event_z6ActionPerformed
+
+    private void z7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_z7ActionPerformed
+        if(z7.isSelected()) current_tgzone |= 0x40;
+        else current_tgzone &= (byte) (255-0x40)&0xff;
+        String cmd= "tgzone "+current_tgzone+"\r\n";
+        serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+        update_zones();
+    }//GEN-LAST:event_z7ActionPerformed
+
+    private void z8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_z8ActionPerformed
+        if(z8.isSelected()) current_tgzone |= 0x80;
+        else current_tgzone &= (byte) (255-0x80)&0xff;
+        String cmd= "tgzone "+current_tgzone+"\r\n";
+        serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+        update_zones();
+    }//GEN-LAST:event_z8ActionPerformed
+
+    private void zone1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zone1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_zone1ActionPerformed
+
+    private void zone2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zone2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_zone2ActionPerformed
+
+    private void zone3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zone3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_zone3ActionPerformed
+
+    private void zone4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zone4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_zone4ActionPerformed
+
+    private void zone5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zone5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_zone5ActionPerformed
+
+    private void zone6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zone6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_zone6ActionPerformed
+
+    private void zone7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zone7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_zone7ActionPerformed
+
+    private void zone8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zone8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_zone8ActionPerformed
+
+    private void tg_write_configActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tg_write_configActionPerformed
+        do_read_config=1;
+        do_write_config=1;
+        cpanel.reset_ref_est();
+
+        current_sys_id = 0;
+        current_wacn_id = 0;
+        wacn.setText("");
+        sysid.setText("");
+        nac.setText("");
+    }//GEN-LAST:event_tg_write_configActionPerformed
+
 
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
@@ -7141,6 +7520,7 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel65;
     private javax.swing.JPanel jPanel66;
     private javax.swing.JPanel jPanel67;
+    private javax.swing.JPanel jPanel69;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JScrollPane jScrollPane2;
@@ -7286,6 +7666,7 @@ public void SLEEP(long val) {
     private javax.swing.JToggleButton tg_indicator;
     private javax.swing.JLabel tg_lb;
     public javax.swing.JScrollPane tg_scroll_pane;
+    private javax.swing.JButton tg_write_config;
     private javax.swing.JPanel tgfontpanel;
     private javax.swing.JButton tglog_color;
     private javax.swing.JButton tglog_edit;
@@ -7302,6 +7683,22 @@ public void SLEEP(long val) {
     public javax.swing.JComboBox<String> vtimeout;
     public javax.swing.JLabel wacn;
     private javax.swing.JButton write_config;
+    public javax.swing.JToggleButton z1;
+    public javax.swing.JToggleButton z2;
+    public javax.swing.JToggleButton z3;
+    public javax.swing.JToggleButton z4;
+    public javax.swing.JToggleButton z5;
+    public javax.swing.JToggleButton z6;
+    public javax.swing.JToggleButton z7;
+    public javax.swing.JToggleButton z8;
     public javax.swing.JTextField zipcode;
+    public javax.swing.JCheckBox zone1;
+    public javax.swing.JCheckBox zone2;
+    public javax.swing.JCheckBox zone3;
+    public javax.swing.JCheckBox zone4;
+    public javax.swing.JCheckBox zone5;
+    public javax.swing.JCheckBox zone6;
+    public javax.swing.JCheckBox zone7;
+    public javax.swing.JCheckBox zone8;
     // End of variables declaration//GEN-END:variables
 }

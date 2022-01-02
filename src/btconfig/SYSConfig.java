@@ -588,6 +588,32 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           }
 
 
+                          int tgzone = bb3.getInt(616);
+                          try {
+                            parent.current_tgzone = tgzone;
+
+                            if( (tgzone&0x01) >0) parent.zone1.setSelected(true);
+                              else parent.zone1.setSelected(false);
+                            if( (tgzone&0x02) >0) parent.zone2.setSelected(true);
+                              else parent.zone2.setSelected(false);
+                            if( (tgzone&0x04) >0) parent.zone3.setSelected(true);
+                              else parent.zone3.setSelected(false);
+                            if( (tgzone&0x08) >0) parent.zone4.setSelected(true);
+                              else parent.zone4.setSelected(false);
+                            if( (tgzone&0x10) >0) parent.zone5.setSelected(true);
+                              else parent.zone5.setSelected(false);
+                            if( (tgzone&0x20) >0) parent.zone6.setSelected(true);
+                              else parent.zone6.setSelected(false);
+                            if( (tgzone&0x40) >0) parent.zone7.setSelected(true);
+                              else parent.zone7.setSelected(false);
+                            if( (tgzone&0x80) >0) parent.zone8.setSelected(true);
+                              else parent.zone8.setSelected(false);
+
+                            parent.update_zones();
+
+                          } catch(Exception e) {
+                          }
+
 
                           int but1_cfg = bb3.getInt(540);
                           int but2_cfg = bb3.getInt(544);
@@ -905,6 +931,27 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
                           SLEEP(readback_sleep);
+
+
+                          int tgzone = 0;
+                          try {
+                            if( parent.zone1.isSelected() ) tgzone |= 0x01;
+                            if( parent.zone2.isSelected() ) tgzone |= 0x02;
+                            if( parent.zone3.isSelected() ) tgzone |= 0x04;
+                            if( parent.zone4.isSelected() ) tgzone |= 0x08;
+                            if( parent.zone5.isSelected() ) tgzone |= 0x10;
+                            if( parent.zone6.isSelected() ) tgzone |= 0x20;
+                            if( parent.zone7.isSelected() ) tgzone |= 0x40;
+                            if( parent.zone8.isSelected() ) tgzone |= 0x80;
+                          } catch(Exception e) {
+                          }
+                          result=new byte[64];
+                          cmd = "tgzone "+tgzone+"\r\n";
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+                          SLEEP(readback_sleep);
+
 
 
                           String freq_to_use="";
