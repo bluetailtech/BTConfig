@@ -1430,8 +1430,8 @@ int fw_completed=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202201021045");
-      release_date.setText("Release: 2022-01-02 10:45");
+      fw_ver.setText("Latest Avail: FW Date: 202201021259");
+      release_date.setText("Release: 2022-01-02 12:59");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -7004,8 +7004,8 @@ public void update_prefs() {
 
       restore_position();
 
-      status_format_cc.setText( parent.prefs.get("status_format_cc", "$P25_MODE$ CC BLKS_SEC $BLKS_SEC$") );
-      status_format_voice.setText( parent.prefs.get("status_format_voice", "$P25_MODE$ $V_FREQ$ MHz, TG $TG_ID$, $TG_NAME$") );
+      status_format_cc.setText( parent.prefs.get("status_format_cc", "CC $P25_MODE$ B/SEC $BLKS_SEC$  $WACN$-$SYS_ID$-$NAC$, $FREQ$ MHz") );
+      status_format_voice.setText( parent.prefs.get("status_format_voice", "$P25_MODE$  $TG_NAME$ ($TG_ID$)  $RID_ALIAS$ [$RID$] $V_FREQ$ MHz") );
       tg_font_name = parent.prefs.get("tg_font_name", "Monospaced" );
       tg_font_style = parent.prefs.getInt("tg_font_style", Font.PLAIN );
       tg_font_size = parent.prefs.getInt("tg_font_size", 14 );
