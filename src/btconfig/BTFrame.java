@@ -1431,7 +1431,7 @@ int fw_completed=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202201021319");
-      release_date.setText("Release: 2022-01-02 13:19");
+      release_date.setText("Release: 2022-01-03 14:24");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5868,6 +5868,18 @@ int fw_completed=0;
       freq.setText("Freq: ");
 
       if(prefs!=null) prefs.put( "system_alias", system_alias.getText() );
+
+      try {
+        if(prefs!=null) parent.prefs.put("status_format_cc", status_format_cc.getText() ); 
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+
+      try {
+        if(prefs!=null) parent.prefs.put("status_format_voice", status_format_voice.getText() ); 
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
     }//GEN-LAST:event_write_configActionPerformed
 
     private void backup_tgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backup_tgActionPerformed
@@ -7004,8 +7016,16 @@ public void update_prefs() {
 
       restore_position();
 
+    try {
       status_format_cc.setText( parent.prefs.get("status_format_cc", "CC $P25_MODE$ B/SEC $BLKS_SEC$  $WACN$-$SYS_ID$-$NAC$, $FREQ$ MHz") );
+    } catch(Exception e) {
+    }
+    try {
       status_format_voice.setText( parent.prefs.get("status_format_voice", "$P25_MODE$  $TG_NAME$ ($TG_ID$)  $RID_ALIAS$ [$RID$] $V_FREQ$ MHz") );
+    } catch(Exception e) {
+    }
+
+
       tg_font_name = parent.prefs.get("tg_font_name", "Monospaced" );
       tg_font_style = parent.prefs.getInt("tg_font_style", Font.PLAIN );
       tg_font_size = parent.prefs.getInt("tg_font_size", 14 );
