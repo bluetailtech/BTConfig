@@ -6886,13 +6886,22 @@ public void update_dmr_lcn1_label() {
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 public void do_meta() {
+  if(is_enc==0) {
 
-  if(did_metadata==1) return;
+    if(did_metadata==1) return;
 
-  if( is_dmr_mode==0 && src_uid==0 && !en_zero_rid.isSelected() ) {
-    did_metadata=1;
-    return;
+    if( is_dmr_mode==0 && src_uid==0 && !en_zero_rid.isSelected() ) {
+      did_metadata=1;
+      return;
+    }
   }
+
+  //is_enc==1 always gets here
+  String enc="";
+  if(is_enc==1) enc="ENCRYPTED,";
+
+  is_enc=0;
+
 
     try {
         if(is_dmr_mode==0) {
