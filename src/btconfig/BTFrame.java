@@ -1430,8 +1430,8 @@ int fw_completed=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202201021930");
-      release_date.setText("Release: 2022-01-03 19:30");
+      fw_ver.setText("Latest Avail: FW Date: 202201041016");
+      release_date.setText("Release: 2022-01-04 10:16");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2516,15 +2516,18 @@ int fw_completed=0;
               }
             }
 
-            if(console_line.contains("ENCRYPTED talkgroup") && st1.equals("talkgroup") ) {
+            if(console_line.contains("ENCRYPTED talkgroup") && st1.equals("talkgroup") && console_line.contains("$") ) {
+
               String tg_id = st.nextToken();
+              String tg_name = st.nextToken();
               tg_config.disable_enc_tg(parent, tg_id, new Integer(current_sys_id).toString() );
 
-              talkgroup = tg_id;
-              current_talkgroup = tg_id;
-              talkgroup_name = "ENCRYPTED"; 
 
               if(tglog_e!=null && tglog_e.tg_trig_enc.isSelected()) {
+                talkgroup = tg_id;
+                current_talkgroup = tg_id;
+                talkgroup_name = tg_name; 
+
                 is_enc=1;
                 do_meta();
               }
@@ -3035,6 +3038,7 @@ int fw_completed=0;
         buttonGroup15 = new javax.swing.ButtonGroup();
         buttonGroup16 = new javax.swing.ButtonGroup();
         buttonGroup17 = new javax.swing.ButtonGroup();
+        buttonGroup18 = new javax.swing.ButtonGroup();
         bottom_panel = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         status_panel = new javax.swing.JPanel();
@@ -3421,6 +3425,10 @@ int fw_completed=0;
         p2_sync_thresh = new javax.swing.JTextField();
         jLabel66 = new javax.swing.JLabel();
         record_iq_file = new javax.swing.JButton();
+        jPanel57 = new javax.swing.JPanel();
+        usb_slow = new javax.swing.JRadioButton();
+        usb_med = new javax.swing.JRadioButton();
+        usb_fast = new javax.swing.JRadioButton();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
@@ -5489,6 +5497,23 @@ int fw_completed=0;
         });
         advancedpanel.add(record_iq_file, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, -1, -1));
 
+        jPanel57.setBorder(javax.swing.BorderFactory.createTitledBorder("USB interface speed"));
+
+        buttonGroup18.add(usb_slow);
+        usb_slow.setSelected(true);
+        usb_slow.setText("Slow (default)");
+        jPanel57.add(usb_slow);
+
+        buttonGroup18.add(usb_med);
+        usb_med.setText("Medium");
+        jPanel57.add(usb_med);
+
+        buttonGroup18.add(usb_fast);
+        usb_fast.setText("Fast");
+        jPanel57.add(usb_fast);
+
+        advancedpanel.add(jPanel57, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 420, 470, 70));
+
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
         signalinsightpanel.setLayout(new javax.swing.BoxLayout(signalinsightpanel, javax.swing.BoxLayout.X_AXIS));
@@ -5818,6 +5843,14 @@ int fw_completed=0;
         serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
       }
           try {
+            if( usb_slow.isSelected() ) prefs.put("usb_speed", "slow");
+            if( usb_med.isSelected() ) prefs.put("usb_speed", "med");
+            if( usb_fast.isSelected() ) prefs.put("usb_speed", "fast");
+          } catch(Exception e) {
+            e.printStackTrace();
+          }
+
+          try {
             prefs.put("sys_zipcode", zipcode.getText());
           } catch(Exception e) {
           e.printStackTrace();
@@ -5883,6 +5916,14 @@ int fw_completed=0;
       sysid.setText("");
       nac.setText("");
       freq.setText("Freq: ");
+
+          try {
+            if( usb_slow.isSelected() ) prefs.put("usb_speed", "slow");
+            if( usb_med.isSelected() ) prefs.put("usb_speed", "med");
+            if( usb_fast.isSelected() ) prefs.put("usb_speed", "fast");
+          } catch(Exception e) {
+            e.printStackTrace();
+          }
 
       if(prefs!=null) prefs.put( "system_alias", system_alias.getText() );
 
@@ -7256,6 +7297,10 @@ public void SLEEP(long val) {
     if(sleep_factor<100) sleep_factor=1000;
     if(is_mac_osx==1) sleep_factor=1000;
 
+    if( usb_slow.isSelected() ) sleep_factor=1000;
+    if( usb_med.isSelected() ) sleep_factor=600;
+    if( usb_fast.isSelected() ) sleep_factor=200;
+
     if(is_linux==1) {
       DELAY_TARGET_MS = NS_PER_US*sleep_factor*(val); 
     }
@@ -7352,6 +7397,7 @@ public void SLEEP(long val) {
     private javax.swing.ButtonGroup buttonGroup15;
     private javax.swing.ButtonGroup buttonGroup16;
     private javax.swing.ButtonGroup buttonGroup17;
+    private javax.swing.ButtonGroup buttonGroup18;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.ButtonGroup buttonGroup4;
@@ -7563,6 +7609,7 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel54;
     private javax.swing.JPanel jPanel55;
     private javax.swing.JPanel jPanel56;
+    private javax.swing.JPanel jPanel57;
     private javax.swing.JPanel jPanel59;
     private javax.swing.JPanel jPanel6;
     public javax.swing.JPanel jPanel60;
@@ -7730,6 +7777,9 @@ public void SLEEP(long val) {
     public javax.swing.JRadioButton triple_click_opt4;
     public javax.swing.JRadioButton triple_click_opt5;
     public javax.swing.JRadioButton triple_click_opt6;
+    public javax.swing.JRadioButton usb_fast;
+    public javax.swing.JRadioButton usb_med;
+    public javax.swing.JRadioButton usb_slow;
     public javax.swing.JButton use_freq_primary;
     public javax.swing.JLabel volume_label;
     public javax.swing.JComboBox<String> vtimeout;

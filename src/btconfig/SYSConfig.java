@@ -319,6 +319,9 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
                       if(crc==0 || config_crc == 0xffffffff) {
                         if(parent.fw_completed==0) {
+                            fw_update_speed fwus = new fw_update_speed(parent);
+                            fwus.init();
+                            fwus.setVisible(true);
                           parent.do_update_firmware=1;
                           parent.do_update_firmware2=1;
                         }
@@ -395,6 +398,9 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                       else if( did_warning==1 && !parent.fw_ver.getText().contains(fw_ver) ) {
                           parent.did_read_talkgroups=1;
                           if(parent.fw_completed==0) {
+                            fw_update_speed fwus = new fw_update_speed(parent);
+                            fwus.init();
+                            fwus.setVisible(true);
                             parent.do_update_firmware=1;
                             parent.do_update_firmware2=1;
                           }
