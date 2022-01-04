@@ -2880,6 +2880,14 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tg_edit_delActionPerformed"/>
                       </Events>
                     </Component>
+                    <Component class="javax.swing.JButton" name="set_zones">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Set Selected Zones"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="set_zonesActionPerformed"/>
+                      </Events>
+                    </Component>
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="jPanel23">

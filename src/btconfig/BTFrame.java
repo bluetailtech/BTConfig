@@ -1431,7 +1431,7 @@ int fw_completed=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202201021319");
-      release_date.setText("Release: 2022-01-03 14:24");
+      release_date.setText("Release: 2022-01-03 17:14");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3306,6 +3306,7 @@ int fw_completed=0;
         send_tg = new javax.swing.JButton();
         backup_tg = new javax.swing.JButton();
         tg_edit_del = new javax.swing.JButton();
+        set_zones = new javax.swing.JButton();
         jPanel23 = new javax.swing.JPanel();
         restore_tg = new javax.swing.JButton();
         import_csv = new javax.swing.JButton();
@@ -4823,6 +4824,14 @@ int fw_completed=0;
             }
         });
         jPanel3.add(tg_edit_del);
+
+        set_zones.setText("Set Selected Zones");
+        set_zones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                set_zonesActionPerformed(evt);
+            }
+        });
+        jPanel3.add(set_zones);
 
         jPanel22.add(jPanel3);
 
@@ -6795,6 +6804,20 @@ int fw_completed=0;
         nac.setText("");
     }//GEN-LAST:event_tg_write_configActionPerformed
 
+    private void set_zonesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_set_zonesActionPerformed
+      int zone = Integer.parseInt( JOptionPane.showInputDialog((JFrame) this,
+        "Zone # (1-8)",
+        "[Zone Number?]",
+        JOptionPane.INFORMATION_MESSAGE) );
+
+      int[] rows = jTable1.getSelectedRows();
+      if(rows.length>0) {
+        for(int i=0;i<rows.length;i++) {
+          jTable1.getModel().setValueAt(new Integer(zone),jTable1.convertRowIndexToModel(rows[i]),7);
+        } 
+      }
+    }//GEN-LAST:event_set_zonesActionPerformed
+
 
     public void enable_voice() {
       frequency_tf1.setEnabled(false);
@@ -7661,6 +7684,7 @@ public void SLEEP(long val) {
     public javax.swing.JButton select_home;
     private javax.swing.JButton send_tg;
     private javax.swing.JLabel ser_dev;
+    private javax.swing.JButton set_zones;
     private javax.swing.JButton show_help;
     public javax.swing.JRadioButton si_cpu_battery_saving;
     public javax.swing.JRadioButton si_cpu_high;
