@@ -2522,11 +2522,11 @@ int fw_completed=0;
               String tg_name = st.nextToken();
               tg_config.disable_enc_tg(parent, tg_id, new Integer(current_sys_id).toString() );
 
-
-              if(tglog_e!=null && tglog_e.tg_trig_enc.isSelected()) {
                 talkgroup = tg_id;
                 current_talkgroup = tg_id;
                 talkgroup_name = tg_name; 
+
+              if(tglog_e!=null && tglog_e.tg_trig_enc.isSelected()) {
 
                 is_enc=1;
                 do_meta();
