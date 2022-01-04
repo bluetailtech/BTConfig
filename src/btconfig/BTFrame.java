@@ -2006,7 +2006,7 @@ int fw_completed=0;
         int cnt=0;
         while(st.hasMoreTokens() && cnt++<25) {
           st1 = st.nextToken();
-          if(st1!=null && st1.equals("SRC_RID:")) {
+          if(st1!=null && st1.equals("SRC_RID:") && st.countTokens()>10) {
             if( st.hasMoreTokens() ) {
               try {
 
