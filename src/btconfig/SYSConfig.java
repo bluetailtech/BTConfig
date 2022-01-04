@@ -398,9 +398,13 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                             parent.do_update_firmware=1;
                             parent.do_update_firmware2=1;
                           }
-                          parent.do_read_talkgroups=0;
-                          parent.did_read_talkgroups=1;
-                          parent.do_read_config=0;
+
+                          parent.do_read_talkgroups=1;
+                          parent.did_read_talkgroups=0;
+                          parent.do_read_config=1;
+
+                          //JOptionPane.showConfirmDialog(parent, "FW Update is complete. Exit Application.", "Firmware Complete", JOptionPane.OK_CANCEL_OPTION);
+                          //System.exit(1);
                       }
 
 
