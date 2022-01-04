@@ -2519,7 +2519,15 @@ int fw_completed=0;
             if(console_line.contains("ENCRYPTED talkgroup") && st1.equals("talkgroup") ) {
               String tg_id = st.nextToken();
               tg_config.disable_enc_tg(parent, tg_id, new Integer(current_sys_id).toString() );
-              is_enc=1;
+
+              talkgroup = tg_id;
+              current_talkgroup = tg_id;
+              talkgroup_name = "ENCRYPTED"; 
+
+              if(tglog_e!=null && tglog_e.tg_trig_enc.isSelected()) {
+                is_enc=1;
+                do_meta();
+              }
             }
 
             if(st1.equals("freq") && !console_line.contains("grant") && console_line.contains("tsbk_ps") ) {

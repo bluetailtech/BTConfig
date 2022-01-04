@@ -46,6 +46,9 @@ JFileChooser chooser;
       if( parent.prefs!=null) {
         tg_trig_anyrid.setSelected(parent.prefs.getBoolean("tg_trig_anyrid", true)); 
       }
+      if( parent.prefs!=null) {
+        tg_trig_enc.setSelected(parent.prefs.getBoolean("tg_trig_enc", true)); 
+      }
     }
 
     public String getFormat() {
@@ -70,6 +73,7 @@ JFileChooser chooser;
         tg_trig_vaudio = new javax.swing.JCheckBox();
         tg_trig_nzrid = new javax.swing.JCheckBox();
         tg_trig_anyrid = new javax.swing.JCheckBox();
+        tg_trig_enc = new javax.swing.JCheckBox();
         te_import = new javax.swing.JButton();
         te_export = new javax.swing.JButton();
         help = new javax.swing.JButton();
@@ -131,6 +135,15 @@ JFileChooser chooser;
             }
         });
         jPanel4.add(tg_trig_anyrid);
+
+        tg_trig_enc.setSelected(true);
+        tg_trig_enc.setText("Encrypted");
+        tg_trig_enc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tg_trig_encActionPerformed(evt);
+            }
+        });
+        jPanel4.add(tg_trig_enc);
 
         jPanel2.add(jPanel4);
 
@@ -291,6 +304,12 @@ JFileChooser chooser;
       }
     }//GEN-LAST:event_tg_trig_anyridActionPerformed
 
+    private void tg_trig_encActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tg_trig_encActionPerformed
+      if( parent.prefs!=null) {
+        parent.prefs.putBoolean("tg_trig_enc", tg_trig_enc.isSelected());
+      }
+    }//GEN-LAST:event_tg_trig_encActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -341,6 +360,7 @@ JFileChooser chooser;
     private javax.swing.JButton te_export;
     private javax.swing.JButton te_import;
     public javax.swing.JCheckBox tg_trig_anyrid;
+    public javax.swing.JCheckBox tg_trig_enc;
     public javax.swing.JCheckBox tg_trig_nzrid;
     public javax.swing.JCheckBox tg_trig_vaudio;
     public javax.swing.JCheckBox tg_trig_vgrant;
