@@ -1431,7 +1431,7 @@ int fw_completed=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202201041016");
-      release_date.setText("Release: 2022-01-06 09:49");
+      release_date.setText("Release: 2022-01-06 10:12");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2006,6 +2006,17 @@ int fw_completed=0;
         int cnt=0;
         while(st.hasMoreTokens() && cnt++<25) {
           st1 = st.nextToken();
+
+
+          if(st1.equals("GRP:") && st.hasMoreTokens()) {
+            String tg_id = st.nextToken();
+
+            if(tg_id!=null) {
+              current_talkgroup = tg_id;
+              talkgroup = tg_id;
+            }
+          }
+
           if(st1!=null && st1.equals("SRC_RID:") && st.countTokens()>4) {
             if( st.hasMoreTokens() ) {
               try {
