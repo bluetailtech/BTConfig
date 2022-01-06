@@ -1431,7 +1431,7 @@ int fw_completed=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202201041016");
-      release_date.setText("Release: 2022-01-04 11:33");
+      release_date.setText("Release: 2022-01-06 09:49");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2006,7 +2006,7 @@ int fw_completed=0;
         int cnt=0;
         while(st.hasMoreTokens() && cnt++<25) {
           st1 = st.nextToken();
-          if(st1!=null && st1.equals("SRC_RID:") && st.countTokens()>10) {
+          if(st1!=null && st1.equals("SRC_RID:") && st.countTokens()>4) {
             if( st.hasMoreTokens() ) {
               try {
 
@@ -7249,7 +7249,7 @@ private void resizeColumns2() {
 //SUMS 1
 float[] columnWidthPercentage3 = {0.1f, 0.9f};
 private void resizeColumns3() {
-  int tW = freq_table.getColumnModel().getTotalColumnWidth();
+  int tW = alias_table.getColumnModel().getTotalColumnWidth();
   TableColumn column;
   TableColumnModel jTableColumnModel = alias_table.getColumnModel();
   int cantCols = jTableColumnModel.getColumnCount();
