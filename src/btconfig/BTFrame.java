@@ -29,6 +29,7 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.text.*;
 import javax.swing.event.*;
+import java.awt.event.*;
 import javax.swing.table.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -1285,9 +1286,14 @@ int blks_per_sec=0;
 int save_iq_len=0;
 int iq_out=0;
 int fw_completed=0;
-  ///////////////////////////////////////////////////////////////////
+
+freqConfiguration freq_config;
     public BTFrame(String[] args) {
       initComponents();
+
+      freq_config = new freqConfiguration(this);
+      f1.setSelected(true);
+      update_freqs();
 
       chooser = new JFileChooser();
 
@@ -1431,7 +1437,7 @@ int fw_completed=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202201041016");
-      release_date.setText("Release: 2022-01-06 10:12");
+      release_date.setText("Release: 2022-01-06 12:56");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2234,13 +2240,21 @@ int fw_completed=0;
         is_phase2=1;
       }
 
-      if(console_line.contains("TG PRI")) {
-        StringTokenizer st = new StringTokenizer(console_line,"\r\n");
+      if(console_line.contains("TG PRI interrupt")) {
+        StringTokenizer st = new StringTokenizer(console_line," \r\n");
         int cnt=0;
         while(st.hasMoreTokens() && cnt++<15) { 
           String l = st.nextToken();
-          if(l.startsWith("TG PRI")) {
+          if(l.equals("interrupt") && st.hasMoreTokens()) {
+
+            String tg_id = st.nextToken();
+
+            if(tg_id!=null) {
+              current_talkgroup = tg_id;
+              talkgroup = tg_id;
+            }
             tg_pri=1;
+            src_uid=0;
             setStatus(l);
           }
         }
@@ -2557,6 +2571,7 @@ int fw_completed=0;
 
                   if(fval!=0) {
                     freq.setText("Freq: "+freq_str);
+                    check_freq(freq_str);
                   }
                   else {
                     freq.setText("");
@@ -3050,12 +3065,23 @@ int fw_completed=0;
         buttonGroup16 = new javax.swing.ButtonGroup();
         buttonGroup17 = new javax.swing.ButtonGroup();
         buttonGroup18 = new javax.swing.ButtonGroup();
+        buttonGroup19 = new javax.swing.ButtonGroup();
         bottom_panel = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         status_panel = new javax.swing.JPanel();
         status = new javax.swing.JLabel();
         tiny_const = new javax.swing.JPanel();
         jPanel55 = new javax.swing.JPanel();
+        jLabel64 = new javax.swing.JLabel();
+        f1 = new javax.swing.JToggleButton();
+        f2 = new javax.swing.JToggleButton();
+        f3 = new javax.swing.JToggleButton();
+        f4 = new javax.swing.JToggleButton();
+        f5 = new javax.swing.JToggleButton();
+        f6 = new javax.swing.JToggleButton();
+        f7 = new javax.swing.JToggleButton();
+        f8 = new javax.swing.JToggleButton();
+        jLabel27 = new javax.swing.JLabel();
         z1 = new javax.swing.JToggleButton();
         z2 = new javax.swing.JToggleButton();
         z3 = new javax.swing.JToggleButton();
@@ -3511,6 +3537,103 @@ int fw_completed=0;
         jPanel9.add(tiny_const, java.awt.BorderLayout.EAST);
 
         jPanel55.setBackground(new java.awt.Color(0, 0, 0));
+
+        jLabel64.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel64.setText("Freq");
+        jPanel55.add(jLabel64);
+
+        f1.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup19.add(f1);
+        f1.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        f1.setSelected(true);
+        f1.setText("1");
+        f1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                f1ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(f1);
+
+        f2.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup19.add(f2);
+        f2.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        f2.setText("2");
+        f2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                f2ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(f2);
+
+        f3.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup19.add(f3);
+        f3.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        f3.setText("3");
+        f3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                f3ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(f3);
+
+        f4.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup19.add(f4);
+        f4.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        f4.setText("4");
+        f4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                f4ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(f4);
+
+        f5.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup19.add(f5);
+        f5.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        f5.setText("5");
+        f5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                f5ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(f5);
+
+        f6.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup19.add(f6);
+        f6.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        f6.setText("6");
+        f6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                f6ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(f6);
+
+        f7.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup19.add(f7);
+        f7.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        f7.setText("7");
+        f7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                f7ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(f7);
+
+        f8.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup19.add(f8);
+        f8.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        f8.setText("8");
+        f8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                f8ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(f8);
+
+        jLabel27.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel27.setText("Zones");
+        jPanel55.add(jLabel27);
 
         z1.setBackground(new java.awt.Color(204, 204, 204));
         z1.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
@@ -6677,6 +6800,102 @@ int fw_completed=0;
       if(prefs!=null) prefs.put("si_cpu", "off"); 
     }//GEN-LAST:event_si_cpu_offActionPerformed
 
+    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
+    public void check_freq(String f) {
+      String cf="";
+      if(f1.isSelected() && prefs!=null) {
+        cf = prefs.get("f1_freq", frequency_tf1.getText());
+      }
+      else if(f2.isSelected() && prefs!=null) {
+        cf = prefs.get("f2_freq", frequency_tf1.getText());
+      }
+      else if(f3.isSelected() && prefs!=null) {
+        cf = prefs.get("f3_freq", frequency_tf1.getText());
+      }
+      else if(f4.isSelected() && prefs!=null) {
+        cf = prefs.get("f4_freq", frequency_tf1.getText());
+      }
+      else if(f5.isSelected() && prefs!=null) {
+        cf = prefs.get("f5_freq", frequency_tf1.getText());
+      }
+      else if(f6.isSelected() && prefs!=null) {
+        cf = prefs.get("f6_freq", frequency_tf1.getText());
+      }
+      else if(f7.isSelected() && prefs!=null) {
+        cf = prefs.get("f7_freq", frequency_tf1.getText());
+      }
+      else if(f8.isSelected() && prefs!=null) {
+        cf = prefs.get("f8_freq", frequency_tf1.getText());
+      }
+      else {
+        cf = frequency_tf1.getText();
+      }
+
+      try {
+        double f1 = new Double(f).doubleValue();
+        double f2 = new Double(cf).doubleValue();
+
+        if(f1!=f2) {
+          String cmd= "freq "+cf+"\r\n"; 
+          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+        }
+      } catch(Exception e) {
+      }
+    }
+
+    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
+    public void update_freqs() {
+      if(f1.isSelected()) {
+        f1.setBackground(java.awt.Color.green);
+      }
+      else {
+        f1.setBackground(java.awt.Color.gray);
+      }
+      if(f2.isSelected()) {
+        f2.setBackground(java.awt.Color.green);
+      }
+      else {
+        f2.setBackground(java.awt.Color.gray);
+      }
+      if(f3.isSelected()) {
+        f3.setBackground(java.awt.Color.green);
+      }
+      else {
+        f3.setBackground(java.awt.Color.gray);
+      }
+      if(f4.isSelected()) {
+        f4.setBackground(java.awt.Color.green);
+      }
+      else {
+        f4.setBackground(java.awt.Color.gray);
+      }
+      if(f5.isSelected()) {
+        f5.setBackground(java.awt.Color.green);
+      }
+      else {
+        f5.setBackground(java.awt.Color.gray);
+      }
+      if(f6.isSelected()) {
+        f6.setBackground(java.awt.Color.green);
+      }
+      else {
+        f6.setBackground(java.awt.Color.gray);
+      }
+      if(f7.isSelected()) {
+        f7.setBackground(java.awt.Color.green);
+      }
+      else {
+        f7.setBackground(java.awt.Color.gray);
+      }
+      if(f8.isSelected()) {
+        f8.setBackground(java.awt.Color.green);
+      }
+      else {
+        f8.setBackground(java.awt.Color.gray);
+      }
+    }
     public void update_zones() {
       if( (current_tgzone&0x01)>0) z1.setSelected(true);
         else z1.setSelected(false);
@@ -6746,12 +6965,13 @@ int fw_completed=0;
     }
 
     private void z1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_z1ActionPerformed
+
         if(z1.isSelected()) current_tgzone |= 0x01;
         else current_tgzone &= (byte) (255-0x01)&0xff;
 
+
         String cmd= "tgzone "+current_tgzone+"\r\n";
         serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-
         update_zones();
     }//GEN-LAST:event_z1ActionPerformed
 
@@ -6869,6 +7089,94 @@ int fw_completed=0;
         } 
       }
     }//GEN-LAST:event_set_zonesActionPerformed
+
+    private void f1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_f1ActionPerformed
+        if(evt.getModifiers() == (InputEvent.BUTTON1_MASK | InputEvent.SHIFT_MASK)) {
+            freq_config.setButton(1);
+            freq_config.setVisible(true);
+            String f = freq_config.getFreq();
+            if(prefs!=null && f!=null) prefs.put("f1_freq", f);
+            return;
+        }
+        update_freqs();
+    }//GEN-LAST:event_f1ActionPerformed
+
+    private void f2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_f2ActionPerformed
+        if(evt.getModifiers() == (InputEvent.BUTTON1_MASK | InputEvent.SHIFT_MASK)) {
+            freq_config.setButton(2);
+            freq_config.setVisible(true);
+            String f = freq_config.getFreq();
+            if(prefs!=null && f!=null) prefs.put("f2_freq", f);
+            return;
+        }
+        update_freqs();
+    }//GEN-LAST:event_f2ActionPerformed
+
+    private void f3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_f3ActionPerformed
+        if(evt.getModifiers() == (InputEvent.BUTTON1_MASK | InputEvent.SHIFT_MASK)) {
+            freq_config.setButton(3);
+            freq_config.setVisible(true);
+            String f = freq_config.getFreq();
+            if(prefs!=null && f!=null) prefs.put("f3_freq", f);
+            return;
+        }
+        update_freqs();
+    }//GEN-LAST:event_f3ActionPerformed
+
+    private void f4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_f4ActionPerformed
+        if(evt.getModifiers() == (InputEvent.BUTTON1_MASK | InputEvent.SHIFT_MASK)) {
+            freq_config.setButton(4);
+            freq_config.setVisible(true);
+            String f = freq_config.getFreq();
+            if(prefs!=null && f!=null) prefs.put("f4_freq", f);
+            return;
+        }
+        update_freqs();
+    }//GEN-LAST:event_f4ActionPerformed
+
+    private void f5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_f5ActionPerformed
+        if(evt.getModifiers() == (InputEvent.BUTTON1_MASK | InputEvent.SHIFT_MASK)) {
+            freq_config.setButton(5);
+            freq_config.setVisible(true);
+            String f = freq_config.getFreq();
+            if(prefs!=null && f!=null) prefs.put("f5_freq", f);
+            return;
+        }
+        update_freqs();
+    }//GEN-LAST:event_f5ActionPerformed
+
+    private void f6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_f6ActionPerformed
+        if(evt.getModifiers() == (InputEvent.BUTTON1_MASK | InputEvent.SHIFT_MASK)) {
+            freq_config.setButton(6);
+            freq_config.setVisible(true);
+            String f = freq_config.getFreq();
+            if(prefs!=null && f!=null) prefs.put("f6_freq", f);
+            return;
+        }
+        update_freqs();
+    }//GEN-LAST:event_f6ActionPerformed
+
+    private void f7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_f7ActionPerformed
+        if(evt.getModifiers() == (InputEvent.BUTTON1_MASK | InputEvent.SHIFT_MASK)) {
+            freq_config.setButton(7);
+            freq_config.setVisible(true);
+            String f = freq_config.getFreq();
+            if(prefs!=null && f!=null) prefs.put("f7_freq", f);
+            return;
+        }
+        update_freqs();
+    }//GEN-LAST:event_f7ActionPerformed
+
+    private void f8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_f8ActionPerformed
+        if(evt.getModifiers() == (InputEvent.BUTTON1_MASK | InputEvent.SHIFT_MASK)) {
+            freq_config.setButton(8);
+            freq_config.setVisible(true);
+            String f = freq_config.getFreq();
+            if(prefs!=null && f!=null) prefs.put("f8_freq", f);
+            return;
+        }
+        update_freqs();
+    }//GEN-LAST:event_f8ActionPerformed
 
 
     public void enable_voice() {
@@ -7418,6 +7726,7 @@ public void SLEEP(long val) {
     private javax.swing.ButtonGroup buttonGroup16;
     private javax.swing.ButtonGroup buttonGroup17;
     private javax.swing.ButtonGroup buttonGroup18;
+    private javax.swing.ButtonGroup buttonGroup19;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.ButtonGroup buttonGroup4;
@@ -7492,6 +7801,14 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox enc_mode;
     public javax.swing.JTextField end_call_silence;
     public javax.swing.JButton erase_roaming;
+    public javax.swing.JToggleButton f1;
+    public javax.swing.JToggleButton f2;
+    public javax.swing.JToggleButton f3;
+    public javax.swing.JToggleButton f4;
+    public javax.swing.JToggleButton f5;
+    public javax.swing.JToggleButton f6;
+    public javax.swing.JToggleButton f7;
+    public javax.swing.JToggleButton f8;
     private javax.swing.JButton follow_tg;
     public javax.swing.JLabel freq;
     public javax.swing.JLabel freq_label;
@@ -7539,6 +7856,7 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
@@ -7572,6 +7890,7 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
+    private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel65;
     private javax.swing.JLabel jLabel66;
     private javax.swing.JLabel jLabel7;
