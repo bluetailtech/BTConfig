@@ -2020,6 +2020,7 @@ freqConfiguration freq_config;
             if(tg_id!=null) {
               current_talkgroup = tg_id;
               talkgroup = tg_id;
+              if(tglog_e!=null && tglog_e.tg_trig_anyrid.isSelected()) do_meta();
             }
           }
 
@@ -2068,16 +2069,15 @@ freqConfiguration freq_config;
                     }
 
                     if(src_uid_str!=null && src_uid_str.length()>0 && current_alias!=null) {
-                      status.setText(system_alias.getText()+", RID: "+src_uid_str+", "+current_alias);
+                      //status.setText(system_alias.getText()+", RID: "+src_uid_str+", "+current_alias);
                     }
                     else if(src_uid_str!=null && src_uid_str.length()>0 ) {
-                      status.setText(system_alias.getText()+", RID: "+src_uid_str);
+                      //status.setText(system_alias.getText()+", RID: "+src_uid_str);
                     }
                     else {
-                      status.setText(system_alias.getText());
+                      //status.setText(system_alias.getText());
                     }
 
-                    if(tglog_e!=null && tglog_e.tg_trig_anyrid.isSelected()) do_meta();
 
               } catch(Exception e) {
                 System.out.println("error: RID");
