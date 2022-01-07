@@ -2014,7 +2014,7 @@ freqConfiguration freq_config;
           st1 = st.nextToken();
 
 
-          if(st1.equals("GRP:") && st.hasMoreTokens()) {
+          if(st1.equals("GRP") && st.hasMoreTokens()) {
             String tg_id = st.nextToken();
 
             if(tg_id!=null) {
