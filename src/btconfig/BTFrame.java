@@ -1437,7 +1437,7 @@ freqConfiguration freq_config;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202201041016");
-      release_date.setText("Release: 2022-01-06 23:59");
+      release_date.setText("Release: 2022-01-07 07:33");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -6804,6 +6804,28 @@ freqConfiguration freq_config;
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
     public void check_freq(String f) {
+
+      if( roaming.isSelected() ) {
+        f1.setEnabled(false);
+        f2.setEnabled(false);
+        f3.setEnabled(false);
+        f4.setEnabled(false);
+        f5.setEnabled(false);
+        f6.setEnabled(false);
+        f7.setEnabled(false);
+        f8.setEnabled(false);
+        return;
+      }
+      else {
+        f1.setEnabled(true);
+        f2.setEnabled(true);
+        f3.setEnabled(true);
+        f4.setEnabled(true);
+        f5.setEnabled(true);
+        f6.setEnabled(true);
+        f7.setEnabled(true);
+        f8.setEnabled(true);
+      }
       String cf="";
       if(f1.isSelected() && prefs!=null) {
         cf = prefs.get("f1_freq", frequency_tf1.getText());
