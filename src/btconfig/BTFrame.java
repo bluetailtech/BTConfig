@@ -1437,7 +1437,7 @@ freqConfiguration freq_config;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202201041016");
-      release_date.setText("Release: 2022-01-06 12:56");
+      release_date.setText("Release: 2022-01-06 23:59");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2014,7 +2014,7 @@ freqConfiguration freq_config;
           st1 = st.nextToken();
 
 
-          if(st1.equals("GRP") && st.hasMoreTokens()) {
+          if(st1.contains("GRP") && st.hasMoreTokens()) {
             String tg_id = st.nextToken();
 
             if(tg_id!=null) {
@@ -2022,9 +2022,18 @@ freqConfiguration freq_config;
               talkgroup = tg_id;
               if(tglog_e!=null && tglog_e.tg_trig_anyrid.isSelected()) do_meta();
             }
+
+            src_uid_str="";
+            try {
+              if(src_uid!=0) src_uid_str = new Integer(src_uid).toString();
+              if(tglog_e!=null && tglog_e.tg_trig_nzrid.isSelected() && src_uid!=0) do_meta();
+            } catch(Exception e) {
+            System.out.println("uid:");
+              e.printStackTrace();
+            }
           }
 
-          if(st1!=null && st1.equals("SRC_RID:") && st.countTokens()>4) {
+          if(st1!=null && st1.equals("SRC_RID:") && st.countTokens()>3) {
             if( st.hasMoreTokens() ) {
               try {
 
@@ -2059,14 +2068,6 @@ freqConfiguration freq_config;
                   //e.printStackTrace();
                 }
 
-                    src_uid_str="";
-                    try {
-                      if(src_uid!=0) src_uid_str = new Integer(src_uid).toString();
-                      if(tglog_e!=null && tglog_e.tg_trig_nzrid.isSelected() && src_uid!=0) do_meta();
-                    } catch(Exception e) {
-                    System.out.println("uid:");
-                      e.printStackTrace();
-                    }
 
                     if(src_uid_str!=null && src_uid_str.length()>0 && current_alias!=null) {
                       //status.setText(system_alias.getText()+", RID: "+src_uid_str+", "+current_alias);

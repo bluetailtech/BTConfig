@@ -170,12 +170,7 @@ java.text.SimpleDateFormat time_format;
 
           if(rid_alias==null) rid_alias="";
 
-          if(!is_tg_log && parent.src_uid==0) {
-            rid = String.format("%d", parent.prev_uid);
-          }
-          else {
-            rid = String.format("%d", parent.src_uid);
-          }
+          rid = String.format("%d", parent.src_uid);
 
           if(!rid.equals("0")) {
             s2 = s2.replaceAll(Matcher.quoteReplacement("$RID$"), rid.trim() );
