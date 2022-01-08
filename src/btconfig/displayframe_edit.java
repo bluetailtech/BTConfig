@@ -132,7 +132,6 @@ java.text.SimpleDateFormat time_format;
       if(parent.nac.getText()!=null) nac = parent.nac.getText().trim();
       if(parent.siteid.getText()!=null) siteid = parent.siteid.getText().trim();
       if(parent.rfid.getText()!=null) rfid = parent.rfid.getText().trim();
-      if(parent.freq.getText()!=null) cc_freq = parent.freq.getText().trim();
 
       rid = parent.src_uid_str;
 
@@ -142,7 +141,6 @@ java.text.SimpleDateFormat time_format;
       if( nac.contains("NAC:") && nac.length()>4) nac = nac.substring(4,nac.length());
       if( rfid.contains("RFSS ID:") && rfid.length()>8) rfid = rfid.substring(8,rfid.length());
       if( siteid.contains("SITE ID:") && siteid.length()>8) siteid = siteid.substring(8,siteid.length());
-      if( cc_freq.contains("Freq:") && cc_freq.length()>5) cc_freq = cc_freq.substring(5,cc_freq.length());
 
       try {
         wacn = String.format("0x%05X", Integer.valueOf(parent.current_wacn_id).intValue());
@@ -159,7 +157,7 @@ java.text.SimpleDateFormat time_format;
         if(s2==null) s2 = s1;
       s2 = s2.replaceAll(Matcher.quoteReplacement("$RFSS_ID$"), rfid.trim() );
         if(s2==null) s2 = s1;
-      s2 = s2.replaceAll(Matcher.quoteReplacement("$CC_FREQ$"), cc_freq.trim() );
+      s2 = s2.replaceAll(Matcher.quoteReplacement("$CC_FREQ$"), String.format("%3.6f", parent.cc_freq) );
         if(s2==null) s2 = s1;
 
       try {

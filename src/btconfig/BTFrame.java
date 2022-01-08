@@ -1286,6 +1286,7 @@ int blks_per_sec=0;
 int save_iq_len=0;
 int iq_out=0;
 int fw_completed=0;
+double cc_freq=0.0f;
 
 freqConfiguration freq_config;
     public BTFrame(String[] args) {
@@ -1436,8 +1437,8 @@ freqConfiguration freq_config;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202201041016");
-      release_date.setText("Release: 2022-01-07 07:33");
+      fw_ver.setText("Latest Avail: FW Date: 202201071611");
+      release_date.setText("Release: 2022-01-07 16:11");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1986,20 +1987,28 @@ freqConfiguration freq_config;
         int cnt=0;
         while(st.hasMoreTokens() && cnt++<15) {
           st1 = st.nextToken();
-          if(st1!=null && st1.equals("wacn")) {
+          if(st1!=null && st1.equals("wacn") && st.hasMoreTokens()) {
             String w = st.nextToken().trim();
             current_wacn_id = Integer.parseInt(w.substring(2,w.length()),16);
           }
-          if(st1!=null && st1.equals("sys_id")) {
+          if(st1!=null && st1.equals("sys_id") && st.hasMoreTokens()) {
             String s = st.nextToken().trim();
             current_sys_id = Integer.parseInt(s.substring(2,s.length()),16);
           }
-          if(st1!=null && st1.equals("nco_off")) {
+          if(st1!=null && st1.equals("nco_off") && st.hasMoreTokens()) {
             String s = st.nextToken().trim();
             try {
               current_nco_off = Float.parseFloat(s);
             } catch(Exception e) {
               //e.printStackTrace();
+            }
+          }
+          if(st1.equals("cc_freq") && st.hasMoreTokens()) {
+            try {
+              double d = Double.valueOf(st.nextToken());
+              if(d>20.0) cc_freq = d;
+            } catch(Exception e) {
+                  //e.printStackTrace();
             }
           }
         }
