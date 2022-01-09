@@ -1292,6 +1292,25 @@ freqConfiguration freq_config;
     public BTFrame(String[] args) {
       initComponents();
 
+      freq_butt_label.setEnabled(false);
+      f1.setEnabled(false);
+      f2.setEnabled(false);
+      f3.setEnabled(false);
+      f4.setEnabled(false);
+      f5.setEnabled(false);
+      f6.setEnabled(false);
+      f7.setEnabled(false);
+      f8.setEnabled(false);
+      freq_butt_label.setVisible(false);
+      f1.setVisible(false);
+      f2.setVisible(false);
+      f3.setVisible(false);
+      f4.setVisible(false);
+      f5.setVisible(false);
+      f6.setVisible(false);
+      f7.setVisible(false);
+      f8.setVisible(false);
+
       freq_config = new freqConfiguration(this);
       f1.setSelected(true);
       update_freqs();
@@ -1438,7 +1457,7 @@ freqConfiguration freq_config;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202201071611");
-      release_date.setText("Release: 2022-01-09 09:26");
+      release_date.setText("Release: 2022-01-09 09:46");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1875,17 +1894,17 @@ freqConfiguration freq_config;
           if(st1!=null && st1.contains("ADJACENT")) {
             st1 = st.nextToken();
             if(st1!=null) roaming_tests.addAdjacent( st1 ); //frequency to add
-            //System.out.println("adding adjacent "+st1); 
+            System.out.println("adding adjacent "+st1); 
           }
           if(st1!=null && st1.contains("SECONDARY")) {
             st1 = st.nextToken();
             if(st1!=null) roaming_tests.addSecondary( st1 ); //frequency to add
-            //System.out.println("adding secondary "+st1); 
+            System.out.println("adding secondary "+st1); 
           }
           if(st1!=null && st1.contains("PRIMARY")) {
             st1 = st.nextToken();
             if(st1!=null) roaming_tests.addPrimary( st1 ); //frequency to add
-            //System.out.println("adding primary "+st1); 
+            System.out.println("adding primary "+st1); 
           }
         }
       }
@@ -3082,7 +3101,7 @@ freqConfiguration freq_config;
         status = new javax.swing.JLabel();
         tiny_const = new javax.swing.JPanel();
         jPanel55 = new javax.swing.JPanel();
-        jLabel64 = new javax.swing.JLabel();
+        freq_butt_label = new javax.swing.JLabel();
         f1 = new javax.swing.JToggleButton();
         f2 = new javax.swing.JToggleButton();
         f3 = new javax.swing.JToggleButton();
@@ -3548,9 +3567,9 @@ freqConfiguration freq_config;
 
         jPanel55.setBackground(new java.awt.Color(0, 0, 0));
 
-        jLabel64.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel64.setText("Freq");
-        jPanel55.add(jLabel64);
+        freq_butt_label.setForeground(new java.awt.Color(255, 255, 255));
+        freq_butt_label.setText("Freq");
+        jPanel55.add(freq_butt_label);
 
         f1.setBackground(new java.awt.Color(204, 204, 204));
         buttonGroup19.add(f1);
@@ -7130,6 +7149,7 @@ freqConfiguration freq_config;
             if(prefs!=null && f!=null) prefs.put("f1_freq", f);
             return;
         }
+        check_freq(prefs.get("f1_freq", frequency_tf1.getText()));
         update_freqs();
     }//GEN-LAST:event_f1ActionPerformed
 
@@ -7141,6 +7161,7 @@ freqConfiguration freq_config;
             if(prefs!=null && f!=null) prefs.put("f2_freq", f);
             return;
         }
+        check_freq(prefs.get("f1_freq", frequency_tf1.getText()));
         update_freqs();
     }//GEN-LAST:event_f2ActionPerformed
 
@@ -7152,6 +7173,7 @@ freqConfiguration freq_config;
             if(prefs!=null && f!=null) prefs.put("f3_freq", f);
             return;
         }
+        check_freq(prefs.get("f1_freq", frequency_tf1.getText()));
         update_freqs();
     }//GEN-LAST:event_f3ActionPerformed
 
@@ -7163,6 +7185,7 @@ freqConfiguration freq_config;
             if(prefs!=null && f!=null) prefs.put("f4_freq", f);
             return;
         }
+        check_freq(prefs.get("f1_freq", frequency_tf1.getText()));
         update_freqs();
     }//GEN-LAST:event_f4ActionPerformed
 
@@ -7174,6 +7197,7 @@ freqConfiguration freq_config;
             if(prefs!=null && f!=null) prefs.put("f5_freq", f);
             return;
         }
+        check_freq(prefs.get("f1_freq", frequency_tf1.getText()));
         update_freqs();
     }//GEN-LAST:event_f5ActionPerformed
 
@@ -7185,6 +7209,7 @@ freqConfiguration freq_config;
             if(prefs!=null && f!=null) prefs.put("f6_freq", f);
             return;
         }
+        check_freq(prefs.get("f1_freq", frequency_tf1.getText()));
         update_freqs();
     }//GEN-LAST:event_f6ActionPerformed
 
@@ -7196,6 +7221,7 @@ freqConfiguration freq_config;
             if(prefs!=null && f!=null) prefs.put("f7_freq", f);
             return;
         }
+        check_freq(prefs.get("f1_freq", frequency_tf1.getText()));
         update_freqs();
     }//GEN-LAST:event_f7ActionPerformed
 
@@ -7207,6 +7233,7 @@ freqConfiguration freq_config;
             if(prefs!=null && f!=null) prefs.put("f8_freq", f);
             return;
         }
+        check_freq(prefs.get("f1_freq", frequency_tf1.getText()));
         update_freqs();
     }//GEN-LAST:event_f8ActionPerformed
 
@@ -7843,6 +7870,7 @@ public void SLEEP(long val) {
     public javax.swing.JToggleButton f8;
     private javax.swing.JButton follow_tg;
     public javax.swing.JLabel freq;
+    private javax.swing.JLabel freq_butt_label;
     public javax.swing.JLabel freq_label;
     private javax.swing.JButton freq_search;
     private javax.swing.JButton freq_search2;
@@ -7922,7 +7950,6 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
-    private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel65;
     private javax.swing.JLabel jLabel66;
     private javax.swing.JLabel jLabel7;
