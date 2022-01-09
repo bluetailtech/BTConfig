@@ -1438,7 +1438,7 @@ freqConfiguration freq_config;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202201071611");
-      release_date.setText("Release: 2022-01-07 16:11");
+      release_date.setText("Release: 2022-01-08 07:59");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1953,7 +1953,7 @@ freqConfiguration freq_config;
       }
 
        //end of call silence
-      if( console_line.contains("link-control end call received") ) {
+      if( console_line.contains("link-control end call received") || console_line.contains("ENDCALL") ) {
         try {
           int silent_time = new Integer( parent.end_call_silence.getText() ).intValue();
           if(aud_archive!=null && silent_time>0) {
