@@ -1953,7 +1953,7 @@ freqConfiguration freq_config;
       }
 
        //end of call silence
-      if( console_line.contains("link-control end call received") || console_line.contains("ENDCALL") ) {
+      if( console_line.contains("link-control end call received") || console_line.contains("ENDCALL") || console_line.contains("TDMA return to control channel") ) {
         try {
           int silent_time = new Integer( parent.end_call_silence.getText() ).intValue();
           if(aud_archive!=null && silent_time>0) {
