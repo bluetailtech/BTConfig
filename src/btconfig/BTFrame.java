@@ -1438,7 +1438,7 @@ freqConfiguration freq_config;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202201071611");
-      release_date.setText("Release: 2022-01-08 07:59");
+      release_date.setText("Release: 2022-01-09 09:26");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2581,7 +2581,7 @@ freqConfiguration freq_config;
 
                   if(fval!=0) {
                     freq.setText("Freq: "+freq_str);
-                    check_freq(freq_str);
+                    //check_freq(freq_str);
                   }
                   else {
                     freq.setText("");
