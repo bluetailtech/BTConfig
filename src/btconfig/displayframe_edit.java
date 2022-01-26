@@ -132,6 +132,7 @@ java.text.SimpleDateFormat time_format;
       if(parent.nac.getText()!=null) nac = parent.nac.getText().trim();
       if(parent.siteid.getText()!=null) siteid = parent.siteid.getText().trim();
       if(parent.rfid.getText()!=null) rfid = parent.rfid.getText().trim();
+      if(parent.freq.getText()!=null) cc_freq = parent.freq.getText().trim();
 
       rid = parent.src_uid_str;
 
@@ -141,6 +142,7 @@ java.text.SimpleDateFormat time_format;
       if( nac.contains("NAC:") && nac.length()>4) nac = nac.substring(4,nac.length());
       if( rfid.contains("RFSS ID:") && rfid.length()>8) rfid = rfid.substring(8,rfid.length());
       if( siteid.contains("SITE ID:") && siteid.length()>8) siteid = siteid.substring(8,siteid.length());
+      if( cc_freq.contains("Freq:") && cc_freq.length()>5) cc_freq = cc_freq.substring(5,cc_freq.length());
 
       try {
         wacn = String.format("0x%05X", Integer.valueOf(parent.current_wacn_id).intValue());
@@ -159,6 +161,7 @@ java.text.SimpleDateFormat time_format;
         if(s2==null) s2 = s1;
       s2 = s2.replaceAll(Matcher.quoteReplacement("$CC_FREQ$"), String.format("%3.6f", parent.cc_freq) );
         if(s2==null) s2 = s1;
+
 
       try {
         if(parent.src_uid!=0 || !is_tg_log) {
@@ -197,21 +200,63 @@ java.text.SimpleDateFormat time_format;
       } catch(Exception e) {
       }
 
-      /*
+      if(parent.tg_zone>0 && parent.tg_zone<=16) {
+        try {
+          s2 = s2.replaceAll(Matcher.quoteReplacement("$ZONE$"), String.format("%d", parent.tg_zone) );
+          if(s2==null) s2 = s1;
+        } catch(Exception e) {
+        }
+        try {
+          s2 = s2.replaceAll(Matcher.quoteReplacement("$ZONE_ALIAS$"), String.format("%s", parent.tg_zone_alias) );
+          if(s2==null) s2 = s1;
+        } catch(Exception e) {
+        }
+      }
+      else {
+        try {
+          s2 = s2.replaceAll(Matcher.quoteReplacement("$ZONE$"), ""); 
+          if(s2==null) s2 = s1;
+        } catch(Exception e) {
+        }
+        try {
+          s2 = s2.replaceAll(Matcher.quoteReplacement("$ZONE_ALIAS$"), ""); 
+          if(s2==null) s2 = s1;
+        } catch(Exception e) {
+        }
+      }
+
       try {
-        if(parent.edit_alias!=null) {
+        if(parent.edit_alias1!=null) {
           if(rid!=null && rid.length()>0 && Integer.valueOf(rid).intValue()!=0) {
-            parent.edit_alias.setEnabled(true);
+            parent.edit_alias1.setEnabled(true);
+            parent.edit_alias1.setEnabled(true);
           }
           else {
-            parent.edit_alias.setEnabled(false);
+            parent.edit_alias1.setEnabled(false);
+            parent.edit_alias1.setEnabled(false);
           }
         }
       } catch(Exception e) {
       }
-      */
 
-      if(parent.is_phase1==1) {
+      if( parent.demod_type==0) {
+      s2 = s2.replaceAll(Matcher.quoteReplacement("$DEMOD$"), "LSM" );
+        if(s2==null) s2 = s1;
+      }
+      else if( parent.demod_type==1) {
+      s2 = s2.replaceAll(Matcher.quoteReplacement("$DEMOD$"), "CQPSK/C4FM" );
+        if(s2==null) s2 = s1;
+      }
+      else if( parent.demod_type==3) {
+      s2 = s2.replaceAll(Matcher.quoteReplacement("$DEMOD$"), "FMNB" );
+        if(s2==null) s2 = s1;
+      }
+
+      if( parent.is_dmr_mode==1) {
+      s2 = s2.replaceAll(Matcher.quoteReplacement("$P25_MODE$"), "DMR" );
+        if(s2==null) s2 = s1;
+      }
+      else if(parent.is_phase1==1) {
       s2 = s2.replaceAll(Matcher.quoteReplacement("$P25_MODE$"), "P25-P1" );
         if(s2==null) s2 = s1;
       }
@@ -1046,9 +1091,10 @@ java.text.SimpleDateFormat time_format;
     public void show_help() {
       String kw="";
 
-      kw = kw.concat("\n$BLKS_SEC$");
+      kw = kw.concat("\n$BLK_SEC$");
       kw = kw.concat("\n$CC_FREQ$");
       kw = kw.concat("\n$DATE$");
+      kw = kw.concat("\n$DEMOD$");
       kw = kw.concat("\n$EVM_P$");
       kw = kw.concat("\n$ERR_RATE$");
       kw = kw.concat("\n$FREQ$");
@@ -1068,6 +1114,8 @@ java.text.SimpleDateFormat time_format;
       kw = kw.concat("\n$TIME$");
       kw = kw.concat("\n$V_FREQ$");
       kw = kw.concat("\n$WACN$");
+      kw = kw.concat("\n$ZONE$");
+      kw = kw.concat("\n$ZONE_ALIAS$");
       hf.setText(kw);
 
       hf.setVisible(true);

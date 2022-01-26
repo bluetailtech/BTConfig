@@ -52,7 +52,6 @@ String sys_mac_id;
 TableRowSorter trs;
 java.util.Timer utimer;
 public int do_save_alias=0;
-boolean did_import=false;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -64,11 +63,11 @@ boolean did_import=false;
         try {
           if( do_save_alias==1 ) {
 
-              if(NRECS<1 || !did_import) {
+              if(NRECS < 1) {
                 do_save_alias=0;
                 return;
               }
-              
+
               try {
 
                 String fs =  System.getProperty("file.separator");
@@ -109,7 +108,6 @@ boolean did_import=false;
             } catch(Exception e) {
               e.printStackTrace();
             }
-
             do_save_alias=0;
           }
         } catch(Exception e) {
@@ -174,10 +172,81 @@ private void read_alias() {
 
     import_alias_csv(parent, lnr);
 
-    did_import=true;
-
   } catch(Exception e) {
     e.printStackTrace();
+  }
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public void setAlias(aliasEntry ae, int rid_i, String alias_str) {
+  try {
+    int i=0;
+    String rid_str = Integer.valueOf(rid_i).toString();
+
+    for(i=0;i<NRECS;i++) {
+      try {
+        Object o1 = parent.getAliasObject(i,0);
+
+        if(o1!=null && ((Integer) o1).toString().equals(rid_str.trim()) )  {
+          parent.addAliasObject(alias_str,i,1);
+          break;
+        }
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+    }
+  } catch(Exception e) {
+  }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public String getAlias(int rid_i) {
+  try {
+    int i=0;
+    String rid_str = Integer.valueOf(rid_i).toString();
+
+    for(i=0;i<NRECS;i++) {
+      try {
+        Object o1 = parent.getAliasObject(i,0);
+
+        if(o1!=null && ((Integer) o1).toString().equals(rid_str.trim()) )  {
+          Object o2 = parent.getAliasObject(i,1);
+          String as = (String) o2;
+          if(as!=null && as.trim().length()>0) return as; 
+          break;
+        }
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+    }
+  } catch(Exception e) {
+  }
+  return null;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public void findAlias(aliasEntry ae, int rid_i) {
+  try {
+    int i=0;
+    String rid_str = Integer.valueOf(rid_i).toString();
+
+    for(i=0;i<NRECS;i++) {
+      try {
+        Object o1 = parent.getAliasObject(i,0);
+
+        if(o1!=null && ((Integer) o1).toString().equals(rid_str.trim()) )  {
+          Object o2 = parent.getAliasObject(i,1);
+          String as = (String) o2;
+          if(as!=null && as.trim().length()>0) ae.setAlias(as);
+          break;
+        }
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+    }
+  } catch(Exception e) {
   }
 }
 
@@ -426,7 +495,7 @@ private void do_import_from_prefs() {
     }
 }
 public void save_alias() {
-  if(NRECS<1 || !did_import) return;
+  if(NRECS < 1) return;
   do_save_alias=1;
 }
 

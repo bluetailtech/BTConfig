@@ -602,23 +602,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           try {
                             parent.current_tgzone = tgzone;
 
-                            if( (tgzone&0x01) >0) parent.zone1.setSelected(true);
-                              else parent.zone1.setSelected(false);
-                            if( (tgzone&0x02) >0) parent.zone2.setSelected(true);
-                              else parent.zone2.setSelected(false);
-                            if( (tgzone&0x04) >0) parent.zone3.setSelected(true);
-                              else parent.zone3.setSelected(false);
-                            if( (tgzone&0x08) >0) parent.zone4.setSelected(true);
-                              else parent.zone4.setSelected(false);
-                            if( (tgzone&0x10) >0) parent.zone5.setSelected(true);
-                              else parent.zone5.setSelected(false);
-                            if( (tgzone&0x20) >0) parent.zone6.setSelected(true);
-                              else parent.zone6.setSelected(false);
-                            if( (tgzone&0x40) >0) parent.zone7.setSelected(true);
-                              else parent.zone7.setSelected(false);
-                            if( (tgzone&0x80) >0) parent.zone8.setSelected(true);
-                              else parent.zone8.setSelected(false);
-
                             parent.update_zones();
 
                           } catch(Exception e) {
@@ -945,14 +928,18 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
                           int tgzone = 0;
                           try {
-                            if( parent.zone1.isSelected() ) tgzone |= 0x01;
-                            if( parent.zone2.isSelected() ) tgzone |= 0x02;
-                            if( parent.zone3.isSelected() ) tgzone |= 0x04;
-                            if( parent.zone4.isSelected() ) tgzone |= 0x08;
-                            if( parent.zone5.isSelected() ) tgzone |= 0x10;
-                            if( parent.zone6.isSelected() ) tgzone |= 0x20;
-                            if( parent.zone7.isSelected() ) tgzone |= 0x40;
-                            if( parent.zone8.isSelected() ) tgzone |= 0x80;
+                            if( parent.z1.isSelected() ) tgzone |= 0x01;
+                            if( parent.z2.isSelected() ) tgzone |= 0x02;
+                            if( parent.z3.isSelected() ) tgzone |= 0x04;
+                            if( parent.z4.isSelected() ) tgzone |= 0x08;
+                            if( parent.z5.isSelected() ) tgzone |= 0x10;
+                            if( parent.z6.isSelected() ) tgzone |= 0x20;
+                            if( parent.z7.isSelected() ) tgzone |= 0x40;
+                            if( parent.z8.isSelected() ) tgzone |= 0x80;
+                            if( parent.z9.isSelected() ) tgzone |= 0x100;
+                            if( parent.z10.isSelected() ) tgzone |= 0x200;
+                            if( parent.z11.isSelected() ) tgzone |= 0x400;
+                            if( parent.z12.isSelected() ) tgzone |= 0x800;
                           } catch(Exception e) {
                           }
                           result=new byte[64];

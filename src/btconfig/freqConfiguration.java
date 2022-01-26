@@ -21,27 +21,42 @@ BTFrame parent;
         parent = p;
     }
 
+    public void setLabels(String l1, String l2) {
+      pre_label.setText(l1);
+      post_label.setText(l2);
+    }
+
     public void setButton(int button) {
       button_id.setText( "Button ID: "+button);
       String f="";
       String key="";
-      if(button==1) key="f1_freq";
-      if(button==2) key="f2_freq";
-      if(button==3) key="f3_freq";
-      if(button==4) key="f4_freq";
-      if(button==5) key="f5_freq";
-      if(button==6) key="f6_freq";
-      if(button==7) key="f7_freq";
-      if(button==8) key="f8_freq";
+      if(button==1) key="zone1_alias";
+      if(button==2) key="zone2_alias";
+      if(button==3) key="zone3_alias";
+      if(button==4) key="zone4_alias";
+      if(button==5) key="zone5_alias";
+      if(button==6) key="zone6_alias";
+      if(button==7) key="zone7_alias";
+      if(button==8) key="zone8_alias";
+      if(button==9) key="zone9_alias";
+      if(button==10) key="zone10_alias";
+      if(button==11) key="zone11_alias";
+      if(button==12) key="zone12_alias";
       if( parent.prefs!=null) f = parent.prefs.get(key, ""); 
-      but_freq.setText(f);
+      input_tf.setText(f);
     }
 
+    public String getInput() {
+      return input_tf.getText();
+    }
+    public void setInput(String f) {
+      input_tf.setText(f);
+    }
     public String getFreq() {
-      return but_freq.getText();
+      return input_tf.getText();
     }
     public void setFreq(String f) {
-      but_freq.setText(f);
+      input_tf.setText(f);
     }
 
     /**
@@ -60,9 +75,9 @@ BTFrame parent;
         jPanel3 = new javax.swing.JPanel();
         button_id = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        but_freq = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        pre_label = new javax.swing.JLabel();
+        input_tf = new javax.swing.JTextField();
+        post_label = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -100,14 +115,14 @@ BTFrame parent;
 
         jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jLabel1.setText("Frequency");
-        jPanel5.add(jLabel1);
+        pre_label.setText("Frequency");
+        jPanel5.add(pre_label);
 
-        but_freq.setColumns(10);
-        jPanel5.add(but_freq);
+        input_tf.setColumns(10);
+        jPanel5.add(input_tf);
 
-        jLabel2.setText("MHz");
-        jPanel5.add(jLabel2);
+        post_label.setText("MHz");
+        jPanel5.add(post_label);
 
         jPanel2.add(jPanel5);
 
@@ -170,11 +185,9 @@ BTFrame parent;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField but_freq;
     private javax.swing.JLabel button_id;
     private javax.swing.JButton cancel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JTextField input_tf;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -183,5 +196,7 @@ BTFrame parent;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JButton ok;
+    private javax.swing.JLabel post_label;
+    private javax.swing.JLabel pre_label;
     // End of variables declaration//GEN-END:variables
 }

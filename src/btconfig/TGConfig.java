@@ -164,6 +164,33 @@ public void addUknownTG(BTFrame parent, String talkgroup, String sys_id, String 
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public int find_tg_zone(BTFrame parent, String talkgroup) {
+  int first_empty_row=0;
+
+  if(talkgroup==null) return -1;
+
+  talkgroup = talkgroup.replace(",","");
+  talkgroup = talkgroup.trim();
+
+  int tg1 = new Integer(talkgroup).intValue();
+
+  for(int i=0;i<NRECS;i++) {
+    try {
+      Object o3 = parent.getTableObject(i,3);
+      if(o3!=null)  {
+        if( tg1 == ( (Integer) o3 ).intValue() ) {
+          Object o7 = parent.getTableObject(i,7);
+          return ((Integer) o7).intValue(); //zone
+        }
+      }
+    } catch(Exception e) {
+    }
+  }
+
+  return -1;
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 public void disable_enc_tg(BTFrame parent, String talkgroup, String sys_id) {
   int first_empty_row=0;
 

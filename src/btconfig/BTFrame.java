@@ -1281,6 +1281,7 @@ String con_str="";
 
 FileOutputStream fos_iq;
 JFileChooser chooser;
+freqConfiguration button_config;
 
 int blks_per_sec=0;
 int save_iq_len=0;
@@ -1289,8 +1290,15 @@ int fw_completed=0;
 double cc_freq=0.0f;
 
 freqConfiguration freq_config;
+int tg_zone=0;
+String tg_zone_alias="";
+aliasEntry alias_dialog;
+int demod_type=0;
+
     public BTFrame(String[] args) {
       initComponents();
+
+      button_config = new freqConfiguration(this);;
 
       freq_butt_label.setEnabled(false);
       f1.setEnabled(false);
@@ -2567,6 +2575,22 @@ freqConfiguration freq_config;
                 }
 
                 if(has_comma==1) tg_config.addUknownTG(parent, tg_id, new Integer(current_sys_id).toString(), city, new Integer(current_wacn_id).toString() ); 
+
+                tg_zone = tg_config.find_tg_zone(this, tg_id); 
+                if(tg_zone>0 && tg_zone<=16) {
+                  if(tg_zone==1 && prefs!=null) tg_zone_alias = prefs.get("zone1_alias","");
+                  if(tg_zone==2 && prefs!=null) tg_zone_alias = prefs.get("zone2_alias","");
+                  if(tg_zone==3 && prefs!=null) tg_zone_alias = prefs.get("zone3_alias","");
+                  if(tg_zone==4 && prefs!=null) tg_zone_alias = prefs.get("zone4_alias","");
+                  if(tg_zone==5 && prefs!=null) tg_zone_alias = prefs.get("zone5_alias","");
+                  if(tg_zone==6 && prefs!=null) tg_zone_alias = prefs.get("zone6_alias","");
+                  if(tg_zone==7 && prefs!=null) tg_zone_alias = prefs.get("zone7_alias","");
+                  if(tg_zone==8 && prefs!=null) tg_zone_alias = prefs.get("zone8_alias","");
+                  if(tg_zone==9 && prefs!=null) tg_zone_alias = prefs.get("zone9_alias","");
+                  if(tg_zone==10 && prefs!=null) tg_zone_alias = prefs.get("zone10_alias","");
+                  if(tg_zone==11 && prefs!=null) tg_zone_alias = prefs.get("zone11_alias","");
+                  if(tg_zone==12 && prefs!=null) tg_zone_alias = prefs.get("zone12_alias","");
+                }
               }
             }
 
@@ -3119,9 +3143,14 @@ freqConfiguration freq_config;
         z6 = new javax.swing.JToggleButton();
         z7 = new javax.swing.JToggleButton();
         z8 = new javax.swing.JToggleButton();
+        z9 = new javax.swing.JToggleButton();
+        z10 = new javax.swing.JToggleButton();
+        z11 = new javax.swing.JToggleButton();
+        z12 = new javax.swing.JToggleButton();
         hold1 = new javax.swing.JButton();
         skip1 = new javax.swing.JButton();
         mute = new javax.swing.JToggleButton();
+        edit_alias1 = new javax.swing.JToggleButton();
         jPanel2 = new javax.swing.JPanel();
         progress_label = new javax.swing.JLabel();
         progbar = new javax.swing.JProgressBar();
@@ -3164,12 +3193,8 @@ freqConfiguration freq_config;
         jLabel24 = new javax.swing.JLabel();
         roaming = new javax.swing.JCheckBox();
         freq_label = new javax.swing.JLabel();
-        vtimeout = new javax.swing.JComboBox<>();
-        jLabel34 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         op_mode = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
-        ref_freq = new javax.swing.JTextField();
         controlchannel = new javax.swing.JRadioButton();
         conventionalchannel = new javax.swing.JRadioButton();
         os_string = new javax.swing.JLabel();
@@ -3185,6 +3210,19 @@ freqConfiguration freq_config;
         jLabel60 = new javax.swing.JLabel();
         audio_agc_max = new javax.swing.JTextField();
         jLabel61 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        ref_freq = new javax.swing.JTextField();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel34 = new javax.swing.JLabel();
+        vtimeout = new javax.swing.JComboBox<>();
+        jPanel74 = new javax.swing.JPanel();
+        jLabel62 = new javax.swing.JLabel();
+        demod = new javax.swing.JComboBox<>();
+        jSeparator49 = new javax.swing.JSeparator();
+        jLabel67 = new javax.swing.JLabel();
+        ch_flt = new javax.swing.JComboBox<>();
+        eq_en = new javax.swing.JCheckBox();
         jPanel25 = new javax.swing.JPanel();
         jPanel26 = new javax.swing.JPanel();
         jPanel29 = new javax.swing.JPanel();
@@ -3384,15 +3422,6 @@ freqConfiguration freq_config;
         disable_encrypted = new javax.swing.JCheckBox();
         auto_pop_table = new javax.swing.JCheckBox();
         jPanel69 = new javax.swing.JPanel();
-        zone1 = new javax.swing.JCheckBox();
-        zone2 = new javax.swing.JCheckBox();
-        zone3 = new javax.swing.JCheckBox();
-        zone4 = new javax.swing.JCheckBox();
-        zone5 = new javax.swing.JCheckBox();
-        zone6 = new javax.swing.JCheckBox();
-        zone7 = new javax.swing.JCheckBox();
-        zone8 = new javax.swing.JCheckBox();
-        tg_write_config = new javax.swing.JButton();
         consolePanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -3744,6 +3773,46 @@ freqConfiguration freq_config;
         });
         jPanel55.add(z8);
 
+        z9.setBackground(new java.awt.Color(204, 204, 204));
+        z9.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        z9.setText("9");
+        z9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                z9ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(z9);
+
+        z10.setBackground(new java.awt.Color(204, 204, 204));
+        z10.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        z10.setText("9");
+        z10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                z10ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(z10);
+
+        z11.setBackground(new java.awt.Color(204, 204, 204));
+        z11.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        z11.setText("10");
+        z11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                z11ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(z11);
+
+        z12.setBackground(new java.awt.Color(204, 204, 204));
+        z12.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        z12.setText("12");
+        z12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                z12ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(z12);
+
         hold1.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         hold1.setText("H");
         hold1.addActionListener(new java.awt.event.ActionListener() {
@@ -3770,6 +3839,15 @@ freqConfiguration freq_config;
             }
         });
         jPanel55.add(mute);
+
+        edit_alias1.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        edit_alias1.setText("Edit Alias");
+        edit_alias1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edit_alias1ActionPerformed(evt);
+            }
+        });
+        jPanel55.add(edit_alias1);
 
         jPanel9.add(jPanel55, java.awt.BorderLayout.EAST);
 
@@ -3992,13 +4070,6 @@ freqConfiguration freq_config;
         freq_label.setText("Control Channel Frequency");
         p25rxconfigpanel.add(freq_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
 
-        vtimeout.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "100ms", "250ms", "500ms", "1sec", "1.5sec", "2sec", "3sec", "5sec", "10sec", "30sec" }));
-        vtimeout.setToolTipText("The time since the last activity on a talk group before the receiver will follow a different talk group.");
-        p25rxconfigpanel.add(vtimeout, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 120, -1, -1));
-
-        jLabel34.setText("Talk Group Timeout");
-        p25rxconfigpanel.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 125, -1, -1));
-
         jLabel6.setText("Power-on Mode");
         p25rxconfigpanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, -1));
 
@@ -4009,17 +4080,6 @@ freqConfiguration freq_config;
             }
         });
         p25rxconfigpanel.add(op_mode, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 80, 30));
-
-        jLabel4.setText("Ref Freq");
-        p25rxconfigpanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 50, -1, -1));
-
-        ref_freq.setColumns(12);
-        ref_freq.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ref_freqActionPerformed(evt);
-            }
-        });
-        p25rxconfigpanel.add(ref_freq, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 50, -1, -1));
 
         buttonGroup7.add(controlchannel);
         controlchannel.setSelected(true);
@@ -4056,7 +4116,7 @@ freqConfiguration freq_config;
         status_format_cc.setText("$P25_MODE$ CC BLKS_SEC $BLKS_SEC$");
         jPanel61.add(status_format_cc);
 
-        p25rxconfigpanel.add(jPanel61, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 160, 610, 80));
+        p25rxconfigpanel.add(jPanel61, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 120, 610, 80));
 
         jPanel66.setBorder(javax.swing.BorderFactory.createTitledBorder("Status Format Voice"));
 
@@ -4064,7 +4124,7 @@ freqConfiguration freq_config;
         status_format_voice.setText("$P25_MODE$ $V_FREQ$ MHz, TG $TG_ID$, $TG_NAME$");
         jPanel66.add(status_format_voice);
 
-        p25rxconfigpanel.add(jPanel66, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 260, 610, 80));
+        p25rxconfigpanel.add(jPanel66, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 220, 610, 80));
 
         show_help.setText("Show KeyWords");
         show_help.addActionListener(new java.awt.event.ActionListener() {
@@ -4087,6 +4147,51 @@ freqConfiguration freq_config;
         jPanel67.add(jLabel61);
 
         p25rxconfigpanel.add(jPanel67, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 380, 40));
+
+        jLabel4.setText("Ref Freq");
+        jPanel7.add(jLabel4);
+
+        ref_freq.setColumns(12);
+        ref_freq.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ref_freqActionPerformed(evt);
+            }
+        });
+        jPanel7.add(ref_freq);
+
+        p25rxconfigpanel.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 80, 260, 30));
+
+        jLabel34.setText("Talk Group Timeout");
+        jPanel8.add(jLabel34);
+
+        vtimeout.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "100ms", "250ms", "500ms", "1sec", "1.5sec", "2sec", "3sec", "5sec", "10sec", "30sec" }));
+        vtimeout.setToolTipText("The time since the last activity on a talk group before the receiver will follow a different talk group.");
+        jPanel8.add(vtimeout);
+
+        p25rxconfigpanel.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 310, 310, 40));
+
+        jPanel74.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel62.setText("P25 Modulation");
+        jPanel74.add(jLabel62);
+
+        demod.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LSM (simulcast)", "CQPSK/C4FM" }));
+        jPanel74.add(demod);
+
+        jSeparator49.setPreferredSize(new java.awt.Dimension(50, 0));
+        jPanel74.add(jSeparator49);
+
+        jLabel67.setText("Ch Filter");
+        jPanel74.add(jLabel67);
+
+        ch_flt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Auto", "Narrow 8.1 kHz", "Medium 8.7 kHz", "Wide 9 kHz" }));
+        jPanel74.add(ch_flt);
+
+        p25rxconfigpanel.add(jPanel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 40, 570, 40));
+
+        eq_en.setSelected(true);
+        eq_en.setText("Enable Channel Equalizer");
+        p25rxconfigpanel.add(eq_en, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 80, -1, -1));
 
         jTabbedPane1.addTab("P25RX Config", p25rxconfigpanel);
 
@@ -5059,103 +5164,6 @@ freqConfiguration freq_config;
 
         jPanel69.setBackground(new java.awt.Color(0, 0, 0));
         jPanel69.setForeground(new java.awt.Color(255, 255, 255));
-
-        zone1.setBackground(new java.awt.Color(0, 0, 0));
-        zone1.setForeground(new java.awt.Color(255, 255, 255));
-        zone1.setSelected(true);
-        zone1.setText("Zone 1");
-        zone1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                zone1ActionPerformed(evt);
-            }
-        });
-        jPanel69.add(zone1);
-
-        zone2.setBackground(new java.awt.Color(0, 0, 0));
-        zone2.setForeground(new java.awt.Color(255, 255, 255));
-        zone2.setSelected(true);
-        zone2.setText("Zone 2");
-        zone2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                zone2ActionPerformed(evt);
-            }
-        });
-        jPanel69.add(zone2);
-
-        zone3.setBackground(new java.awt.Color(0, 0, 0));
-        zone3.setForeground(new java.awt.Color(255, 255, 255));
-        zone3.setSelected(true);
-        zone3.setText("Zone 3");
-        zone3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                zone3ActionPerformed(evt);
-            }
-        });
-        jPanel69.add(zone3);
-
-        zone4.setBackground(new java.awt.Color(0, 0, 0));
-        zone4.setForeground(new java.awt.Color(255, 255, 255));
-        zone4.setSelected(true);
-        zone4.setText("Zone 4");
-        zone4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                zone4ActionPerformed(evt);
-            }
-        });
-        jPanel69.add(zone4);
-
-        zone5.setBackground(new java.awt.Color(0, 0, 0));
-        zone5.setForeground(new java.awt.Color(255, 255, 255));
-        zone5.setSelected(true);
-        zone5.setText("Zone 5");
-        zone5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                zone5ActionPerformed(evt);
-            }
-        });
-        jPanel69.add(zone5);
-
-        zone6.setBackground(new java.awt.Color(0, 0, 0));
-        zone6.setForeground(new java.awt.Color(255, 255, 255));
-        zone6.setSelected(true);
-        zone6.setText("Zone 6");
-        zone6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                zone6ActionPerformed(evt);
-            }
-        });
-        jPanel69.add(zone6);
-
-        zone7.setBackground(new java.awt.Color(0, 0, 0));
-        zone7.setForeground(new java.awt.Color(255, 255, 255));
-        zone7.setSelected(true);
-        zone7.setText("Zone 7");
-        zone7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                zone7ActionPerformed(evt);
-            }
-        });
-        jPanel69.add(zone7);
-
-        zone8.setBackground(new java.awt.Color(0, 0, 0));
-        zone8.setForeground(new java.awt.Color(255, 255, 255));
-        zone8.setSelected(true);
-        zone8.setText("Zone 8");
-        zone8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                zone8ActionPerformed(evt);
-            }
-        });
-        jPanel69.add(zone8);
-
-        tg_write_config.setText("Write Zone Enable");
-        tg_write_config.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tg_write_configActionPerformed(evt);
-            }
-        });
-        jPanel69.add(tg_write_config);
-
         jPanel22.add(jPanel69);
 
         talkgroup_panel.add(jPanel22, java.awt.BorderLayout.SOUTH);
@@ -5617,9 +5625,11 @@ freqConfiguration freq_config;
         advancedpanel.add(mcu_speed, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 260, -1, -1));
 
         jLabel57.setText("RX Model");
+        jLabel57.setEnabled(false);
         jPanel54.add(jLabel57);
 
         rxmodel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "RX Model 0", "RX Model 1", "RX Model 2", "RX Model 3" }));
+        rxmodel.setEnabled(false);
         jPanel54.add(rxmodel);
 
         advancedpanel.add(jPanel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 300, 260, 40));
@@ -6964,6 +6974,14 @@ freqConfiguration freq_config;
         else z7.setSelected(false);
       if( (current_tgzone&0x80)>0) z8.setSelected(true);
         else z8.setSelected(false);
+      if( (current_tgzone&0x100)>0) z9.setSelected(true);
+        else z9.setSelected(false);
+      if( (current_tgzone&0x200)>0) z10.setSelected(true);
+        else z10.setSelected(false);
+      if( (current_tgzone&0x400)>0) z11.setSelected(true);
+        else z11.setSelected(false);
+      if( (current_tgzone&0x800)>0) z12.setSelected(true);
+        else z12.setSelected(false);
 
       if(z1.isSelected()) {
         z1.setBackground(java.awt.Color.green);
@@ -7013,119 +7031,252 @@ freqConfiguration freq_config;
       else {
         z8.setBackground(java.awt.Color.gray);
       }
+      if(z9.isSelected()) {
+        z9.setBackground(java.awt.Color.green);
+      }
+      else {
+        z9.setBackground(java.awt.Color.gray);
+      }
+      if(z10.isSelected()) {
+        z10.setBackground(java.awt.Color.green);
+      }
+      else {
+        z10.setBackground(java.awt.Color.gray);
+      }
+      if(z11.isSelected()) {
+        z11.setBackground(java.awt.Color.green);
+      }
+      else {
+        z11.setBackground(java.awt.Color.gray);
+      }
+      if(z12.isSelected()) {
+        z12.setBackground(java.awt.Color.green);
+      }
+      else {
+        z12.setBackground(java.awt.Color.gray);
+      }
     }
 
     private void z1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_z1ActionPerformed
 
-        if(z1.isSelected()) current_tgzone |= 0x01;
-        else current_tgzone &= (byte) (255-0x01)&0xff;
+      if(evt.getModifiers() == (InputEvent.BUTTON1_MASK | InputEvent.SHIFT_MASK)) {
+        button_config.setButton(1);
+        button_config.setLabels("Zone Alias", "");
+        button_config.setVisible(true);
 
+        String zone_alias = button_config.getInput();
+        if(prefs!=null && zone_alias!=null) prefs.put("zone1_alias", zone_alias); 
+        z1.setToolTipText(zone_alias);
+        return;
+      }
 
-        String cmd= "tgzone "+current_tgzone+"\r\n";
-        serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-        update_zones();
+      if(z1.isSelected()) current_tgzone |= 0x01;
+        else current_tgzone &= (~0x01)&0xffff; 
+
+      String cmd= "tgzone "+current_tgzone+"\r\n"; 
+      serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+
+      update_zones();
     }//GEN-LAST:event_z1ActionPerformed
 
     private void z2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_z2ActionPerformed
-        if(z2.isSelected()) current_tgzone |= 0x02;
-        else current_tgzone &= (byte) (255-0x02)&0xff;
+      if(evt.getModifiers() == (InputEvent.BUTTON1_MASK | InputEvent.SHIFT_MASK)) {
+        button_config.setButton(2);
+        button_config.setLabels("Zone Alias", "");
+        button_config.setVisible(true);
 
-        String cmd= "tgzone "+current_tgzone+"\r\n";
-        serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-        update_zones();
+        String zone_alias = button_config.getInput();
+        if(prefs!=null && zone_alias!=null) prefs.put("zone2_alias", zone_alias); 
+        z2.setToolTipText(zone_alias);
+        return;
+      }
+      if(z2.isSelected()) current_tgzone |= 0x02;
+        else current_tgzone &= (~0x02)&0xffff; 
+
+      String cmd= "tgzone "+current_tgzone+"\r\n"; 
+      serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+      update_zones();
     }//GEN-LAST:event_z2ActionPerformed
 
     private void z3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_z3ActionPerformed
-        if(z3.isSelected()) current_tgzone |= 0x04;
-        else current_tgzone &= (byte) (255-0x04)&0xff;
-        String cmd= "tgzone "+current_tgzone+"\r\n";
-        serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-        update_zones();
+      if(evt.getModifiers() == (InputEvent.BUTTON1_MASK | InputEvent.SHIFT_MASK)) {
+        button_config.setButton(3);
+        button_config.setLabels("Zone Alias", "");
+        button_config.setVisible(true);
+
+        String zone_alias = button_config.getInput();
+        if(prefs!=null && zone_alias!=null) prefs.put("zone3_alias", zone_alias); 
+        z3.setToolTipText(zone_alias);
+        return;
+      }
+      if(z3.isSelected()) current_tgzone |= 0x04;
+        else current_tgzone &= (~0x04)&0xffff; 
+      String cmd= "tgzone "+current_tgzone+"\r\n"; 
+      serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+      update_zones();
     }//GEN-LAST:event_z3ActionPerformed
 
     private void z4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_z4ActionPerformed
-        if(z4.isSelected()) current_tgzone |= 0x08;
-        else current_tgzone &= (byte) (255-0x08)&0xff;
-        String cmd= "tgzone "+current_tgzone+"\r\n";
-        serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-        update_zones();
+      if(evt.getModifiers() == (InputEvent.BUTTON1_MASK | InputEvent.SHIFT_MASK)) {
+        button_config.setButton(4);
+        button_config.setLabels("Zone Alias", "");
+        button_config.setVisible(true);
+
+        String zone_alias = button_config.getInput();
+        if(prefs!=null && zone_alias!=null) prefs.put("zone4_alias", zone_alias); 
+        z4.setToolTipText(zone_alias);
+        return;
+      }
+      if(z4.isSelected()) current_tgzone |= 0x08;
+        else current_tgzone &= (~0x08)&0xffff; 
+      String cmd= "tgzone "+current_tgzone+"\r\n"; 
+      serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+      update_zones();
     }//GEN-LAST:event_z4ActionPerformed
 
     private void z5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_z5ActionPerformed
-        if(z5.isSelected()) current_tgzone |= 0x10;
-        else current_tgzone &= (byte) (255-0x10)&0xff;
-        String cmd= "tgzone "+current_tgzone+"\r\n";
-        serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-        update_zones();
+      if(evt.getModifiers() == (InputEvent.BUTTON1_MASK | InputEvent.SHIFT_MASK)) {
+        button_config.setButton(5);
+        button_config.setLabels("Zone Alias", "");
+        button_config.setVisible(true);
+
+        String zone_alias = button_config.getInput();
+        if(prefs!=null && zone_alias!=null) prefs.put("zone5_alias", zone_alias); 
+        z5.setToolTipText(zone_alias);
+        return;
+      }
+      if(z5.isSelected()) current_tgzone |= 0x10;
+        else current_tgzone &= (~0x10)&0xffff; 
+      String cmd= "tgzone "+current_tgzone+"\r\n"; 
+      serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+      update_zones();
     }//GEN-LAST:event_z5ActionPerformed
 
     private void z6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_z6ActionPerformed
-        if(z6.isSelected()) current_tgzone |= 0x20;
-        else current_tgzone &= (byte) (255-0x20)&0xff;
-        String cmd= "tgzone "+current_tgzone+"\r\n";
-        serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-        update_zones();
+      if(evt.getModifiers() == (InputEvent.BUTTON1_MASK | InputEvent.SHIFT_MASK)) {
+        button_config.setButton(6);
+        button_config.setLabels("Zone Alias", "");
+        button_config.setVisible(true);
+
+        String zone_alias = button_config.getInput();
+        if(prefs!=null && zone_alias!=null) prefs.put("zone6_alias", zone_alias); 
+        z6.setToolTipText(zone_alias);
+        return;
+      }
+      if(z6.isSelected()) current_tgzone |= 0x20;
+        else current_tgzone &= (~0x20)&0xffff; 
+      String cmd= "tgzone "+current_tgzone+"\r\n"; 
+      serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+      update_zones();
     }//GEN-LAST:event_z6ActionPerformed
 
     private void z7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_z7ActionPerformed
-        if(z7.isSelected()) current_tgzone |= 0x40;
-        else current_tgzone &= (byte) (255-0x40)&0xff;
-        String cmd= "tgzone "+current_tgzone+"\r\n";
-        serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-        update_zones();
+      if(evt.getModifiers() == (InputEvent.BUTTON1_MASK | InputEvent.SHIFT_MASK)) {
+        button_config.setButton(7);
+        button_config.setLabels("Zone Alias", "");
+        button_config.setVisible(true);
+
+        String zone_alias = button_config.getInput();
+        if(prefs!=null && zone_alias!=null) prefs.put("zone7_alias", zone_alias); 
+        z7.setToolTipText(zone_alias);
+        return;
+      }
+      if(z7.isSelected()) current_tgzone |= 0x40;
+        else current_tgzone &= (~0x40)&0xffff; 
+      String cmd= "tgzone "+current_tgzone+"\r\n"; 
+      serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+      update_zones();
     }//GEN-LAST:event_z7ActionPerformed
 
     private void z8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_z8ActionPerformed
-        if(z8.isSelected()) current_tgzone |= 0x80;
-        else current_tgzone &= (byte) (255-0x80)&0xff;
-        String cmd= "tgzone "+current_tgzone+"\r\n";
-        serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-        update_zones();
+      if(evt.getModifiers() == (InputEvent.BUTTON1_MASK | InputEvent.SHIFT_MASK)) {
+        button_config.setButton(8);
+        button_config.setLabels("Zone Alias", "");
+        button_config.setVisible(true);
+
+        String zone_alias = button_config.getInput();
+        if(prefs!=null && zone_alias!=null) prefs.put("zone8_alias", zone_alias); 
+        z8.setToolTipText(zone_alias);
+        return;
+      }
+      if(z8.isSelected()) current_tgzone |= 0x80;
+        else current_tgzone &= (~0x80)&0xffff; 
+      String cmd= "tgzone "+current_tgzone+"\r\n"; 
+      serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+      update_zones();
     }//GEN-LAST:event_z8ActionPerformed
 
-    private void zone1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zone1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_zone1ActionPerformed
+    private void z9ActionPerformed(java.awt.event.ActionEvent evt) {                                   
+      if(evt.getModifiers() == (InputEvent.BUTTON1_MASK | InputEvent.SHIFT_MASK)) {
+        button_config.setButton(9);
+        button_config.setLabels("Zone Alias", "");
+        button_config.setVisible(true);
 
-    private void zone2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zone2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_zone2ActionPerformed
+        String zone_alias = button_config.getInput();
+        if(prefs!=null && zone_alias!=null) prefs.put("zone9_alias", zone_alias); 
+        z9.setToolTipText(zone_alias);
+        return;
+      }
+      if(z9.isSelected()) current_tgzone |= 0x100;
+        else current_tgzone &= (~0x100)&0xffff; 
+      String cmd= "tgzone "+current_tgzone+"\r\n"; 
+      serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+      update_zones();
+    }                                  
 
-    private void zone3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zone3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_zone3ActionPerformed
+    private void z10ActionPerformed(java.awt.event.ActionEvent evt) {                                    
+      if(evt.getModifiers() == (InputEvent.BUTTON1_MASK | InputEvent.SHIFT_MASK)) {
+        button_config.setButton(10);
+        button_config.setLabels("Zone Alias", "");
+        button_config.setVisible(true);
 
-    private void zone4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zone4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_zone4ActionPerformed
+        String zone_alias = button_config.getInput();
+        if(prefs!=null && zone_alias!=null) prefs.put("zone10_alias", zone_alias); 
+        z10.setToolTipText(zone_alias);
+        return;
+      }
+      if(z10.isSelected()) current_tgzone |= 0x200;
+        else current_tgzone &= (~0x200)&0xffff; 
+      String cmd= "tgzone "+current_tgzone+"\r\n"; 
+      serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+      update_zones();
+    }                                   
 
-    private void zone5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zone5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_zone5ActionPerformed
+    private void z11ActionPerformed(java.awt.event.ActionEvent evt) {                                    
+      if(evt.getModifiers() == (InputEvent.BUTTON1_MASK | InputEvent.SHIFT_MASK)) {
+        button_config.setButton(11);
+        button_config.setLabels("Zone Alias", "");
+        button_config.setVisible(true);
 
-    private void zone6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zone6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_zone6ActionPerformed
+        String zone_alias = button_config.getInput();
+        if(prefs!=null && zone_alias!=null) prefs.put("zone11_alias", zone_alias); 
+        z11.setToolTipText(zone_alias);
+        return;
+      }
+      if(z11.isSelected()) current_tgzone |= 0x400;
+        else current_tgzone &= (~0x400)&0xffff; 
+      String cmd= "tgzone "+current_tgzone+"\r\n"; 
+      serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+      update_zones();
+    }                                   
 
-    private void zone7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zone7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_zone7ActionPerformed
+    private void z12ActionPerformed(java.awt.event.ActionEvent evt) {                                    
+      if(evt.getModifiers() == (InputEvent.BUTTON1_MASK | InputEvent.SHIFT_MASK)) {
+        button_config.setButton(12);
+        button_config.setLabels("Zone Alias", "");
+        button_config.setVisible(true);
 
-    private void zone8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zone8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_zone8ActionPerformed
-
-    private void tg_write_configActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tg_write_configActionPerformed
-        do_read_config=1;
-        do_write_config=1;
-        cpanel.reset_ref_est();
-
-        current_sys_id = 0;
-        current_wacn_id = 0;
-        wacn.setText("");
-        sysid.setText("");
-        nac.setText("");
-    }//GEN-LAST:event_tg_write_configActionPerformed
+        String zone_alias = button_config.getInput();
+        if(prefs!=null && zone_alias!=null) prefs.put("zone12_alias", zone_alias); 
+        z12.setToolTipText(zone_alias);
+        return;
+      }
+      if(z12.isSelected()) current_tgzone |= 0x800;
+        else current_tgzone &= (~0x800)&0xffff; 
+      String cmd= "tgzone "+current_tgzone+"\r\n"; 
+      serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+      update_zones();
+    }                                   
 
     private void set_zonesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_set_zonesActionPerformed
       int zone = Integer.parseInt( JOptionPane.showInputDialog((JFrame) this,
@@ -7236,6 +7387,11 @@ freqConfiguration freq_config;
         check_freq(prefs.get("f1_freq", frequency_tf1.getText()));
         update_freqs();
     }//GEN-LAST:event_f8ActionPerformed
+
+    private void edit_alias1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_alias1ActionPerformed
+      edit_alias();
+    }//GEN-LAST:event_edit_alias1ActionPerformed
+
 
 
     public void enable_voice() {
@@ -7502,6 +7658,19 @@ public void update_prefs() {
         if(sicpu.equals("off")) si_cpu_off.setSelected(true);
       }
 
+      z1.setToolTipText( prefs.get("zone1_alias","Press Shift While Pressing Button To Set Zone Alias") );
+      z2.setToolTipText( prefs.get("zone2_alias","Press Shift While Pressing Button To Set Zone Alias") );
+      z3.setToolTipText( prefs.get("zone3_alias","Press Shift While Pressing Button To Set Zone Alias") );
+      z4.setToolTipText( prefs.get("zone4_alias","Press Shift While Pressing Button To Set Zone Alias") );
+      z5.setToolTipText( prefs.get("zone5_alias","Press Shift While Pressing Button To Set Zone Alias") );
+      z6.setToolTipText( prefs.get("zone6_alias","Press Shift While Pressing Button To Set Zone Alias") );
+      z7.setToolTipText( prefs.get("zone7_alias","Press Shift While Pressing Button To Set Zone Alias") );
+      z8.setToolTipText( prefs.get("zone8_alias","Press Shift While Pressing Button To Set Zone Alias") );
+      z9.setToolTipText( prefs.get("zone9_alias","Press Shift While Pressing Button To Set Zone Alias") );
+      z10.setToolTipText( prefs.get("zone10_alias","Press Shift While Pressing Button To Set Zone Alias") );
+      z11.setToolTipText( prefs.get("zone11_alias","Press Shift While Pressing Button To Set Zone Alias") );
+      z12.setToolTipText( prefs.get("zone12_alias","Press Shift While Pressing Button To Set Zone Alias") );
+
   } catch(Exception e) {
     e.printStackTrace();
   }
@@ -7593,9 +7762,23 @@ public void restore_position() {
     e.printStackTrace();
   }
 }
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+public void edit_alias() {
+  if(alias_dialog==null) alias_dialog = new aliasEntry(alias);
+
+  if(alias_dialog!=null && src_uid!=0) {
+    alias_dialog.setRID( src_uid );
+    alias_dialog.setVisible(true);
+  }
+  else if(alias_dialog!=null && prev_uid!=0) {
+    alias_dialog.setRID( prev_uid );
+    alias_dialog.setVisible(true);
+  }
+}
 
 //SUMS 1
-float[] columnWidthPercentage = {.075f, .10f, .075f, .075f, .25f, .325f, 0.1f };
+float[] columnWidthPercentage = {.075f, .10f, .075f, .075f, .25f, .325f, 0.1f, 0.05f };
 private void resizeColumns() {
   // Use TableColumnModel.getTotalColumnWidth() if your table is included in a JScrollPane
   //int tW = jTable1.getWidth();
@@ -7627,7 +7810,7 @@ private void resizeColumns2() {
 //SUMS 1
 float[] columnWidthPercentage3 = {0.1f, 0.9f};
 private void resizeColumns3() {
-  int tW = alias_table.getColumnModel().getTotalColumnWidth();
+  int tW = freq_table.getColumnModel().getTotalColumnWidth();
   TableColumn column;
   TableColumnModel jTableColumnModel = alias_table.getColumnModel();
   int cantCols = jTableColumnModel.getColumnCount();
@@ -7637,7 +7820,6 @@ private void resizeColumns3() {
     column.setPreferredWidth(pWidth);
   }
 }
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 public void SLEEP_US(long val) {
@@ -7796,6 +7978,7 @@ public void SLEEP(long val) {
     private javax.swing.ButtonGroup buttonGroup9;
     private javax.swing.JButton button_write_config;
     private javax.swing.JPanel buttong_config;
+    public javax.swing.JComboBox<String> ch_flt;
     private javax.swing.JButton check_firmware;
     public javax.swing.JTextField city;
     private javax.swing.JPanel consolePanel;
@@ -7803,6 +7986,7 @@ public void SLEEP(long val) {
     public javax.swing.JRadioButton controlchannel;
     public javax.swing.JRadioButton conventionalchannel;
     private javax.swing.JButton delete_roaming;
+    public javax.swing.JComboBox<String> demod;
     private javax.swing.JPanel desc_panel;
     public javax.swing.JCheckBox disable_encrypted;
     private javax.swing.JButton disable_table_rows;
@@ -7844,6 +8028,7 @@ public void SLEEP(long val) {
     public javax.swing.JRadioButton double_click_opt5;
     public javax.swing.JRadioButton double_click_opt6;
     private javax.swing.JButton dvpopout;
+    public javax.swing.JToggleButton edit_alias1;
     private javax.swing.JButton edit_display_view;
     public javax.swing.JCheckBox en_bluetooth_cb;
     public javax.swing.JCheckBox en_encout;
@@ -7859,6 +8044,7 @@ public void SLEEP(long val) {
     private javax.swing.JRadioButton enable_voice_const;
     public javax.swing.JCheckBox enc_mode;
     public javax.swing.JTextField end_call_silence;
+    public javax.swing.JCheckBox eq_en;
     public javax.swing.JButton erase_roaming;
     public javax.swing.JToggleButton f1;
     public javax.swing.JToggleButton f2;
@@ -7950,8 +8136,10 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
+    private javax.swing.JLabel jLabel62;
     private javax.swing.JLabel jLabel65;
     private javax.swing.JLabel jLabel66;
+    private javax.swing.JLabel jLabel67;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -8017,6 +8205,9 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel66;
     private javax.swing.JPanel jPanel67;
     private javax.swing.JPanel jPanel69;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel74;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JScrollPane jScrollPane2;
@@ -8058,6 +8249,7 @@ public void SLEEP(long val) {
     private javax.swing.JSeparator jSeparator39;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator40;
+    private javax.swing.JSeparator jSeparator49;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
@@ -8163,7 +8355,6 @@ public void SLEEP(long val) {
     private javax.swing.JToggleButton tg_indicator;
     private javax.swing.JLabel tg_lb;
     public javax.swing.JScrollPane tg_scroll_pane;
-    private javax.swing.JButton tg_write_config;
     private javax.swing.JPanel tgfontpanel;
     private javax.swing.JButton tglog_color;
     private javax.swing.JButton tglog_edit;
@@ -8184,6 +8375,9 @@ public void SLEEP(long val) {
     public javax.swing.JLabel wacn;
     private javax.swing.JButton write_config;
     public javax.swing.JToggleButton z1;
+    public javax.swing.JToggleButton z10;
+    public javax.swing.JToggleButton z11;
+    public javax.swing.JToggleButton z12;
     public javax.swing.JToggleButton z2;
     public javax.swing.JToggleButton z3;
     public javax.swing.JToggleButton z4;
@@ -8191,14 +8385,7 @@ public void SLEEP(long val) {
     public javax.swing.JToggleButton z6;
     public javax.swing.JToggleButton z7;
     public javax.swing.JToggleButton z8;
+    public javax.swing.JToggleButton z9;
     public javax.swing.JTextField zipcode;
-    public javax.swing.JCheckBox zone1;
-    public javax.swing.JCheckBox zone2;
-    public javax.swing.JCheckBox zone3;
-    public javax.swing.JCheckBox zone4;
-    public javax.swing.JCheckBox zone5;
-    public javax.swing.JCheckBox zone6;
-    public javax.swing.JCheckBox zone7;
-    public javax.swing.JCheckBox zone8;
     // End of variables declaration//GEN-END:variables
 }
