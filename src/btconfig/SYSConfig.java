@@ -607,6 +607,20 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           } catch(Exception e) {
                           }
 
+                          int demod = bb3.getInt(620);
+                          if(demod<0) demod=0;
+                          if(demod>1) demod=1;
+                          parent.demod.setSelectedIndex(demod);
+
+                          int ch_flt = bb3.getInt(624);
+                          if(ch_flt<0) ch_flt=0; 
+                          if(ch_flt>3) ch_flt=3; 
+                          parent.ch_flt.setSelectedIndex(ch_flt);
+
+                          int eq_en = bb3.getInt(584);
+                          if(eq_en>0) parent.eq_en.setSelected(true);
+                              else parent.eq_en.setSelected(false);
+
 
                           int but1_cfg = bb3.getInt(540);
                           int but2_cfg = bb3.getInt(544);
@@ -1227,6 +1241,31 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           rlen=serial_port.readBytes( result, 64);
                           System.out.println("result: "+new String(result) );
 
+                          boolean b = parent.eq_en.isSelected();
+                          if(b) cmd = "eq_en 1\r\n";
+                            else cmd = "eq_en 0\r\n"; 
+                          result=new byte[64];
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          SLEEP(readback_sleep);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
+                          int chflt = parent.ch_flt.getSelectedIndex();
+                          result=new byte[64];
+                          cmd = "ch_flt "+chflt+"\r\n";
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          SLEEP(readback_sleep);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
+
+
+                          int demod_type = parent.demod.getSelectedIndex();
+                          result=new byte[64];
+                          cmd = "demod "+demod_type+"\r\n";
+                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
+                          SLEEP(readback_sleep);
+                          rlen=serial_port.readBytes( result, 64);
+                          System.out.println("result: "+new String(result) );
 
 
                           //cmd = "bt_reset "+parent.bluetooth_reset.getText()+"\r\n";
@@ -1239,7 +1278,7 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
 
                           result=new byte[64];
 
-                          boolean b = parent.controlchannel.isSelected();
+                          b = parent.controlchannel.isSelected();
                           if(b) cmd = "is_control 1\r\n";
                             else cmd = "is_control 0\r\n"; 
 
