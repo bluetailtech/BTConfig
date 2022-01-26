@@ -261,7 +261,9 @@ public class ConstPlotPanel extends JPanel {
        }
 
        //System.out.println("gain: "+java.lang.Math.log10(gain)*20.0f);
-       current_gain = "soft agc gain: "+String.format("%3.1f", java.lang.Math.log10(gain)*20.0f)+" dB";
+       //current_gain = "soft agc gain: "+String.format("%3.1f", java.lang.Math.log10(gain)*20.0f)+" dB";
+       current_gain = "AGC->target: "+String.format("%3.1f", java.lang.Math.log10(gain)*20.0f)+" dB";
+
        String auto_gain="";
        if(rfgain==0) auto_gain = " (auto)";
        current_rf_gain = "front-end RF gain: "+String.format("%d", rfgain)+" dB"+auto_gain;
@@ -444,9 +446,8 @@ public class ConstPlotPanel extends JPanel {
      g2d.setColor( Color.white ); 
      j=0;
      for(int i=0;i<256*3;i++) {
-       //g2d.drawLine( j+xoff2, (int) gains[j]+256, j+129, (int) gains[j+1]+256 );
-       //j+=2;
-       g2d.drawRoundRect(i+xoff2, (int) (yoff2 + gains[j++]+350.0f ),1, 1, 1, 1);
+       //g2d.drawRoundRect(i+xoff2, (int) (yoff2 + gains[j++]+350.0f ),1, 1, 1, 1);
+       g2d.drawRoundRect(i+xoff2, (int) (yoff2 + gains[j++]+445.0f ),1, 1, 1, 1);
      }
      
      
