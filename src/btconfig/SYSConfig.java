@@ -76,6 +76,7 @@ int prev_op_mode=-1;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 void do_usb_watchdog(SerialPort sp) {
 
+  /*
   try {
     byte[] out_buffer = new byte[16+32]; //size of bl_op
     ByteBuffer bb = ByteBuffer.wrap(out_buffer);
@@ -91,6 +92,7 @@ void do_usb_watchdog(SerialPort sp) {
   } catch(Exception e) {
     e.printStackTrace();
   }
+  */
 }
 
 

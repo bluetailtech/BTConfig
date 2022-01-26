@@ -4397,6 +4397,8 @@
                     <StringItem index="5" value="480 MHz"/>
                   </StringArray>
                 </Property>
+                <Property name="selectedIndex" type="int" value="5"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>

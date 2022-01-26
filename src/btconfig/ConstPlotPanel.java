@@ -354,43 +354,22 @@ public class ConstPlotPanel extends JPanel {
 
      //if( parent.off_const.isSelected() ) return;
 
-     int j = 0;
-     peak_mag = 0.0;
-     for(int i=0;i<DATA_SIZE;i++) {
+     //draw ref circles
+     g2d.setColor( new java.awt.Color(48,48,48) ); 
+     g2d.drawOval(xoff+256-45,256-45-yoff,90,90); //peak 
+     g2d.drawOval(xoff+166,256-90-yoff,180,180);  //peak * 0.7
 
-       int ii = (int) ((double) plot_data[j++]);
-       int qq = (int) ((double) plot_data[j++]);
-       try {
-         double mag = java.lang.Math.pow( ((double) ii * (double) ii) + ((double) qq * (double) qq), 0.5 );
-         if(mag > peak_mag) peak_mag = mag; 
-       } catch(Exception e) {
-       }
 
-     }
-
-     scale = 100.0 * (1.0 / peak_mag);
-
-     j=0;
+     int j=0;
      int j2=0;
      for(int i=0;i<DATA_SIZE;i++) {
 
-         int ii = (int) ((double) plot_data[j++]*scale);
-         int qq = (int) ((double) plot_data[j++]*scale);
+         int ii = (int) ((double) ((double) plot_data[j++]/4096.0f)*50.0f);
+         int qq = (int) ((double) ((double) plot_data[j++]/4096.0f)*50.0f);
 
 
-         if(do_log) {
-           int idir=1;
-           int qdir=1;
-           if(ii<0) idir=-1;
-           if(qq<0) qdir=-1;
-
-           scaled_data[j2++] = (int) ((double) java.lang.Math.log10( java.lang.Math.abs(ii))*10.0*4.0*idir ); 
-           scaled_data[j2++] = (int) ((double) java.lang.Math.log10( java.lang.Math.abs(qq))*10.0*4.0*qdir ); 
-         }
-         else {
-           scaled_data[j2++] = (int) ((double)ii); 
-           scaled_data[j2++] = (int) ((double)qq); 
-         }
+         scaled_data[j2++] = ii; 
+         scaled_data[j2++] = qq; 
       }
 
      g2d.setColor( Color.white ); 
@@ -402,14 +381,16 @@ public class ConstPlotPanel extends JPanel {
      g2d.setColor( new Color(96,96,96) ); 
      g2d.drawString("REF30", 30,420);
 
+     g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.55f));
      //draw x/y plot
-     g2d.setColor( Color.yellow ); 
+     g2d.setColor( new Color( Color.yellow.getRGB() | 0x10000000 , true) ); 
      j=0;
      for(int i=0;i<DATA_SIZE/2;i++) {
        int ii = scaled_data[j++];
        int qq = scaled_data[j++];
-       g2d.drawRoundRect(xoff+256+ii, 256+qq-yoff, 1, 1, 1, 1);
+       g2d.drawRoundRect(xoff+256+ii, 256+qq-yoff, 2, 2, 2, 2);
      }
+     g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
 
      /*
      g2d.drawString("I/Q Symbol Time Domain", 850,470);

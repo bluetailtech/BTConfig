@@ -1464,8 +1464,8 @@ int demod_type=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202201071611");
-      release_date.setText("Release: 2022-01-09 09:46");
+      fw_ver.setText("Latest Avail: FW Date: 202201260846");
+      release_date.setText("Release: 2022-01-26 08:46");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5622,6 +5622,8 @@ int demod_type=0;
         advancedpanel.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 265, -1, 20));
 
         mcu_speed.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "400 MHz (default)", "408 MHz", "432 MHz", "440 MHz", "456 MHz", "480 MHz" }));
+        mcu_speed.setSelectedIndex(5);
+        mcu_speed.setEnabled(false);
         advancedpanel.add(mcu_speed, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 260, -1, -1));
 
         jLabel57.setText("RX Model");
