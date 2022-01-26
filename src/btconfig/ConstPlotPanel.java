@@ -446,7 +446,7 @@ public class ConstPlotPanel extends JPanel {
      for(int i=0;i<256*3;i++) {
        //g2d.drawLine( j+xoff2, (int) gains[j]+256, j+129, (int) gains[j+1]+256 );
        //j+=2;
-       g2d.drawRoundRect(i+xoff2, (int) (yoff2 + 925 - ((2.5f*gains[j++])+320) ),1, 1, 1, 1);
+       g2d.drawRoundRect(i+xoff2, (int) (yoff2 + gains[j++]+350.0f ),1, 1, 1, 1);
      }
      
      
