@@ -55,7 +55,7 @@ public class audio {
             }
             System.out.print("\r\n");
             */
-            parent.audio_prog.setValue(kb);
+            //parent.audio_prog.setValue(kb);
           }
 
 
@@ -79,7 +79,7 @@ public class audio {
               sourceDataLine.drain();
               if(do_start==0) {
                 sourceDataLine.stop();
-                parent.audio_prog.setValue(0);
+                //parent.audio_prog.setValue(0);
               }
               else if(debug) {
                 System.out.println("abort stop.");
@@ -426,7 +426,7 @@ BTFrame parent;
     if(mixer!=null) mixer.close();
     if(sourceDataLine!=null) sourceDataLine.stop();
     if(sourceDataLine!=null) sourceDataLine.close();
-    parent.audio_prog.setValue(0);
+    //parent.audio_prog.setValue(0);
     //if(sourceDataLine!=null) sourceDataLine.removeLineListener(listener);
     try {
       SLEEP(1);
@@ -466,7 +466,7 @@ BTFrame parent;
       voice_count=0;
       if(debug) System.out.println("stop");
       sourceDataLine.stop();
-      parent.audio_prog.setValue(0);
+      //parent.audio_prog.setValue(0);
     }
   }
 
