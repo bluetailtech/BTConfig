@@ -1464,8 +1464,8 @@ int demod_type=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202201262005");
-      release_date.setText("Release: 2022-01-26 20:05");
+      fw_ver.setText("Latest Avail: FW Date: 202201262035");
+      release_date.setText("Release: 2022-01-26 20:35");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -5596,21 +5596,27 @@ int demod_type=0;
         advancedpanel.add(process_rid_alias, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 450, -1, -1));
 
         p1_ch_bw.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10.0 kHz", "10.4 kHz", "10.6 kHz", "11.0 kHz", "11.4 kHz", "12.0 kHz", "12.4 kHz", "13.0 kHz", "13.4 kHz", "14.2 kHz", "14.8 kHz", "15.6 kHz", "16.4 kHz", "17.2 kHz", "18.2 kHz", "19.4 kHz", "20.0 kHz", "22.0 kHz", "24.0 kHz" }));
+        p1_ch_bw.setEnabled(false);
         advancedpanel.add(p1_ch_bw, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 70, -1, 30));
 
         jLabel51.setText("P25 P2 Channel Filter BW");
+        jLabel51.setEnabled(false);
         advancedpanel.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 130, -1, -1));
 
         jLabel52.setText("Default of 15.6 kHz");
+        jLabel52.setEnabled(false);
         advancedpanel.add(jLabel52, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 130, -1, -1));
 
         jLabel53.setText("P25 P1 Channel Filter BW");
+        jLabel53.setEnabled(false);
         advancedpanel.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 80, -1, -1));
 
         p2_ch_bw.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10.0 kHz", "10.4 kHz", "10.6 kHz", "11.0 kHz", "11.4 kHz", "12.0 kHz", "12.4 kHz", "13.0 kHz", "13.4 kHz", "14.2 kHz", "14.8 kHz", "15.6 kHz", "16.4 kHz", "17.2 kHz", "18.2 kHz", "19.4 kHz", "20.0 kHz", "22.0 kHz", "24.0 kHz" }));
+        p2_ch_bw.setEnabled(false);
         advancedpanel.add(p2_ch_bw, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 120, -1, 30));
 
         jLabel54.setText("Default of 15.6 kHz");
+        jLabel54.setEnabled(false);
         advancedpanel.add(jLabel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 80, -1, -1));
 
         jLabel55.setText("For P25 P2, the best bw setting is likely to be in the range 12.4 kHz - 15.6 kHz");
@@ -6732,6 +6738,8 @@ int demod_type=0;
     }
 
     private void dvpopoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dvpopoutActionPerformed
+        if(do_read_talkgroups==1) return;
+
         // TODO add your handling code here:
         if(dvout==null) {
           dvout = new displayframe_popout(this);
