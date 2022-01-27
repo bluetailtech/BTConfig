@@ -1298,6 +1298,9 @@ int demod_type=0;
     public BTFrame(String[] args) {
       initComponents();
 
+      jPanel74.setVisible(false);
+      eq_en.setVisible(false);
+
       button_config = new freqConfiguration(this);;
 
       freq_butt_label.setEnabled(false);
@@ -5528,6 +5531,7 @@ int demod_type=0;
 
         jTabbedPane1.addTab("Alias", alias_panel);
 
+        advancedpanel.setEnabled(false);
         advancedpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         adv_write_config.setText("Write Config");
@@ -5620,9 +5624,11 @@ int demod_type=0;
         advancedpanel.add(jLabel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 80, -1, -1));
 
         jLabel55.setText("For P25 P2, the best bw setting is likely to be in the range 12.4 kHz - 15.6 kHz");
+        jLabel55.setEnabled(false);
         advancedpanel.add(jLabel55, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 200, -1, -1));
 
         jLabel56.setText("For P25 P1, the best bw setting is likely to be in the range 12.4 kHz - 15.6 kHz");
+        jLabel56.setEnabled(false);
         advancedpanel.add(jLabel56, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 170, -1, -1));
 
         en_tg_int_tone.setSelected(true);

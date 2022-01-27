@@ -95,7 +95,7 @@ public class audio {
             if(stop_timer==0) {
               if(debug) System.out.println("stop");
               sourceDataLine.stop();
-              parent.audio_prog.setValue(0);
+              //parent.audio_prog.setValue(0);
             }
           }
 
