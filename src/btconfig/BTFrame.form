@@ -490,7 +490,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Dialog" size="10" style="1"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="9"/>
+                    <Property name="text" type="java.lang.String" value="10"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="z10ActionPerformed"/>
@@ -507,7 +507,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Dialog" size="10" style="1"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="10"/>
+                    <Property name="text" type="java.lang.String" value="11"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="z11ActionPerformed"/>
@@ -1351,6 +1351,7 @@
                 <Component class="javax.swing.JLabel" name="jLabel62">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="P25 Modulation"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="demod">
@@ -1361,6 +1362,7 @@
                         <StringItem index="1" value="CQPSK/C4FM"/>
                       </StringArray>
                     </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -1377,6 +1379,7 @@
                 <Component class="javax.swing.JLabel" name="jLabel67">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Ch Filter"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="ch_flt">
@@ -1389,6 +1392,7 @@
                         <StringItem index="3" value="Wide 9 kHz"/>
                       </StringArray>
                     </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -1401,6 +1405,7 @@
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Enable Channel Equalizer"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>

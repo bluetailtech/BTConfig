@@ -1464,8 +1464,8 @@ int demod_type=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202201261247");
-      release_date.setText("Release: 2022-01-26 12:47");
+      fw_ver.setText("Latest Avail: FW Date: 202201261939");
+      release_date.setText("Release: 2022-01-26 19:39");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3785,7 +3785,7 @@ int demod_type=0;
 
         z10.setBackground(new java.awt.Color(204, 204, 204));
         z10.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
-        z10.setText("9");
+        z10.setText("10");
         z10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 z10ActionPerformed(evt);
@@ -3795,7 +3795,7 @@ int demod_type=0;
 
         z11.setBackground(new java.awt.Color(204, 204, 204));
         z11.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
-        z11.setText("10");
+        z11.setText("11");
         z11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 z11ActionPerformed(evt);
@@ -4173,24 +4173,29 @@ int demod_type=0;
         jPanel74.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         jLabel62.setText("P25 Modulation");
+        jLabel62.setEnabled(false);
         jPanel74.add(jLabel62);
 
         demod.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LSM (simulcast)", "CQPSK/C4FM" }));
+        demod.setEnabled(false);
         jPanel74.add(demod);
 
         jSeparator49.setPreferredSize(new java.awt.Dimension(50, 0));
         jPanel74.add(jSeparator49);
 
         jLabel67.setText("Ch Filter");
+        jLabel67.setEnabled(false);
         jPanel74.add(jLabel67);
 
         ch_flt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Auto", "Narrow 8.1 kHz", "Medium 8.7 kHz", "Wide 9 kHz" }));
+        ch_flt.setEnabled(false);
         jPanel74.add(ch_flt);
 
         p25rxconfigpanel.add(jPanel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 40, 570, 40));
 
         eq_en.setSelected(true);
         eq_en.setText("Enable Channel Equalizer");
+        eq_en.setEnabled(false);
         p25rxconfigpanel.add(eq_en, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 80, -1, -1));
 
         jTabbedPane1.addTab("P25RX Config", p25rxconfigpanel);
@@ -6738,6 +6743,20 @@ int demod_type=0;
           logpanel.remove(tg_scroll_pane);
           dvout.split_bottom.add(tg_scroll_pane, java.awt.BorderLayout.CENTER);
 
+          try {
+            if(prefs==null) return;
+
+            int x = prefs.getInt("dvout_form_x",50);
+            int y = prefs.getInt("dvout_form_y",50);
+            int width = prefs.getInt("dvout_form_width", 1200);
+            int height = prefs.getInt("dvout_form_height",750+10);
+              //setSize(1054,750);
+            Rectangle r = new Rectangle(x,y,width,height);
+            dvout.setBounds(r);
+
+          } catch(Exception e) {
+            e.printStackTrace();
+          }
 
         }
         dvout.setVisible(true);
@@ -7725,6 +7744,12 @@ public void save_position() {
     prefs.putInt("form_y", r.y);
     prefs.putInt("form_width", r.width);
     prefs.putInt("form_height", r.height);
+
+    r = dvout.getBounds();
+    prefs.putInt("dvout_form_x", r.x);
+    prefs.putInt("dvout_form_y", r.y);
+    prefs.putInt("dvout_form_width", r.width);
+    prefs.putInt("dvout_form_height", r.height);
 
     Boolean b = minimize.isSelected();
     prefs.putBoolean("form_min", b);
