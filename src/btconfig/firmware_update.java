@@ -264,12 +264,20 @@ int did_save=0;
               bb.putInt( (int) crc);  //app crc 
 
               serial_port.writeBytes( out_buffer, 48, 0);
+              //TODO: need to check for ack
+              try {
+                SLEEP(1000);
+              } catch(Exception e) {
+              }
+              serial_port.writeBytes( out_buffer, 48, 0);
 
               //TODO: need to check for ack
               try {
-                SLEEP(500);
+                SLEEP(8000);
               } catch(Exception e) {
               }
+
+              //System.exit(0);
 
               parent.setStatus("\r\nresetting device");
               String cmd = "system_reset\r\n";
@@ -375,10 +383,16 @@ int did_save=0;
               bb.putInt( (int) crc);  //app crc 
 
               serial_port.writeBytes( out_buffer, 48, 0);
+              //TODO: need to check for ack
+              try {
+                SLEEP(1000);
+              } catch(Exception e) {
+              }
+              serial_port.writeBytes( out_buffer, 48, 0);
 
               //TODO: need to check for ack
               try {
-                SLEEP(500);
+                SLEEP(8000);
               } catch(Exception e) {
               }
 
