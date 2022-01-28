@@ -1299,7 +1299,6 @@ int demod_type=0;
       initComponents();
 
       jPanel74.setVisible(false);
-      eq_en.setVisible(false);
 
       button_config = new freqConfiguration(this);;
 
@@ -1467,8 +1466,8 @@ int demod_type=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202201270242");
-      release_date.setText("Release: 2022-01-27 02:42");
+      fw_ver.setText("Latest Avail: FW Date: 202201280918");
+      release_date.setText("Release: 2022-01-28 09:18");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2500,10 +2499,14 @@ int demod_type=0;
             if(console_line.contains("sa 0")) {
               if(bluetooth_streaming==1 && bluetooth_error==0) setStatus("Bluetooth Audio Streaming Stopped");
               bluetooth_streaming=0;
+              is_phase1=1;
+              is_phase2=0;
             }
             if(console_line.contains("sa 1")) {
               if(bluetooth_streaming==0 && bluetooth_error==0) setStatus("Bluetooth Audio Streaming Started");
               bluetooth_streaming=1;
+              is_phase1=1;
+              is_phase2=0;
             }
 
           if(console_line.contains("sa 1")) {
@@ -3225,7 +3228,7 @@ int demod_type=0;
         jSeparator49 = new javax.swing.JSeparator();
         jLabel67 = new javax.swing.JLabel();
         ch_flt = new javax.swing.JComboBox<>();
-        eq_en = new javax.swing.JCheckBox();
+        is_lsm = new javax.swing.JCheckBox();
         jPanel25 = new javax.swing.JPanel();
         jPanel26 = new javax.swing.JPanel();
         jPanel29 = new javax.swing.JPanel();
@@ -3529,6 +3532,7 @@ int demod_type=0;
         usb_fast = new javax.swing.JRadioButton();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
+        jPanel58 = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
         jPanel56 = new javax.swing.JPanel();
         si_cpu_high = new javax.swing.JRadioButton();
@@ -4196,10 +4200,8 @@ int demod_type=0;
 
         p25rxconfigpanel.add(jPanel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 40, 570, 40));
 
-        eq_en.setSelected(true);
-        eq_en.setText("Enable Channel Equalizer");
-        eq_en.setEnabled(false);
-        p25rxconfigpanel.add(eq_en, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 80, -1, -1));
+        is_lsm.setText("LSM Mode");
+        p25rxconfigpanel.add(is_lsm, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 80, 200, 30));
 
         jTabbedPane1.addTab("P25RX Config", p25rxconfigpanel);
 
@@ -5708,13 +5710,18 @@ int demod_type=0;
 
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
-        signalinsightpanel.setLayout(new javax.swing.BoxLayout(signalinsightpanel, javax.swing.BoxLayout.X_AXIS));
+        signalinsightpanel.setLayout(new java.awt.BorderLayout());
 
         const_panel.setBackground(new java.awt.Color(0, 0, 0));
         const_panel.setMaximumSize(new java.awt.Dimension(1512, 1512));
         const_panel.setMinimumSize(new java.awt.Dimension(512, 512));
         const_panel.setPreferredSize(new java.awt.Dimension(512, 512));
         const_panel.setLayout(new java.awt.BorderLayout());
+
+        jPanel58.setBackground(new java.awt.Color(0, 0, 0));
+        const_panel.add(jPanel58, java.awt.BorderLayout.EAST);
+
+        signalinsightpanel.add(const_panel, java.awt.BorderLayout.CENTER);
 
         jPanel24.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
@@ -5768,9 +5775,7 @@ int demod_type=0;
 
         jPanel24.add(jPanel56);
 
-        const_panel.add(jPanel24, java.awt.BorderLayout.NORTH);
-
-        signalinsightpanel.add(const_panel);
+        signalinsightpanel.add(jPanel24, java.awt.BorderLayout.NORTH);
 
         jTabbedPane1.addTab("Signal Insights", signalinsightpanel);
 
@@ -8085,7 +8090,6 @@ public void SLEEP(long val) {
     private javax.swing.JRadioButton enable_voice_const;
     public javax.swing.JCheckBox enc_mode;
     public javax.swing.JTextField end_call_silence;
-    public javax.swing.JCheckBox eq_en;
     public javax.swing.JButton erase_roaming;
     public javax.swing.JToggleButton f1;
     public javax.swing.JToggleButton f2;
@@ -8123,6 +8127,7 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox inc_p25;
     public javax.swing.JCheckBox inc_trunked_only;
     public javax.swing.JCheckBox inc_vhf;
+    public javax.swing.JCheckBox is_lsm;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -8237,6 +8242,7 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel55;
     private javax.swing.JPanel jPanel56;
     private javax.swing.JPanel jPanel57;
+    private javax.swing.JPanel jPanel58;
     private javax.swing.JPanel jPanel59;
     private javax.swing.JPanel jPanel6;
     public javax.swing.JPanel jPanel60;

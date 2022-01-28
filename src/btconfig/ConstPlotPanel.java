@@ -331,12 +331,6 @@ public class ConstPlotPanel extends JPanel {
        repaint_amod=32;
        repaint_vmod=64;
      }
-     else if( parent.si_cpu_off.isSelected()) {
-       repaint_amod=9999999;
-       repaint_vmod=9999999;
-     }
-
-
 
      //Rectangle r = g2d.getClipBounds();
      Rectangle r = getBounds(); 
@@ -344,6 +338,12 @@ public class ConstPlotPanel extends JPanel {
       //clear to black
      g2d.setColor( Color.black ); 
      g2d.fill3DRect(r.x-250,r.y-250,r.width+500,r.height+500,false); 
+
+
+     if( parent.si_cpu_off.isSelected()) {
+       return;
+     }
+
 
      g2d.setColor( Color.green ); 
      g2d.drawLine(xoff+128,256-yoff,xoff+128+256,256-yoff); 
