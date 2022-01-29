@@ -1351,7 +1351,6 @@
                 <Component class="javax.swing.JLabel" name="jLabel62">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="P25 Modulation"/>
-                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="demod">
@@ -1362,7 +1361,6 @@
                         <StringItem index="1" value="CQPSK/C4FM"/>
                       </StringArray>
                     </Property>
-                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>

@@ -1305,7 +1305,7 @@ int demod_type=0;
       jLabel57.setVisible(false);
 
 
-      jPanel74.setVisible(false);
+      //jPanel74.setVisible(false);
 
       button_config = new freqConfiguration(this);;
 
@@ -1473,8 +1473,8 @@ int demod_type=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202201280918");
-      release_date.setText("Release: 2022-01-29 04:44");
+      fw_ver.setText("Latest Avail: FW Date: 202201290511");
+      release_date.setText("Release: 2022-01-29 05:11");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4192,11 +4192,9 @@ int demod_type=0;
         jPanel74.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         jLabel62.setText("P25 Modulation");
-        jLabel62.setEnabled(false);
         jPanel74.add(jLabel62);
 
         demod.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LSM (simulcast)", "CQPSK/C4FM" }));
-        demod.setEnabled(false);
         jPanel74.add(demod);
 
         jSeparator49.setPreferredSize(new java.awt.Dimension(50, 0));
