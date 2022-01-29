@@ -609,12 +609,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           } catch(Exception e) {
                           }
 
-                          int is_lsm = bb3.getInt(652);
-                          if(is_lsm<0) is_lsm=0;
-                          if(is_lsm>1) is_lsm=1;
-                          if(is_lsm==0) parent.is_lsm.setSelected(false);
-                              else parent.is_lsm.setSelected(true);
-
 
                           int demod = bb3.getInt(620);
                           if(demod<0) demod=0;
@@ -1276,15 +1270,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           boolean b = parent.controlchannel.isSelected();
                           if(b) cmd = "is_control 1\r\n";
                             else cmd = "is_control 0\r\n"; 
-
-                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-                          SLEEP(50);
-                          rlen=serial_port.readBytes( result, 64);
-                          System.out.println("result: "+new String(result) );
-
-                          b = parent.is_lsm.isSelected();
-                          if(b) cmd = "lsm 1\r\n";
-                            else cmd = "lsm 0\r\n"; 
 
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
                           SLEEP(50);

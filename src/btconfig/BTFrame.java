@@ -1298,6 +1298,13 @@ int demod_type=0;
     public BTFrame(String[] args) {
       initComponents();
 
+      mcu_speed.setVisible(false);
+      rxmodel.setVisible(false);
+      jPanel62.setVisible(false);
+      jLabel23.setVisible(false);
+      jLabel57.setVisible(false);
+
+
       jPanel74.setVisible(false);
 
       button_config = new freqConfiguration(this);;
@@ -1467,7 +1474,7 @@ int demod_type=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202201280918");
-      release_date.setText("Release: 2022-01-28 09:18");
+      release_date.setText("Release: 2022-01-29 04:44");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3228,7 +3235,6 @@ int demod_type=0;
         jSeparator49 = new javax.swing.JSeparator();
         jLabel67 = new javax.swing.JLabel();
         ch_flt = new javax.swing.JComboBox<>();
-        is_lsm = new javax.swing.JCheckBox();
         jPanel25 = new javax.swing.JPanel();
         jPanel26 = new javax.swing.JPanel();
         jPanel29 = new javax.swing.JPanel();
@@ -3503,14 +3509,6 @@ int demod_type=0;
         enc_mode = new javax.swing.JCheckBox();
         allow_tg_pri_int = new javax.swing.JCheckBox();
         process_rid_alias = new javax.swing.JCheckBox();
-        p1_ch_bw = new javax.swing.JComboBox<>();
-        jLabel51 = new javax.swing.JLabel();
-        jLabel52 = new javax.swing.JLabel();
-        jLabel53 = new javax.swing.JLabel();
-        p2_ch_bw = new javax.swing.JComboBox<>();
-        jLabel54 = new javax.swing.JLabel();
-        jLabel55 = new javax.swing.JLabel();
-        jLabel56 = new javax.swing.JLabel();
         en_tg_int_tone = new javax.swing.JCheckBox();
         jLabel23 = new javax.swing.JLabel();
         mcu_speed = new javax.swing.JComboBox<>();
@@ -3530,6 +3528,20 @@ int demod_type=0;
         usb_slow = new javax.swing.JRadioButton();
         usb_med = new javax.swing.JRadioButton();
         usb_fast = new javax.swing.JRadioButton();
+        jPanel62 = new javax.swing.JPanel();
+        jPanel63 = new javax.swing.JPanel();
+        jLabel53 = new javax.swing.JLabel();
+        p1_ch_bw = new javax.swing.JComboBox<>();
+        jLabel54 = new javax.swing.JLabel();
+        jPanel70 = new javax.swing.JPanel();
+        jLabel51 = new javax.swing.JLabel();
+        p2_ch_bw = new javax.swing.JComboBox<>();
+        jLabel52 = new javax.swing.JLabel();
+        jPanel75 = new javax.swing.JPanel();
+        jPanel76 = new javax.swing.JPanel();
+        jLabel56 = new javax.swing.JLabel();
+        jPanel71 = new javax.swing.JPanel();
+        jLabel55 = new javax.swing.JLabel();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel58 = new javax.swing.JPanel();
@@ -4199,9 +4211,6 @@ int demod_type=0;
         jPanel74.add(ch_flt);
 
         p25rxconfigpanel.add(jPanel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 40, 570, 40));
-
-        is_lsm.setText("LSM Mode");
-        p25rxconfigpanel.add(is_lsm, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 80, 200, 30));
 
         jTabbedPane1.addTab("P25RX Config", p25rxconfigpanel);
 
@@ -5601,38 +5610,6 @@ int demod_type=0;
         });
         advancedpanel.add(process_rid_alias, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 450, -1, -1));
 
-        p1_ch_bw.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10.0 kHz", "10.4 kHz", "10.6 kHz", "11.0 kHz", "11.4 kHz", "12.0 kHz", "12.4 kHz", "13.0 kHz", "13.4 kHz", "14.2 kHz", "14.8 kHz", "15.6 kHz", "16.4 kHz", "17.2 kHz", "18.2 kHz", "19.4 kHz", "20.0 kHz", "22.0 kHz", "24.0 kHz" }));
-        p1_ch_bw.setEnabled(false);
-        advancedpanel.add(p1_ch_bw, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 70, -1, 30));
-
-        jLabel51.setText("P25 P2 Channel Filter BW");
-        jLabel51.setEnabled(false);
-        advancedpanel.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 130, -1, -1));
-
-        jLabel52.setText("Default of 15.6 kHz");
-        jLabel52.setEnabled(false);
-        advancedpanel.add(jLabel52, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 130, -1, -1));
-
-        jLabel53.setText("P25 P1 Channel Filter BW");
-        jLabel53.setEnabled(false);
-        advancedpanel.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 80, -1, -1));
-
-        p2_ch_bw.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10.0 kHz", "10.4 kHz", "10.6 kHz", "11.0 kHz", "11.4 kHz", "12.0 kHz", "12.4 kHz", "13.0 kHz", "13.4 kHz", "14.2 kHz", "14.8 kHz", "15.6 kHz", "16.4 kHz", "17.2 kHz", "18.2 kHz", "19.4 kHz", "20.0 kHz", "22.0 kHz", "24.0 kHz" }));
-        p2_ch_bw.setEnabled(false);
-        advancedpanel.add(p2_ch_bw, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 120, -1, 30));
-
-        jLabel54.setText("Default of 15.6 kHz");
-        jLabel54.setEnabled(false);
-        advancedpanel.add(jLabel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 80, -1, -1));
-
-        jLabel55.setText("For P25 P2, the best bw setting is likely to be in the range 12.4 kHz - 15.6 kHz");
-        jLabel55.setEnabled(false);
-        advancedpanel.add(jLabel55, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 200, -1, -1));
-
-        jLabel56.setText("For P25 P1, the best bw setting is likely to be in the range 12.4 kHz - 15.6 kHz");
-        jLabel56.setEnabled(false);
-        advancedpanel.add(jLabel56, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 170, -1, -1));
-
         en_tg_int_tone.setSelected(true);
         en_tg_int_tone.setText("Enable 440 Hz tone on Talk Group priority interrupt event");
         advancedpanel.add(en_tg_int_tone, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, -1, -1));
@@ -5707,6 +5684,59 @@ int demod_type=0;
         jPanel57.add(usb_fast);
 
         advancedpanel.add(jPanel57, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 420, 470, 70));
+
+        jPanel62.setLayout(new javax.swing.BoxLayout(jPanel62, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel63.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jLabel53.setText("P25 P1 Channel Filter BW");
+        jLabel53.setEnabled(false);
+        jPanel63.add(jLabel53);
+
+        p1_ch_bw.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10.0 kHz", "10.4 kHz", "10.6 kHz", "11.0 kHz", "11.4 kHz", "12.0 kHz", "12.4 kHz", "13.0 kHz", "13.4 kHz", "14.2 kHz", "14.8 kHz", "15.6 kHz", "16.4 kHz", "17.2 kHz", "18.2 kHz", "19.4 kHz", "20.0 kHz", "22.0 kHz", "24.0 kHz" }));
+        p1_ch_bw.setEnabled(false);
+        jPanel63.add(p1_ch_bw);
+
+        jLabel54.setText("Default of 15.6 kHz");
+        jLabel54.setEnabled(false);
+        jPanel63.add(jLabel54);
+
+        jPanel62.add(jPanel63);
+
+        jPanel70.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jLabel51.setText("P25 P2 Channel Filter BW");
+        jLabel51.setEnabled(false);
+        jPanel70.add(jLabel51);
+
+        p2_ch_bw.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10.0 kHz", "10.4 kHz", "10.6 kHz", "11.0 kHz", "11.4 kHz", "12.0 kHz", "12.4 kHz", "13.0 kHz", "13.4 kHz", "14.2 kHz", "14.8 kHz", "15.6 kHz", "16.4 kHz", "17.2 kHz", "18.2 kHz", "19.4 kHz", "20.0 kHz", "22.0 kHz", "24.0 kHz" }));
+        p2_ch_bw.setEnabled(false);
+        jPanel70.add(p2_ch_bw);
+
+        jLabel52.setText("Default of 15.6 kHz");
+        jLabel52.setEnabled(false);
+        jPanel70.add(jLabel52);
+
+        jPanel62.add(jPanel70);
+
+        jPanel75.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jPanel75.add(jPanel76);
+
+        jLabel56.setText("For P25 P1, the best bw setting is likely to be in the range 12.4 kHz - 15.6 kHz");
+        jLabel56.setEnabled(false);
+        jPanel75.add(jLabel56);
+
+        jPanel62.add(jPanel75);
+
+        jPanel71.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jLabel55.setText("For P25 P2, the best bw setting is likely to be in the range 12.4 kHz - 15.6 kHz");
+        jLabel55.setEnabled(false);
+        jPanel71.add(jLabel55);
+
+        jPanel62.add(jPanel71);
+
+        advancedpanel.add(jPanel62, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, 710, 210));
 
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
@@ -8127,7 +8157,6 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox inc_p25;
     public javax.swing.JCheckBox inc_trunked_only;
     public javax.swing.JCheckBox inc_vhf;
-    public javax.swing.JCheckBox is_lsm;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -8247,13 +8276,19 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel6;
     public javax.swing.JPanel jPanel60;
     private javax.swing.JPanel jPanel61;
+    private javax.swing.JPanel jPanel62;
+    private javax.swing.JPanel jPanel63;
     private javax.swing.JPanel jPanel64;
     private javax.swing.JPanel jPanel65;
     private javax.swing.JPanel jPanel66;
     private javax.swing.JPanel jPanel67;
     private javax.swing.JPanel jPanel69;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel70;
+    private javax.swing.JPanel jPanel71;
     private javax.swing.JPanel jPanel74;
+    private javax.swing.JPanel jPanel75;
+    private javax.swing.JPanel jPanel76;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;

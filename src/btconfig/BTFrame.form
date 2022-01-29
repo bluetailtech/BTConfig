@@ -1401,19 +1401,6 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JCheckBox" name="is_lsm">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="LSM Mode"/>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-              </AuxValues>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="880" y="80" width="200" height="30"/>
-                </Constraint>
-              </Constraints>
-            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanel25">
@@ -4235,146 +4222,6 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JComboBox" name="p1_ch_bw">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="19">
-                    <StringItem index="0" value="10.0 kHz"/>
-                    <StringItem index="1" value="10.4 kHz"/>
-                    <StringItem index="2" value="10.6 kHz"/>
-                    <StringItem index="3" value="11.0 kHz"/>
-                    <StringItem index="4" value="11.4 kHz"/>
-                    <StringItem index="5" value="12.0 kHz"/>
-                    <StringItem index="6" value="12.4 kHz"/>
-                    <StringItem index="7" value="13.0 kHz"/>
-                    <StringItem index="8" value="13.4 kHz"/>
-                    <StringItem index="9" value="14.2 kHz"/>
-                    <StringItem index="10" value="14.8 kHz"/>
-                    <StringItem index="11" value="15.6 kHz"/>
-                    <StringItem index="12" value="16.4 kHz"/>
-                    <StringItem index="13" value="17.2 kHz"/>
-                    <StringItem index="14" value="18.2 kHz"/>
-                    <StringItem index="15" value="19.4 kHz"/>
-                    <StringItem index="16" value="20.0 kHz"/>
-                    <StringItem index="17" value="22.0 kHz"/>
-                    <StringItem index="18" value="24.0 kHz"/>
-                  </StringArray>
-                </Property>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-              </AuxValues>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="780" y="70" width="-1" height="30"/>
-                </Constraint>
-              </Constraints>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel51">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="P25 P2 Channel Filter BW"/>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="590" y="130" width="-1" height="-1"/>
-                </Constraint>
-              </Constraints>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel52">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Default of 15.6 kHz"/>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="890" y="130" width="-1" height="-1"/>
-                </Constraint>
-              </Constraints>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel53">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="P25 P1 Channel Filter BW"/>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="590" y="80" width="-1" height="-1"/>
-                </Constraint>
-              </Constraints>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="p2_ch_bw">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="19">
-                    <StringItem index="0" value="10.0 kHz"/>
-                    <StringItem index="1" value="10.4 kHz"/>
-                    <StringItem index="2" value="10.6 kHz"/>
-                    <StringItem index="3" value="11.0 kHz"/>
-                    <StringItem index="4" value="11.4 kHz"/>
-                    <StringItem index="5" value="12.0 kHz"/>
-                    <StringItem index="6" value="12.4 kHz"/>
-                    <StringItem index="7" value="13.0 kHz"/>
-                    <StringItem index="8" value="13.4 kHz"/>
-                    <StringItem index="9" value="14.2 kHz"/>
-                    <StringItem index="10" value="14.8 kHz"/>
-                    <StringItem index="11" value="15.6 kHz"/>
-                    <StringItem index="12" value="16.4 kHz"/>
-                    <StringItem index="13" value="17.2 kHz"/>
-                    <StringItem index="14" value="18.2 kHz"/>
-                    <StringItem index="15" value="19.4 kHz"/>
-                    <StringItem index="16" value="20.0 kHz"/>
-                    <StringItem index="17" value="22.0 kHz"/>
-                    <StringItem index="18" value="24.0 kHz"/>
-                  </StringArray>
-                </Property>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-              </AuxValues>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="780" y="120" width="-1" height="30"/>
-                </Constraint>
-              </Constraints>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel54">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Default of 15.6 kHz"/>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="890" y="80" width="-1" height="-1"/>
-                </Constraint>
-              </Constraints>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel55">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="For P25 P2, the best bw setting is likely to be in the range 12.4 kHz - 15.6 kHz"/>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="480" y="200" width="-1" height="-1"/>
-                </Constraint>
-              </Constraints>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel56">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="For P25 P1, the best bw setting is likely to be in the range 12.4 kHz - 15.6 kHz"/>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="480" y="170" width="-1" height="-1"/>
-                </Constraint>
-              </Constraints>
-            </Component>
             <Component class="javax.swing.JCheckBox" name="en_tg_int_tone">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
@@ -4585,6 +4432,155 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="jPanel62">
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                  <AbsoluteConstraints x="350" y="10" width="710" height="210"/>
+                </Constraint>
+              </Constraints>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout">
+                <Property name="axis" type="int" value="1"/>
+              </Layout>
+              <SubComponents>
+                <Container class="javax.swing.JPanel" name="jPanel63">
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+                    <Property name="alignment" type="int" value="2"/>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JLabel" name="jLabel53">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="P25 P1 Channel Filter BW"/>
+                        <Property name="enabled" type="boolean" value="false"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JComboBox" name="p1_ch_bw">
+                      <Properties>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                          <StringArray count="19">
+                            <StringItem index="0" value="10.0 kHz"/>
+                            <StringItem index="1" value="10.4 kHz"/>
+                            <StringItem index="2" value="10.6 kHz"/>
+                            <StringItem index="3" value="11.0 kHz"/>
+                            <StringItem index="4" value="11.4 kHz"/>
+                            <StringItem index="5" value="12.0 kHz"/>
+                            <StringItem index="6" value="12.4 kHz"/>
+                            <StringItem index="7" value="13.0 kHz"/>
+                            <StringItem index="8" value="13.4 kHz"/>
+                            <StringItem index="9" value="14.2 kHz"/>
+                            <StringItem index="10" value="14.8 kHz"/>
+                            <StringItem index="11" value="15.6 kHz"/>
+                            <StringItem index="12" value="16.4 kHz"/>
+                            <StringItem index="13" value="17.2 kHz"/>
+                            <StringItem index="14" value="18.2 kHz"/>
+                            <StringItem index="15" value="19.4 kHz"/>
+                            <StringItem index="16" value="20.0 kHz"/>
+                            <StringItem index="17" value="22.0 kHz"/>
+                            <StringItem index="18" value="24.0 kHz"/>
+                          </StringArray>
+                        </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                      </AuxValues>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel54">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Default of 15.6 kHz"/>
+                        <Property name="enabled" type="boolean" value="false"/>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="jPanel70">
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+                    <Property name="alignment" type="int" value="2"/>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JLabel" name="jLabel51">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="P25 P2 Channel Filter BW"/>
+                        <Property name="enabled" type="boolean" value="false"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JComboBox" name="p2_ch_bw">
+                      <Properties>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                          <StringArray count="19">
+                            <StringItem index="0" value="10.0 kHz"/>
+                            <StringItem index="1" value="10.4 kHz"/>
+                            <StringItem index="2" value="10.6 kHz"/>
+                            <StringItem index="3" value="11.0 kHz"/>
+                            <StringItem index="4" value="11.4 kHz"/>
+                            <StringItem index="5" value="12.0 kHz"/>
+                            <StringItem index="6" value="12.4 kHz"/>
+                            <StringItem index="7" value="13.0 kHz"/>
+                            <StringItem index="8" value="13.4 kHz"/>
+                            <StringItem index="9" value="14.2 kHz"/>
+                            <StringItem index="10" value="14.8 kHz"/>
+                            <StringItem index="11" value="15.6 kHz"/>
+                            <StringItem index="12" value="16.4 kHz"/>
+                            <StringItem index="13" value="17.2 kHz"/>
+                            <StringItem index="14" value="18.2 kHz"/>
+                            <StringItem index="15" value="19.4 kHz"/>
+                            <StringItem index="16" value="20.0 kHz"/>
+                            <StringItem index="17" value="22.0 kHz"/>
+                            <StringItem index="18" value="24.0 kHz"/>
+                          </StringArray>
+                        </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                      </AuxValues>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel52">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Default of 15.6 kHz"/>
+                        <Property name="enabled" type="boolean" value="false"/>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="jPanel75">
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+                    <Property name="alignment" type="int" value="2"/>
+                  </Layout>
+                  <SubComponents>
+                    <Container class="javax.swing.JPanel" name="jPanel76">
+
+                      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
+                    </Container>
+                    <Component class="javax.swing.JLabel" name="jLabel56">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="For P25 P1, the best bw setting is likely to be in the range 12.4 kHz - 15.6 kHz"/>
+                        <Property name="enabled" type="boolean" value="false"/>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="jPanel71">
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+                    <Property name="alignment" type="int" value="2"/>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JLabel" name="jLabel55">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="For P25 P2, the best bw setting is likely to be in the range 12.4 kHz - 15.6 kHz"/>
+                        <Property name="enabled" type="boolean" value="false"/>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
               </SubComponents>
             </Container>
           </SubComponents>
