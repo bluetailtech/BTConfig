@@ -1304,7 +1304,6 @@ int demod_type=0;
       jLabel23.setVisible(false);
       jLabel57.setVisible(false);
 
-
       //jPanel74.setVisible(false);
 
       button_config = new freqConfiguration(this);;
@@ -1473,8 +1472,8 @@ int demod_type=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202201310049");
-      release_date.setText("Release: 2022-01-31 00:49");
+      fw_ver.setText("Latest Avail: FW Date: 202201310131");
+      release_date.setText("Release: 2022-01-31 01:31");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
