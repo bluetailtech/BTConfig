@@ -1473,8 +1473,8 @@ int demod_type=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202201302001");
-      release_date.setText("Release: 2022-01-30 20:01");
+      fw_ver.setText("Latest Avail: FW Date: 202201302102");
+      release_date.setText("Release: 2022-01-30 21:02");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
