@@ -383,16 +383,17 @@ public class ConstPlotPanel extends JPanel {
      g2d.setColor( new Color(96,96,96) ); 
      g2d.drawString("REF30", 30,420);
 
-     g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.55f));
+     //g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.55f));
      //draw x/y plot
-     g2d.setColor( new Color( Color.yellow.getRGB() | 0x10000000 , true) ); 
+     //g2d.setColor( new Color( Color.yellow.getRGB() | 0x10000000 , true) ); 
+     g2d.setColor( Color.yellow ); 
      j=0;
      for(int i=0;i<DATA_SIZE/2;i++) {
        int ii = scaled_data[j++];
        int qq = scaled_data[j++];
        g2d.drawRoundRect(xoff+256+ii, 256+qq-yoff, 2, 2, 2, 2);
      }
-     g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+     //g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
 
      /*
      g2d.drawString("I/Q Symbol Time Domain", 850,470);
