@@ -137,7 +137,6 @@ public class ConstPlotPanel extends JPanel {
          if(i<128) {
            audio_in[i] = (double) audio_bytes[i] * win128[i];
          }
-         audio_bytes[i] /= 200;
        }
 
        if(did_draw_audio_fft) {
@@ -495,18 +494,26 @@ public class ConstPlotPanel extends JPanel {
 
        g2d.setColor( Color.white ); 
        g2d.drawString("Audio Frame Count "+audio_frame_count, 840, 125);
-       g2d.drawString("Audio FFT 0-4kHz", 860,375);
+       //g2d.drawString("Audio FFT 0-4kHz", 860,375);
 
        int a_xoff = 830;
+       int aval=0;
+       int prev_aval=0;
 
        g2d.setColor( Color.green ); 
        for(int i=0;i<160-1;i++) {
-         //g2d.drawRoundRect(i+850, audio_bytes[i]+132, 1, 1, 1, 1);
-         g2d.drawLine(a_xoff++, audio_bytes[i]/2+132, a_xoff, audio_bytes[i+1]/2+132 );
+         //g2d.drawLine(a_xoff++, audio_bytes[i]/200+132-50, a_xoff, audio_bytes[i+1]/200+132-50 );
+         aval = audio_bytes[i]/200;
+         if(i>1) {
+           g2d.drawLine(a_xoff, prev_aval+132-50, a_xoff+1, aval+132-50 );
+         }
+         prev_aval=aval;
+         a_xoff+=2;
        }
 
        a_xoff = 850;
 
+       /*
        //draw grid 
        g2d.setColor( new Color(0.5f,0.5f,0.5f,0.3f ) ); 
 
@@ -550,6 +557,7 @@ public class ConstPlotPanel extends JPanel {
          did_draw_audio_fft=true;
        }
 
+       */
        paint_audio--;
        if(paint_audio==0) {
          audio_frame_count=0;
