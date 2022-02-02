@@ -139,10 +139,12 @@ public class ConstPlotPanel extends JPanel {
          }
        }
 
+       /*
        if(did_draw_audio_fft) {
          fft.applyReal( audio_in, 0, true, audio_out, 0);  //real in, complex out
          did_draw_audio_fft=false;
        }
+       */
 
        paint_audio=15;
        audio_frame_count++;
