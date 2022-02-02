@@ -54,7 +54,7 @@ String hold_str="";
          long t0 = System.nanoTime(); 
          while (System.nanoTime() < t0+DELAY_TARGET_US) {
            try {
-             Thread.sleep(0, 1000);
+             Thread.sleep(0, 100);
            } catch(Exception e) {
            }
          }; 
@@ -76,6 +76,11 @@ String hold_str="";
 
                     String ndate = formatter_date.format(new java.util.Date() );
 
+                    if(fos_mp3!=null) {
+                      fos_mp3.close();
+                      fos_mp3=null;
+                    }
+
                     if(parent.mp3_separate_files.isSelected()) {
                       fos_mp3 = new FileOutputStream( home_dir+"/TG-"+tg+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".mp3", true );
                     }
@@ -84,7 +89,7 @@ String hold_str="";
                     }
                     fos_mp3.write(buffer,0,buffer.length);  //write Int num records
                     //fos_mp3.flush();
-                    fos_mp3.close();
+
                   } catch(Exception e) {
                     e.printStackTrace();
                   }
@@ -100,6 +105,11 @@ String hold_str="";
 
                   String ndate = formatter_date.format(new java.util.Date() );
 
+                  if(fos_wav!=null) {
+                    fos_wav.close();
+                    fos_wav=null;
+                  }
+
                   if(parent.mp3_separate_files.isSelected()) {
                     String wfname = home_dir+"/TG-"+tg+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".wav";
                     check_wav_header(wfname);
@@ -113,7 +123,6 @@ String hold_str="";
 
                   fos_wav.write(audio_buffer,0,audio_buffer.length);  //write Int num records
                   //fos_wav.flush();
-                  fos_wav.close();
                 } catch(Exception e) {
                   e.printStackTrace();
                 }
@@ -213,16 +222,6 @@ String hold_str="";
     parent = p;
     init();
   }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-private void SLEEP(long val) {
-  try {
-    parent.SLEEP(val);
-  } catch(Exception e) {
-    e.printStackTrace();
-  }
-}
-
 
     //////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////
