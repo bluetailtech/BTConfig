@@ -1108,7 +1108,7 @@ class updateTask extends java.util.TimerTask
 
     }
 }
-
+  java.lang.Runtime rt;
 int do_audio_tick=0;
 int do_zipsearch=0;
 int do_zipsearch2=0;
@@ -1298,6 +1298,8 @@ int demod_type=0;
     public BTFrame(String[] args) {
       initComponents();
 
+      rt = Runtime.getRuntime();
+
       mcu_speed.setVisible(false);
       rxmodel.setVisible(false);
       jPanel62.setVisible(false);
@@ -1472,8 +1474,8 @@ int demod_type=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202202020123");
-      release_date.setText("Release: 2022-02-02 08:12");
+      fw_ver.setText("Latest Avail: FW Date: 202202020921");
+      release_date.setText("Release: 2022-02-02 13:05");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3551,6 +3553,7 @@ int demod_type=0;
         si_cpu_low = new javax.swing.JRadioButton();
         si_cpu_battery_saving = new javax.swing.JRadioButton();
         si_cpu_off = new javax.swing.JRadioButton();
+        freemem = new javax.swing.JButton();
         displayviewmain_border = new javax.swing.JPanel();
         display_frame = new javax.swing.JPanel();
         jPanel60 = new javax.swing.JPanel();
@@ -5802,6 +5805,14 @@ int demod_type=0;
 
         jPanel24.add(jPanel56);
 
+        freemem.setText("Free Memory");
+        freemem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                freememActionPerformed(evt);
+            }
+        });
+        jPanel24.add(freemem);
+
         signalinsightpanel.add(jPanel24, java.awt.BorderLayout.NORTH);
 
         jTabbedPane1.addTab("Signal Insights", signalinsightpanel);
@@ -7459,6 +7470,10 @@ int demod_type=0;
       edit_alias();
     }//GEN-LAST:event_edit_alias1ActionPerformed
 
+    private void freememActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_freememActionPerformed
+      if(rt!=null) rt.gc();
+    }//GEN-LAST:event_freememActionPerformed
+
 
 
     public void enable_voice() {
@@ -8127,6 +8142,7 @@ public void SLEEP(long val) {
     public javax.swing.JToggleButton f7;
     public javax.swing.JToggleButton f8;
     private javax.swing.JButton follow_tg;
+    private javax.swing.JButton freemem;
     public javax.swing.JLabel freq;
     private javax.swing.JLabel freq_butt_label;
     public javax.swing.JLabel freq_label;
