@@ -1385,11 +1385,12 @@
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="4">
                         <StringItem index="0" value="Auto"/>
-                        <StringItem index="1" value="Narrow 8.1 kHz"/>
-                        <StringItem index="2" value="Medium 8.7 kHz"/>
-                        <StringItem index="3" value="Wide 9 kHz"/>
+                        <StringItem index="1" value="12.5 kHz"/>
+                        <StringItem index="2" value="15 kHz"/>
+                        <StringItem index="3" value="10.4 kHz"/>
                       </StringArray>
                     </Property>
+                    <Property name="selectedIndex" type="int" value="1"/>
                     <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>

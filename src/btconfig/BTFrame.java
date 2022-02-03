@@ -1474,8 +1474,8 @@ int demod_type=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202202020921");
-      release_date.setText("Release: 2022-02-02 13:05");
+      fw_ver.setText("Latest Avail: FW Date: 20220202014");
+      release_date.setText("Release: 2022-02-02 20:14");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3049,10 +3049,15 @@ int demod_type=0;
         }
       //}
 
+       /*
       if( jTextArea1.getText().length() > 128000 ) {
         String text = jTextArea1.getText();
         String new_text = text.substring(64000,text.length()-1);
         jTextArea1.setText(new_text);
+      }
+       */
+      if( jTextArea1.getText().length() > 128000 ) {
+        jTextArea1.replaceRange("",0,64000);
       }
 
       //TODO: fix
@@ -4206,7 +4211,8 @@ int demod_type=0;
         jLabel67.setEnabled(false);
         jPanel74.add(jLabel67);
 
-        ch_flt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Auto", "Narrow 8.1 kHz", "Medium 8.7 kHz", "Wide 9 kHz" }));
+        ch_flt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Auto", "12.5 kHz", "15 kHz", "10.4 kHz" }));
+        ch_flt.setSelectedIndex(1);
         ch_flt.setEnabled(false);
         jPanel74.add(ch_flt);
 
@@ -7563,9 +7569,14 @@ public void do_meta() {
 
       log_ta.setText(text.concat( new String(log_str.getBytes()) ).trim()+"\n");
 
+      /*
       if( log_ta.getText().length() > 16000 ) {
         String new_text = text.substring(8000,text.length()-1);
         log_ta.setText(new_text.trim()+"\n");
+      }
+      */
+      if( log_ta.getText().length() > 64000 ) {
+        log_ta.replaceRange("",0,32000);
       }
 
       log_ta.setCaretPosition(log_ta.getText().length());
