@@ -80,6 +80,16 @@ class updateTask extends java.util.TimerTask
     {
       try {
 
+       long total = rt.totalMemory();
+       long free = rt.freeMemory();
+
+       long total_mb = total / (1024*1024);
+       long free_mb = free / (1024*1024);
+       long used_mb = total_mb - free_mb; 
+
+       if( used_mb > 200 ) {
+         rt.gc();
+       }
 
         if(  aud!=null && ( new java.util.Date().getTime() - audio_tick_start ) > 55) {
           aud.audio_tick();
@@ -1298,6 +1308,8 @@ int demod_type=0;
     public BTFrame(String[] args) {
       initComponents();
 
+      freemem.setVisible(false);
+
       rt = Runtime.getRuntime();
 
       mcu_speed.setVisible(false);
@@ -1475,7 +1487,7 @@ int demod_type=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 20220202014");
-      release_date.setText("Release: 2022-02-02 20:14");
+      release_date.setText("Release: 2022-02-03 02:49");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
