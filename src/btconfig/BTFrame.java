@@ -87,9 +87,9 @@ class updateTask extends java.util.TimerTask
        long free_mb = free / (1024*1024);
        long used_mb = total_mb - free_mb; 
 
-       if( used_mb > 200 ) {
-         rt.gc();
-       }
+       //if( used_mb > 200 ) {
+        // rt.gc();
+       //}
 
         if(  aud!=null && ( new java.util.Date().getTime() - audio_tick_start ) > 55) {
           aud.audio_tick();
@@ -1029,7 +1029,9 @@ class updateTask extends java.util.TimerTask
               }
 
               if(str_idx>0 && do_print==1) {
-                addTextConsole( new String(str_b,0,str_idx) );
+                String b = new String(str_b,0,str_idx);
+                addTextConsole(b);
+                b=null;
                 str_idx=0;
               }
 
@@ -1487,7 +1489,7 @@ int demod_type=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 20220202014");
-      release_date.setText("Release: 2022-02-03 02:49");
+      release_date.setText("Release: 2022-02-03 10:37");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
