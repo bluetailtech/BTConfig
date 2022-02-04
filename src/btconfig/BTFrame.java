@@ -1488,8 +1488,8 @@ int demod_type=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202202041029");
-      release_date.setText("Release: 2022-02-04 10:29");
+      fw_ver.setText("Latest Avail: FW Date: 202202041531");
+      release_date.setText("Release: 2022-02-04 15:31");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3562,6 +3562,10 @@ int demod_type=0;
         jLabel56 = new javax.swing.JLabel();
         jPanel71 = new javax.swing.JPanel();
         jLabel55 = new javax.swing.JLabel();
+        jPanel68 = new javax.swing.JPanel();
+        jLabel28 = new javax.swing.JLabel();
+        audio_srate = new javax.swing.JTextField();
+        jLabel29 = new javax.swing.JLabel();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel58 = new javax.swing.JPanel();
@@ -5757,6 +5761,21 @@ int demod_type=0;
         jPanel62.add(jPanel71);
 
         advancedpanel.add(jPanel62, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, 710, 210));
+
+        jPanel68.setBorder(javax.swing.BorderFactory.createTitledBorder("Line-Out / Bluetooth Rate 46-50kHz"));
+        jPanel68.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel28.setText("Audio Sample Rate");
+        jPanel68.add(jLabel28);
+
+        audio_srate.setColumns(8);
+        audio_srate.setText("48000");
+        jPanel68.add(audio_srate);
+
+        jLabel29.setText("Hz");
+        jPanel68.add(jLabel29);
+
+        advancedpanel.add(jPanel68, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 370, 70));
 
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
@@ -8062,6 +8081,7 @@ public void SLEEP(long val) {
     public javax.swing.JRadioButton audio_hiq;
     public javax.swing.JRadioButton audio_lowq;
     public javax.swing.JProgressBar audio_prog;
+    public javax.swing.JTextField audio_srate;
     private javax.swing.JPanel audiopanel;
     public javax.swing.JCheckBox auto_flash_tg;
     public javax.swing.JCheckBox auto_pop_table;
@@ -8216,6 +8236,8 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
@@ -8320,6 +8342,7 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel65;
     private javax.swing.JPanel jPanel66;
     private javax.swing.JPanel jPanel67;
+    private javax.swing.JPanel jPanel68;
     private javax.swing.JPanel jPanel69;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel70;

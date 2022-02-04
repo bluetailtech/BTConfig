@@ -39,10 +39,20 @@ public class audio {
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   class updateTask extends java.util.TimerTask
   {
+    long NS_PER_US = 1000; 
+    long DELAY_TARGET_US = NS_PER_US*100; 
 
       public void run()
       {
         try {
+
+           long t0 = System.nanoTime(); 
+           while (System.nanoTime() < t0+DELAY_TARGET_US) {
+             try {
+               Thread.sleep(0, 10);
+             } catch(Exception e) {
+             }
+           }; 
 
           int blen = sourceDataLine.getBufferSize()-sourceDataLine.available();
           if(sourceDataLine.isRunning() && blen > 0) {
