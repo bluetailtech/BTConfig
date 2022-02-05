@@ -21,6 +21,8 @@ LameEncoder encoder=null;
 byte[] mp3_buffer;
 FileOutputStream fos_mp3;
 FileOutputStream fos_wav;
+FileOutputStream prev_fos_mp3;
+FileOutputStream prev_fos_wav;
 File mp3_file=null;
 java.text.SimpleDateFormat mp3_time_format;
 java.text.SimpleDateFormat formatter_date;
@@ -59,6 +61,11 @@ String hold_str="";
            }
          }; 
 
+    }
+      }
+  }
+
+  private void _write_audio() {
         try {
 
           if( do_audio_encode!=0 && audio_buffer!=null && home_dir!=null) {
@@ -72,14 +79,9 @@ String hold_str="";
 
                 if(buffer!=null && buffer.length>0) {
                   try {
-                    if(tg==null || tg.length()==0) break; 
+                    if(tg==null || tg.length()==0) return; 
 
                     String ndate = formatter_date.format(new java.util.Date() );
-
-                    if(fos_mp3!=null) {
-                      fos_mp3.close();
-                      fos_mp3=null;
-                    }
 
                     if(parent.mp3_separate_files.isSelected()) {
                       fos_mp3 = new FileOutputStream( home_dir+"/TG-"+tg+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".mp3", true );
@@ -88,8 +90,11 @@ String hold_str="";
                       fos_mp3 = new FileOutputStream( home_dir+"/p25rx_record"+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".mp3", true );
                     }
                     fos_mp3.write(buffer,0,buffer.length);  //write Int num records
-                    //fos_mp3.flush();
 
+                    if(prev_fos_mp3!=fos_mp3) {
+                      prev_fos_mp3.close();
+                      prev_fos_mp3 = fos_mp3;
+                    }
                   } catch(Exception e) {
                     e.printStackTrace();
                   }
@@ -101,14 +106,9 @@ String hold_str="";
               if( audio_buffer!=null ) {
 
                 try {
-                  if(tg==null || tg.length()==0) break; 
+                  if(tg==null || tg.length()==0) return; 
 
                   String ndate = formatter_date.format(new java.util.Date() );
-
-                  if(fos_wav!=null) {
-                    fos_wav.close();
-                    fos_wav=null;
-                  }
 
                   if(parent.mp3_separate_files.isSelected()) {
                     String wfname = home_dir+"/TG-"+tg+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".wav";
@@ -122,7 +122,11 @@ String hold_str="";
                   }
 
                   fos_wav.write(audio_buffer,0,audio_buffer.length);  //write Int num records
-                  //fos_wav.flush();
+
+                  if(prev_fos_wav!=fos_wav) {
+                    prev_fos_wav.close();
+                    prev_fos_wav = fos_wav;
+                  }
                 } catch(Exception e) {
                   e.printStackTrace();
                 }
@@ -132,11 +136,7 @@ String hold_str="";
         } catch(Exception e) {
           e.printStackTrace();
         }
-    }
-      }
   }
-
-
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
   public void set_follow(int tg) {
@@ -187,6 +187,8 @@ String hold_str="";
     this.wacn = String.format("%05X", wacn);
     this.sysid = String.format("%03X",sysid);
 
+    _write_audio();
+
   }
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
@@ -213,6 +215,8 @@ String hold_str="";
 
     this.wacn = String.format("%05X", wacn);
     this.sysid = String.format("%03X",sysid);
+
+    _write_audio();
 
   }
 

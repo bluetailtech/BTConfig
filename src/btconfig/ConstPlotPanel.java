@@ -87,6 +87,8 @@ public class ConstPlotPanel extends JPanel {
    int evms_idx;
    static float[] evms = new float[256*3];
    static float[] evms_ideal = new float[256*3];
+
+   java.lang.Runtime rt;
    ///////////////////////////////////////////////////////////////////////////////////////
    ///////////////////////////////////////////////////////////////////////////////////////
    public ConstPlotPanel(BTFrame parent) {
@@ -100,6 +102,9 @@ public class ConstPlotPanel extends JPanel {
      fft = new FastFourierTransform(256);
      audio_in = new double[256];
      audio_out = new double[256*2];
+
+     rt = Runtime.getRuntime();
+
 
      plot_data = new int[8192*2];
      scaled_data = new int[ 8192*2 ];
@@ -314,6 +319,8 @@ public class ConstPlotPanel extends JPanel {
    public void paint(Graphics g){
      //super.paint(g);
      Graphics2D g2d = (Graphics2D) g;
+     //int text_xoff = 300+256;
+     int text_xoff = 250+256;
 
 
      if( parent.si_cpu_high.isSelected()) {
@@ -340,6 +347,15 @@ public class ConstPlotPanel extends JPanel {
      g2d.setColor( Color.black ); 
      g2d.fill3DRect(r.x-250,r.y-250,r.width+500,r.height+500,false); 
 
+       long total = rt.totalMemory();
+       long free = rt.freeMemory();
+
+       long total_mb = total / (1024*1024);
+       long free_mb = free / (1024*1024);
+       long used_mb = total_mb - free_mb; 
+
+       g2d.setColor( Color.white ); 
+       g2d.drawString( String.format("MEM: %d MB Used,   %d MB Free / %d MB Total Avail To Java", used_mb, free_mb, total_mb) , text_xoff,350 );
 
      if( parent.si_cpu_off.isSelected()) {
        return;
@@ -455,8 +471,6 @@ public class ConstPlotPanel extends JPanel {
      
      
 
-     //int text_xoff = 300+256;
-     int text_xoff = 250+256;
 
      g2d.setColor( Color.white ); 
      g2d.drawString(current_gain, text_xoff,50);
