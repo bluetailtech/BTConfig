@@ -92,7 +92,7 @@ String hold_str="";
                     fos_mp3.write(buffer,0,buffer.length);  //write Int num records
 
                     if(prev_fos_mp3!=fos_mp3) {
-                      prev_fos_mp3.close();
+                      if(prev_fos_mp3!=null) prev_fos_mp3.close();
                       prev_fos_mp3 = fos_mp3;
                     }
                   } catch(Exception e) {
@@ -124,7 +124,7 @@ String hold_str="";
                   fos_wav.write(audio_buffer,0,audio_buffer.length);  //write Int num records
 
                   if(prev_fos_wav!=fos_wav) {
-                    prev_fos_wav.close();
+                    if(prev_fos_wav!=null) prev_fos_wav.close();
                     prev_fos_wav = fos_wav;
                   }
                 } catch(Exception e) {
