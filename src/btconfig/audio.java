@@ -46,13 +46,13 @@ public class audio {
       {
         try {
 
-           long t0 = System.nanoTime(); 
-           while (System.nanoTime() < t0+DELAY_TARGET_US) {
+           //long t0 = System.nanoTime(); 
+           //while (System.nanoTime() < t0+DELAY_TARGET_US) {
              try {
                Thread.sleep(0, 10);
              } catch(Exception e) {
              }
-           }; 
+           //}; 
 
           int blen = sourceDataLine.getBufferSize()-sourceDataLine.available();
           if(sourceDataLine.isRunning() && blen > 0) {
@@ -261,7 +261,7 @@ BTFrame parent;
               }
               else {
                 try {
-                  audio_srate = 48000;
+                  audio_srate = 47000;
 
                   af = new AudioFormat(
                     audio_srate,
