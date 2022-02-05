@@ -80,16 +80,6 @@ class updateTask extends java.util.TimerTask
     {
       try {
 
-       long total = rt.totalMemory();
-       long free = rt.freeMemory();
-
-       long total_mb = total / (1024*1024);
-       long free_mb = free / (1024*1024);
-       long used_mb = total_mb - free_mb; 
-
-       //if( used_mb > 200 ) {
-        // rt.gc();
-       //}
 
         if(  aud!=null && ( new java.util.Date().getTime() - audio_tick_start ) > 55) {
           aud.audio_tick();
@@ -1029,9 +1019,7 @@ class updateTask extends java.util.TimerTask
               }
 
               if(str_idx>0 && do_print==1) {
-                String b = new String(str_b,0,str_idx);
-                addTextConsole(b);
-                b=null;
+                addTextConsole( new String(str_b,0,str_idx) );
                 str_idx=0;
               }
 
@@ -1120,7 +1108,7 @@ class updateTask extends java.util.TimerTask
 
     }
 }
-  java.lang.Runtime rt;
+
 int do_audio_tick=0;
 int do_zipsearch=0;
 int do_zipsearch2=0;
@@ -1310,10 +1298,6 @@ int demod_type=0;
     public BTFrame(String[] args) {
       initComponents();
 
-      freemem.setVisible(false);
-
-      rt = Runtime.getRuntime();
-
       mcu_speed.setVisible(false);
       rxmodel.setVisible(false);
       jPanel62.setVisible(false);
@@ -1488,8 +1472,8 @@ int demod_type=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202202041531");
-      release_date.setText("Release: 2022-02-04 16:11");
+      fw_ver.setText("Latest Avail: FW Date: 202202041700");
+      release_date.setText("Release: 2022-02-04 17:00");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3063,15 +3047,10 @@ int demod_type=0;
         }
       //}
 
-       /*
       if( jTextArea1.getText().length() > 128000 ) {
         String text = jTextArea1.getText();
         String new_text = text.substring(64000,text.length()-1);
         jTextArea1.setText(new_text);
-      }
-       */
-      if( jTextArea1.getText().length() > 128000 ) {
-        jTextArea1.replaceRange("",0,64000);
       }
 
       //TODO: fix
@@ -3562,10 +3541,6 @@ int demod_type=0;
         jLabel56 = new javax.swing.JLabel();
         jPanel71 = new javax.swing.JPanel();
         jLabel55 = new javax.swing.JLabel();
-        jPanel68 = new javax.swing.JPanel();
-        jLabel28 = new javax.swing.JLabel();
-        audio_srate = new javax.swing.JTextField();
-        jLabel29 = new javax.swing.JLabel();
         signalinsightpanel = new javax.swing.JPanel();
         const_panel = new javax.swing.JPanel();
         jPanel58 = new javax.swing.JPanel();
@@ -3576,7 +3551,6 @@ int demod_type=0;
         si_cpu_low = new javax.swing.JRadioButton();
         si_cpu_battery_saving = new javax.swing.JRadioButton();
         si_cpu_off = new javax.swing.JRadioButton();
-        freemem = new javax.swing.JButton();
         displayviewmain_border = new javax.swing.JPanel();
         display_frame = new javax.swing.JPanel();
         jPanel60 = new javax.swing.JPanel();
@@ -4229,8 +4203,7 @@ int demod_type=0;
         jLabel67.setEnabled(false);
         jPanel74.add(jLabel67);
 
-        ch_flt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Auto", "12.5 kHz", "15 kHz", "10.4 kHz" }));
-        ch_flt.setSelectedIndex(1);
+        ch_flt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Auto", "Narrow 8.1 kHz", "Medium 8.7 kHz", "Wide 9 kHz" }));
         ch_flt.setEnabled(false);
         jPanel74.add(ch_flt);
 
@@ -5762,21 +5735,6 @@ int demod_type=0;
 
         advancedpanel.add(jPanel62, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, 710, 210));
 
-        jPanel68.setBorder(javax.swing.BorderFactory.createTitledBorder("Line-Out / Bluetooth Rate 46-50kHz"));
-        jPanel68.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        jLabel28.setText("Audio Sample Rate");
-        jPanel68.add(jLabel28);
-
-        audio_srate.setColumns(8);
-        audio_srate.setText("48000");
-        jPanel68.add(audio_srate);
-
-        jLabel29.setText("Hz");
-        jPanel68.add(jLabel29);
-
-        advancedpanel.add(jPanel68, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 370, 70));
-
         jTabbedPane1.addTab("Advanced", advancedpanel);
 
         signalinsightpanel.setLayout(new java.awt.BorderLayout());
@@ -5843,14 +5801,6 @@ int demod_type=0;
         jPanel56.add(si_cpu_off);
 
         jPanel24.add(jPanel56);
-
-        freemem.setText("Free Memory");
-        freemem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                freememActionPerformed(evt);
-            }
-        });
-        jPanel24.add(freemem);
 
         signalinsightpanel.add(jPanel24, java.awt.BorderLayout.NORTH);
 
@@ -7509,10 +7459,6 @@ int demod_type=0;
       edit_alias();
     }//GEN-LAST:event_edit_alias1ActionPerformed
 
-    private void freememActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_freememActionPerformed
-      if(rt!=null) rt.gc();
-    }//GEN-LAST:event_freememActionPerformed
-
 
 
     public void enable_voice() {
@@ -7602,14 +7548,9 @@ public void do_meta() {
 
       log_ta.setText(text.concat( new String(log_str.getBytes()) ).trim()+"\n");
 
-      /*
       if( log_ta.getText().length() > 16000 ) {
         String new_text = text.substring(8000,text.length()-1);
         log_ta.setText(new_text.trim()+"\n");
-      }
-      */
-      if( log_ta.getText().length() > 64000 ) {
-        log_ta.replaceRange("",0,32000);
       }
 
       log_ta.setCaretPosition(log_ta.getText().length());
@@ -8081,7 +8022,6 @@ public void SLEEP(long val) {
     public javax.swing.JRadioButton audio_hiq;
     public javax.swing.JRadioButton audio_lowq;
     public javax.swing.JProgressBar audio_prog;
-    public javax.swing.JTextField audio_srate;
     private javax.swing.JPanel audiopanel;
     public javax.swing.JCheckBox auto_flash_tg;
     public javax.swing.JCheckBox auto_pop_table;
@@ -8187,7 +8127,6 @@ public void SLEEP(long val) {
     public javax.swing.JToggleButton f7;
     public javax.swing.JToggleButton f8;
     private javax.swing.JButton follow_tg;
-    private javax.swing.JButton freemem;
     public javax.swing.JLabel freq;
     private javax.swing.JLabel freq_butt_label;
     public javax.swing.JLabel freq_label;
@@ -8236,8 +8175,6 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
@@ -8342,7 +8279,6 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel65;
     private javax.swing.JPanel jPanel66;
     private javax.swing.JPanel jPanel67;
-    private javax.swing.JPanel jPanel68;
     private javax.swing.JPanel jPanel69;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel70;

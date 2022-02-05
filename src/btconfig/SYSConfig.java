@@ -625,9 +625,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           int but3_cfg = bb3.getInt(548);
                           int but4_cfg = bb3.getInt(556);
 
-                          int audio_srate = bb3.getInt(248);
-                          parent.audio_srate.setText( String.format("%d", audio_srate) );
-
                           int roam_ret_to_cc = bb3.getInt(560);
 
                           if( roam_ret_to_cc == 1) parent.roaming_ret_to_cc.setSelected(true);
@@ -957,8 +954,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                             if( parent.z12.isSelected() ) tgzone |= 0x800;
                           } catch(Exception e) {
                           }
-
-
                           result=new byte[64];
                           cmd = "tgzone "+tgzone+"\r\n";
                           serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
@@ -966,12 +961,6 @@ public void read_sysconfig(BTFrame parent, SerialPort serial_port)
                           System.out.println("result: "+new String(result) );
                           SLEEP(readback_sleep);
 
-                          result=new byte[64];
-                          cmd = "audio_srate "+parent.audio_srate.getText()+"\r\n";
-                          serial_port.writeBytes( cmd.getBytes(), cmd.length(), 0);
-                          rlen=serial_port.readBytes( result, 64);
-                          System.out.println("result: "+new String(result) );
-                          SLEEP(readback_sleep);
 
 
                           String freq_to_use="";

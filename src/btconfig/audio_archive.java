@@ -51,13 +51,13 @@ String hold_str="";
       {
     while(true) {
 
-         //long t0 = System.nanoTime(); 
-         //while (System.nanoTime() < t0+DELAY_TARGET_US) {
+         long t0 = System.nanoTime(); 
+         while (System.nanoTime() < t0+DELAY_TARGET_US) {
            try {
              Thread.sleep(0, 100);
            } catch(Exception e) {
            }
-         //}; 
+         }; 
 
         try {
 
