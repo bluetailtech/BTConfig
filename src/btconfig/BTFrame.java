@@ -963,7 +963,7 @@ class updateTask extends java.util.TimerTask
                       //System.out.println("do tdma");
                     }
                     else if(b[i]==(byte) 0x15) {
-                      skip_bytes=144+1;
+                      skip_bytes=148+1;
                       rx_state=0;
                       //System.out.println("do sysinfo");
                     }
