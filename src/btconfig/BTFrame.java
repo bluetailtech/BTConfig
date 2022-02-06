@@ -963,7 +963,7 @@ class updateTask extends java.util.TimerTask
                       //System.out.println("do tdma");
                     }
                     else if(b[i]==(byte) 0x15) {
-                      skip_bytes=140+1;
+                      skip_bytes=144+1;
                       rx_state=0;
                       //System.out.println("do sysinfo");
                     }
@@ -1472,8 +1472,8 @@ int demod_type=0;
 
 
 
-      fw_ver.setText("Latest Avail: FW Date: 202202041700");
-      release_date.setText("Release: 2022-02-04 19:28");
+      fw_ver.setText("Latest Avail: FW Date: 202202051910");
+      release_date.setText("Release: 2022-02-05 19:10");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
