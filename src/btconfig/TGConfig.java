@@ -318,14 +318,23 @@ public void import_talkgroups_csv(BTFrame parent, LineNumberReader lnr, SerialPo
           String str7="";
           String str8="";
 
-          if(strs[0]!=null) str1 = strs[0];  
-          if(strs[1]!=null) str2 = strs[1]; 
-          if(strs[2]!=null) str3 = strs[2]; 
-          if(strs[3]!=null) str4 = strs[3]; 
-          if(strs[4]!=null) str5 = strs[4]; 
-          if(strs[5]!=null) str6 = strs[5]; 
-          if(strs[6]!=null) str7 = strs[6]; 
-          if(strs.length>7 && strs[7]!=null) str8 = strs[7]; 
+          if(strs[0]!=null) str1 = strs[0].trim();  
+          if(strs[1]!=null) str2 = strs[1].trim(); 
+          if(strs[2]!=null) str3 = strs[2].trim(); 
+          if(strs[3]!=null) str4 = strs[3].trim(); 
+          if(strs[4]!=null) str5 = strs[4].trim(); 
+          if(strs[5]!=null) str6 = strs[5].trim(); 
+          if(strs[6]!=null) str7 = strs[6].trim(); 
+          if(strs.length>7 && strs[7]!=null) str8 = strs[7].trim(); 
+
+          str1 = strip_garbage(str1);
+          str2 = strip_garbage(str2);
+          str3 = strip_garbage(str3);
+          str4 = strip_garbage(str4);
+          str5 = strip_garbage(str5);
+          str6 = strip_garbage(str6);
+          str7 = strip_garbage(str7);
+          str8 = strip_garbage(str8);
 
           System.out.println(":"+str1+":"+str2+":"+str3+":"+str4+":"+str5+":"+str6+":"+str7+":"+str8+":");
 
@@ -614,14 +623,22 @@ public void import_DSD(BTFrame parent, LineNumberReader lnr, SerialPort serial_p
           String str6="";
           String str7="";
 
-          if(strs[0]!=null) str0 = strs[0];  
-          if(strs[1]!=null) str1 = strs[1]; 
-          if(strs[2]!=null) str2 = strs[2]; 
-          if(strs[3]!=null) str3 = strs[3]; 
-          if(strs[4]!=null) str4 = strs[4]; 
-          if(strs[5]!=null) str5 = strs[5]; 
-          if(strs[6]!=null) str6 = strs[6]; 
-          if(strs[7]!=null) str7 = strs[7]; 
+          if(strs[0]!=null) str0 = strs[0].trim();  
+          if(strs[1]!=null) str1 = strs[1].trim(); 
+          if(strs[2]!=null) str2 = strs[2].trim(); 
+          if(strs[3]!=null) str3 = strs[3].trim(); 
+          if(strs[4]!=null) str4 = strs[4].trim(); 
+          if(strs[5]!=null) str5 = strs[5].trim(); 
+          if(strs[6]!=null) str6 = strs[6].trim(); 
+          if(strs[7]!=null) str7 = strs[7].trim(); 
+
+          str1 = strip_garbage(str1);
+          str2 = strip_garbage(str2);
+          str3 = strip_garbage(str3);
+          str4 = strip_garbage(str4);
+          str5 = strip_garbage(str5);
+          str6 = strip_garbage(str6);
+          str7 = strip_garbage(str7);
 
           String[] netinfo = str1.split("\\."); 
 
@@ -832,6 +849,24 @@ public void import_DSD(BTFrame parent, LineNumberReader lnr, SerialPort serial_p
   } catch (Exception e) {
     e.printStackTrace();
   }
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+String strip_garbage(String str) {
+  int i;
+  byte[] b = str.getBytes();
+
+  for(i=0;i<b.length;i++) {
+
+    if( b[i]>=(byte) 0x00 && b[i]<=(byte)0x1f && b[i]!=(byte)0x0a && b[i]!=(byte)0x0d) {
+      b[i] = (byte)' ';
+    }
+    if((byte)b[i]<0) {
+      b[i] = (byte)' ';
+    }
+    if(b[i]==0xa0) b[i]=(byte)' ';
+  }
+  return new String(b);
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
