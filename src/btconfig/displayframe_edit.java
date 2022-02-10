@@ -21,7 +21,8 @@ public class displayframe_edit extends javax.swing.JFrame {
   JFontChooser jfc;
   JFileChooser chooser;
 java.text.SimpleDateFormat formatter_date;
-java.text.SimpleDateFormat time_format;
+java.text.SimpleDateFormat formatter_time;
+java.text.SimpleDateFormat formatter_date_time;
 
 
   helpFrame hf;
@@ -65,6 +66,10 @@ java.text.SimpleDateFormat time_format;
 
   float dw=1.0f;
 
+  String prev_date_format;
+  String prev_time_format;
+  String prev_date_time_format;
+
     /**
      * Creates new form displayframe_edit
      */
@@ -72,8 +77,7 @@ java.text.SimpleDateFormat time_format;
       initComponents();
       parent = p;
 
-      formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
-      time_format = new java.text.SimpleDateFormat( "HH:mm:ss" );
+      update_prefs();
 
       hf = new helpFrame();
 
@@ -102,13 +106,81 @@ java.text.SimpleDateFormat time_format;
 
   ///////////////////////////////////////////////////
   ///////////////////////////////////////////////////
+  public void update_prefs() {
+    try {
+      if(parent.prefs!=null) date_format.setText( parent.prefs.get("date_format", "yyyy-MM-dd") );
+      if(parent.prefs!=null) time_format.setText( parent.prefs.get("time_format", "HH:mm:ss") );
+      if(parent.prefs!=null) date_time_format.setText( parent.prefs.get("date_time_format", "yyyy-MM-dd HH:mm:ss") );
+
+      formatter_date = new java.text.SimpleDateFormat( date_format.getText() );
+      formatter_time = new java.text.SimpleDateFormat( time_format.getText() ); 
+      formatter_date_time = new java.text.SimpleDateFormat( date_time_format.getText() ); 
+
+      prev_date_format = ""; 
+      prev_time_format = ""; 
+      prev_date_time_format = ""; 
+    } catch(Exception e) {
+    }
+  }
+
+  ///////////////////////////////////////////////////
+  ///////////////////////////////////////////////////
+  public String getDateTimeStr() {
+    try {
+      java.util.Date now = new java.util.Date();
+      return formatter_date_time.format(now);
+    } catch(Exception e) {
+    }
+    return "";
+  }
+  ///////////////////////////////////////////////////
+  ///////////////////////////////////////////////////
+  public String getDateStr() {
+    try {
+      java.util.Date now = new java.util.Date();
+      return formatter_date.format(now);
+    } catch(Exception e) {
+    }
+    return "";
+  }
+  ///////////////////////////////////////////////////
+  ///////////////////////////////////////////////////
+  public String getTimeStr() {
+    try {
+      java.util.Date now = new java.util.Date();
+      return formatter_time.format(now);
+    } catch(Exception e) {
+    }
+    return "";
+  }
+
+  ///////////////////////////////////////////////////
+  ///////////////////////////////////////////////////
   String do_subs(String s1, boolean is_tg_log) {
     String s2 = s1; 
 
     try {
+
+
+      try {
+        if( !date_format.getText().equals( prev_date_format ) ) {
+          formatter_date = new java.text.SimpleDateFormat( date_format.getText() );
+          parent.prefs.put("date_format", date_format.getText() );
+        }
+        if( !time_format.getText().equals( prev_time_format ) ) {
+          formatter_time = new java.text.SimpleDateFormat( time_format.getText() ); 
+          parent.prefs.put("time_format", time_format.getText() );
+        }
+        if( !date_time_format.getText().equals( prev_date_time_format ) ) {
+          formatter_date_time = new java.text.SimpleDateFormat( date_time_format.getText() ); 
+          parent.prefs.put("date_time_format", date_time_format.getText() );
+        }
+      } catch(Exception e) {
+      }
+
       java.util.Date now = new java.util.Date();
       String cdate = formatter_date.format(now);
-      String ctime = time_format.format(now);
+      String ctime = formatter_time.format(now);
 
       s2 = s2.replaceAll(Matcher.quoteReplacement("$DATE$"), cdate.trim() );
       s2 = s2.replaceAll(Matcher.quoteReplacement("$TIME$"), ctime.trim() );
@@ -229,10 +301,8 @@ java.text.SimpleDateFormat time_format;
         if(parent.edit_alias1!=null) {
           if(rid!=null && rid.length()>0 && Integer.valueOf(rid).intValue()!=0) {
             parent.edit_alias1.setEnabled(true);
-            parent.edit_alias1.setEnabled(true);
           }
           else {
-            parent.edit_alias1.setEnabled(false);
             parent.edit_alias1.setEnabled(false);
           }
         }
@@ -510,6 +580,14 @@ java.text.SimpleDateFormat time_format;
         dvcol5 = new javax.swing.JButton();
         en5 = new javax.swing.JCheckBox();
         clrnv5 = new javax.swing.JCheckBox();
+        jPanel9 = new javax.swing.JPanel();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        date_format = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        time_format = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        date_time_format = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         dwidth = new javax.swing.JTextField();
@@ -522,7 +600,7 @@ java.text.SimpleDateFormat time_format;
         showkeyw = new javax.swing.JButton();
         saveconfig = new javax.swing.JButton();
 
-        jPanel1.setLayout(new java.awt.GridLayout(6, 1));
+        jPanel1.setLayout(new java.awt.GridLayout(7, 1));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
@@ -763,6 +841,46 @@ java.text.SimpleDateFormat time_format;
         jPanel6.add(clrnv5);
 
         jPanel1.add(jPanel6);
+
+        jLabel3.setText("Date Format");
+        jPanel10.add(jLabel3);
+
+        date_format.setColumns(12);
+        date_format.setText("yyyy-MM-dd");
+        date_format.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                date_formatActionPerformed(evt);
+            }
+        });
+        jPanel10.add(date_format);
+
+        jLabel4.setText("Time Format");
+        jPanel10.add(jLabel4);
+
+        time_format.setColumns(12);
+        time_format.setText("HH:mm:ss");
+        time_format.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                time_formatActionPerformed(evt);
+            }
+        });
+        jPanel10.add(time_format);
+
+        jPanel9.add(jPanel10);
+
+        jLabel1.setText("Combined Date-Time Format");
+        jPanel9.add(jLabel1);
+
+        date_time_format.setColumns(20);
+        date_time_format.setText("yyyy-MM-dd HH:mm:ss");
+        date_time_format.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                date_time_formatActionPerformed(evt);
+            }
+        });
+        jPanel9.add(date_time_format);
+
+        jPanel1.add(jPanel9);
 
         jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
@@ -1036,6 +1154,10 @@ java.text.SimpleDateFormat time_format;
         parent.prefs.put("dftok5", tok5.getText() );
 
         parent.prefs.putFloat("dwidth", Float.valueOf( dwidth.getText()).floatValue() );
+
+        parent.prefs.put("date_format", date_format.getText() );
+        parent.prefs.put("time_format", time_format.getText() );
+        parent.prefs.put("date_time_format", date_time_format.getText() );
 
       }
 
@@ -1312,6 +1434,22 @@ java.text.SimpleDateFormat time_format;
       reset_to_defaults();
     }//GEN-LAST:event_resettodefaultActionPerformed
 
+    private void date_formatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_date_formatActionPerformed
+        if( parent.prefs!=null) {
+            parent.prefs.put("date_format", date_format.getText());
+        }
+    }//GEN-LAST:event_date_formatActionPerformed
+
+    private void time_formatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_time_formatActionPerformed
+        if( parent.prefs!=null) {
+            parent.prefs.put("time_format", time_format.getText());
+        }
+    }//GEN-LAST:event_time_formatActionPerformed
+
+    private void date_time_formatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_date_time_formatActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_date_time_formatActionPerformed
+
   /*
     public static void main(String args[]) {
         try {
@@ -1347,6 +1485,8 @@ java.text.SimpleDateFormat time_format;
     private javax.swing.JCheckBox clrnv3;
     private javax.swing.JCheckBox clrnv4;
     private javax.swing.JCheckBox clrnv5;
+    public javax.swing.JTextField date_format;
+    public javax.swing.JTextField date_time_format;
     private javax.swing.JButton dvcol1;
     private javax.swing.JButton dvcol2;
     private javax.swing.JButton dvcol3;
@@ -1360,8 +1500,12 @@ java.text.SimpleDateFormat time_format;
     public javax.swing.JCheckBox en5;
     private javax.swing.JButton export_df;
     private javax.swing.JButton import_df;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1369,6 +1513,7 @@ java.text.SimpleDateFormat time_format;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton resettodefault;
     private javax.swing.JButton saveconfig;
@@ -1378,6 +1523,7 @@ java.text.SimpleDateFormat time_format;
     private javax.swing.JButton selfont4;
     private javax.swing.JButton selfont5;
     private javax.swing.JButton showkeyw;
+    public javax.swing.JTextField time_format;
     private javax.swing.JTextField tok1;
     private javax.swing.JTextField tok2;
     private javax.swing.JTextField tok3;

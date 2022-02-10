@@ -41,7 +41,7 @@
         <Component class="javax.swing.JTextField" name="log_format">
           <Properties>
             <Property name="columns" type="int" value="200"/>
-            <Property name="text" type="java.lang.String" value="$P25_MODE$ $V_FREQ$ MHz,  TG $TG_ID$ ,  $TG_NAME$, $DATE$-$TIME$, $RSSI$ dbm,  cc_freq $CC_FREQ$ mhz, RID $RID$, $P25_MODE$, EVM  $EVM_P$%, "/>
+            <Property name="text" type="java.lang.String" value="$P25_MODE$ $V_FREQ$ MHz,  TG $TG_ID$ ,  $TG_NAME$, $DATE$ $TIME$, $RSSI$ dbm,  cc_freq $CC_FREQ$ mhz, RID $RID$, $P25_MODE$, EVM  $EVM_P$%, "/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="log_formatActionPerformed"/>

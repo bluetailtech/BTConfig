@@ -1473,7 +1473,7 @@ int demod_type=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202202100648");
-      release_date.setText("Release: 2022-02-10 06:48");
+      release_date.setText("Release: 2022-02-10 10:45");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1817,7 +1817,9 @@ int demod_type=0;
 
       if( enable_conlog.isSelected() ) {
         try {
-          String date = time_format.format(new java.util.Date() );
+          //String date = time_format.format(new java.util.Date() );
+          String date = dframe.getDateTimeStr(); 
+
           str = str.replaceAll("DATA_SYNC",date+" "+"DATA_SYNC");
           str = str.replaceAll("found DMR_BS_VOICE_SYNC",date+" "+"found DMR_BS_VOICE_SYNC");
           str = str.replaceAll("$TDMA",date+" "+"$TDMA");
@@ -1876,7 +1878,9 @@ int demod_type=0;
           st1 = st.nextToken().trim();
           if(st1.startsWith("signal found") || st1.contains("FOUND") ) {
             try {
-              String date = time_format.format(new java.util.Date() );
+              //String date = time_format.format(new java.util.Date() );
+              String date = dframe.getDateTimeStr();
+
               String rec = ""; 
               if(st1.startsWith("signal found")) {
                 rec = "\r\n"+date+","+st1; 
@@ -1941,7 +1945,8 @@ int demod_type=0;
               int ga = new Integer(grp).intValue();
               int sa = new Integer(src).intValue();
 
-              String date = time_format.format(new java.util.Date() );
+              //String date = time_format.format(new java.util.Date() );
+              String date = dframe.getDateTimeStr(); 
               String rec = String.format("\r\nEMRG_RESP(0x27),%s,%3.6f,%d,%d", date, fr, ga, sa);
 
               String fs =  System.getProperty("file.separator");
@@ -1971,7 +1976,8 @@ int demod_type=0;
               double fr = new Double(frq).doubleValue();
               int ga = new Integer(grp).intValue();
               int sa = new Integer(src).intValue();
-              String date = time_format.format(new java.util.Date() );
+              //String date = time_format.format(new java.util.Date() );
+              String date = dframe.getDateTimeStr(); 
               String rec = String.format("\r\nGRP_AFF_RESP(0x28),%s,%3.6f,%d,%d", date, fr, ga, sa);
 
               String fs =  System.getProperty("file.separator");
@@ -3058,7 +3064,8 @@ int demod_type=0;
 
         if(str.length()>0 ) {
 
-          String date = time_format.format(new java.util.Date() );
+          //String date = time_format.format(new java.util.Date() );
+          String date = dframe.getDateTimeStr(); 
           //str = str.replaceAll("DATA_SYNC",date+" "+"DATA_SYNC");
           //str = str.replaceAll("found DMR_BS_VOICE_SYNC",date+" "+"found DMR_BS_VOICE_SYNC");
 
@@ -7530,7 +7537,9 @@ public void do_meta() {
         String log_str = "\r\n"+dframe.do_subs(log_format,true);
 
         String date = formatter_date.format(new java.util.Date() );
-        current_date=new String(date);  //date changed
+
+        //current_date=new String(date);  //date changed
+        if(dframe!=null) current_date=dframe.getDateStr();
 
         try {
           if(fos_meta!=null) fos_meta.close();
@@ -7594,7 +7603,7 @@ public void open_audio_output_files() {
     home_dir_label.setText(home_dir);
 
     String date = formatter_date.format(new java.util.Date() );
-    current_date=new String(date);  //date changed
+    if(dframe!=null) current_date=dframe.getDateStr();
 
     meta_file = new File(document_dir+fs+sys_mac_id+fs+"p25rx_recmeta_"+current_date+".txt");
     String exe_path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath().toString();
@@ -7738,6 +7747,8 @@ public void update_prefs() {
         if(sicpu.equals("battery")) si_cpu_battery_saving.setSelected(true);
         if(sicpu.equals("off")) si_cpu_off.setSelected(true);
       }
+
+      dframe.update_prefs();
 
       z1.setToolTipText( prefs.get("zone1_alias","Press Shift While Pressing Button To Set Zone Alias") );
       z2.setToolTipText( prefs.get("zone2_alias","Press Shift While Pressing Button To Set Zone Alias") );
