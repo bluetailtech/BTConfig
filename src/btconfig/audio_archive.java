@@ -139,7 +139,7 @@ String hold_str="";
 
                   String ndate = formatter_date.format(new java.util.Date() );
 
-                  if( parent.separate_rid.isSelected() ) {
+                  if( parent.separate_rid.isSelected() && parent.src_uid!=0) {
                     try {
                       Path path = Paths.get(new File(home_dir+"/TG-"+tg+"_"+ndate+"-"+wacn+"-"+sysid).getAbsolutePath() );
                       Files.createDirectories(path);
@@ -164,7 +164,7 @@ String hold_str="";
                     fos_wav = new FileOutputStream( wfname, true );
                   }
 
-                  if( parent.separate_rid.isSelected() ) {
+                  if( parent.separate_rid.isSelected() && parent.src_uid!=0) {
                     rid_fos_wav.write(audio_buffer,0,audio_buffer.length);  //write Int num records
                     if(rid_prev_fos_wav!=rid_fos_wav) {
                       if(rid_prev_fos_wav!=null) rid_prev_fos_wav.close();
