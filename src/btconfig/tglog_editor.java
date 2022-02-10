@@ -32,7 +32,7 @@ JFileChooser chooser;
       //$DATE$ $TIME$, $TG_NAME$, TG_$TG_ID$, RID $RID$, $RID_ALIAS$, RSSI $RSSI$, VFREQ $V_FREQ$, CCFREQ $CC_FREQ$, SYS $WACN$-$SYS_ID$, NAC $NAC$, SITE $SITE_ID$, RFSS $RFSS_ID$, ERR_RATE $ERR_RATE$
 
       if( parent.prefs!=null) {
-        log_format.setText( parent.prefs.get("tglog_format", "$P25_MODE$ $V_FREQ$ MHz,  TG $TG_ID$ ,  $TG_NAME$, $DATE$ $TIME$, $RSSI$ dbm,  cc_freq $CC_FREQ$ mhz, RID $RID$, $P25_MODE$, EVM  $EVM_P$%, ") );
+        log_format.setText( parent.prefs.get("tglog_format", "$P25_MODE$ $V_FREQ$ MHz,  TG $TG_ID$ ,  $TG_NAME$,$DATE$ $TIME$, $RSSI$ dbm,  cc_freq $CC_FREQ$ mhz, RID $RID$, $P25_MODE$, EVM  $EVM_P$%, ") );
       }
       if( parent.prefs!=null) {
         tg_trig_vgrant.setSelected(parent.prefs.getBoolean("tg_trig_vgrant", false)); 
@@ -88,7 +88,7 @@ JFileChooser chooser;
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         log_format.setColumns(200);
-        log_format.setText("$P25_MODE$ $V_FREQ$ MHz,  TG $TG_ID$ ,  $TG_NAME$, $DATE$ $TIME$, $RSSI$ dbm,  cc_freq $CC_FREQ$ mhz, RID $RID$, $P25_MODE$, EVM  $EVM_P$%, ");
+        log_format.setText("$P25_MODE$ $V_FREQ$ MHz,  TG $TG_ID$ ,  $TG_NAME$,$DATE$ $TIME$, $RSSI$ dbm,  cc_freq $CC_FREQ$ mhz, RID $RID$, $P25_MODE$, EVM  $EVM_P$%, ");
         log_format.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 log_formatActionPerformed(evt);
@@ -224,7 +224,7 @@ JFileChooser chooser;
     }//GEN-LAST:event_log_formatActionPerformed
 
     private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
-        log_format.setText("$P25_MODE$ $V_FREQ$ MHz,  TG $TG_ID$ ,  $TG_NAME$, $DATE$ $TIME$, $RSSI$ dbm,  cc_freq $CC_FREQ$ mhz, RID $RID$, $P25_MODE$, EVM  $EVM_P$%, ");
+        log_format.setText("$P25_MODE$ $V_FREQ$ MHz,  TG $TG_ID$ ,  $TG_NAME$,$DATE$ $TIME$, $RSSI$ dbm,  cc_freq $CC_FREQ$ mhz, RID $RID$, $P25_MODE$, EVM  $EVM_P$%, ");
     }//GEN-LAST:event_resetActionPerformed
 
     private void te_importActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_te_importActionPerformed
