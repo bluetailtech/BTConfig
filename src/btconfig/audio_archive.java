@@ -115,7 +115,6 @@ String hold_str="";
                         if(rid_prev_fos_mp3!=null) rid_prev_fos_mp3.close();
                         rid_prev_fos_mp3 = rid_fos_mp3;
                       }
-                      rid_fos_mp3.write(buffer,0,buffer.length);  //write Int num records
                     }
 
 
