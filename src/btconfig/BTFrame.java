@@ -1473,7 +1473,7 @@ int demod_type=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202202070532");
-      release_date.setText("Release: 2022-02-07 05:32");
+      release_date.setText("Release: 2022-02-09 20:05");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3368,6 +3368,7 @@ int demod_type=0;
         jLabel35 = new javax.swing.JLabel();
         end_call_silence = new javax.swing.JTextField();
         jLabel50 = new javax.swing.JLabel();
+        separate_rid = new javax.swing.JCheckBox();
         jPanel13 = new javax.swing.JPanel();
         freqdb_panel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
@@ -4662,7 +4663,7 @@ int demod_type=0;
                 mp3_separate_filesActionPerformed(evt);
             }
         });
-        jPanel11.add(mp3_separate_files, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, -1, -1));
+        jPanel11.add(mp3_separate_files, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, -1, -1));
 
         jScrollPane3.setAutoscrolls(true);
 
@@ -4770,7 +4771,15 @@ int demod_type=0;
         jLabel50.setText("ms");
         jPanel59.add(jLabel50);
 
-        jPanel11.add(jPanel59, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 230, 40));
+        jPanel11.add(jPanel59, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 230, 40));
+
+        separate_rid.setText("Generate separate files by RID");
+        separate_rid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                separate_ridActionPerformed(evt);
+            }
+        });
+        jPanel11.add(separate_rid, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, -1, -1));
 
         audiopanel.add(jPanel11, java.awt.BorderLayout.CENTER);
 
@@ -7459,6 +7468,10 @@ int demod_type=0;
       edit_alias();
     }//GEN-LAST:event_edit_alias1ActionPerformed
 
+    private void separate_ridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_separate_ridActionPerformed
+     if(prefs!=null) prefs.putBoolean("separate_rid", separate_rid.isSelected());
+    }//GEN-LAST:event_separate_ridActionPerformed
+
 
 
     public void enable_voice() {
@@ -7661,6 +7674,7 @@ public void update_prefs() {
       enable_mp3.setSelected( prefs.getBoolean("enable_mp3", true) ); 
       enable_audio.setSelected( prefs.getBoolean("enable_audio", true) ); 
       mp3_separate_files.setSelected( prefs.getBoolean("mp3_separate_files", false) );
+      separate_rid.setSelected( prefs.getBoolean("separate_rid", false) );
 
       do_mp3.setSelected( prefs.getBoolean("do_mp3", true) );
       do_wav.setSelected( prefs.getBoolean("do_wav", false) );
@@ -8399,6 +8413,7 @@ public void SLEEP(long val) {
     private javax.swing.JTextField search_radius;
     public javax.swing.JButton select_home;
     private javax.swing.JButton send_tg;
+    public javax.swing.JCheckBox separate_rid;
     private javax.swing.JLabel ser_dev;
     private javax.swing.JButton set_zones;
     private javax.swing.JButton show_help;

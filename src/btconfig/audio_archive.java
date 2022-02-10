@@ -1,6 +1,7 @@
 package btconfig;
 
 import java.nio.*;
+import java.nio.file.*;
 import java.util.*;
 import javax.sound.sampled.*;
 import java.io.ByteArrayInputStream;
@@ -71,6 +72,8 @@ String hold_str="";
           if( do_audio_encode!=0 && audio_buffer!=null && home_dir!=null) {
             do_audio_encode=0;
 
+            if( parent.separate_rid.isEnabled() && parent.src_uid==0 ) return;
+
             if( parent.do_mp3.isSelected() ) {
               //System.out.println("encode mp3");
 
@@ -83,12 +86,26 @@ String hold_str="";
 
                     String ndate = formatter_date.format(new java.util.Date() );
 
-                    if(parent.mp3_separate_files.isSelected()) {
-                      fos_mp3 = new FileOutputStream( home_dir+"/TG-"+tg+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".mp3", true );
+                    if( parent.separate_rid.isSelected() ) {
+                      try {
+                        Path path = Paths.get(new File(home_dir+"/TG-"+tg+"_"+ndate+"-"+wacn+"-"+sysid).getAbsolutePath() );
+                        Files.createDirectories(path);
+                        String abspath = path.toString();
+                        String rid_str = String.format("%d", parent.src_uid);
+                        fos_mp3 = new FileOutputStream( abspath+"/"+"RID-"+rid_str+".mp3", true );
+                      } catch(Exception e) {
+                      }
                     }
                     else {
-                      fos_mp3 = new FileOutputStream( home_dir+"/p25rx_record"+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".mp3", true );
+                      if(parent.mp3_separate_files.isSelected()) {
+                        fos_mp3 = new FileOutputStream( home_dir+"/TG-"+tg+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".mp3", true );
+                      }
+                      else {
+                        fos_mp3 = new FileOutputStream( home_dir+"/p25rx_record"+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".mp3", true );
+                      }
                     }
+
+
                     fos_mp3.write(buffer,0,buffer.length);  //write Int num records
 
                     if(prev_fos_mp3!=fos_mp3) {
@@ -110,15 +127,27 @@ String hold_str="";
 
                   String ndate = formatter_date.format(new java.util.Date() );
 
-                  if(parent.mp3_separate_files.isSelected()) {
-                    String wfname = home_dir+"/TG-"+tg+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".wav";
-                    check_wav_header(wfname);
-                    fos_wav = new FileOutputStream( wfname, true );
+                  if( parent.separate_rid.isSelected() ) {
+                    try {
+                      Path path = Paths.get(new File(home_dir+"/TG-"+tg+"_"+ndate+"-"+wacn+"-"+sysid).getAbsolutePath() );
+                      Files.createDirectories(path);
+                      String abspath = path.toString();
+                      String rid_str = String.format("%d", parent.src_uid);
+                      fos_wav = new FileOutputStream( abspath+"/"+"RID-"+rid_str+".wav", true );
+                    } catch(Exception e) {
+                    }
                   }
                   else {
-                    String wfname = home_dir+"/p25rx_record"+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".wav";
-                    check_wav_header(wfname);
-                    fos_wav = new FileOutputStream( wfname, true );
+                    if(parent.mp3_separate_files.isSelected()) {
+                      String wfname = home_dir+"/TG-"+tg+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".wav";
+                      check_wav_header(wfname);
+                      fos_wav = new FileOutputStream( wfname, true );
+                    }
+                    else {
+                      String wfname = home_dir+"/p25rx_record"+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".wav";
+                      check_wav_header(wfname);
+                      fos_wav = new FileOutputStream( wfname, true );
+                    }
                   }
 
                   fos_wav.write(audio_buffer,0,audio_buffer.length);  //write Int num records
