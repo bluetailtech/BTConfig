@@ -24,6 +24,12 @@ FileOutputStream fos_mp3;
 FileOutputStream fos_wav;
 FileOutputStream prev_fos_mp3;
 FileOutputStream prev_fos_wav;
+
+FileOutputStream rid_fos_mp3;
+FileOutputStream rid_fos_wav;
+FileOutputStream rid_prev_fos_mp3;
+FileOutputStream rid_prev_fos_wav;
+
 File mp3_file=null;
 java.text.SimpleDateFormat mp3_time_format;
 java.text.SimpleDateFormat formatter_date;
@@ -72,7 +78,6 @@ String hold_str="";
           if( do_audio_encode!=0 && audio_buffer!=null && home_dir!=null) {
             do_audio_encode=0;
 
-            if( parent.separate_rid.isEnabled() && parent.src_uid==0 ) return;
 
             if( parent.do_mp3.isSelected() ) {
               //System.out.println("encode mp3");
@@ -86,28 +91,35 @@ String hold_str="";
 
                     String ndate = formatter_date.format(new java.util.Date() );
 
-                    if( parent.separate_rid.isSelected() ) {
+                    if( parent.separate_rid.isSelected() && parent.src_uid!=0) {
                       try {
                         Path path = Paths.get(new File(home_dir+"/TG-"+tg+"_"+ndate+"-"+wacn+"-"+sysid).getAbsolutePath() );
                         Files.createDirectories(path);
                         String abspath = path.toString();
                         String rid_str = String.format("%d", parent.src_uid);
-                        fos_mp3 = new FileOutputStream( abspath+"/"+"RID-"+rid_str+".mp3", true );
+                        rid_fos_mp3 = new FileOutputStream( abspath+"/"+"RID-"+rid_str+".mp3", true );
                       } catch(Exception e) {
                       }
                     }
+
+                    if(parent.mp3_separate_files.isSelected()) {
+                      fos_mp3 = new FileOutputStream( home_dir+"/TG-"+tg+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".mp3", true );
+                    }
                     else {
-                      if(parent.mp3_separate_files.isSelected()) {
-                        fos_mp3 = new FileOutputStream( home_dir+"/TG-"+tg+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".mp3", true );
+                      fos_mp3 = new FileOutputStream( home_dir+"/p25rx_record"+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".mp3", true );
+                    }
+
+                    if(parent.separate_rid.isSelected() && parent.src_uid!=0) {
+                      rid_fos_mp3.write(buffer,0,buffer.length);  //write Int num records
+                      if(rid_prev_fos_mp3!=rid_fos_mp3) {
+                        if(rid_prev_fos_mp3!=null) rid_prev_fos_mp3.close();
+                        rid_prev_fos_mp3 = rid_fos_mp3;
                       }
-                      else {
-                        fos_mp3 = new FileOutputStream( home_dir+"/p25rx_record"+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".mp3", true );
-                      }
+                      rid_fos_mp3.write(buffer,0,buffer.length);  //write Int num records
                     }
 
 
                     fos_mp3.write(buffer,0,buffer.length);  //write Int num records
-
                     if(prev_fos_mp3!=fos_mp3) {
                       if(prev_fos_mp3!=null) prev_fos_mp3.close();
                       prev_fos_mp3 = fos_mp3;
@@ -133,25 +145,34 @@ String hold_str="";
                       Files.createDirectories(path);
                       String abspath = path.toString();
                       String rid_str = String.format("%d", parent.src_uid);
-                      fos_wav = new FileOutputStream( abspath+"/"+"RID-"+rid_str+".wav", true );
+
+                      String wfname = abspath+"/"+"RID-"+rid_str+".wav";
+                      check_wav_header(wfname);
+                      rid_fos_wav = new FileOutputStream( wfname, true );
                     } catch(Exception e) {
                     }
                   }
+
+                  if(parent.mp3_separate_files.isSelected()) {
+                    String wfname = home_dir+"/TG-"+tg+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".wav";
+                    check_wav_header(wfname);
+                    fos_wav = new FileOutputStream( wfname, true );
+                  }
                   else {
-                    if(parent.mp3_separate_files.isSelected()) {
-                      String wfname = home_dir+"/TG-"+tg+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".wav";
-                      check_wav_header(wfname);
-                      fos_wav = new FileOutputStream( wfname, true );
-                    }
-                    else {
-                      String wfname = home_dir+"/p25rx_record"+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".wav";
-                      check_wav_header(wfname);
-                      fos_wav = new FileOutputStream( wfname, true );
+                    String wfname = home_dir+"/p25rx_record"+"_"+hold_str+ndate+"-"+wacn+"-"+sysid+".wav";
+                    check_wav_header(wfname);
+                    fos_wav = new FileOutputStream( wfname, true );
+                  }
+
+                  if( parent.separate_rid.isSelected() ) {
+                    rid_fos_wav.write(audio_buffer,0,audio_buffer.length);  //write Int num records
+                    if(rid_prev_fos_wav!=rid_fos_wav) {
+                      if(rid_prev_fos_wav!=null) rid_prev_fos_wav.close();
+                      rid_prev_fos_wav = rid_fos_wav;
                     }
                   }
 
                   fos_wav.write(audio_buffer,0,audio_buffer.length);  //write Int num records
-
                   if(prev_fos_wav!=fos_wav) {
                     if(prev_fos_wav!=null) prev_fos_wav.close();
                     prev_fos_wav = fos_wav;
