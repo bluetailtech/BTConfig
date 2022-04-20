@@ -1294,6 +1294,7 @@ int tg_zone=0;
 String tg_zone_alias="";
 aliasEntry alias_dialog;
 int demod_type=0;
+String user_serial_port="";
 
     public BTFrame(String[] args) {
       initComponents();
@@ -1394,6 +1395,10 @@ int demod_type=0;
             do_console_output=1;
             System.out.println("enable console output");
           }
+          if(args[i].equals("-port")) {
+            user_serial_port = args[i+1]; 
+            System.out.println("user serial port "+user_serial_port);
+          }
           if(args[i].equals("-tdma")) {
             do_tdma_messages=true;
             System.out.println("enable tdma / phase 2 messages");
@@ -1473,7 +1478,7 @@ int demod_type=0;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202202100648");
-      release_date.setText("Release: 2022-02-10 14:57");
+      release_date.setText("Release: 2022-04-20 13:53");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1725,6 +1730,12 @@ int demod_type=0;
           ports[i].getDescriptivePortName()+"  "+
           ports[i].getPortDescription()+"  "+
           ports[i].toString()+isopen);
+
+        if( ports[i].getSystemPortName().toUpperCase().contains( user_serial_port.toUpperCase() ) ) {
+          System.out.println("\r\nusing user defined port: "+ports[i].getSystemPortName());
+          ser_dev.setText("PORT: "+ports[i].getSystemPortName());
+          return ports[i];
+        }
     }
 
 
