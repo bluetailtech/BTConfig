@@ -1478,7 +1478,7 @@ String user_serial_port="";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202202100648");
-      release_date.setText("Release: 2022-04-20 13:53");
+      release_date.setText("Release: 2022-04-20 15:49");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -1734,7 +1734,16 @@ String user_serial_port="";
         if( ports[i].getSystemPortName().toUpperCase().contains( user_serial_port.toUpperCase() ) ) {
           System.out.println("\r\nusing user defined port: "+ports[i].getSystemPortName());
           ser_dev.setText("PORT: "+ports[i].getSystemPortName());
-          return ports[i];
+
+          try {
+            if(ports[i].isOpen()) {
+              ports[i].closePort();
+              Thread.sleep(50);
+            }
+            ports[i].openPort(200);
+            return ports[i];
+          } catch(Exception e) {
+          }
         }
     }
 
