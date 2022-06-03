@@ -25,6 +25,9 @@ FileOutputStream fos_wav;
 FileOutputStream prev_fos_mp3;
 FileOutputStream prev_fos_wav;
 
+FileOutputStream rdio_wav;
+FileOutputStream prev_rdio_wav;
+
 FileOutputStream rid_fos_mp3;
 FileOutputStream rid_fos_wav;
 FileOutputStream rid_prev_fos_mp3;
@@ -33,6 +36,8 @@ FileOutputStream rid_prev_fos_wav;
 File mp3_file=null;
 java.text.SimpleDateFormat mp3_time_format;
 java.text.SimpleDateFormat formatter_date;
+java.text.SimpleDateFormat rdio_date;
+java.text.SimpleDateFormat rdio_time;
 String mp3_time ="";
 private int do_audio_encode=0;
 private byte[] audio_buffer=null;
@@ -43,12 +48,18 @@ String tg="";
 String home_dir;
 String wacn="";
 String sysid="";
+String sysid_dec="";
 
 java.util.Timer utimer;
 
 int p25_follow=0;
 String hold_str="";
 
+double freq_hz=0.0;
+String rdio_ndate = ""; 
+String rdio_ntime = ""; 
+
+  /*
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   class updateTask extends java.util.TimerTask
@@ -71,6 +82,7 @@ String hold_str="";
     }
       }
   }
+    */
 
   private void _write_audio() {
         try {
@@ -181,6 +193,46 @@ String hold_str="";
                 }
               }
             }
+
+
+            //RDIO support
+            //rdio_mask.setText("TG_#TG_#DATE_#TIME_#SYS_#MHZ_");
+            if( parent.en_rdio.isSelected() ) {
+              //System.out.println("encode wav");
+              if( audio_buffer!=null ) {
+
+                try {
+                  if(tg==null || tg.length()==0) return; 
+
+                  rdio_ndate = rdio_date.format(new java.util.Date() );
+                  rdio_ntime = rdio_time.format(new java.util.Date() )+"00";
+
+                  String freq_str = String.format("%d", (int) freq_hz);
+
+
+                  try {
+                    //Path path = Paths.get(new File(home_dir+"/rdio_dirwatch/"+sysid_dec+"/").getAbsolutePath());
+                    Path path = Paths.get(new File(home_dir+"/rdio_dirwatch/").getAbsolutePath());
+                    Files.createDirectories(path);
+
+                    //path = Paths.get(new File(home_dir+"/rdio_dirwatch/"+sysid_dec+"/"+"TG_"+tg+"_"+rdio_ndate+"_"+rdio_ntime+"_"+sysid_dec+"_"+freq_str+"_"+wacn+".wav").getAbsolutePath() );
+                    path = Paths.get(new File(home_dir+"/rdio_dirwatch/TG_"+tg+"_"+rdio_ndate+"_"+rdio_ntime+"_"+sysid_dec+"_"+freq_str+"_"+wacn+".wav").getAbsolutePath() );
+                    String abspath = path.toString();
+                    check_wav_header(abspath);
+                    rdio_wav = new FileOutputStream( abspath, true );
+                  } catch(Exception e) {
+                  }
+
+                  rdio_wav.write(audio_buffer,0,audio_buffer.length);  //write Int num records
+                  if(prev_rdio_wav!=rdio_wav) {
+                    if(prev_rdio_wav!=null) prev_rdio_wav.close();
+                    prev_rdio_wav = rdio_wav;
+                  }
+                } catch(Exception e) {
+                  e.printStackTrace();
+                }
+              }
+            }
           }
         } catch(Exception e) {
           e.printStackTrace();
@@ -206,8 +258,12 @@ String hold_str="";
       mp3_time_format = new java.text.SimpleDateFormat( "HH:mm:ss" );
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
 
-      utimer = new java.util.Timer();
-      utimer.schedule( new updateTask(), 0, 1);
+      rdio_date = new java.text.SimpleDateFormat( "yyyyMMdd" );
+      rdio_time = new java.text.SimpleDateFormat( "HH:mm:" );
+      //rdio_time = new java.text.SimpleDateFormat( "HH" );
+
+      //utimer = new java.util.Timer();
+      //utimer.schedule( new updateTask(), 0, 1);
 
     } catch(Exception e) {
      e.printStackTrace();
@@ -216,7 +272,46 @@ String hold_str="";
 
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
-  public void addAudio(byte[] pcm, String talkgroup, String home_dir, int wacn, int sysid) {
+  public void addAudio(byte[] pcm, String talkgroup, String home_dir, int wacn, int sysid, int mode_b, int p25_demod, double freq) {
+
+    int current_mod_type=0;
+
+    freq_hz = freq;
+
+    //map to gui combobox
+      if( mode_b ==1 || mode_b == 129) {
+        if(p25_demod==0) current_mod_type = 0;
+        if(p25_demod==1) current_mod_type = 1;
+      }
+      if(mode_b==2) current_mod_type=3;
+      if(mode_b==3) current_mod_type=4;
+      if(mode_b==4) current_mod_type=6;
+      if(mode_b==5) current_mod_type=2;
+      if(mode_b==6) current_mod_type=5;
+      if(mode_b==7) current_mod_type=7;
+      if(mode_b==8) current_mod_type=8;
+
+    if( current_mod_type==6 ) {
+      talkgroup="FMNB_"+String.format("%3.6f", freq/1e6);
+      talkgroup = talkgroup.replace('.','_');
+      wacn=0x12345;
+      sysid=0x555;
+    }
+    if( current_mod_type==7 ) {
+      talkgroup="AM_"+String.format("%3.6f", freq/1e6);
+      talkgroup = talkgroup.replace('.','_');
+      wacn=0x12345;
+      sysid=0x556;
+    }
+    if( current_mod_type==8 ) {
+      talkgroup="AM_AAGC_"+String.format("%3.6f", freq/1e6);
+      talkgroup = talkgroup.replace('.','_');
+      wacn=0x12345;
+      sysid=0x557;
+    }
+
+
+
     if(do_audio_encode!=0) return; //shouldn't happen
     if(home_dir==null) return;
     if( talkgroup==null ) return;
@@ -235,6 +330,8 @@ String hold_str="";
 
     this.wacn = String.format("%05X", wacn);
     this.sysid = String.format("%03X",sysid);
+
+    this.sysid_dec = String.format("%d",sysid);
 
     _write_audio();
 

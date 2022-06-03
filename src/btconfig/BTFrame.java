@@ -916,8 +916,7 @@ class updateTask extends java.util.TimerTask
                       String fs =  System.getProperty("file.separator");
                       try {
                         if(aud_archive!=null) 
-                          aud_archive.addAudio( pcm_bytes, current_talkgroup, 
-                            home_dir+fs+sys_mac_id, current_wacn_id, current_sys_id );
+                          aud_archive.addAudio( pcm_bytes, current_talkgroup, home_dir+fs+sys_mac_id, current_wacn_id, current_sys_id, 1, 0, current_freq );
                       } catch(Exception e) {
                         e.printStackTrace();
                       }
@@ -1294,7 +1293,7 @@ int tg_zone=0;
 String tg_zone_alias="";
 aliasEntry alias_dialog;
 int demod_type=0;
-String user_serial_port="";
+String user_serial_port="null";
 
     public BTFrame(String[] args) {
       initComponents();
@@ -1478,7 +1477,7 @@ String user_serial_port="";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202202100648");
-      release_date.setText("Release: 2022-04-20 15:49");
+      release_date.setText("Release: 2022-06-02 16:50");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3384,8 +3383,6 @@ String user_serial_port="";
         select_home = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         home_dir_label = new javax.swing.JLabel();
-        audio_dev_play = new javax.swing.JRadioButton();
-        audio_dev_all = new javax.swing.JRadioButton();
         do_mp3 = new javax.swing.JRadioButton();
         do_wav = new javax.swing.JRadioButton();
         audio_hiq = new javax.swing.JRadioButton();
@@ -3396,6 +3393,9 @@ String user_serial_port="";
         end_call_silence = new javax.swing.JTextField();
         jLabel50 = new javax.swing.JLabel();
         separate_rid = new javax.swing.JCheckBox();
+        en_rdio = new javax.swing.JCheckBox();
+        jLabel63 = new javax.swing.JLabel();
+        rdio_mask = new javax.swing.JTextField();
         jPanel13 = new javax.swing.JPanel();
         freqdb_panel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
@@ -4673,7 +4673,7 @@ String user_serial_port="";
                 enable_mp3ActionPerformed(evt);
             }
         });
-        jPanel11.add(enable_mp3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
+        jPanel11.add(enable_mp3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
 
         enable_audio.setSelected(true);
         enable_audio.setText("Enable PC Audio Output (PC Speakers)");
@@ -4682,7 +4682,7 @@ String user_serial_port="";
                 enable_audioActionPerformed(evt);
             }
         });
-        jPanel11.add(enable_audio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, -1, -1));
+        jPanel11.add(enable_audio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, -1, -1));
 
         mp3_separate_files.setText("Generate separate files by talk group");
         mp3_separate_files.addActionListener(new java.awt.event.ActionListener() {
@@ -4690,7 +4690,7 @@ String user_serial_port="";
                 mp3_separate_filesActionPerformed(evt);
             }
         });
-        jPanel11.add(mp3_separate_files, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, -1, -1));
+        jPanel11.add(mp3_separate_files, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, -1));
 
         jScrollPane3.setAutoscrolls(true);
 
@@ -4707,7 +4707,7 @@ String user_serial_port="";
         });
         jScrollPane3.setViewportView(audio_dev_list);
 
-        jPanel11.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 40, 510, 430));
+        jPanel11.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 40, 510, 380));
 
         jLabel3.setText("PC Output Audio Device Selection");
         jPanel11.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, -1, -1));
@@ -4718,44 +4718,22 @@ String user_serial_port="";
                 select_homeActionPerformed(evt);
             }
         });
-        jPanel11.add(select_home, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
+        jPanel11.add(select_home, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, -1));
 
         jLabel10.setText("Audio Output Dir:");
-        jPanel11.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, -1));
+        jPanel11.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
 
         home_dir_label.setText("/home/p25rx");
-        jPanel11.add(home_dir_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
-
-        buttonGroup8.add(audio_dev_play);
-        audio_dev_play.setText("Show Play Devices Only");
-        audio_dev_play.setEnabled(false);
-        audio_dev_play.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                audio_dev_playActionPerformed(evt);
-            }
-        });
-        jPanel11.add(audio_dev_play, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 480, -1, -1));
-
-        buttonGroup8.add(audio_dev_all);
-        audio_dev_all.setSelected(true);
-        audio_dev_all.setText("Show All Devices");
-        audio_dev_all.setEnabled(false);
-        audio_dev_all.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                audio_dev_allActionPerformed(evt);
-            }
-        });
-        jPanel11.add(audio_dev_all, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 480, -1, -1));
+        jPanel11.add(home_dir_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
 
         buttonGroup15.add(do_mp3);
-        do_mp3.setSelected(true);
         do_mp3.setText("MP3");
         do_mp3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 do_mp3ActionPerformed(evt);
             }
         });
-        jPanel11.add(do_mp3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, -1, -1));
+        jPanel11.add(do_mp3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, -1, -1));
 
         buttonGroup15.add(do_wav);
         do_wav.setText("WAV");
@@ -4764,7 +4742,7 @@ String user_serial_port="";
                 do_wavActionPerformed(evt);
             }
         });
-        jPanel11.add(do_wav, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, -1, -1));
+        jPanel11.add(do_wav, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, -1, -1));
 
         buttonGroup16.add(audio_hiq);
         audio_hiq.setText("High");
@@ -4773,20 +4751,19 @@ String user_serial_port="";
                 audio_hiqActionPerformed(evt);
             }
         });
-        jPanel11.add(audio_hiq, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, -1, -1));
+        jPanel11.add(audio_hiq, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 200, -1, -1));
 
         buttonGroup16.add(audio_lowq);
-        audio_lowq.setSelected(true);
         audio_lowq.setText("Variable Bit Rate");
         audio_lowq.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 audio_lowqActionPerformed(evt);
             }
         });
-        jPanel11.add(audio_lowq, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 270, -1, -1));
+        jPanel11.add(audio_lowq, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, -1, -1));
 
         jLabel9.setText("MP3 Quality");
-        jPanel11.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(73, 270, 100, 20));
+        jPanel11.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 100, 20));
 
         jLabel35.setText("End-Of-Call Silence");
         jPanel59.add(jLabel35);
@@ -4798,7 +4775,7 @@ String user_serial_port="";
         jLabel50.setText("ms");
         jPanel59.add(jLabel50);
 
-        jPanel11.add(jPanel59, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 230, 40));
+        jPanel11.add(jPanel59, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 230, 40));
 
         separate_rid.setText("Generate separate files by RID");
         separate_rid.addActionListener(new java.awt.event.ActionListener() {
@@ -4806,7 +4783,26 @@ String user_serial_port="";
                 separate_ridActionPerformed(evt);
             }
         });
-        jPanel11.add(separate_rid, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, -1, -1));
+        jPanel11.add(separate_rid, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
+
+        en_rdio.setText("Rdio-Scanner support (DirWatch)");
+        en_rdio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                en_rdioActionPerformed(evt);
+            }
+        });
+        jPanel11.add(en_rdio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, -1, -1));
+
+        jLabel63.setText("Cut/Paste This Mask");
+        jPanel11.add(jLabel63, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 450, -1, -1));
+
+        rdio_mask.setText("TG_#TG_#DATE_#TIME_#SYS_#HZ_");
+        rdio_mask.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdio_maskActionPerformed(evt);
+            }
+        });
+        jPanel11.add(rdio_mask, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 450, 460, -1));
 
         audiopanel.add(jPanel11, java.awt.BorderLayout.CENTER);
 
@@ -6655,14 +6651,6 @@ String user_serial_port="";
       save_position();
     }//GEN-LAST:event_formComponentMoved
 
-    private void audio_dev_playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_audio_dev_playActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_audio_dev_playActionPerformed
-
-    private void audio_dev_allActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_audio_dev_allActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_audio_dev_allActionPerformed
-
     private void import_aliasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_import_aliasActionPerformed
       do_alias_import=1;
     }//GEN-LAST:event_import_aliasActionPerformed
@@ -7499,6 +7487,18 @@ String user_serial_port="";
      if(prefs!=null) prefs.putBoolean("separate_rid", separate_rid.isSelected());
     }//GEN-LAST:event_separate_ridActionPerformed
 
+    private void en_rdioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_en_rdioActionPerformed
+        try {
+            prefs.putBoolean("en_rdio", en_rdio.isSelected());
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_en_rdioActionPerformed
+
+    private void rdio_maskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdio_maskActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rdio_maskActionPerformed
+
 
 
     public void enable_voice() {
@@ -8061,9 +8061,7 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox allow_unknown_tg_cb;
     public javax.swing.JButton append_cc;
     public javax.swing.JTextField audio_agc_max;
-    public javax.swing.JRadioButton audio_dev_all;
     public javax.swing.JList<String> audio_dev_list;
-    public javax.swing.JRadioButton audio_dev_play;
     public javax.swing.JRadioButton audio_hiq;
     public javax.swing.JRadioButton audio_lowq;
     public javax.swing.JProgressBar audio_prog;
@@ -8151,6 +8149,7 @@ public void SLEEP(long val) {
     public javax.swing.JCheckBox en_bluetooth_cb;
     public javax.swing.JCheckBox en_encout;
     public javax.swing.JCheckBox en_p2_tones;
+    public javax.swing.JCheckBox en_rdio;
     public javax.swing.JCheckBox en_tg_int_tone;
     public javax.swing.JCheckBox en_zero_rid;
     public javax.swing.JCheckBox enable_audio;
@@ -8254,6 +8253,7 @@ public void SLEEP(long val) {
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel62;
+    private javax.swing.JLabel jLabel63;
     private javax.swing.JLabel jLabel65;
     private javax.swing.JLabel jLabel66;
     private javax.swing.JLabel jLabel67;
@@ -8429,6 +8429,7 @@ public void SLEEP(long val) {
     public javax.swing.JRadioButton quad_click_opt4;
     public javax.swing.JRadioButton quad_click_opt5;
     public javax.swing.JRadioButton quad_click_opt6;
+    public javax.swing.JTextField rdio_mask;
     private javax.swing.JButton read_config;
     private javax.swing.JButton read_tg;
     private javax.swing.JButton readroaming;
