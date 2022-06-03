@@ -87,6 +87,8 @@ String rdio_ntime = "";
   private void _write_audio() {
         try {
 
+          String fs =  System.getProperty("file.separator");
+
           if( do_audio_encode!=0 && audio_buffer!=null && home_dir!=null) {
             do_audio_encode=0;
 
@@ -210,14 +212,17 @@ String rdio_ntime = "";
                   String freq_str = String.format("%d", (int) freq_hz);
 
 
+                  Path path=null;
                   try {
                     //Path path = Paths.get(new File(home_dir+"/rdio_dirwatch/"+sysid_dec+"/").getAbsolutePath());
-                    Path path = Paths.get(new File(home_dir+"/rdio_dirwatch/").getAbsolutePath());
+                    path = Paths.get(new File(home_dir+fs+"rdio_dirwatch").getAbsolutePath());
                     Files.createDirectories(path);
+                  } catch(Exception e) {
+                  }
 
+                  try {
                     //path = Paths.get(new File(home_dir+"/rdio_dirwatch/"+sysid_dec+"/"+"TG_"+tg+"_"+rdio_ndate+"_"+rdio_ntime+"_"+sysid_dec+"_"+freq_str+"_"+wacn+".wav").getAbsolutePath() );
-                    path = Paths.get(new File(home_dir+"/rdio_dirwatch/TG_"+tg+"_"+rdio_ndate+"_"+rdio_ntime+"_"+sysid_dec+"_"+freq_str+"_"+wacn+".wav").getAbsolutePath() );
-                    String abspath = path.toString();
+                    String abspath = path.toString()+fs+"TG_"+tg+"_"+rdio_ndate+"_"+rdio_ntime+"_"+sysid_dec+"_"+freq_str+"_"+wacn+".wav";
                     check_wav_header(abspath);
                     rdio_wav = new FileOutputStream( abspath, true );
                   } catch(Exception e) {
@@ -259,7 +264,7 @@ String rdio_ntime = "";
       formatter_date = new java.text.SimpleDateFormat( "yyyy-MM-dd" );
 
       rdio_date = new java.text.SimpleDateFormat( "yyyyMMdd" );
-      rdio_time = new java.text.SimpleDateFormat( "HH:mm:" );
+      rdio_time = new java.text.SimpleDateFormat( "HHmm" );
       //rdio_time = new java.text.SimpleDateFormat( "HH" );
 
       //utimer = new java.util.Timer();

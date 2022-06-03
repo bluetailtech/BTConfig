@@ -912,7 +912,7 @@ class updateTask extends java.util.TimerTask
                     rx_state=0;
                     pcm_idx=0;
 
-                    if(enable_mp3.isSelected()) {
+                    if(enable_mp3.isSelected() || en_rdio.isSelected() ) {
                       String fs =  System.getProperty("file.separator");
                       try {
                         if(aud_archive!=null) 
@@ -1477,7 +1477,7 @@ String user_serial_port="null";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202202100648");
-      release_date.setText("Release: 2022-06-02 16:50");
+      release_date.setText("Release: 2022-06-03 10:05");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4046,7 +4046,7 @@ String user_serial_port="null";
 
         jPanel1.add(jPanel12);
 
-        p25rxconfigpanel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 444, 1110, 70));
+        p25rxconfigpanel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 394, 1110, 80));
 
         jLabel5.setText("Line Out Volume");
         p25rxconfigpanel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
@@ -4682,7 +4682,7 @@ String user_serial_port="null";
                 enable_audioActionPerformed(evt);
             }
         });
-        jPanel11.add(enable_audio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, -1, -1));
+        jPanel11.add(enable_audio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, -1, -1));
 
         mp3_separate_files.setText("Generate separate files by talk group");
         mp3_separate_files.addActionListener(new java.awt.event.ActionListener() {
@@ -4690,7 +4690,7 @@ String user_serial_port="null";
                 mp3_separate_filesActionPerformed(evt);
             }
         });
-        jPanel11.add(mp3_separate_files, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, -1));
+        jPanel11.add(mp3_separate_files, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
 
         jScrollPane3.setAutoscrolls(true);
 
@@ -4707,7 +4707,7 @@ String user_serial_port="null";
         });
         jScrollPane3.setViewportView(audio_dev_list);
 
-        jPanel11.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 40, 510, 380));
+        jPanel11.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 40, 510, 330));
 
         jLabel3.setText("PC Output Audio Device Selection");
         jPanel11.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, -1, -1));
@@ -4775,7 +4775,7 @@ String user_serial_port="null";
         jLabel50.setText("ms");
         jPanel59.add(jLabel50);
 
-        jPanel11.add(jPanel59, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 230, 40));
+        jPanel11.add(jPanel59, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 230, 40));
 
         separate_rid.setText("Generate separate files by RID");
         separate_rid.addActionListener(new java.awt.event.ActionListener() {
@@ -4783,7 +4783,7 @@ String user_serial_port="null";
                 separate_ridActionPerformed(evt);
             }
         });
-        jPanel11.add(separate_rid, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
+        jPanel11.add(separate_rid, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, -1));
 
         en_rdio.setText("Rdio-Scanner support (DirWatch)");
         en_rdio.addActionListener(new java.awt.event.ActionListener() {
@@ -4791,10 +4791,10 @@ String user_serial_port="null";
                 en_rdioActionPerformed(evt);
             }
         });
-        jPanel11.add(en_rdio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, -1, -1));
+        jPanel11.add(en_rdio, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, -1, -1));
 
         jLabel63.setText("Cut/Paste This Mask");
-        jPanel11.add(jLabel63, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 450, -1, -1));
+        jPanel11.add(jLabel63, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 400, -1, -1));
 
         rdio_mask.setText("TG_#TG_#DATE_#TIME_#SYS_#HZ_");
         rdio_mask.addActionListener(new java.awt.event.ActionListener() {
@@ -4802,7 +4802,7 @@ String user_serial_port="null";
                 rdio_maskActionPerformed(evt);
             }
         });
-        jPanel11.add(rdio_mask, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 450, 460, -1));
+        jPanel11.add(rdio_mask, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 400, 460, -1));
 
         audiopanel.add(jPanel11, java.awt.BorderLayout.CENTER);
 
@@ -7758,6 +7758,12 @@ public void update_prefs() {
 
       tg_font_color = new Color( parent.prefs.getInt("tg_font_color", new Color(255,255,255).getRGB() ) );
       log_ta.setForeground( tg_font_color ); 
+
+        try {
+          en_rdio.setSelected( prefs.getBoolean("en_rdio", false ) ); 
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
 
       if(prefs!=null) {
         String sicpu = prefs.get("si_cpu", "normal");
