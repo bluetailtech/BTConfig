@@ -56,6 +56,8 @@ java.util.Timer utimer;
 int p25_follow=0;
 String hold_str="";
 
+boolean is_silence=false;
+
 double freq_hz=0.0;
 String rdio_ndate = ""; 
 String rdio_ntime = ""; 
@@ -204,7 +206,7 @@ String rdio_path="";
             //rdio_mask.setText("TG_#TG_#DATE_#TIME_#SYS_#MHZ_");
           }
 
-          if( parent.en_rdio.isSelected() && audio_buffer!=null && home_dir!=null) {
+          if( !is_silence && parent.en_rdio.isSelected() && audio_buffer!=null && home_dir!=null) {
             if( audio_buffer!=null ) {
 
               try {
@@ -313,6 +315,8 @@ String rdio_path="";
   /////////////////////////////////////////////////////////////////////////////////
   public void addAudio(byte[] pcm, String talkgroup, String home_dir, int wacn, int sysid, int mode_b, int p25_demod, double freq) {
 
+    is_silence=false;
+
     int current_mod_type=0;
 
     freq_hz = freq;
@@ -357,6 +361,7 @@ String rdio_path="";
     if(talkgroup==null || talkgroup.trim().equals("0") ) return;
     if(wacn==0) return;
     if(sysid==0) return;
+    if(freq==0.0) return;
 
     this.home_dir = home_dir;
 
@@ -378,6 +383,8 @@ String rdio_path="";
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
   public void addSilence(int silent_time, String talkgroup, String home_dir, int wacn, int sysid) {
+
+    is_silence=true;
 
     if(do_audio_encode!=0) return; //shouldn't happen
     if(home_dir==null) return;
