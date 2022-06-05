@@ -204,8 +204,7 @@ String rdio_path="";
             //rdio_mask.setText("TG_#TG_#DATE_#TIME_#SYS_#MHZ_");
           }
 
-          if( parent.en_rdio.isSelected() ) {
-            //System.out.println("encode wav");
+          if( parent.en_rdio.isSelected() && audio_buffer!=null && home_dir!=null) {
             if( audio_buffer!=null ) {
 
               try {
@@ -220,27 +219,53 @@ String rdio_path="";
                   path = Paths.get(new File(home_dir+fs+"rdio_dirwatch").getAbsolutePath());
                   Files.createDirectories(path);
                 } catch(Exception e) {
+                  e.printStackTrace();
                 }
 
                 try {
-                  rdio_ndate = rdio_date.format(new java.util.Date() );
-                  rdio_ntime = rdio_time_full.format(new java.util.Date() );
+                  java.util.Date datetime = new java.util.Date();
+                  rdio_ndate = rdio_date.format(datetime);
+                  rdio_ntime = rdio_time_full.format(datetime);
+
                   String abspath = path.toString()+fs+"TG_"+tg+"_"+rdio_ndate+"_"+rdio_ntime+"_"+sysid_dec+"_"+freq_str+"_"+wacn+".wav";
 
-                  File f = new File(rdio_path);
+                  File f = new File(path.toString());
+                  File test_dir[] = f.listFiles();
 
-                  if( !f.exists() ) { 
+                  int wav_count=0;
+                  for(int i=0;i<test_dir.length;i++) {
+                    if(test_dir[i].toString().contains(".wav")) wav_count++;
+                  }
+
+                  //if( test_dir==null || test_dir.length==0) { 
+                  if( wav_count==0 ) { 
+                    if(rdio_wav!=null) {
+                      try {
+                        //System.out.println("close file:");
+                        rdio_wav.close();
+                      } catch(Exception e) {
+                        e.printStackTrace();
+                      }
+                    }
+
+                    //System.out.println("creat new file: "+abspath);
                     rdio_path = abspath;
                     check_wav_header(rdio_path);
                     rdio_wav = new FileOutputStream( rdio_path, true );
+
+                  }
+                  else {
+                    //System.out.println("testdir_len: "+test_dir.length);
                   }
                 } catch(Exception e) {
+                  e.printStackTrace();
                 }
 
-                rdio_wav.write(audio_buffer,0,audio_buffer.length);  //write Int num records
-                if(prev_rdio_wav!=rdio_wav) {
-                  if(prev_rdio_wav!=null) prev_rdio_wav.close();
-                  prev_rdio_wav = rdio_wav;
+                try {
+                  //System.out.println("write to file:");
+                  if(rdio_wav!=null) rdio_wav.write(audio_buffer,0,audio_buffer.length);  //write Int num records
+                } catch(Exception e) {
+                  e.printStackTrace();
                 }
               } catch(Exception e) {
                 e.printStackTrace();
@@ -324,6 +349,7 @@ String rdio_path="";
       sysid=0x557;
     }
 
+    do_audio_encode=0;
 
 
     if(do_audio_encode!=0) return; //shouldn't happen
@@ -338,7 +364,6 @@ String rdio_path="";
     for(int i=0;i<pcm.length;i++) {
       audio_buffer[i]=pcm[i];
     }
-    do_audio_encode=1;
 
     tg = talkgroup;
 
