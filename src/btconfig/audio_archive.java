@@ -38,6 +38,7 @@ java.text.SimpleDateFormat mp3_time_format;
 java.text.SimpleDateFormat formatter_date;
 java.text.SimpleDateFormat rdio_date;
 java.text.SimpleDateFormat rdio_time;
+java.text.SimpleDateFormat rdio_time_full;
 String mp3_time ="";
 private int do_audio_encode=0;
 private byte[] audio_buffer=null;
@@ -58,6 +59,8 @@ String hold_str="";
 double freq_hz=0.0;
 String rdio_ndate = ""; 
 String rdio_ntime = ""; 
+
+String rdio_path="";
 
   /*
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,7 +92,7 @@ String rdio_ntime = "";
 
           String fs =  System.getProperty("file.separator");
 
-          if( do_audio_encode!=0 && audio_buffer!=null && home_dir!=null) {
+          if( parent.enable_mp3.isSelected() && do_audio_encode!=0 && audio_buffer!=null && home_dir!=null) {
             do_audio_encode=0;
 
 
@@ -199,46 +202,52 @@ String rdio_ntime = "";
 
             //RDIO support
             //rdio_mask.setText("TG_#TG_#DATE_#TIME_#SYS_#MHZ_");
-            if( parent.en_rdio.isSelected() ) {
-              //System.out.println("encode wav");
-              if( audio_buffer!=null ) {
+          }
+
+          if( parent.en_rdio.isSelected() ) {
+            //System.out.println("encode wav");
+            if( audio_buffer!=null ) {
+
+              try {
+                if(tg==null || tg.length()==0) return; 
+
+
+                String freq_str = String.format("%d", (int) freq_hz);
+
+
+                Path path=null;
+                try {
+                  path = Paths.get(new File(home_dir+fs+"rdio_dirwatch").getAbsolutePath());
+                  Files.createDirectories(path);
+                } catch(Exception e) {
+                }
 
                 try {
-                  if(tg==null || tg.length()==0) return; 
-
                   rdio_ndate = rdio_date.format(new java.util.Date() );
-                  rdio_ntime = rdio_time.format(new java.util.Date() )+"00";
+                  rdio_ntime = rdio_time_full.format(new java.util.Date() );
+                  String abspath = path.toString()+fs+"TG_"+tg+"_"+rdio_ndate+"_"+rdio_ntime+"_"+sysid_dec+"_"+freq_str+"_"+wacn+".wav";
 
-                  String freq_str = String.format("%d", (int) freq_hz);
+                  File f = new File(rdio_path);
 
-
-                  Path path=null;
-                  try {
-                    //Path path = Paths.get(new File(home_dir+"/rdio_dirwatch/"+sysid_dec+"/").getAbsolutePath());
-                    path = Paths.get(new File(home_dir+fs+"rdio_dirwatch").getAbsolutePath());
-                    Files.createDirectories(path);
-                  } catch(Exception e) {
-                  }
-
-                  try {
-                    //path = Paths.get(new File(home_dir+"/rdio_dirwatch/"+sysid_dec+"/"+"TG_"+tg+"_"+rdio_ndate+"_"+rdio_ntime+"_"+sysid_dec+"_"+freq_str+"_"+wacn+".wav").getAbsolutePath() );
-                    String abspath = path.toString()+fs+"TG_"+tg+"_"+rdio_ndate+"_"+rdio_ntime+"_"+sysid_dec+"_"+freq_str+"_"+wacn+".wav";
-                    check_wav_header(abspath);
-                    rdio_wav = new FileOutputStream( abspath, true );
-                  } catch(Exception e) {
-                  }
-
-                  rdio_wav.write(audio_buffer,0,audio_buffer.length);  //write Int num records
-                  if(prev_rdio_wav!=rdio_wav) {
-                    if(prev_rdio_wav!=null) prev_rdio_wav.close();
-                    prev_rdio_wav = rdio_wav;
+                  if( !f.exists() ) { 
+                    rdio_path = abspath;
+                    check_wav_header(rdio_path);
+                    rdio_wav = new FileOutputStream( rdio_path, true );
                   }
                 } catch(Exception e) {
-                  e.printStackTrace();
                 }
+
+                rdio_wav.write(audio_buffer,0,audio_buffer.length);  //write Int num records
+                if(prev_rdio_wav!=rdio_wav) {
+                  if(prev_rdio_wav!=null) prev_rdio_wav.close();
+                  prev_rdio_wav = rdio_wav;
+                }
+              } catch(Exception e) {
+                e.printStackTrace();
               }
             }
           }
+
         } catch(Exception e) {
           e.printStackTrace();
         }
@@ -265,7 +274,7 @@ String rdio_ntime = "";
 
       rdio_date = new java.text.SimpleDateFormat( "yyyyMMdd" );
       rdio_time = new java.text.SimpleDateFormat( "HHmm" );
-      //rdio_time = new java.text.SimpleDateFormat( "HH" );
+      rdio_time_full = new java.text.SimpleDateFormat( "HHmmss" );
 
       //utimer = new java.util.Timer();
       //utimer.schedule( new updateTask(), 0, 1);
