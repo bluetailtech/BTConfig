@@ -234,7 +234,7 @@ String rdio_path="";
 
                   int wav_count=0;
                   for(int i=0;i<test_dir.length;i++) {
-                    if(test_dir[i].toString().contains(".wav")) wav_count++;
+                    if(test_dir[i].toString().contains(".wav") && !test_dir[i].toString().contains("TG_0_") ) wav_count++;
                   }
 
                   //if( test_dir==null || test_dir.length==0) { 
@@ -354,7 +354,7 @@ String rdio_path="";
 
     if(do_audio_encode!=0) return; //shouldn't happen
     if(home_dir==null) return;
-    if( talkgroup==null ) return;
+    if(talkgroup==null || talkgroup.trim().equals("0") ) return;
     if(wacn==0) return;
     if(sysid==0) return;
 
