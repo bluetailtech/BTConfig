@@ -64,7 +64,8 @@ String rdio_ntime = "";
 
 String rdio_path="";
 
-int tick_count=0;
+private long start_time;
+private long end_time;
 
   /*
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -268,7 +269,10 @@ int tick_count=0;
                 try {
                   //System.out.println("write to file:");
                   if(rdio_wav!=null) {
-                    tick_count=0;
+                    
+                    start_time = System.nanoTime(); 
+                    end_time = start_time;
+
                     rdio_wav.write(audio_buffer,0,audio_buffer.length);  //write Int num records
                   }
                   else {
@@ -411,20 +415,37 @@ int tick_count=0;
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
   public void tick() {
-    tick_count++;
+    end_time = System.nanoTime(); 
 
-    if(prev_rdio_wav!=null && tick_count>500) {
+    long diff_time_ms = (end_time - start_time)/1000000; //convert to ms
+
+    if(prev_rdio_wav!=null && diff_time_ms>500) {
       try {
-        tick_count=0;
-        //System.out.println("close file:");
-        prev_rdio_wav.close();
-        prev_rdio_wav=null;
-        if(rdio_wav!=null) rdio_wav.close();
-        rdio_wav=null;
+        System.out.println(String.format("diff_time: %d ms, close file:", diff_time_ms));
+        close_all_rdio();
       } catch(Exception e) {
         e.printStackTrace();
       }
     }
+  }
+
+  /////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////
+  private void close_all_rdio() {
+      try {
+        prev_rdio_wav.close();
+        prev_rdio_wav=null;
+      } catch(Exception e) {
+        prev_rdio_wav=null;
+        e.printStackTrace();
+      }
+      try {
+        if(rdio_wav!=null) rdio_wav.close();
+        rdio_wav=null;
+      } catch(Exception e) {
+        rdio_wav=null;
+        e.printStackTrace();
+      }
   }
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
