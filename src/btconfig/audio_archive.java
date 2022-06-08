@@ -67,6 +67,9 @@ String rdio_path="";
 private long start_time;
 private long end_time;
 
+private String temp_name="";
+private String rdio_final_name="";
+
   /*
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -246,18 +249,11 @@ private long end_time;
                   //if( test_dir==null || test_dir.length==0) { 
                   //if( wav_count==0 ) { 
                   if( rdio_wav==null ) { 
-                    if(prev_rdio_wav!=null) {
-                      try {
-                        //System.out.println("close file:");
-                        prev_rdio_wav.close();
-                        prev_rdio_wav=null;
-                      } catch(Exception e) {
-                        e.printStackTrace();
-                      }
-                    }
-
                     //System.out.println("creat new file: "+abspath);
-                    rdio_path = abspath;
+                    rdio_final_name = abspath;
+                    temp_name = path.toString()+fs+"temp.out"; 
+                    rdio_path = temp_name; 
+
                     check_wav_header(rdio_path);
                     rdio_wav = new FileOutputStream( rdio_path, true );
                     prev_rdio_wav=rdio_wav;
@@ -274,17 +270,6 @@ private long end_time;
                     end_time = start_time;
 
                     rdio_wav.write(audio_buffer,0,audio_buffer.length);  //write Int num records
-                  }
-                  else {
-                    if(prev_rdio_wav!=null) {
-                      try {
-                        //System.out.println("close file:");
-                        prev_rdio_wav.close();
-                        prev_rdio_wav=null;
-                      } catch(Exception e) {
-                        e.printStackTrace();
-                      }
-                    }
                   }
                 } catch(Exception e) {
                   e.printStackTrace();
@@ -433,7 +418,11 @@ private long end_time;
   /////////////////////////////////////////////////////////////////////////////////
   private void close_all_rdio() {
       try {
+
         prev_rdio_wav.close();
+        File tmp_file = new File(temp_name); 
+        tmp_file.renameTo( new File(rdio_final_name) );
+
         prev_rdio_wav=null;
       } catch(Exception e) {
         prev_rdio_wav=null;
