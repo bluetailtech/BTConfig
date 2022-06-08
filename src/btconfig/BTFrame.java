@@ -80,6 +80,10 @@ class updateTask extends java.util.TimerTask
     {
       try {
 
+        try {
+          if(aud_archive!=null) aud_archive.tick();
+        } catch(Exception e) {
+        }
 
         if(  aud!=null && ( new java.util.Date().getTime() - audio_tick_start ) > 55) {
           aud.audio_tick();

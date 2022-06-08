@@ -64,6 +64,8 @@ String rdio_ntime = "";
 
 String rdio_path="";
 
+int tick_count=0;
+
   /*
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -231,21 +233,23 @@ String rdio_path="";
 
                   String abspath = path.toString()+fs+"TG_"+tg+"_"+rdio_ndate+"_"+rdio_ntime+"_"+sysid_dec+"_"+freq_str+"_"+wacn+".wav";
 
+                  /*
                   File f = new File(path.toString());
                   File test_dir[] = f.listFiles();
-
                   int wav_count=0;
                   for(int i=0;i<test_dir.length;i++) {
                     if(test_dir[i].toString().contains(".wav") && !test_dir[i].toString().contains("TG_0_") ) wav_count++;
                   }
+                  */
 
                   //if( test_dir==null || test_dir.length==0) { 
-                  if( wav_count==0 ) { 
-                    if(rdio_wav!=null) {
+                  //if( wav_count==0 ) { 
+                  if( rdio_wav==null ) { 
+                    if(prev_rdio_wav!=null) {
                       try {
                         //System.out.println("close file:");
-                        rdio_wav.close();
-                        rdio_wav=null;
+                        prev_rdio_wav.close();
+                        prev_rdio_wav=null;
                       } catch(Exception e) {
                         e.printStackTrace();
                       }
@@ -255,6 +259,7 @@ String rdio_path="";
                     rdio_path = abspath;
                     check_wav_header(rdio_path);
                     rdio_wav = new FileOutputStream( rdio_path, true );
+                    prev_rdio_wav=rdio_wav;
                   }
                 } catch(Exception e) {
                   e.printStackTrace();
@@ -262,7 +267,21 @@ String rdio_path="";
 
                 try {
                   //System.out.println("write to file:");
-                  if(rdio_wav!=null) rdio_wav.write(audio_buffer,0,audio_buffer.length);  //write Int num records
+                  if(rdio_wav!=null) {
+                    tick_count=0;
+                    rdio_wav.write(audio_buffer,0,audio_buffer.length);  //write Int num records
+                  }
+                  else {
+                    if(prev_rdio_wav!=null) {
+                      try {
+                        //System.out.println("close file:");
+                        prev_rdio_wav.close();
+                        prev_rdio_wav=null;
+                      } catch(Exception e) {
+                        e.printStackTrace();
+                      }
+                    }
+                  }
                 } catch(Exception e) {
                   e.printStackTrace();
                 }
@@ -388,6 +407,24 @@ String rdio_path="";
 
     _write_audio();
 
+  }
+  /////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////
+  public void tick() {
+    tick_count++;
+
+    if(prev_rdio_wav!=null && tick_count>500) {
+      try {
+        tick_count=0;
+        //System.out.println("close file:");
+        prev_rdio_wav.close();
+        prev_rdio_wav=null;
+        if(rdio_wav!=null) rdio_wav.close();
+        rdio_wav=null;
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+    }
   }
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
