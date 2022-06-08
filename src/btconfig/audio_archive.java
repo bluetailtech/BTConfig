@@ -245,6 +245,7 @@ String rdio_path="";
                       try {
                         //System.out.println("close file:");
                         rdio_wav.close();
+                        rdio_wav=null;
                       } catch(Exception e) {
                         e.printStackTrace();
                       }
@@ -254,10 +255,6 @@ String rdio_path="";
                     rdio_path = abspath;
                     check_wav_header(rdio_path);
                     rdio_wav = new FileOutputStream( rdio_path, true );
-
-                  }
-                  else {
-                    //System.out.println("testdir_len: "+test_dir.length);
                   }
                 } catch(Exception e) {
                   e.printStackTrace();

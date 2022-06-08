@@ -1477,7 +1477,7 @@ String user_serial_port="null";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202202100648");
-      release_date.setText("Release: 2022-06-07 18:29");
+      release_date.setText("Release: 2022-06-08 04:38");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
