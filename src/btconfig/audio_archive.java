@@ -335,25 +335,37 @@ String rdio_path="";
       if(mode_b==8) current_mod_type=8;
 
     if( current_mod_type==6 ) {
-      talkgroup="FMNB_"+String.format("%3.6f", freq/1e6);
-      talkgroup = talkgroup.replace('.','_');
+      //talkgroup="FMNB_"+String.format("%3.6f", freq/1e6);
+      //talkgroup="FMNB_"+String.format("%3.6f", freq/1e6);
+      //talkgroup = talkgroup.replace('.','_');
+      talkgroup="510";
       wacn=0x12345;
-      sysid=0x555;
+      sysid=592;
     }
     if( current_mod_type==7 ) {
-      talkgroup="AM_"+String.format("%3.6f", freq/1e6);
-      talkgroup = talkgroup.replace('.','_');
+      //talkgroup="AM_"+String.format("%3.6f", freq/1e6);
+      //talkgroup = talkgroup.replace('.','_');
+      talkgroup="511";
       wacn=0x12345;
-      sysid=0x556;
+      sysid=592;
     }
     if( current_mod_type==8 ) {
-      talkgroup="AM_AAGC_"+String.format("%3.6f", freq/1e6);
-      talkgroup = talkgroup.replace('.','_');
+      //talkgroup="AM_AAGC_"+String.format("%3.6f", freq/1e6);
+      //talkgroup = talkgroup.replace('.','_');
+      talkgroup="512";
       wacn=0x12345;
-      sysid=0x557;
+      sysid=592;
     }
 
     do_audio_encode=0;
+
+    int err=0;
+    try {
+      //make sure it is an integer
+      int tg = Integer.valueOf(talkgroup);
+    } catch(Exception e) {
+      return;
+    }
 
 
     if(do_audio_encode!=0) return; //shouldn't happen
