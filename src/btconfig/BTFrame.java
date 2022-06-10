@@ -81,7 +81,7 @@ class updateTask extends java.util.TimerTask
       try {
 
         try {
-          if(aud_archive!=null) aud_archive.tick();
+          if(aud_archive!=null) aud_archive.tick(src_uid);
         } catch(Exception e) {
         }
 
@@ -1481,7 +1481,7 @@ String user_serial_port="null";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202202100648");
-      release_date.setText("Release: 2022-06-08 14:28");
+      release_date.setText("Release: 2022-06-09 18:58");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2023,6 +2023,8 @@ String user_serial_port="null";
           if(aud_archive!=null && silent_time>0) {
             String fs =  System.getProperty("file.separator");
             aud_archive.addSilence( silent_time, current_talkgroup, home_dir+fs+sys_mac_id, current_wacn_id, current_sys_id );
+
+            aud_archive.close_all_rdio();
           }
         } catch(Exception e) {
         }

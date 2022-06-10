@@ -70,6 +70,9 @@ private long end_time;
 private String temp_name="";
 private String rdio_final_name="";
 
+private int prev_uid;
+private int src_uid;
+
   /*
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -235,19 +238,9 @@ private String rdio_final_name="";
                   rdio_ndate = rdio_date.format(datetime);
                   rdio_ntime = rdio_time_full.format(datetime);
 
-                  String abspath = path.toString()+fs+"TG_"+tg+"_"+rdio_ndate+"_"+rdio_ntime+"_"+sysid_dec+"_"+freq_str+"_"+wacn+".wav";
+                  //String abspath = path.toString()+fs+"TG_"+tg+"_"+rdio_ndate+"_"+rdio_ntime+"_"+sysid_dec+"_"+freq_str+"_"+wacn+".wav";
+                  String abspath = path.toString()+fs+"TG_"+tg+"_"+rdio_ndate+"_"+rdio_ntime+"_"+sysid_dec+"_"+freq_str;
 
-                  /*
-                  File f = new File(path.toString());
-                  File test_dir[] = f.listFiles();
-                  int wav_count=0;
-                  for(int i=0;i<test_dir.length;i++) {
-                    if(test_dir[i].toString().contains(".wav") && !test_dir[i].toString().contains("TG_0_") ) wav_count++;
-                  }
-                  */
-
-                  //if( test_dir==null || test_dir.length==0) { 
-                  //if( wav_count==0 ) { 
                   if( rdio_wav==null ) { 
                     //System.out.println("creat new file: "+abspath);
                     rdio_final_name = abspath;
@@ -399,12 +392,17 @@ private String rdio_final_name="";
   }
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
-  public void tick() {
+  public void tick(int uid) {
+
+    if(rdio_wav==null) return;
+
     end_time = System.nanoTime(); 
+
+    if(uid!=0) this.src_uid = uid;
 
     long diff_time_ms = (end_time - start_time)/1000000; //convert to ms
 
-    if(prev_rdio_wav!=null && diff_time_ms>500) {
+    if(prev_rdio_wav!=null && diff_time_ms>2000) {
       try {
         System.out.println(String.format("diff_time: %d ms, close file:", diff_time_ms));
         close_all_rdio();
@@ -416,11 +414,13 @@ private String rdio_final_name="";
 
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
-  private void close_all_rdio() {
+  public void close_all_rdio() {
       try {
 
         prev_rdio_wav.close();
         File tmp_file = new File(temp_name); 
+
+        rdio_final_name = rdio_final_name +"_"+src_uid+".wav";
         tmp_file.renameTo( new File(rdio_final_name) );
 
         prev_rdio_wav=null;
@@ -431,10 +431,14 @@ private String rdio_final_name="";
       try {
         if(rdio_wav!=null) rdio_wav.close();
         rdio_wav=null;
+        end_time = start_time = 0;
       } catch(Exception e) {
         rdio_wav=null;
         e.printStackTrace();
       }
+
+    this.src_uid=0;
+
   }
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
