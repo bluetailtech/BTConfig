@@ -108,7 +108,7 @@ private int src_uid;
 
 
             if( parent.do_mp3.isSelected() ) {
-              System.out.println("encode mp3");
+              //System.out.println("encode mp3");
 
               if( audio_buffer!=null ) {
                 byte[] buffer = encode_mp3(audio_buffer);
@@ -158,7 +158,7 @@ private int src_uid;
               }
             }
             else if( parent.do_wav.isSelected() ) {
-              System.out.println("encode wav");
+              //System.out.println("encode wav");
               if( audio_buffer!=null ) {
 
                 try {
