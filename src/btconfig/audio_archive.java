@@ -103,12 +103,12 @@ private int src_uid;
 
           String fs =  System.getProperty("file.separator");
 
-          if( parent.enable_mp3.isSelected() && do_audio_encode!=0 && audio_buffer!=null && home_dir!=null) {
+          if( parent.enable_mp3.isSelected() && audio_buffer!=null && home_dir!=null) {
             do_audio_encode=0;
 
 
             if( parent.do_mp3.isSelected() ) {
-              //System.out.println("encode mp3");
+              System.out.println("encode mp3");
 
               if( audio_buffer!=null ) {
                 byte[] buffer = encode_mp3(audio_buffer);
@@ -158,7 +158,7 @@ private int src_uid;
               }
             }
             else if( parent.do_wav.isSelected() ) {
-              //System.out.println("encode wav");
+              System.out.println("encode wav");
               if( audio_buffer!=null ) {
 
                 try {
@@ -319,6 +319,7 @@ private int src_uid;
 
     freq_hz = freq;
 
+
     //map to gui combobox
       if( mode_b ==1 || mode_b == 129) {
         if(p25_demod==0) current_mod_type = 0;
@@ -386,6 +387,7 @@ private int src_uid;
     this.sysid = String.format("%03X",sysid);
 
     this.sysid_dec = String.format("%d",sysid);
+
 
     _write_audio();
 
