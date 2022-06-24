@@ -25,20 +25,12 @@ FileOutputStream fos_wav;
 FileOutputStream prev_fos_mp3;
 FileOutputStream prev_fos_wav;
 
-FileOutputStream rdio_wav;
-FileOutputStream prev_rdio_wav;
-
-FileOutputStream rid_fos_mp3;
-FileOutputStream rid_fos_wav;
-FileOutputStream rid_prev_fos_mp3;
-FileOutputStream rid_prev_fos_wav;
+Thread bcalls_thread;
 
 File mp3_file=null;
 java.text.SimpleDateFormat mp3_time_format;
 java.text.SimpleDateFormat formatter_date;
-java.text.SimpleDateFormat rdio_date;
-java.text.SimpleDateFormat rdio_time;
-java.text.SimpleDateFormat rdio_time_full;
+
 String mp3_time ="";
 private int do_audio_encode=0;
 private byte[] audio_buffer=null;
@@ -47,6 +39,7 @@ BTFrame parent;
 boolean debug=false;
 String tg="";
 String home_dir;
+String broadcastify_calls_dir;
 String wacn="";
 String sysid="";
 String sysid_dec="";
@@ -59,19 +52,51 @@ String hold_str="";
 boolean is_silence=false;
 
 double freq_hz=0.0;
-String rdio_ndate = ""; 
-String rdio_ntime = ""; 
 
-String rdio_path="";
 
+private long rdio_init_time;
 private long start_time;
 private long end_time;
 
-private String temp_name="";
-private String rdio_final_name="";
+String rdio_path="";
 
 private int prev_uid;
 private int src_uid;
+
+
+String temp_filename=null;
+String bcalls_path="";
+private String rdio_temp_name="";
+private String rdio_final_name="";
+String rdio_ndate = ""; 
+String rdio_ntime = ""; 
+java.text.SimpleDateFormat rdio_date;
+java.text.SimpleDateFormat rdio_time;
+java.text.SimpleDateFormat rdio_time_full;
+
+FileOutputStream rdio_wav;
+FileOutputStream prev_rdio_wav;
+
+FileOutputStream rid_fos_mp3;
+FileOutputStream rid_fos_wav;
+FileOutputStream rid_prev_fos_mp3;
+FileOutputStream rid_prev_fos_wav;
+
+private long bcalls_init_time;
+private long bcalls_start_time;
+private long bcalls_end_time;
+private String bcalls_temp_name="";
+private String bcalls_final_name="";
+String bcalls_ndate = ""; 
+String bcalls_ntime = ""; 
+java.text.SimpleDateFormat bcalls_date;
+java.text.SimpleDateFormat bcalls_time;
+java.text.SimpleDateFormat bcalls_time_full;
+
+FileOutputStream bcalls_wav;
+FileOutputStream prev_bcalls_wav;
+private int src_uid_bcalls;
+
 
   /*
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -244,12 +269,13 @@ private int src_uid;
                   if( rdio_wav==null ) { 
                     //System.out.println("creat new file: "+abspath);
                     rdio_final_name = abspath;
-                    temp_name = path.toString()+fs+"temp.out"; 
-                    rdio_path = temp_name; 
+                    rdio_temp_name = path.toString()+fs+temp_filename; 
+                    rdio_path = rdio_temp_name; 
 
                     check_wav_header(rdio_path);
                     rdio_wav = new FileOutputStream( rdio_path, true );
                     prev_rdio_wav=rdio_wav;
+                    rdio_init_time = new Date().getTime(); 
                   }
                 } catch(Exception e) {
                   e.printStackTrace();
@@ -259,10 +285,67 @@ private int src_uid;
                   //System.out.println("write to file:");
                   if(rdio_wav!=null) {
                     
-                    start_time = System.nanoTime(); 
+                    start_time = new Date().getTime(); 
                     end_time = start_time;
 
                     rdio_wav.write(audio_buffer,0,audio_buffer.length);  //write Int num records
+                  }
+                } catch(Exception e) {
+                  e.printStackTrace();
+                }
+              } catch(Exception e) {
+                e.printStackTrace();
+              }
+            }
+          }
+
+          if( !is_silence && parent.bcalls_cfg.en_broadcastify_calls.isSelected() && audio_buffer!=null && broadcastify_calls_dir!=null) {
+            if( audio_buffer!=null ) {
+
+              try {
+                if(tg==null || tg.length()==0) return; 
+
+
+                String freq_str = String.format("%d", (int) freq_hz);
+
+
+                Path path=null;
+                try {
+                  path = Paths.get(new File(broadcastify_calls_dir).getAbsolutePath());
+                  Files.createDirectories(path);
+                } catch(Exception e) {
+                  e.printStackTrace();
+                }
+
+                try {
+                  java.util.Date datetime = new java.util.Date();
+                  String timestamp = String.format("%d", ((long)datetime.getTime()/(long)1000) );
+
+                  String abspath = path.toString()+fs+"TG_"+tg+"_"+timestamp+"_"+sysid_dec+"_"+freq_str;
+
+                  if( bcalls_wav==null ) { 
+                    //System.out.println("creat new file: "+abspath);
+                    bcalls_final_name = abspath;
+                    bcalls_temp_name = path.toString()+fs+temp_filename; 
+                    bcalls_path = bcalls_temp_name; 
+
+                    check_wav_header(bcalls_path);
+                    bcalls_wav = new FileOutputStream( bcalls_path, true );
+                    prev_bcalls_wav=bcalls_wav;
+                    bcalls_init_time = new Date().getTime(); 
+                  }
+                } catch(Exception e) {
+                  e.printStackTrace();
+                }
+
+                try {
+                  //System.out.println("write to file:");
+                  if(bcalls_wav!=null) {
+                    
+                    bcalls_start_time = new Date().getTime(); 
+                    bcalls_end_time = bcalls_start_time;
+
+                    bcalls_wav.write(audio_buffer,0,audio_buffer.length);  //write Int num records
                   }
                 } catch(Exception e) {
                   e.printStackTrace();
@@ -301,6 +384,10 @@ private int src_uid;
       rdio_time = new java.text.SimpleDateFormat( "HHmm" );
       rdio_time_full = new java.text.SimpleDateFormat( "HHmmss" );
 
+      bcalls_date = new java.text.SimpleDateFormat( "yyyyMMdd" );
+      bcalls_time = new java.text.SimpleDateFormat( "HHmm" );
+      bcalls_time_full = new java.text.SimpleDateFormat( "HHmmss" );
+
       //utimer = new java.util.Timer();
       //utimer.schedule( new updateTask(), 0, 1);
 
@@ -311,7 +398,9 @@ private int src_uid;
 
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
-  public void addAudio(byte[] pcm, String talkgroup, String home_dir, int wacn, int sysid, int mode_b, int p25_demod, double freq) {
+  public void addAudio(byte[] pcm, String talkgroup, String home_dir, int wacn, int sysid, int mode_b, int p25_demod, double freq, String bcalls_dir, String sys_mac) {
+
+    temp_filename = "temp_"+sys_mac+"_aud.out";
 
     is_silence=false;
 
@@ -319,6 +408,7 @@ private int src_uid;
 
     freq_hz = freq;
 
+    this.broadcastify_calls_dir = bcalls_dir;
 
     //map to gui combobox
       if( mode_b ==1 || mode_b == 129) {
@@ -394,20 +484,41 @@ private int src_uid;
   }
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
-  public void tick(int uid) {
+  public void tick_rdio(int uid) {
 
     if(rdio_wav==null) return;
 
-    end_time = System.nanoTime(); 
+    end_time = new Date().getTime(); 
 
     if(uid!=0) this.src_uid = uid;
 
-    long diff_time_ms = (end_time - start_time)/1000000; //convert to ms
+    long diff_time_ms = (end_time - start_time);
 
     if(prev_rdio_wav!=null && diff_time_ms>2000) {
       try {
-        System.out.println(String.format("diff_time: %d ms, close file:", diff_time_ms));
+        //System.out.println(String.format("diff_time: %d ms, close file:", diff_time_ms));
         close_all_rdio();
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+    }
+  }
+  /////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////
+  public void tick_bcalls(int uid) {
+
+    if(bcalls_wav==null) return;
+
+    bcalls_end_time = new Date().getTime(); 
+
+    if(uid!=0) this.src_uid_bcalls = uid;
+
+    long diff_time_ms = (bcalls_end_time - bcalls_start_time);
+
+    if(prev_bcalls_wav!=null && diff_time_ms>2000) {
+      try {
+        //System.out.println(String.format("diff_time: %d ms, close file:", diff_time_ms));
+        close_all_bcalls( bcalls_end_time - bcalls_init_time );
       } catch(Exception e) {
         e.printStackTrace();
       }
@@ -416,11 +527,56 @@ private int src_uid;
 
   /////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////
+  public void close_all_bcalls(long duration) {
+      try {
+
+        double duration_sec = (double) ((double)duration/1000.0)-2.0;
+
+        if(duration_sec < 0) duration_sec=0;
+        if(duration_sec > 500) duration_sec=500;
+
+        String dur_flt = String.format("%3.1f", duration_sec); 
+
+        prev_bcalls_wav.close();
+        File tmp_file = new File(bcalls_temp_name); 
+
+        bcalls_final_name = bcalls_final_name +"_"+src_uid_bcalls+"_"+dur_flt+"_.wav";
+        tmp_file.renameTo( new File(bcalls_final_name) );
+
+        prev_bcalls_wav=null;
+      } catch(Exception e) {
+        prev_bcalls_wav=null;
+        e.printStackTrace();
+      }
+      try {
+        if(bcalls_wav!=null) bcalls_wav.close();
+        bcalls_wav=null;
+        bcalls_end_time = bcalls_start_time = 0;
+      } catch(Exception e) {
+        bcalls_wav=null;
+        e.printStackTrace();
+      }
+
+    this.src_uid_bcalls=0;
+
+    try {
+      if(bcalls_thread!=null && bcalls_thread.isAlive()) bcalls_thread.join(5000);
+
+      //start a new one
+      bcalls_thread = new Thread( parent.bcalls_cfg.bcalls );
+      bcalls_thread.start();
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
+
+  }
+  /////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////
   public void close_all_rdio() {
       try {
 
         prev_rdio_wav.close();
-        File tmp_file = new File(temp_name); 
+        File tmp_file = new File(rdio_temp_name); 
 
         rdio_final_name = rdio_final_name +"_"+src_uid+".wav";
         tmp_file.renameTo( new File(rdio_final_name) );

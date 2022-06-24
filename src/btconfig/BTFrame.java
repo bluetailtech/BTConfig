@@ -81,7 +81,11 @@ class updateTask extends java.util.TimerTask
       try {
 
         try {
-          if(aud_archive!=null) aud_archive.tick(src_uid);
+          if(aud_archive!=null) aud_archive.tick_rdio(src_uid);
+        } catch(Exception e) {
+        }
+        try {
+          if(aud_archive!=null) aud_archive.tick_bcalls(src_uid);
         } catch(Exception e) {
         }
 
@@ -916,16 +920,17 @@ class updateTask extends java.util.TimerTask
                     rx_state=0;
                     pcm_idx=0;
 
-                    if(enable_mp3.isSelected() || en_rdio.isSelected() ) {
+
+                    if(enable_mp3.isSelected() || en_rdio.isSelected() || bcalls_cfg.en_broadcastify_calls.isSelected() ) {
                       String fs =  System.getProperty("file.separator");
                       try {
                         if(aud_archive!=null) 
-                          aud_archive.addAudio( pcm_bytes, current_talkgroup, home_dir+fs+sys_mac_id, current_wacn_id, current_sys_id, 1, 0, current_freq );
+                          aud_archive.addAudio( pcm_bytes, current_talkgroup, 
+                            home_dir+fs+sys_mac_id, current_wacn_id, current_sys_id, 1, 0, current_freq, broadcastify_calls_dir, sys_mac_id );
                       } catch(Exception e) {
                         e.printStackTrace();
                       }
                     }
-
 
                   }
 
@@ -1298,9 +1303,14 @@ String tg_zone_alias="";
 aliasEntry alias_dialog;
 int demod_type=0;
 String user_serial_port="null";
+public String broadcastify_calls_dir=null;
+bcalls_config bcalls_cfg;
+
 
     public BTFrame(String[] args) {
       initComponents();
+
+      bcalls_cfg = new bcalls_config(this);
 
       mcu_speed.setVisible(false);
       rxmodel.setVisible(false);
@@ -1481,7 +1491,7 @@ String user_serial_port="null";
 
 
       fw_ver.setText("Latest Avail: FW Date: 202202100648");
-      release_date.setText("Release: 2022-06-13 19:16");
+      release_date.setText("Release: 2022-06-24 07:15");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -3592,6 +3602,11 @@ String user_serial_port="null";
         skip = new javax.swing.JButton();
         edit_display_view = new javax.swing.JButton();
         dvpopout = new javax.swing.JButton();
+        jPanel68 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        btt_bcalls_console = new javax.swing.JTextArea();
+        jPanel77 = new javax.swing.JPanel();
+        configure_bcalls = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         logo_panel = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -5895,6 +5910,29 @@ String user_serial_port="null";
 
         jTabbedPane1.addTab("Display View", displayviewmain_border);
 
+        jPanel68.setLayout(new java.awt.BorderLayout());
+
+        btt_bcalls_console.setBackground(new java.awt.Color(0, 0, 0));
+        btt_bcalls_console.setColumns(20);
+        btt_bcalls_console.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
+        btt_bcalls_console.setForeground(new java.awt.Color(255, 255, 255));
+        btt_bcalls_console.setRows(5);
+        jScrollPane6.setViewportView(btt_bcalls_console);
+
+        jPanel68.add(jScrollPane6, java.awt.BorderLayout.CENTER);
+
+        configure_bcalls.setText("Configure");
+        configure_bcalls.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                configure_bcallsActionPerformed(evt);
+            }
+        });
+        jPanel77.add(configure_bcalls);
+
+        jPanel68.add(jPanel77, java.awt.BorderLayout.PAGE_END);
+
+        jTabbedPane1.addTab("BTT BCalls", jPanel68);
+
         getContentPane().add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
@@ -7505,6 +7543,10 @@ String user_serial_port="null";
         // TODO add your handling code here:
     }//GEN-LAST:event_rdio_maskActionPerformed
 
+    private void configure_bcallsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configure_bcallsActionPerformed
+        if(bcalls_cfg!=null) bcalls_cfg.show();
+    }//GEN-LAST:event_configure_bcallsActionPerformed
+
 
 
     public void enable_voice() {
@@ -7745,6 +7787,14 @@ public void update_prefs() {
           e.printStackTrace();
         }
 
+        try {
+          Path path = Paths.get(new File(home_dir+fs+"broadcastify_calls").getAbsolutePath() );
+          Files.createDirectories(path);
+          broadcastify_calls_dir = path.toString();
+        } catch(Exception e) {
+          e.printStackTrace();
+        }
+
       restore_position();
 
     try {
@@ -7798,6 +7848,18 @@ public void update_prefs() {
   } catch(Exception e) {
     e.printStackTrace();
   }
+
+    try {
+      bcalls_cfg.en_broadcastify_calls.setSelected( prefs.getBoolean("en_bcalls", false) );
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
+
+    try {
+      bcalls_cfg.init();
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -8085,6 +8147,7 @@ public void SLEEP(long val) {
     private javax.swing.JPanel bottom_panel;
     private javax.swing.JToggleButton bt_indicator;
     private javax.swing.JLabel bt_lb;
+    public javax.swing.JTextArea btt_bcalls_console;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup10;
     private javax.swing.ButtonGroup buttonGroup11;
@@ -8109,6 +8172,7 @@ public void SLEEP(long val) {
     public javax.swing.JComboBox<String> ch_flt;
     private javax.swing.JButton check_firmware;
     public javax.swing.JTextField city;
+    private javax.swing.JButton configure_bcalls;
     private javax.swing.JPanel consolePanel;
     private javax.swing.JPanel const_panel;
     public javax.swing.JRadioButton controlchannel;
@@ -8336,6 +8400,7 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel65;
     private javax.swing.JPanel jPanel66;
     private javax.swing.JPanel jPanel67;
+    private javax.swing.JPanel jPanel68;
     private javax.swing.JPanel jPanel69;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel70;
@@ -8343,12 +8408,14 @@ public void SLEEP(long val) {
     private javax.swing.JPanel jPanel74;
     private javax.swing.JPanel jPanel75;
     private javax.swing.JPanel jPanel76;
+    private javax.swing.JPanel jPanel77;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     public javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator10;
