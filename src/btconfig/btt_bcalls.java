@@ -126,18 +126,15 @@ StringBuilder sb;
 
   /////////////////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////////////////
-  public boolean scan_files() {
+  public boolean _scan_files(File f) {
+
     try {
-      File in_files = new File(base_path);
-      File[] file_list = in_files.listFiles();
-      for(int i=0;i<file_list.length;i++) {
-        File f = file_list[i];
         if( f.getAbsolutePath().endsWith(".wav")) {
           //System.out.println( "\r\n\r\nConverting: "+f.getAbsolutePath());
           System.out.println( "\r\nConverting: "+f.getName());
 
           StringTokenizer st = new StringTokenizer(f.getName(), "_");
-          if(st.countTokens()==8) {
+          if(st!=null && st.countTokens()==8) {
             //System.out.println(st.nextToken());
             st.nextToken(); //skip
             tg = st.nextToken(); //TG
@@ -167,13 +164,22 @@ StringBuilder sb;
             sb = sb.append("RID:"+src+"\r\n");
             sb = sb.append("DURATION:"+call_duration+"\r\n");
 
-            if(sys.equals(p25_sysid)) { 
-              convert_and_upload(f, IS_MP3);
-            }
-            else {
-              sb = sb.append("WARNING!!: Wrong P25_SYS_ID for "+f.getName()+" Removing without send"+"\r\n");
-              //wrong system. delete it.
+            try {
+
+              if(sys.equals(p25_sysid)) { 
+                convert_and_upload(f, IS_MP3);
+              }
+              else {
+                sb = sb.append("WARNING!!: Wrong P25_SYS_ID for "+f.getName()+" Removing without send"+"\r\n");
+                //wrong system. delete it.
+              }
+
               f.delete();
+            } catch(Exception e) {
+              try {
+                f.delete();
+              } catch(Exception e2) {
+              }
             }
 
             try {
@@ -189,27 +195,19 @@ StringBuilder sb;
           
           return true;
         }
-        else if(f.getAbsolutePath().contains(bttcfg.parent.sys_mac_id+"_aud.out")) {
-          if(rec_mod++%5==0) {
-            if(is_done) {
-              is_done=false;
-              java.util.Date d = new java.util.Date();
-              String ctime = time_format.format(d);
-              System.out.println("\r\nCurrent Time: "+ctime);
-              String node_mac="";
-              try {
-                StringTokenizer st = new StringTokenizer(f.getName(), "_");
-                if(st!=null && st.countTokens()==3) {
-                  st.nextToken();
-                  node_mac = st.nextToken();
-                }
-              } catch(Exception e) {
-              }
-              System.out.print(String.format("Recording node %s ", node_mac));
-            }
-            System.out.print(".");
-          }
-        }
+    } catch(Exception e2) {
+    }
+    return true;
+  }
+  /////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////////
+  public boolean scan_files() {
+    try {
+      File in_files = new File(base_path);
+      File[] file_list = in_files.listFiles();
+      for(int i=0;i<file_list.length;i++) {
+        File f = file_list[i];
+        _scan_files(f);
       }
     } catch(Exception e) {
       e.printStackTrace();
