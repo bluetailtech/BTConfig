@@ -229,7 +229,8 @@ StringBuilder sb;
       int avail=0;
 
       //while(is.available()<=0);
-      Thread.sleep(100);
+      //Thread.sleep(100);
+      proc.waitFor();
 
       while( is.available() > 0) {
         avail = is.available();
@@ -261,7 +262,8 @@ StringBuilder sb;
       int avail=0;
 
       //while(is.available()<=0);
-      Thread.sleep(100);
+      //Thread.sleep(100);
+      proc.waitFor();
 
       while( is.available() > 0) {
         avail = is.available();
@@ -301,7 +303,8 @@ StringBuilder sb;
       }
       //System.out.println(ffmpeg_cmd);
       System.out.println("Running FFMPEG");
-      Runtime.getRuntime().exec(ffmpeg_cmd);
+      Process proc = Runtime.getRuntime().exec(ffmpeg_cmd);
+      proc.waitFor();
 
       upload_file( ufile, is_mp3 ); 
 
