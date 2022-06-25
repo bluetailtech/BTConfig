@@ -1,3 +1,5 @@
 build/
 dist
 exe/*conlog*.txt
+exe/*.exe
+exe/*.jar
