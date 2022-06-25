@@ -86,7 +86,6 @@ StringBuilder sb;
   public void run() {
     if(!did_init) {
       update_config();
-      did_init=true;
     }
     while(true) {
       try {
@@ -367,6 +366,8 @@ StringBuilder sb;
 
           sb = sb.append("Call Completed.\r\n");
           is_done=true;
+
+          did_init=true;
       }
       else {
         sb = sb.append("WARNING!!!!: SERVER ERROR CODE: "+errcode +" Description: "+url+"\r\n");
