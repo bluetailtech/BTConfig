@@ -1491,7 +1491,7 @@ bcalls_config bcalls_cfg;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202202100648");
-      release_date.setText("Release: 2022-06-25 13:41");
+      release_date.setText("Release: 2022-06-26 01:08");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);

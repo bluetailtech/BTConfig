@@ -560,7 +560,7 @@ private int src_uid_bcalls;
     this.src_uid_bcalls=0;
 
     try {
-      if(bcalls_thread!=null && bcalls_thread.isAlive()) bcalls_thread.join(5000);
+      //if(bcalls_thread!=null && bcalls_thread.isAlive()) bcalls_thread.join(5000);
 
       //start a new one
       bcalls_thread = new Thread( parent.bcalls_cfg.bcalls );

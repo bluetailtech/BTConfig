@@ -305,6 +305,8 @@ StringBuilder sb;
 
       upload_file( ufile, is_mp3 ); 
 
+      proc.destroy();
+
     } catch(Exception e) {
       e.printStackTrace();
     }
