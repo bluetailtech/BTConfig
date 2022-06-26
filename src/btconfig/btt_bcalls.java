@@ -284,6 +284,7 @@ StringBuilder sb;
   /////////////////////////////////////////////////////////////////////////////////////////////
   public void convert_and_upload(File f, boolean is_mp3) {
     File ufile=null;
+    Process proc=null;
     try {
       String ffmpeg_cmd = ""; 
       if(is_mp3) {
@@ -300,17 +301,17 @@ StringBuilder sb;
       }
       //System.out.println(ffmpeg_cmd);
       System.out.println("Running FFMPEG");
-      Process proc = Runtime.getRuntime().exec(ffmpeg_cmd);
+      proc = Runtime.getRuntime().exec(ffmpeg_cmd);
       proc.waitFor();
 
       upload_file( ufile, is_mp3 ); 
 
-      proc.destroy();
 
     } catch(Exception e) {
       e.printStackTrace();
     }
     finally {
+      proc.destroy();
       f.delete();
       if(ufile!=null) ufile.delete();
     }
