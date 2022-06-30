@@ -299,7 +299,7 @@ private int src_uid_bcalls;
             }
           }
 
-          if( !is_silence && parent.bcalls_cfg.en_broadcastify_calls.isSelected() && audio_buffer!=null && broadcastify_calls_dir!=null) {
+          if( !is_silence && parent.en_broadcastify_calls.isSelected() && audio_buffer!=null && broadcastify_calls_dir!=null) {
             if( audio_buffer!=null ) {
 
               try {
@@ -560,11 +560,9 @@ private int src_uid_bcalls;
     this.src_uid_bcalls=0;
 
     try {
-      //if(bcalls_thread!=null && bcalls_thread.isAlive()) bcalls_thread.join(5000);
-
       //start a new one
-      bcalls_thread = new Thread( parent.bcalls_cfg.bcalls );
-      bcalls_thread.start();
+      //bcalls_thread = new Thread( parent.bcalls_cfg.bcalls );
+      //bcalls_thread.start();
     } catch(Exception e) {
       e.printStackTrace();
     }
