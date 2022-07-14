@@ -1488,7 +1488,7 @@ public String broadcastify_calls_dir=null;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202202100648");
-      release_date.setText("Release: 2022-07-14 11:37");
+      release_date.setText("Release: 2022-07-14 12:15");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2024,15 +2024,27 @@ public String broadcastify_calls_dir=null;
       }
 
        //end of call silence
-      if( console_line.contains("link-control end call received") || console_line.contains("ENDCALL") || console_line.contains("TDMA return to control channel") ) {
+      if( console_line.contains("link-control end call received") || 
+          console_line.contains("ENDCALL") || 
+          console_line.contains("TDMA lost signal") || 
+          console_line.contains("TDMA voice timeout") || 
+          console_line.contains("TDMA return to control channel") ) {
         try {
           int silent_time = new Integer( parent.end_call_silence.getText() ).intValue();
           if(aud_archive!=null && silent_time>0) {
             String fs =  System.getProperty("file.separator");
             aud_archive.addSilence( silent_time, current_talkgroup, home_dir+fs+sys_mac_id, current_wacn_id, current_sys_id );
 
-            aud_archive.close_all_rdio();
-            aud_archive.close_all_bcalls(0);
+            try {
+              aud_archive.close_all_rdio();
+            } catch(Exception e) {
+            }
+
+            try {
+              aud_archive.close_all_bcalls(0);
+            } catch(Exception e) {
+            }
+
           }
         } catch(Exception e) {
         }
