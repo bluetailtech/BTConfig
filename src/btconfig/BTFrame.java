@@ -1488,7 +1488,7 @@ public String broadcastify_calls_dir=null;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202202100648");
-      release_date.setText("Release: 2022-06-30 15:47");
+      release_date.setText("Release: 2022-07-14 11:37");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -2032,6 +2032,7 @@ public String broadcastify_calls_dir=null;
             aud_archive.addSilence( silent_time, current_talkgroup, home_dir+fs+sys_mac_id, current_wacn_id, current_sys_id );
 
             aud_archive.close_all_rdio();
+            aud_archive.close_all_bcalls(0);
           }
         } catch(Exception e) {
         }

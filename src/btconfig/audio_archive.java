@@ -509,10 +509,9 @@ private int src_uid_bcalls;
 
     if(bcalls_wav==null) return;
 
-    bcalls_end_time = new Date().getTime(); 
-
     if(uid!=0) this.src_uid_bcalls = uid;
 
+    bcalls_end_time = new Date().getTime(); 
     long diff_time_ms = (bcalls_end_time - bcalls_start_time);
 
     if(prev_bcalls_wav!=null && diff_time_ms>2000) {
@@ -529,6 +528,8 @@ private int src_uid_bcalls;
   /////////////////////////////////////////////////////////////////////////////////
   public void close_all_bcalls(long duration) {
       try {
+        bcalls_end_time = new Date().getTime(); 
+        if(duration==0) duration = (bcalls_end_time - bcalls_start_time);
 
         double duration_sec = (double) ((double)duration/1000.0)-2.0;
 
