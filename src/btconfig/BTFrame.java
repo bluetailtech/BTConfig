@@ -1489,7 +1489,7 @@ public String broadcastify_calls_dir=null;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202202100648");
-      release_date.setText("Release: 2022-07-14 12:15");
+      release_date.setText("Release: 2022-07-14 17:23");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
@@ -4833,6 +4833,11 @@ public String broadcastify_calls_dir=null;
         jPanel11.add(rdio_mask, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 400, 460, -1));
 
         en_broadcastify_calls.setText("Enable Broadcastify Calls Output");
+        en_broadcastify_calls.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                en_broadcastify_callsActionPerformed(evt);
+            }
+        });
         jPanel11.add(en_broadcastify_calls, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 340, -1, -1));
 
         audiopanel.add(jPanel11, java.awt.BorderLayout.CENTER);
@@ -7529,6 +7534,14 @@ public String broadcastify_calls_dir=null;
     private void rdio_maskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdio_maskActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rdio_maskActionPerformed
+
+    private void en_broadcastify_callsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_en_broadcastify_callsActionPerformed
+      try {
+        prefs.putBoolean("en_bcalls", en_broadcastify_calls.isSelected());
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
+    }//GEN-LAST:event_en_broadcastify_callsActionPerformed
 
 
 

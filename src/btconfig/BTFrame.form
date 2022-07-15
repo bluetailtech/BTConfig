@@ -2682,6 +2682,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Enable Broadcastify Calls Output"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="en_broadcastify_callsActionPerformed"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
