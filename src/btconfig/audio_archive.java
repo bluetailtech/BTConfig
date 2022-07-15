@@ -86,7 +86,13 @@ private long bcalls_init_time;
 private long bcalls_start_time;
 private long bcalls_end_time;
 private String bcalls_temp_name="";
+
 private String bcalls_final_name="";
+private String bcalls_final_name1="";
+private String bcalls_final_name2="";
+private String bcalls_final_name3="";
+
+
 String bcalls_ndate = ""; 
 String bcalls_ntime = ""; 
 java.text.SimpleDateFormat bcalls_date;
@@ -266,6 +272,7 @@ private int src_uid_bcalls;
                   //String abspath = path.toString()+fs+"TG_"+tg+"_"+rdio_ndate+"_"+rdio_ntime+"_"+sysid_dec+"_"+freq_str+"_"+wacn+".wav";
                   String abspath = path.toString()+fs+"TG_"+tg+"_"+rdio_ndate+"_"+rdio_ntime+"_"+sysid_dec+"_"+freq_str;
 
+
                   if( rdio_wav==null ) { 
                     //System.out.println("creat new file: "+abspath);
                     rdio_final_name = abspath;
@@ -322,6 +329,10 @@ private int src_uid_bcalls;
                   String timestamp = String.format("%d", ((long)datetime.getTime()/(long)1000) );
 
                   String abspath = path.toString()+fs+"TG_"+tg+"_"+timestamp+"_"+sysid_dec+"_"+freq_str;
+
+                  bcalls_final_name1 = path.toString()+fs; 
+                  bcalls_final_name2 = "TG_"+tg;  
+                  bcalls_final_name3 = "_"+rdio_ndate+"_"+rdio_ntime+"_"+sysid_dec+"_"+freq_str; 
 
                   if( bcalls_wav==null ) { 
                     //System.out.println("creat new file: "+abspath);
@@ -540,6 +551,11 @@ private int src_uid_bcalls;
 
         prev_bcalls_wav.close();
         File tmp_file = new File(bcalls_temp_name); 
+
+
+        bcalls_final_name2 = "TG_"+tg;  
+        bcalls_final_name = bcalls_final_name1 + bcalls_final_name2 + bcalls_final_name3;
+
 
         bcalls_final_name = bcalls_final_name +"_"+src_uid_bcalls+"_"+dur_flt+"_.wav";
         tmp_file.renameTo( new File(bcalls_final_name) );
