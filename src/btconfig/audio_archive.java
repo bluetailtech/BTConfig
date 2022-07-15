@@ -568,7 +568,7 @@ private int src_uid_bcalls;
         File tmp_file = new File(bcalls_temp_name); 
 
 
-        bcalls_final_name2 = "TG_"+tg;  
+        bcalls_final_name2 = "TG_"+prev_tg;  
         bcalls_final_name = bcalls_final_name1 + bcalls_final_name2 + bcalls_final_name3;
 
 
