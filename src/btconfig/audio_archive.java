@@ -332,7 +332,7 @@ private int src_uid_bcalls;
 
                   bcalls_final_name1 = path.toString()+fs; 
                   bcalls_final_name2 = "TG_"+tg;  
-                  bcalls_final_name3 = "_"+rdio_ndate+"_"+rdio_ntime+"_"+sysid_dec+"_"+freq_str; 
+                  bcalls_final_name3 = "_"+timestamp+"_"+sysid_dec+"_"+freq_str; 
 
                   if( bcalls_wav==null ) { 
                     //System.out.println("creat new file: "+abspath);
