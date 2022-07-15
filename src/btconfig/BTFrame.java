@@ -146,6 +146,8 @@ class updateTask extends java.util.TimerTask
             l3.setText("NO SIG");
 
             do_synced=false;
+            rx_state=0;
+            skip_bytes=0;
           }
           else {
             do_synced=true;
@@ -682,6 +684,9 @@ class updateTask extends java.util.TimerTask
 
             serial_port = find_serial_port();
 
+            rx_state=0;
+            skip_bytes=0;
+
             macid.setVisible(false);
             macid.setText("");
 
@@ -1044,6 +1049,8 @@ class updateTask extends java.util.TimerTask
           is_connected=0;
           if(serial_port!=null) serial_port.closePort();
           serial_port=null;
+            rx_state=0;
+            skip_bytes=0;
         }
 
         tick_mod++;
@@ -1489,7 +1496,7 @@ public String broadcastify_calls_dir=null;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202202100648");
-      release_date.setText("Release: 2022-07-14 18:59");
+      release_date.setText("Release: 2022-07-15 08:02");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
