@@ -63,6 +63,8 @@ String rdio_path="";
 private int prev_uid;
 private int src_uid;
 
+private String prev_tg;
+
 
 String temp_filename=null;
 String bcalls_path="";
@@ -344,6 +346,8 @@ private int src_uid_bcalls;
                     bcalls_wav = new FileOutputStream( bcalls_path, true );
                     prev_bcalls_wav=bcalls_wav;
                     bcalls_init_time = new Date().getTime(); 
+
+                    prev_tg = tg;
                   }
                 } catch(Exception e) {
                   e.printStackTrace();
@@ -525,7 +529,18 @@ private int src_uid_bcalls;
     bcalls_end_time = new Date().getTime(); 
     long diff_time_ms = (bcalls_end_time - bcalls_start_time);
 
-    if(prev_bcalls_wav!=null && diff_time_ms>2000) {
+    int tg1=0;
+    int tg2=0;
+    try {
+      tg1 = Integer.valueOf(tg);
+    } catch(Exception e) {
+    }
+    try {
+      tg2 = Integer.valueOf(prev_tg);
+    } catch(Exception e) {
+    }
+
+    if(prev_bcalls_wav!=null && (diff_time_ms>2000 || tg1!=tg2) ) {
       try {
         //System.out.println(String.format("diff_time: %d ms, close file:", diff_time_ms));
         close_all_bcalls( bcalls_end_time - bcalls_init_time );
@@ -561,6 +576,8 @@ private int src_uid_bcalls;
         tmp_file.renameTo( new File(bcalls_final_name) );
 
         prev_bcalls_wav=null;
+        tg = "";
+        prev_tg = "";
       } catch(Exception e) {
         prev_bcalls_wav=null;
         e.printStackTrace();

@@ -1489,7 +1489,7 @@ public String broadcastify_calls_dir=null;
 
 
       fw_ver.setText("Latest Avail: FW Date: 202202100648");
-      release_date.setText("Release: 2022-07-14 17:57");
+      release_date.setText("Release: 2022-07-14 18:59");
       fw_installed.setText("   Installed FW: ");
 
       setProgress(-1);
